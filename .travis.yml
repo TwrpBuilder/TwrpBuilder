@@ -10,7 +10,7 @@ android:
     - android-24
 
 jdk:
-  - oraclejdk8
+  - openjdk7
 
 script:
   ./gradlew build
