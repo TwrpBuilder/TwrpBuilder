@@ -1,4 +1,4 @@
-package github.TwroBuilder.com;
+package github.grace5921.TwrpBuilder;
 
 import org.junit.Test;
 

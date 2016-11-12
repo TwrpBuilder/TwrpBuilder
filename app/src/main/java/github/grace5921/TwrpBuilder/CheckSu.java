@@ -1,4 +1,4 @@
-package github.TwroBuilder.com;
+package github.grace5921.TwrpBuilder;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,8 +6,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
-
-import github.TwroBuilder.com.config.Config;
+import github.grace5921.TwrpBuilder.config.Config;
 
 public class CheckSu extends Activity {
 
@@ -20,7 +19,7 @@ public class CheckSu extends Activity {
         super.onCreate(icicle);
         setContentView(R.layout.activity_check_su);
 
-        if(Config.suAvailable) {
+        if(Config.suAvailable()) {
         /* New Handler to start the Menu-Activity
          * and close this Splash-Screen after some seconds.*/
             new Handler().postDelayed(new Runnable() {

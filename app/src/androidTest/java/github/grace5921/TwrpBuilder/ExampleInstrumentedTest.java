@@ -1,4 +1,4 @@
-package github.TwroBuilder.com;
+package github.grace5921.TwrpBuilder;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("github.TwroBuilder.com", appContext.getPackageName());
+        assertEquals("github.grace5921.TwrpBuilder", appContext.getPackageName());
     }
 }

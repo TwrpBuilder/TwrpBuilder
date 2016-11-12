@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_backup"
+            android:title="Backup" />
+        <item
+            android:id="@+id/nav_twrp"
+            android:title="Check for twrp" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <group android:checkableBehavior="single">
+
+            <item
+                android:id="@+id/nav_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:title="Send" />
+            </group>
+        </menu>
+    </item>
+    <item android:title="Help">
+        <menu>
+            <group android:checkableBehavior="single">
+
+            <item
+                android:id="@+id/nav_help"
+                android:title="Help" />
+            </group>
+        </menu>
+    </item>
+
+</menu>
