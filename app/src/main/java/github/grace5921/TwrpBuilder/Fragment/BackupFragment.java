@@ -67,7 +67,7 @@ public class BackupFragment extends Fragment
                         ShowOutput.setText("Backed up recovery "+recovery_output_path);
                         Snackbar.make(view, "Made Recovery Backup. ", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
-
+                        mUploadBackup.setEnabled(true);
                     }
                 }
         );
