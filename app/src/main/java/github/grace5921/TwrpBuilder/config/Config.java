@@ -11,6 +11,6 @@ import eu.chainfire.libsuperuser.Shell;
 public class Config
 {
    public static boolean suAvailable(){return new File("/system/xbin/su").isFile();}
-   public static boolean checkBackup(){return new File("/sdcard/TwrpBuilder/TWrpBuilderBackup.tar").isFile();}
+   public static boolean checkBackup(){return new File("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar").isFile();}
 
 }

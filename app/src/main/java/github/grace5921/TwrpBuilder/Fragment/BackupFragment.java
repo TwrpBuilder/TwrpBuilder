@@ -1,6 +1,7 @@
 package github.grace5921.TwrpBuilder.Fragment;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.List;
 
 import eu.chainfire.libsuperuser.Shell;
@@ -24,7 +26,7 @@ import github.grace5921.TwrpBuilder.util.ShellUtils;
 
 public class BackupFragment extends Fragment
 {
-    ShellUtils mShell;
+    private ShellUtils mShell;
     private Button mBackupButton;
     private TextView ShowOutput;
 
@@ -35,7 +37,7 @@ public class BackupFragment extends Fragment
     {
         View view = inflater.inflate(R.layout.fragment_backup, container, false);
         /*this.mShell = ((Activity) getActivity()).getShellSession();*/
-        mBackupButton=(Button)view.findViewById(R.id.BackupButton);
+        mBackupButton=(Button)view.findViewById(R.id.BackupRecovery);
         ShowOutput=(TextView)view.findViewById(R.id.show_output);
 
         if(Config.checkBackup()) {
@@ -47,7 +49,11 @@ public class BackupFragment extends Fragment
                     @Override
                     public void onClick(View v) {
                         mBackupButton.setEnabled(false);
-                        ShowOutput.setText(recovery_output);
+                        ShowOutput.setText(recovery_output_path);
+                        Shell.SU.run(" dd if="+recovery_output_path+" of=/sdcard/TwrpBuilder/Recovery.img");
+                        Shell.SU.run("tar -H ustar -c /sdcard/TwrpBuilder/Recovery.img > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar");
+                        Shell.SU.run(" md5sum /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar >> md5sum /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar");
+
                     }
                 }
         );
@@ -55,11 +61,11 @@ public class BackupFragment extends Fragment
         return view;
     }
 
-    private static final List<String> BackupTwrp= Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep RECOVERY");
-    private String store_dev_output=String.valueOf(BackupTwrp);
-    private String[] parts = store_dev_output.split("\\s+");
-    private String[] recovery_output_last = parts[7].split("\\]");
-    private String recovery_output=recovery_output_last[0];
+    private static final List<String> RecoveryPartitonPath= Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep RECOVERY");
+    private String store_RecoveryPartitonPath_output=String.valueOf(RecoveryPartitonPath);
+    private String[] parts = store_RecoveryPartitonPath_output.split("\\s+");
+    private String[] recovery_output_last_value = parts[7].split("\\]");
+    private String recovery_output_path=recovery_output_last_value[0];
 
     @Override
     public void onResume() {

@@ -4,13 +4,13 @@
     android:layout_height="match_parent">
 
     <Button
-        android:text="Button"
+        android:text="Backup Recovery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="118dp"
-        android:id="@+id/BackupButton" />
+        android:id="@+id/BackupRecovery" />
 
     <TextView
         android:layout_width="wrap_content"
