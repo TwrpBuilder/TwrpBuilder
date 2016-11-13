@@ -32,6 +32,11 @@ public class BackupFragment extends Fragment
     private Button mBackupButton;
     private TextView ShowOutput;
     private Button mUploadBackup;
+    private String store_RecoveryPartitonPath_output;
+    private String[] parts;
+    private String[] recovery_output_last_value;
+    private String recovery_output_path;
+    private List<String> RecoveryPartitonPath;
 
     @Nullable
     @Override
@@ -77,14 +82,25 @@ public class BackupFragment extends Fragment
                     }
                 }
         );
+        try {
+            RecoveryPartitonPath = Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep RECOVERY");
+            store_RecoveryPartitonPath_output=String.valueOf(RecoveryPartitonPath);
+            parts = store_RecoveryPartitonPath_output.split("\\s+");
+            recovery_output_last_value = parts[7].split("\\]");
+            recovery_output_path=recovery_output_last_value[0];
+        }catch (Exception e){
+            RecoveryPartitonPath = Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep recovery");
+            store_RecoveryPartitonPath_output=String.valueOf(RecoveryPartitonPath);
+            parts = store_RecoveryPartitonPath_output.split("\\s+");
+            recovery_output_last_value = parts[7].split("\\]");
+            recovery_output_path=recovery_output_last_value[0];
+        }
+
         return view;
     }
 
-    private static final List<String> RecoveryPartitonPath= Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep RECOVERY");
-    private String store_RecoveryPartitonPath_output=String.valueOf(RecoveryPartitonPath);
-    private String[] parts = store_RecoveryPartitonPath_output.split("\\s+");
-    private String[] recovery_output_last_value = parts[7].split("\\]");
-    private String recovery_output_path=recovery_output_last_value[0];
+
+
 
     @Override
     public void onResume() {
