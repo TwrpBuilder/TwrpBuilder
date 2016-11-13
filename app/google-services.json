@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1079738297898",
+    "firebase_url": "https://twrpbuilder.firebaseio.com",
+    "project_id": "twrpbuilder",
+    "storage_bucket": "twrpbuilder.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1079738297898:android:49428911d1c8603a",
+        "android_client_info": {
+          "package_name": "github.grace5921.TwrpBuilder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1079738297898-vhjk9spqmm9v0uea143fjjso0tho9slb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "github.grace5921.TwrpBuilder",
+            "certificate_hash": "A9B44A397BCBD9A1208D10AC0A431C45BD00E6DA"
+          }
+        },
+        {
+          "client_id": "1079738297898-bnlgbg1cbo46sdm51cmbvbm384pp7i87.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgs52qKpykOA9M6WW49btolwKtqOumhJ4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1079738297898-bnlgbg1cbo46sdm51cmbvbm384pp7i87.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
