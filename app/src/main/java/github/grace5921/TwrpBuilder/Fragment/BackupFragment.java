@@ -49,11 +49,9 @@ public class BackupFragment extends Fragment
                     @Override
                     public void onClick(View v) {
                         mBackupButton.setEnabled(false);
-                        ShowOutput.setText(recovery_output_path);
-                        Shell.SU.run(" dd if="+recovery_output_path+" of=/sdcard/TwrpBuilder/Recovery.img");
-                        Shell.SU.run("tar -H ustar -c /sdcard/TwrpBuilder/Recovery.img > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar");
-                        Shell.SU.run(" md5sum /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar >> md5sum /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar");
-
+                        Shell.SU.run("mkdir -p /sdcard/TwrpBuilder && dd if="+recovery_output_path+" of=/sdcard/TwrpBuilder/Recovery.img");
+                        Shell.SU.run("tar -c /sdcard/TwrpBuilder/Recovery.img > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar");
+                        ShowOutput.setText("Backed up recovery "+recovery_output_path);
                     }
                 }
         );
