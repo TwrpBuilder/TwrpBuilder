@@ -48,13 +48,31 @@ public class BackupFragment extends Fragment
         mBackupButton=(Button)view.findViewById(R.id.BackupRecovery);
         ShowOutput=(TextView)view.findViewById(R.id.show_output);
         mUploadBackup=(Button)view.findViewById(R.id.UploadBackup);
+
+        try {
+            RecoveryPartitonPath = Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep RECOVERY");
+            store_RecoveryPartitonPath_output=String.valueOf(RecoveryPartitonPath);
+            parts = store_RecoveryPartitonPath_output.split("\\s+");
+            recovery_output_last_value = parts[7].split("\\]");
+            recovery_output_path=recovery_output_last_value[0];
+        }catch (Exception e){
+            RecoveryPartitonPath = Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep recovery");
+            store_RecoveryPartitonPath_output=String.valueOf(RecoveryPartitonPath);
+            parts = store_RecoveryPartitonPath_output.split("\\s+");
+            recovery_output_last_value = parts[7].split("\\]");
+            recovery_output_path=recovery_output_last_value[0];
+        }
+
+
         if(Config.checkBackup()) {
             mBackupButton.setEnabled(false);
             mUploadBackup.setEnabled(true);
+            ShowOutput.setText("Recovery mount point "+recovery_output_path);
         }
         else {
             mBackupButton.setEnabled(true);
             mUploadBackup.setEnabled(false);
+            ShowOutput.setText("If it takes more then 1 min to backup then send me recovery.img from email");
         }
 
         mBackupButton.setOnClickListener(
@@ -64,6 +82,7 @@ public class BackupFragment extends Fragment
                         mBackupButton.setEnabled(false);
                         Shell.SU.run("mkdir -p /sdcard/TwrpBuilder && dd if="+recovery_output_path+" of=/sdcard/TwrpBuilder/Recovery.img");
                         Shell.SU.run("tar -c /sdcard/TwrpBuilder/Recovery.img > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar");
+                        Shell.SU.run("getprop ro.build.fingerprint > /sdcard/TwrpBuilder/fingerprint");
                         ShowOutput.setText("Backed up recovery "+recovery_output_path);
                         Snackbar.make(view, "Made Recovery Backup. ", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
@@ -82,25 +101,9 @@ public class BackupFragment extends Fragment
                     }
                 }
         );
-        try {
-            RecoveryPartitonPath = Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep RECOVERY");
-            store_RecoveryPartitonPath_output=String.valueOf(RecoveryPartitonPath);
-            parts = store_RecoveryPartitonPath_output.split("\\s+");
-            recovery_output_last_value = parts[7].split("\\]");
-            recovery_output_path=recovery_output_last_value[0];
-        }catch (Exception e){
-            RecoveryPartitonPath = Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep recovery");
-            store_RecoveryPartitonPath_output=String.valueOf(RecoveryPartitonPath);
-            parts = store_RecoveryPartitonPath_output.split("\\s+");
-            recovery_output_last_value = parts[7].split("\\]");
-            recovery_output_path=recovery_output_last_value[0];
-        }
 
         return view;
     }
-
-
-
 
     @Override
     public void onResume() {

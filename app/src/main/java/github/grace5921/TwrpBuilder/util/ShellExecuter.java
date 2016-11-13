@@ -55,8 +55,7 @@ public class ShellExecuter {
         return new File("/system/xbin/su").isFile();
     }
     public static List<String> SuperSu(){
-        List<String> newShell= (Shell.SH.run(command));
-        return newShell;
+        return Shell.SH.run(command);
     }
     public static boolean hasGpu(){return new File("/sys/class/kgsl/kgsl-3d0/gpuclk").isFile();}
     public static boolean hasFastCharge(){return new File("/sys/kernel/fast_charge/force_fast_charge").isFile();}
