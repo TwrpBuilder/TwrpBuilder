@@ -1,6 +1,7 @@
 package github.grace5921.TwrpBuilder.Fragment;
 
 import android.Manifest;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,9 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -113,6 +118,8 @@ public class BackupFragment extends Fragment
                     public void onClick(View v) {
                         Snackbar.make(view, "Uploading Please Wait. ", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
+                        //creating a new user
+
                         mUploadBackup.setEnabled(false);
                         Uri file = Uri.fromFile(new File("/sdcard/TwrpBuilder/fingerprint"));
                         StorageReference riversRef = storageRef.child("application/x-tar"+file.getLastPathSegment());
