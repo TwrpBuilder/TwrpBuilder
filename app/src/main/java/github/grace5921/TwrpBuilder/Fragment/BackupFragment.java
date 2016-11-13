@@ -102,8 +102,8 @@ public class BackupFragment extends Fragment
                     public void onClick(View v) {
                         mBackupButton.setEnabled(false);
                         Shell.SU.run("mkdir -p /sdcard/TwrpBuilder && dd if="+recovery_output_path+" of=/sdcard/TwrpBuilder/Recovery.img");
-                        Shell.SU.run("tar -c /sdcard/TwrpBuilder/Recovery.img > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar");
-                        Shell.SH.run(Build.FINGERPRINT+"/sdcard/TwrpBuilder/fingerprint");
+                        Shell.SU.run("getprop ro.build.fingerprint > /sdcard/TwrpBuilder/fingerprint");
+                        Shell.SU.run("tar -c /sdcard/TwrpBuilder/Recovery.img /sdcard/TwrpBuilder/fingerprint > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar");
                         ShowOutput.setText("Backed up recovery "+recovery_output_path);
                         Snackbar.make(view, "Made Recovery Backup. ", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
@@ -118,12 +118,12 @@ public class BackupFragment extends Fragment
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Snackbar.make(view, "Uploading Please Wait. ", Snackbar.LENGTH_INDEFINITE)
+                        Snackbar.make(view, "Uploading Please Wait... ", Snackbar.LENGTH_INDEFINITE)
                                 .setAction("Action", null).show();
                         //creating a new user
 
                         mUploadBackup.setEnabled(false);
-                        Uri file = Uri.fromFile(new File("/sdcard/TwrpBuilder/fingerprint"));
+                        Uri file = Uri.fromFile(new File("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar"));
                         UploadTask uploadTask = storageRef.putFile(file);
                         StorageReference riversRef = storageRef.child("queue/"+ Build.BRAND+"/"+Build.BOARD+"/"+Build.MODEL+"/"+file.getLastPathSegment());
                         uploadTask = riversRef.putFile(file);
