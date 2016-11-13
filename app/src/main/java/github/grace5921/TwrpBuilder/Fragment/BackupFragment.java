@@ -31,6 +31,7 @@ public class BackupFragment extends Fragment
     private ShellUtils mShell;
     private Button mBackupButton;
     private TextView ShowOutput;
+    private Button mUploadBackup;
 
     @Nullable
     @Override
@@ -41,9 +42,14 @@ public class BackupFragment extends Fragment
         /*this.mShell = ((Activity) getActivity()).getShellSession();*/
         mBackupButton=(Button)view.findViewById(R.id.BackupRecovery);
         ShowOutput=(TextView)view.findViewById(R.id.show_output);
-
+        mUploadBackup=(Button)view.findViewById(R.id.UploadBackup);
         if(Config.checkBackup()) {
             mBackupButton.setEnabled(false);
+            mUploadBackup.setEnabled(true);
+        }
+        else {
+            mBackupButton.setEnabled(true);
+            mUploadBackup.setEnabled(false);
         }
 
         mBackupButton.setOnClickListener(
@@ -61,6 +67,16 @@ public class BackupFragment extends Fragment
                 }
         );
 
+        mUploadBackup.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mUploadBackup.setEnabled(false);
+                        Snackbar.make(view, "Uploading Please Wait. ", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+                }
+        );
         return view;
     }
 
