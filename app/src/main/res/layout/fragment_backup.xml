@@ -4,18 +4,19 @@
     android:layout_height="match_parent">
 
     <Button
+        android:text="Backup Recovery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/BackupRecovery"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
         android:text="Upload Backup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/UploadBackup"
         android:layout_gravity="center_horizontal"/>
 
-    <Button
-        android:text="Backup Recovery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/BackupRecovery"
-        android:layout_gravity="center_horizontal"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

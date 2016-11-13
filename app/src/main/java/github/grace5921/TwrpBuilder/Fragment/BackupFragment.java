@@ -1,11 +1,15 @@
 package github.grace5921.TwrpBuilder.Fragment;
 
+import android.Manifest;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +26,7 @@ import java.io.File;
 import java.util.List;
 
 import eu.chainfire.libsuperuser.Shell;
+import github.grace5921.TwrpBuilder.MainActivity;
 import github.grace5921.TwrpBuilder.R;
 import github.grace5921.TwrpBuilder.config.Config;
 import github.grace5921.TwrpBuilder.util.ShellUtils;
@@ -96,6 +101,8 @@ public class BackupFragment extends Fragment
                         Snackbar.make(view, "Made Recovery Backup. ", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                         mUploadBackup.setEnabled(true);
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+
                     }
                 }
         );
@@ -106,10 +113,9 @@ public class BackupFragment extends Fragment
                     public void onClick(View v) {
                         Snackbar.make(view, "Uploading Please Wait. ", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
-
                         mUploadBackup.setEnabled(false);
-                        Uri file = Uri.fromFile(new File("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar"));
-                        StorageReference riversRef = storageRef.child("img/"+file.getLastPathSegment());
+                        Uri file = Uri.fromFile(new File("/sdcard/TwrpBuilder/fingerprint"));
+                        StorageReference riversRef = storageRef.child("application/x-tar"+file.getLastPathSegment());
                         uploadTask = riversRef.putFile(file);
 
 // Register observers to listen for when the download is done or if it fails
