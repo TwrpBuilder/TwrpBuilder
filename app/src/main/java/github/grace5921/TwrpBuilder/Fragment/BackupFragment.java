@@ -6,9 +6,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import github.grace5921.TwrpBuilder.R;
 import github.grace5921.TwrpBuilder.app.Activity;
+import github.grace5921.TwrpBuilder.config.Config;
 import github.grace5921.TwrpBuilder.util.ShellUtils;
 
 /**
@@ -18,6 +20,7 @@ import github.grace5921.TwrpBuilder.util.ShellUtils;
 public class BackupFragment extends Fragment
 {
     ShellUtils mShell;
+    private Button mBackupButton;
 
     @Nullable
     @Override
@@ -26,6 +29,20 @@ public class BackupFragment extends Fragment
     {
         View view = inflater.inflate(R.layout.fragment_backup, container, false);
         /*this.mShell = ((Activity) getActivity()).getShellSession();*/
+        mBackupButton=(Button)view.findViewById(R.id.BackupButton);
+
+        if(Config.checkBackup()) {
+            mBackupButton.setEnabled(false);
+        }
+
+        mBackupButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mBackupButton.setEnabled(false);
+                    }
+                }
+        );
 
         return view;
     }
