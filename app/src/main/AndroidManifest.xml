@@ -21,6 +21,10 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="170780f99a1c0f42ee4bce379c8a786f3e295ea7" />
+
         <activity android:name=".CheckSu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
