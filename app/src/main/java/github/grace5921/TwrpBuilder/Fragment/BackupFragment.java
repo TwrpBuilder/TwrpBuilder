@@ -1,7 +1,8 @@
 package github.grace5921.TwrpBuilder.Fragment;
 
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -11,15 +12,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import java.io.File;
 import java.util.List;
-import java.util.zip.CheckedOutputStream;
 
 import eu.chainfire.libsuperuser.Shell;
 import github.grace5921.TwrpBuilder.R;
-import github.grace5921.TwrpBuilder.app.Activity;
 import github.grace5921.TwrpBuilder.config.Config;
-import github.grace5921.TwrpBuilder.util.ShellExecuter;
 import github.grace5921.TwrpBuilder.util.ShellUtils;
 
 /**
@@ -37,6 +41,11 @@ public class BackupFragment extends Fragment
     private String[] recovery_output_last_value;
     private String recovery_output_path;
     private List<String> RecoveryPartitonPath;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    // Create a storage reference from our app
+    private StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/");
+
+    private UploadTask uploadTask;
 
     @Nullable
     @Override
@@ -95,9 +104,31 @@ public class BackupFragment extends Fragment
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mUploadBackup.setEnabled(false);
                         Snackbar.make(view, "Uploading Please Wait. ", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
+
+                        mUploadBackup.setEnabled(false);
+                        Uri file = Uri.fromFile(new File("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar"));
+                        StorageReference riversRef = storageRef.child("img/"+file.getLastPathSegment());
+                        uploadTask = riversRef.putFile(file);
+
+// Register observers to listen for when the download is done or if it fails
+                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                mUploadBackup.setEnabled(true);
+                                Snackbar.make(view, "Something went wrong. ", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();
+
+                            }
+                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                            }
+                        });
+
                     }
                 }
         );
