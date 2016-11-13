@@ -101,9 +101,7 @@ public class BackupFragment extends Fragment
                     @Override
                     public void onClick(View v) {
                         mBackupButton.setEnabled(false);
-                        Shell.SU.run("mkdir -p /sdcard/TwrpBuilder && dd if="+recovery_output_path+" of=/sdcard/TwrpBuilder/Recovery.img");
-                        Shell.SU.run("getprop ro.build.fingerprint > /sdcard/TwrpBuilder/fingerprint");
-                        Shell.SU.run("tar -c /sdcard/TwrpBuilder/Recovery.img /sdcard/TwrpBuilder/fingerprint > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar");
+                        Shell.SU.run("mkdir -p /sdcard/TwrpBuilder ; dd if="+recovery_output_path+" of=/sdcard/TwrpBuilder/Recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` >  /sdcard/TwrpBuilder/mounts ; getprop ro.build.fingerprint > /sdcard/TwrpBuilder/fingerprint ; tar -c /sdcard/TwrpBuilder/Recovery.img /sdcard/TwrpBuilder/fingerprint /sdcard/TwrpBuilder/mounts > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
                         ShowOutput.setText("Backed up recovery "+recovery_output_path);
                         Snackbar.make(view, "Made Recovery Backup. ", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
