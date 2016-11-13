@@ -3,6 +3,7 @@ package github.grace5921.TwrpBuilder.Fragment;
 import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -24,6 +25,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -101,7 +103,7 @@ public class BackupFragment extends Fragment
                         mBackupButton.setEnabled(false);
                         Shell.SU.run("mkdir -p /sdcard/TwrpBuilder && dd if="+recovery_output_path+" of=/sdcard/TwrpBuilder/Recovery.img");
                         Shell.SU.run("tar -c /sdcard/TwrpBuilder/Recovery.img > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar");
-                        Shell.SU.run("getprop ro.build.fingerprint > /sdcard/TwrpBuilder/fingerprint");
+                        Shell.SH.run(Build.FINGERPRINT+"/sdcard/TwrpBuilder/fingerprint");
                         ShowOutput.setText("Backed up recovery "+recovery_output_path);
                         Snackbar.make(view, "Made Recovery Backup. ", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
@@ -116,16 +118,31 @@ public class BackupFragment extends Fragment
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Snackbar.make(view, "Uploading Please Wait. ", Snackbar.LENGTH_LONG)
+                        Snackbar.make(view, "Uploading Please Wait. ", Snackbar.LENGTH_INDEFINITE)
                                 .setAction("Action", null).show();
                         //creating a new user
 
                         mUploadBackup.setEnabled(false);
                         Uri file = Uri.fromFile(new File("/sdcard/TwrpBuilder/fingerprint"));
-                        StorageReference riversRef = storageRef.child("application/x-tar"+file.getLastPathSegment());
+                        UploadTask uploadTask = storageRef.putFile(file);
+                        StorageReference riversRef = storageRef.child("queue/"+ Build.BRAND+"/"+Build.BOARD+"/"+Build.MODEL+"/"+file.getLastPathSegment());
                         uploadTask = riversRef.putFile(file);
+                        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                Snackbar.make(view, "Upload Finish. ", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();
+                            }
+                        });
 
-// Register observers to listen for when the download is done or if it fails
+                        uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                                System.out.println(taskSnapshot.toString());
+
+                            }
+                        });
+
                         uploadTask.addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception exception) {
@@ -134,6 +151,7 @@ public class BackupFragment extends Fragment
                                         .setAction("Action", null).show();
 
                             }
+
                         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
