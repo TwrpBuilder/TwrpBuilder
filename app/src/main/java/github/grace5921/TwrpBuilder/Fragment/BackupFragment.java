@@ -3,6 +3,7 @@ package github.grace5921.TwrpBuilder.Fragment;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.util.List;
+import java.util.zip.CheckedOutputStream;
 
 import eu.chainfire.libsuperuser.Shell;
 import github.grace5921.TwrpBuilder.R;
@@ -35,7 +37,7 @@ public class BackupFragment extends Fragment
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_backup, container, false);
+        final View view = inflater.inflate(R.layout.fragment_backup, container, false);
         /*this.mShell = ((Activity) getActivity()).getShellSession();*/
         mBackupButton=(Button)view.findViewById(R.id.BackupRecovery);
         ShowOutput=(TextView)view.findViewById(R.id.show_output);
@@ -52,6 +54,9 @@ public class BackupFragment extends Fragment
                         Shell.SU.run("mkdir -p /sdcard/TwrpBuilder && dd if="+recovery_output_path+" of=/sdcard/TwrpBuilder/Recovery.img");
                         Shell.SU.run("tar -c /sdcard/TwrpBuilder/Recovery.img > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar");
                         ShowOutput.setText("Backed up recovery "+recovery_output_path);
+                        Snackbar.make(view, "Made Recovery Backup. ", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+
                     }
                 }
         );
