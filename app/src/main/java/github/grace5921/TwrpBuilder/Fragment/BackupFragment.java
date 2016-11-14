@@ -1,5 +1,6 @@
 package github.grace5921.TwrpBuilder.Fragment;
 
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -62,6 +63,8 @@ public class BackupFragment extends Fragment {
     private String recovery_output_path;
     private List<String> RecoveryPartitonPath;
 
+    /*Progress Bar*/
+    private ProgressDialog mProgressDialog;
     @Nullable
     @Override
 
@@ -195,13 +198,54 @@ public class BackupFragment extends Fragment {
 
 
     }
+    private void showProgressDialog(String title, String message) {
+        if (mProgressDialog != null && mProgressDialog.isShowing())
+            mProgressDialog.setMessage(message);
+        else
+            mProgressDialog = ProgressDialog.show(getActivity(), title, message, true, false);
+    }
 
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    public void showHorizontalProgressDialog(String title, String body) {
+
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.setTitle(title);
+            mProgressDialog.setMessage(body);
+        } else {
+            mProgressDialog = new ProgressDialog(getActivity());
+            mProgressDialog.setTitle(title);
+            mProgressDialog.setMessage(body);
+            mProgressDialog.setIndeterminate(false);
+            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            mProgressDialog.setProgress(0);
+            mProgressDialog.setMax(100);
+            mProgressDialog.setCancelable(false);
+            mProgressDialog.show();
+        }
+    }
+
+    public void updateProgress(int progress) {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.setProgress(progress);
+        }
+    }
     private void uploadStream() {
         riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + file.getLastPathSegment() + "_" + Build.BRAND + "_" + Build.MODEL);
         uploadTask = riversRef.putFile(file);
+        showHorizontalProgressDialog("Uploading", "Please wait...");
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                hideProgressDialog();
                 Log.d("Status", "uploadStream : " + taskSnapshot.getTotalByteCount());
                 mUploadBackup.setEnabled(false);
                 Snackbar.make(getView(), "Upload Finish. ", Snackbar.LENGTH_LONG)
@@ -213,6 +257,7 @@ public class BackupFragment extends Fragment {
                 mUploadBackup.setEnabled(true);
                 Snackbar.make(getView(), "Failed to upload data . ", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
+                hideProgressDialog();
 
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -222,6 +267,7 @@ public class BackupFragment extends Fragment {
                 Log.d("uploadDataInMemory progress : ", String.valueOf(progress));
                 ShowOutput.setVisibility(View.VISIBLE);
                 ShowOutput.setText(String.valueOf(progress + "%"));
+                updateProgress((int) progress);
             }
 
         });
