@@ -239,7 +239,7 @@ public class BackupFragment extends Fragment {
         }
     }
     private void uploadStream() {
-        riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + file.getLastPathSegment() + "_" + Build.BRAND + "_" + Build.MODEL);
+        riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + file.getLastPathSegment());
         uploadTask = riversRef.putFile(file);
         showHorizontalProgressDialog("Uploading", "Please wait...");
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
