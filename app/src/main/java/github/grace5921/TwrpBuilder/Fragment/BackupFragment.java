@@ -250,6 +250,7 @@ public class BackupFragment extends Fragment {
                 mUploadBackup.setEnabled(false);
                 Snackbar.make(getView(), "Upload Finish. ", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                ShowOutput.setText(R.string.build_description_text);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
