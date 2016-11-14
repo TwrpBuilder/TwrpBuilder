@@ -31,6 +31,8 @@ import github.grace5921.TwrpBuilder.R;
 import github.grace5921.TwrpBuilder.config.Config;
 import github.grace5921.TwrpBuilder.util.ShellUtils;
 
+import static github.grace5921.TwrpBuilder.config.Config.CheckDownloadedTwrp;
+
 /**
  * Created by Sumit on 19.10.2016.
  */
@@ -89,6 +91,9 @@ public class BackupFragment extends Fragment {
         file = Uri.fromFile(new File("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar"));
         riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + file.getLastPathSegment());
         getRecoveryStatus = storageRef.child("output/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + "Twrp.img");
+
+        if(CheckDownloadedTwrp())
+        {mDownloadRecovery.setEnabled(false);}else{mDownloadRecovery.setEnabled(true);}
 
         /*Buttons Visibility */
         if (Config.checkBackup()) {

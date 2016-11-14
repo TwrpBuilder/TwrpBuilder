@@ -12,5 +12,6 @@ public class Config
 {
    public static boolean suAvailable(){return new File("/system/xbin/su").isFile();}
    public static boolean checkBackup(){return new File("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar").isFile();}
+   public static boolean CheckDownloadedTwrp(){return new File("/sdcard/TwrpBuilder/Twrp.img").isFile();}
 
 }
