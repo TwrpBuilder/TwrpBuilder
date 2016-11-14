@@ -1,12 +1,5 @@
 package github.grace5921.TwrpBuilder.Fragment;
 
-import android.Manifest;
-import android.app.DownloadManager;
-import android.app.NotificationManager;
-import android.content.Context;
-import android.content.Intent;
-import android.content.UriMatcher;
-import android.media.MediaRouter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,10 +7,7 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +24,6 @@ import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import eu.chainfire.libsuperuser.Shell;
 import github.grace5921.TwrpBuilder.R;
@@ -47,17 +36,25 @@ import github.grace5921.TwrpBuilder.util.ShellUtils;
 
 public class BackupFragment extends Fragment {
     private ShellUtils mShell;
-    private Button mBackupButton;
-    private TextView ShowOutput;
+
+    /*Buttons*/
     private Button mUploadBackup;
+    private Button mDownloadRecovery;
+    private Button mBackupButton;
+
+    /*TextView*/
+    private TextView ShowOutput;
+
+    /*Uri*/
+    private Uri file;
+    private UploadTask uploadTask;
+
+    /*FireBase*/
     private FirebaseStorage storage = FirebaseStorage.getInstance();
-    // Create a storage reference from our app
     private StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/");
     private StorageReference riversRef;
     private StorageReference getRecoveryStatus;
-    private Uri file;
-    private UploadTask uploadTask;
-    private Button mDownloadRecovery;
+
     /*Strings*/
     private String store_RecoveryPartitonPath_output;
     private String[] parts;

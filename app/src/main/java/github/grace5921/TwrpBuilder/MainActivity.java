@@ -32,10 +32,15 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import eu.chainfire.libsuperuser.Shell;
 import github.grace5921.TwrpBuilder.Fragment.BackupFragment;
+import github.grace5921.TwrpBuilder.Fragment.NotRooted;
+import github.grace5921.TwrpBuilder.util.ShellExecuter;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    /*Fragments*/
     private Fragment mBackupFragment;
+    private Fragment mNotRooted;
+    /*FireBase*/
     private FirebaseAuth firebaseAuth;
 
     @Override
@@ -53,8 +58,15 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        /*Fragments*/
         mBackupFragment=new BackupFragment();
-        updateFragment(this.mBackupFragment);
+        mNotRooted=new NotRooted();
+        /*Replace Fragment*/
+        if(ShellExecuter.hasRoot()) {
+            updateFragment(this.mBackupFragment);
+        }else {
+            updateFragment(this.mNotRooted);
+        }
         //initializing firebase auth object
         firebaseAuth = FirebaseAuth.getInstance();
 
