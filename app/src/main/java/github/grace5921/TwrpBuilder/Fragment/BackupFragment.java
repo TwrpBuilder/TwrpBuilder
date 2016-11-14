@@ -106,8 +106,6 @@ public class BackupFragment extends Fragment
                         Snackbar.make(view, "Made Recovery Backup. ", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                         mUploadBackup.setEnabled(true);
-                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
-
                     }
                 }
         );
