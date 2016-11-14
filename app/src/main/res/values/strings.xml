@@ -8,8 +8,10 @@
     <string name="upload_backup">Upload Backup</string>
     <string name="backup_recovery">Backup Recovery</string>
     <string name="download_recovery">Download Recovery</string>
-    <string name="build_description_text"> twrp build Status :- \n\n Pending. \n \n What now ? \n \n Check this app next day if you "don't</string>
+    <string name="build_description_text"> twrp build Status :- \n\n Pending. \n \n What now ? \n \n Check this app next day if you "don't see download button</string>
     <string name="backup_recovery_help_text">Backup Recovery :- \n\n This option backups your \n\n recovery , mounts and \n fingerprint of device . \n You will not \n see this option once you have clicked (delete TwrpBuilder/ folder to restore button). \n\n </string>
     <string name="upload_backup_help_text">\n\n Upload Bakcup :- \n\n This option allows you to upload recovery Backup made from app (you "can't" upload if you have done \n one time ). \n\n </string>
     <string name="download_recovery_help_text">\n\n Download Recovery :- \n\n This option allows to download recovery if "it's" ready on server (This button is hidden and shown when all processes is done ).\n\n </string>
+    <string name="request_approved">\n Recovery is ready ! \n Test recovery and send ne email it works or not </string>
+
 </resources>

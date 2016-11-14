@@ -46,6 +46,7 @@ public class BackupFragment extends Fragment {
     /*TextView*/
     private TextView ShowOutput;
     private TextView mBuildDescription;
+    private TextView mBuildApproved;
     /*Uri*/
     private Uri file;
     private UploadTask uploadTask;
@@ -81,10 +82,13 @@ public class BackupFragment extends Fragment {
 
         ShowOutput = (TextView) view.findViewById(R.id.show_output);
         mBuildDescription=(TextView)view.findViewById(R.id.build_description);
+        mBuildApproved=(TextView)view.findViewById(R.id.build_approved);
+
         /*Define Methods*/
 
         file = Uri.fromFile(new File("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar"));
         riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + file.getLastPathSegment());
+        getRecoveryStatus = storageRef.child("output/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + "Twrp.img");
 
         /*Buttons Visibility */
         if (Config.checkBackup()) {
@@ -104,11 +108,13 @@ public class BackupFragment extends Fragment {
 
             });
         }
-        getRecoveryStatus = storageRef.child("output/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "Twrp.img");
 
         getRecoveryStatus.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
             @Override
             public void onSuccess(StorageMetadata storageMetadata) {
+                mBuildApproved.setVisibility(View.VISIBLE);
+                mBuildDescription.setVisibility(View.GONE);
+                mBuildApproved.setText(R.string.request_approved);
                 mDownloadRecovery.setVisibility(View.VISIBLE);
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -276,14 +282,17 @@ public class BackupFragment extends Fragment {
     private void DownloadStream()  {
 
         File localFile = new File(Environment.getExternalStorageDirectory(), "TwrpBuilder/Twrp.img");
+        showHorizontalProgressDialog("Uploading", "Please wait...");
         getRecoveryStatus.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                hideProgressDialog();
                 Snackbar.make(getView(), "File downloaded at \n/sdcard/TwrpBuilder/Twrp.img . ", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
+                hideProgressDialog();
                 Snackbar.make(getView(), "Failed To Downlaod . ", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         }).addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
@@ -293,6 +302,7 @@ public class BackupFragment extends Fragment {
                 Log.d("uploadDataInMemory progress : ", String.valueOf(progress));
                 ShowOutput.setVisibility(View.VISIBLE);
                 ShowOutput.setText(String.valueOf(progress + "%"));
+                updateProgress((int) progress);
 
             }
         });
