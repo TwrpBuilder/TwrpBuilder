@@ -32,6 +32,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import eu.chainfire.libsuperuser.Shell;
 import github.grace5921.TwrpBuilder.Fragment.BackupFragment;
+import github.grace5921.TwrpBuilder.Fragment.HelpFragment;
 import github.grace5921.TwrpBuilder.Fragment.NotRooted;
 import github.grace5921.TwrpBuilder.util.ShellExecuter;
 
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity
     /*Fragments*/
     private Fragment mBackupFragment;
     private Fragment mNotRooted;
+    private Fragment mHelpFragment;
+
     /*FireBase*/
     private FirebaseAuth firebaseAuth;
 
@@ -61,11 +64,14 @@ public class MainActivity extends AppCompatActivity
         /*Fragments*/
         mBackupFragment=new BackupFragment();
         mNotRooted=new NotRooted();
+        mHelpFragment=new HelpFragment();
         /*Replace Fragment*/
         if(ShellExecuter.hasRoot()) {
             updateFragment(this.mBackupFragment);
+            setTitle("Request Twrp");
         }else {
             updateFragment(this.mNotRooted);
+            setTitle("Device Not Rooted :(");
         }
         //initializing firebase auth object
         firebaseAuth = FirebaseAuth.getInstance();
@@ -101,14 +107,11 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_backup) {
-            this.updateFragment(this.mBackupFragment);
-            setTitle("Backup");
-        }  else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            updateFragment(mBackupFragment);
+            setTitle("Request Twrp");
         } else if (id == R.id.nav_help) {
-
+            updateFragment(mHelpFragment);
+            setTitle("Help");
     }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
