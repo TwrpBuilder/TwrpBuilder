@@ -72,7 +72,7 @@ public class BackupFragment extends Fragment {
 
         mBackupButton = (Button) view.findViewById(R.id.BackupRecovery);
         mUploadBackup = (Button) view.findViewById(R.id.UploadBackup);
-        mDownloadRecovery=(Button)view.findViewById(R.id.get_recovery);
+        mDownloadRecovery = (Button) view.findViewById(R.id.get_recovery);
 
         /*TextView*/
 
@@ -84,19 +84,20 @@ public class BackupFragment extends Fragment {
         riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + file.getLastPathSegment() + "_" + Build.BRAND + "_" + Build.MODEL);
 
         /*Buttons Visibility */
+        if (Config.checkBackup()) {
+            riversRef.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
+                @Override
+                public void onSuccess(StorageMetadata storageMetadata) {
+                    mUploadBackup.setVisibility(View.GONE);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    mUploadBackup.setVisibility(View.VISIBLE);
+                }
 
-        riversRef.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
-            @Override
-            public void onSuccess(StorageMetadata storageMetadata) {
-                mUploadBackup.setVisibility(View.GONE);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Uh-oh, an error occurred!
-            }
-
-        });
+            });
+        }
         getRecoveryStatus = storageRef.child("output/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "Twrp.img");
 
         getRecoveryStatus.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
@@ -115,8 +116,6 @@ public class BackupFragment extends Fragment {
         /*Check For Backup */
 
         if (Config.checkBackup()) {
-
-            mUploadBackup.setVisibility(View.VISIBLE);
             ShowOutput.setText("Recovery mount point " + recovery_output_path);
         } else {
             mBackupButton.setVisibility(View.VISIBLE);
