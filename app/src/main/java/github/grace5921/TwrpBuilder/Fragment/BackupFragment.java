@@ -287,7 +287,7 @@ public class BackupFragment extends Fragment {
     private void DownloadStream()  {
 
         File localFile = new File(Environment.getExternalStorageDirectory(), "TwrpBuilder/Twrp.img");
-        showHorizontalProgressDialog("Uploading", "Please wait...");
+        showHorizontalProgressDialog("Downloading", "Please wait...");
         getRecoveryStatus.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
