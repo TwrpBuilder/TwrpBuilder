@@ -83,8 +83,8 @@ public class BackupFragment extends Fragment {
         mBuildDescription=(TextView)view.findViewById(R.id.build_description);
         /*Define Methods*/
 
-        file = Uri.fromFile(new File("/sdcard/TwrpBuilder/mounts"));
-        riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + file.getLastPathSegment() + "_" + Build.BRAND + "_" + Build.MODEL);
+        file = Uri.fromFile(new File("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar"));
+        riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + file.getLastPathSegment());
 
         /*Buttons Visibility */
         if (Config.checkBackup()) {
