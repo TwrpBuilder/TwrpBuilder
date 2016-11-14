@@ -87,8 +87,13 @@ public class BackupFragment extends Fragment
             RecoveryPartitonPath = Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep recovery");
             store_RecoveryPartitonPath_output=String.valueOf(RecoveryPartitonPath);
             parts = store_RecoveryPartitonPath_output.split("\\s+");
-            recovery_output_last_value = parts[7].split("\\]");
-            recovery_output_path=recovery_output_last_value[0];
+            try {
+                recovery_output_last_value = parts[7].split("\\]");
+                recovery_output_path=recovery_output_last_value[0];
+            }
+            catch (Exception ExceptionE){
+                Toast.makeText(getContext(), "Your devic is not supported", Toast.LENGTH_LONG).show();
+            }
         }
 
 
@@ -163,7 +168,13 @@ public class BackupFragment extends Fragment
                             .setAction("Action", null).show();
 
                 }
-            });
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                    Log.d("LOL", "uploadDataInMemory progress : " + progress);
+                }
 
-    }
+            });
+            }
     }
