@@ -145,7 +145,7 @@ public class BackupFragment extends Fragment
     }
 
     private void uploadStream() {
-            StorageReference riversRef = storageRef.child("queue/"+ Build.BRAND+"/"+Build.BOARD+"/"+Build.MODEL+"/"+file.getLastPathSegment());
+            StorageReference riversRef = storageRef.child("queue/"+ Build.BRAND+"/"+Build.BOARD+"/"+Build.MODEL+"/"+file.getLastPathSegment()+"_"+Build.BRAND+"+"+Build.MODEL);
             uploadTask = riversRef.putFile(file);
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
