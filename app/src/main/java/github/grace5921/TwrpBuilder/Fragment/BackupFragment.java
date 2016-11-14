@@ -1,6 +1,8 @@
 package github.grace5921.TwrpBuilder.Fragment;
 
 import android.Manifest;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.UriMatcher;
 import android.media.MediaRouter;
@@ -13,6 +15,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +30,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -150,7 +154,7 @@ public class BackupFragment extends Fragment
     }
 
     private void uploadStream() {
-            StorageReference riversRef = storageRef.child("queue/"+ Build.BRAND+"/"+Build.BOARD+"/"+Build.MODEL+"/"+file.getLastPathSegment()+"_"+Build.BRAND+"+"+Build.MODEL);
+            StorageReference riversRef = storageRef.child("queue/"+ Build.BRAND+"/"+Build.BOARD+"/"+Build.MODEL+"/"+file.getLastPathSegment()+"_"+Build.BRAND+"_"+Build.MODEL);
             uploadTask = riversRef.putFile(file);
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -171,10 +175,35 @@ public class BackupFragment extends Fragment
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                    double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                    Log.d("LOL", "uploadDataInMemory progress : " + progress);
+                    double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                    Log.d("uploadDataInMemory progress : ", String.valueOf(progress));
+                    ShowOutput.setText(String.valueOf(progress+"%"));
                 }
 
             });
             }
+
+    public void onProgress(FileDownloadTask.TaskSnapshot taskSnapshot) {
+        double fprogress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+        long bytes = taskSnapshot.getBytesTransferred();
+
+        String progress = String.format("%.2f", fprogress);
+        int constant = 1000;
+        if(bytes%constant == 0)
+        {
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(getContext().getApplicationContext())
+                            .setSmallIcon(android.R.drawable.stat_sys_download)
+                            .setContentTitle("Downloading " + file.getLastPathSegment())
+                            .setContentText(" " + progress + "% completed" );
+
+            NotificationManager mNotificationManager =
+                    (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+
+           // mNotificationManager.notify(mId, mBuilder.build());
+        }
+
     }
+
+
+}
