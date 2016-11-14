@@ -27,12 +27,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import eu.chainfire.libsuperuser.Shell;
 import github.grace5921.TwrpBuilder.R;
@@ -151,6 +153,7 @@ public class BackupFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        DownloadStream();
                     }
                 }
         );
@@ -224,6 +227,33 @@ public class BackupFragment extends Fragment {
 
         });
     }
+    private void DownloadStream()  {
+        try {
 
+            File localFile = File.createTempFile("images", "jpg");
+            getRecoveryStatus.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    Snackbar.make(getView(), "File Downlaoded . ", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Snackbar.make(getView(), "Failed To Downlaod . ", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                }
+            }).addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                    Log.d("uploadDataInMemory progress : ", String.valueOf(progress));
+                    ShowOutput.setVisibility(View.VISIBLE);
+                    ShowOutput.setText(String.valueOf(progress + "%"));
+
+                }
+            });
+        }catch (IOException IOe){
+            /*TODO: add something when throws exception*/
+        }
     }
+}
 
