@@ -8,4 +8,5 @@
     <string name="upload_backup">Upload Backup</string>
     <string name="backup_recovery">Backup Recovery</string>
     <string name="download_recovery">Download Recovery</string>
+    <string name="build_description_text">Twrp build Status :- \n \n Pending. \n \n What now ? \n \n Check this app next day if you "don't" see download button then report on xda . </string>
 </resources>

@@ -44,7 +44,7 @@ public class BackupFragment extends Fragment {
 
     /*TextView*/
     private TextView ShowOutput;
-
+    private TextView mBuildDescription;
     /*Uri*/
     private Uri file;
     private UploadTask uploadTask;
@@ -77,7 +77,7 @@ public class BackupFragment extends Fragment {
         /*TextView*/
 
         ShowOutput = (TextView) view.findViewById(R.id.show_output);
-
+        mBuildDescription=(TextView)view.findViewById(R.id.build_description);
         /*Define Methods*/
 
         file = Uri.fromFile(new File("/sdcard/TwrpBuilder/mounts"));
@@ -89,6 +89,9 @@ public class BackupFragment extends Fragment {
                 @Override
                 public void onSuccess(StorageMetadata storageMetadata) {
                     mUploadBackup.setVisibility(View.GONE);
+                    mBuildDescription.setVisibility(View.VISIBLE);
+                    mBuildDescription.setText(R.string.build_description_text);
+
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
