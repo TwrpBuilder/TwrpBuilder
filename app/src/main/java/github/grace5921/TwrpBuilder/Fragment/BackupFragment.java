@@ -48,11 +48,6 @@ public class BackupFragment extends Fragment {
     private Button mBackupButton;
     private TextView ShowOutput;
     private Button mUploadBackup;
-    private String store_RecoveryPartitonPath_output;
-    private String[] parts;
-    private String[] recovery_output_last_value;
-    private String recovery_output_path;
-    private List<String> RecoveryPartitonPath;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     // Create a storage reference from our app
     private StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/");
@@ -61,19 +56,36 @@ public class BackupFragment extends Fragment {
     private Uri file;
     private UploadTask uploadTask;
     private Button mDownloadRecovery;
+    /*Strings*/
+    private String store_RecoveryPartitonPath_output;
+    private String[] parts;
+    private String[] recovery_output_last_value;
+    private String recovery_output_path;
+    private List<String> RecoveryPartitonPath;
 
     @Nullable
     @Override
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_backup, container, false);
-        /*this.mShell = ((Activity) getActivity()).getShellSession();*/
+
+        /*Buttons*/
+
         mBackupButton = (Button) view.findViewById(R.id.BackupRecovery);
-        ShowOutput = (TextView) view.findViewById(R.id.show_output);
         mUploadBackup = (Button) view.findViewById(R.id.UploadBackup);
+        mDownloadRecovery=(Button)view.findViewById(R.id.get_recovery);
+
+        /*TextView*/
+
+        ShowOutput = (TextView) view.findViewById(R.id.show_output);
+
+        /*Define Methods*/
+
         file = Uri.fromFile(new File("/sdcard/TwrpBuilder/mounts"));
         riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + file.getLastPathSegment() + "_" + Build.BRAND + "_" + Build.MODEL);
-        mDownloadRecovery=(Button)view.findViewById(R.id.get_recovery);
+
+        /*Buttons Visibility */
+
         riversRef.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
             @Override
             public void onSuccess(StorageMetadata storageMetadata) {
@@ -101,12 +113,26 @@ public class BackupFragment extends Fragment {
 
         });
 
+        /*Check For Backup */
+
+        if (Config.checkBackup()) {
+
+            mUploadBackup.setVisibility(View.VISIBLE);
+            ShowOutput.setText("Recovery mount point " + recovery_output_path);
+        } else {
+            mBackupButton.setVisibility(View.VISIBLE);
+            ShowOutput.setText("If it takes more then 1 min to backup then send me recovery.img from email");
+        }
+
+        /*Find Recovery (Works if device supports /dev/block/platfrom/---/by-name) else gives Exception*/
+
         try {
             RecoveryPartitonPath = Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep RECOVERY");
             store_RecoveryPartitonPath_output = String.valueOf(RecoveryPartitonPath);
             parts = store_RecoveryPartitonPath_output.split("\\s+");
             recovery_output_last_value = parts[7].split("\\]");
             recovery_output_path = recovery_output_last_value[0];
+            ShowOutput.setVisibility(View.VISIBLE);
         } catch (Exception e) {
             RecoveryPartitonPath = Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep recovery");
             store_RecoveryPartitonPath_output = String.valueOf(RecoveryPartitonPath);
@@ -119,16 +145,7 @@ public class BackupFragment extends Fragment {
             }
         }
 
-
-        if (Config.checkBackup()) {
-            mBackupButton.setVisibility(View.GONE);
-            mUploadBackup.setEnabled(true);
-            ShowOutput.setText("Recovery mount point " + recovery_output_path);
-        } else {
-            mBackupButton.setVisibility(View.VISIBLE);
-            mUploadBackup.setEnabled(false);
-            ShowOutput.setText("If it takes more then 1 min to backup then send me recovery.img from email");
-        }
+        /*On Click Listeners */
 
         mDownloadRecovery.setOnClickListener(
                 new View.OnClickListener() {
@@ -142,12 +159,12 @@ public class BackupFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mBackupButton.setEnabled(false);
+                        mBackupButton.setVisibility(View.GONE);
                         Shell.SU.run("mkdir -p /sdcard/TwrpBuilder ; dd if=" + recovery_output_path + " of=/sdcard/TwrpBuilder/Recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` >  /sdcard/TwrpBuilder/mounts ; getprop ro.build.fingerprint > /sdcard/TwrpBuilder/fingerprint ; tar -c /sdcard/TwrpBuilder/Recovery.img /sdcard/TwrpBuilder/fingerprint /sdcard/TwrpBuilder/mounts > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
                         ShowOutput.setText("Backed up recovery " + recovery_output_path);
                         Snackbar.make(view, "Made Recovery Backup. ", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
-                        mUploadBackup.setEnabled(true);
+                        mUploadBackup.setVisibility(View.VISIBLE);
                     }
                 }
         );
@@ -160,7 +177,7 @@ public class BackupFragment extends Fragment {
                                 .setAction("Action", null).show();
                         //creating a new user
                         uploadStream();
-                        mUploadBackup.setEnabled(false);
+                        mUploadBackup.setVisibility(View.GONE);
 
                     }
                 }
@@ -201,6 +218,7 @@ public class BackupFragment extends Fragment {
             public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                 double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
                 Log.d("uploadDataInMemory progress : ", String.valueOf(progress));
+                ShowOutput.setVisibility(View.VISIBLE);
                 ShowOutput.setText(String.valueOf(progress + "%"));
             }
 

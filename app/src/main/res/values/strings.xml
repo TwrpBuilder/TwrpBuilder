@@ -5,4 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="upload_backup">Upload Backup</string>
+    <string name="backup_recovery">Backup Recovery</string>
+    <string name="download_recovery">Download Recovery</string>
 </resources>
