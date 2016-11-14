@@ -1,6 +1,7 @@
 package github.grace5921.TwrpBuilder.Fragment;
 
 import android.Manifest;
+import android.app.DownloadManager;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -24,28 +25,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.List;
-
 import eu.chainfire.libsuperuser.Shell;
-import github.grace5921.TwrpBuilder.MainActivity;
 import github.grace5921.TwrpBuilder.R;
 import github.grace5921.TwrpBuilder.config.Config;
 import github.grace5921.TwrpBuilder.util.ShellUtils;
@@ -68,10 +57,10 @@ public class BackupFragment extends Fragment {
     // Create a storage reference from our app
     private StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/");
     private StorageReference riversRef;
-
-
+    private StorageReference getRecoveryStatus;
     private Uri file;
     private UploadTask uploadTask;
+    private Button mDownloadRecovery;
 
     @Nullable
     @Override
@@ -84,11 +73,25 @@ public class BackupFragment extends Fragment {
         mUploadBackup = (Button) view.findViewById(R.id.UploadBackup);
         file = Uri.fromFile(new File("/sdcard/TwrpBuilder/mounts"));
         riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + file.getLastPathSegment() + "_" + Build.BRAND + "_" + Build.MODEL);
-
+        mDownloadRecovery=(Button)view.findViewById(R.id.get_recovery);
         riversRef.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
             @Override
             public void onSuccess(StorageMetadata storageMetadata) {
                 mUploadBackup.setVisibility(View.GONE);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Uh-oh, an error occurred!
+            }
+
+        });
+        getRecoveryStatus = storageRef.child("output/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + file.getLastPathSegment() + "_" + Build.BRAND + "_" + Build.MODEL);
+
+        getRecoveryStatus.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
+            @Override
+            public void onSuccess(StorageMetadata storageMetadata) {
+                mDownloadRecovery.setVisibility(View.VISIBLE);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -126,6 +129,14 @@ public class BackupFragment extends Fragment {
             mUploadBackup.setEnabled(false);
             ShowOutput.setText("If it takes more then 1 min to backup then send me recovery.img from email");
         }
+
+        mDownloadRecovery.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                    }
+                }
+        );
 
         mBackupButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -195,26 +206,6 @@ public class BackupFragment extends Fragment {
 
         });
     }
-    public void onProgress(FileDownloadTask.TaskSnapshot taskSnapshot) {
-        double fprogress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-        long bytes = taskSnapshot.getBytesTransferred();
-
-        String progress = String.format("%.2f", fprogress);
-        int constant = 1000;
-        if (bytes % constant == 0) {
-            NotificationCompat.Builder mBuilder =
-                    new NotificationCompat.Builder(getContext().getApplicationContext())
-                            .setSmallIcon(android.R.drawable.stat_sys_download)
-                            .setContentTitle("Downloading " + file.getLastPathSegment())
-                            .setContentText(" " + progress + "% completed");
-
-            NotificationManager mNotificationManager =
-                    (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-
-            // mNotificationManager.notify(mId, mBuilder.build());
-        }
 
     }
 
-
-}
