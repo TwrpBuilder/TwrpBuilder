@@ -2,6 +2,8 @@ package github.grace5921.TwrpBuilder.Fragment;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.UriMatcher;
+import android.media.MediaRouter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +33,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import eu.chainfire.libsuperuser.Shell;
@@ -56,7 +63,7 @@ public class BackupFragment extends Fragment
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     // Create a storage reference from our app
     private StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/");
-
+    private Uri file;
     private UploadTask uploadTask;
 
     @Nullable
@@ -117,48 +124,15 @@ public class BackupFragment extends Fragment
                         Snackbar.make(view, "Uploading Please Wait... ", Snackbar.LENGTH_INDEFINITE)
                                 .setAction("Action", null).show();
                         //creating a new user
-
+                        file=Uri.fromFile(new File("/sdcard/TwrpBuilder/mounts"));
+                        uploadStream();
                         mUploadBackup.setEnabled(false);
-                        Uri file = Uri.fromFile(new File("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar"));
-                        UploadTask uploadTask = storageRef.putFile(file);
-                        StorageReference riversRef = storageRef.child("queue/"+ Build.BRAND+"/"+Build.BOARD+"/"+Build.MODEL+"/"+file.getLastPathSegment());
-                        uploadTask = riversRef.putFile(file);
-                        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Snackbar.make(view, "Upload Finish. ", Snackbar.LENGTH_LONG)
-                                        .setAction("Action", null).show();
-                            }
-                        });
-
-                        uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                                System.out.println(taskSnapshot.toString());
-
-                            }
-                        });
-
-                        uploadTask.addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                mUploadBackup.setEnabled(true);
-                                Snackbar.make(view, "Something went wrong. ", Snackbar.LENGTH_LONG)
-                                        .setAction("Action", null).show();
-
-                            }
-
-                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                                Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                            }
-                        });
 
                     }
                 }
         );
+
+
 
         return view;
     }
@@ -169,4 +143,27 @@ public class BackupFragment extends Fragment
 
 
     }
-}
+
+    private void uploadStream() {
+            StorageReference riversRef = storageRef.child("queue/"+ Build.BRAND+"/"+Build.BOARD+"/"+Build.MODEL+"/"+file.getLastPathSegment());
+            uploadTask = riversRef.putFile(file);
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Log.d("Status", "uploadStream : " + taskSnapshot.getTotalByteCount());
+                    mUploadBackup.setEnabled(false);
+                    Snackbar.make(getView(), "Upload Finish. ", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    mUploadBackup.setEnabled(true);
+                    Snackbar.make(getView(), "Failed to upload data . ", Snackbar.LENGTH_SHORT)
+                            .setAction("Action", null).show();
+
+                }
+            });
+
+    }
+    }
