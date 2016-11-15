@@ -114,11 +114,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_help) {
             updateFragment(mHelpFragment);
             setTitle("Help");
-    }else if (id==R.id.nav_credits);{
+    }else if (id == R.id.nav_credits) {
             updateFragment(mFragmentCredits);
             setTitle("Credits");
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
