@@ -117,7 +117,9 @@ public class BackupFragment extends Fragment {
                     mUploadBackup.setVisibility(View.GONE);
                     mBuildDescription.setVisibility(View.VISIBLE);
                     ShowOutput.setVisibility(View.GONE);
-                    mBuildDescription.setText(R.string.build_description_text);
+                    if(mDownloadRecovery.getVisibility()==View.VISIBLE)
+                    {mBuildDescription.setVisibility(View.GONE);}else{mBuildDescription.setText(R.string.build_description_text);}
+
 
                 }
             }).addOnFailureListener(new OnFailureListener() {
