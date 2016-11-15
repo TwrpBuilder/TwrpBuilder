@@ -12,7 +12,7 @@
         android:layout_marginTop="120dp" />
 
     <TextView
-        android:text="Not Rooted "
+        android:text="@string/not_rooted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

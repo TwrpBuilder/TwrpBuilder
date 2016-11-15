@@ -171,17 +171,17 @@ public class BackupFragment extends Fragment {
                 recovery_output_last_value = parts[7].split("\\]");
                 recovery_output_path = recovery_output_last_value[0];
             } catch (Exception ExceptionE) {
-                Toast.makeText(getContext(), "Your devic is not supported", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), R.string.device_not_supported, Toast.LENGTH_LONG).show();
             }
         }
 
         /*Check For Backup */
 
         if (Config.checkBackup()) {
-            ShowOutput.setText("Recovery mount point " + recovery_output_path);
+            ShowOutput.setText(getString(R.string.recovery_mount_point) + recovery_output_path);
         } else {
             mBackupButton.setVisibility(View.VISIBLE);
-            ShowOutput.setText("If it takes more then 1 min to backup then send me recovery.img from email");
+            ShowOutput.setText(R.string.warning_about_recovery_backup);
         }
 
         /*On Click Listeners */
@@ -202,7 +202,7 @@ public class BackupFragment extends Fragment {
                         mBackupButton.setVisibility(View.GONE);
                         Shell.SU.run("mkdir -p /sdcard/TwrpBuilder ; dd if=" + recovery_output_path + " of=/sdcard/TwrpBuilder/Recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` >  /sdcard/TwrpBuilder/mounts ; getprop ro.build.fingerprint > /sdcard/TwrpBuilder/fingerprint ; tar -c /sdcard/TwrpBuilder/Recovery.img /sdcard/TwrpBuilder/fingerprint /sdcard/TwrpBuilder/mounts > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
                         ShowOutput.setText("Backed up recovery " + recovery_output_path);
-                        Snackbar.make(view, "Made Recovery Backup. ", Snackbar.LENGTH_LONG)
+                        Snackbar.make(view, R.string.made_recovery_backup, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                         mUploadBackup.setVisibility(View.VISIBLE);
                     }
@@ -213,7 +213,7 @@ public class BackupFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Snackbar.make(view, "Uploading Please Wait... ", Snackbar.LENGTH_INDEFINITE)
+                        Snackbar.make(view, R.string.Uploading_please_wait, Snackbar.LENGTH_INDEFINITE)
                                 .setAction("Action", null).show();
                         //creating a new user
                         uploadStream();
@@ -282,10 +282,10 @@ public class BackupFragment extends Fragment {
               /*  hideProgressDialog();*/
                 Log.d("Status", "uploadStream : " + taskSnapshot.getTotalByteCount());
                 mUploadBackup.setVisibility(View.GONE);
-                Snackbar.make(getView(), "Upload Finish. ", Snackbar.LENGTH_LONG)
+                Snackbar.make(getView(), getString(R.string.upload_finished), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 ShowOutput.setText(R.string.build_description_text);
-                mBuilder.setContentText("Upload complete");
+                mBuilder.setContentText(getString(R.string.upload_finished));
                 mBuilder.setOngoing(false);
                 mNotifyManager.notify(1, mBuilder.build());
                 mProgressBar.setVisibility(View.GONE);
@@ -294,7 +294,7 @@ public class BackupFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Exception e) {
                 mUploadBackup.setVisibility(View.VISIBLE);
-                Snackbar.make(getView(), "Failed to upload data . ", Snackbar.LENGTH_SHORT)
+                Snackbar.make(getView(), R.string.failed_to_upload, Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
                 mProgressBar.setVisibility(View.GONE);
                 mUploadBackup.setEnabled(true);
@@ -311,10 +311,10 @@ public class BackupFragment extends Fragment {
                 mBuilder =
                         new NotificationCompat.Builder(getContext())
                                 .setSmallIcon(R.mipmap.ic_launcher)
-                                .setContentTitle("Uploading")
+                                .setContentTitle(getString(R.string.uploading))
                                 .setAutoCancel(false)
                                 .setOngoing(true)
-                                .setContentText("Uploaded (" + progress+("%") + "/100%"+")");
+                                .setContentText(getString(R.string.uploaded) +"( "+ progress+("%") + "/100%"+")");
                 mNotifyManager.notify(1, mBuilder.build());
                 mProgressBar.setVisibility(View.VISIBLE);
                 /*updateProgress((int) progress);*/
@@ -331,8 +331,8 @@ public class BackupFragment extends Fragment {
             @Override
             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                /* hideProgressDialog();*/
-                Snackbar.make(getView(), "File downloaded at \n/sdcard/TwrpBuilder/Twrp.img . ", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                mBuilder.setContentText("Download complete");
+                Snackbar.make(getView(), R.string.twrp_downloaded, Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                mBuilder.setContentText(getString(R.string.download_complete));
                 mBuilder.setOngoing(false);
                 mNotifyManager.notify(1, mBuilder.build());
                 mProgressBar.setVisibility(View.GONE);
@@ -342,7 +342,7 @@ public class BackupFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Exception exception) {
                /* hideProgressDialog();*/
-                Snackbar.make(getView(), "Failed To Downlaod . ", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                Snackbar.make(getView(), R.string.failed_to_download, Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 mProgressBar.setVisibility(View.GONE);
                 mDownloadRecovery.setEnabled(true);
                 mBuildDescription.setVisibility(View.GONE);
@@ -351,16 +351,16 @@ public class BackupFragment extends Fragment {
             @Override
             public void onProgress(FileDownloadTask.TaskSnapshot taskSnapshot) {
                 double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                Log.d("Download progress : ", String.valueOf(progress));
+                Log.d("Download in progress : ", String.valueOf(progress));
                 ShowOutput.setVisibility(View.VISIBLE);
                 ShowOutput.setText(String.valueOf(progress + "%"));
                 mBuilder =
                         new NotificationCompat.Builder(getContext())
                                 .setSmallIcon(R.mipmap.ic_launcher)
-                                .setContentTitle("Downloading")
+                                .setContentTitle(getString(R.string.downloading))
                                 .setAutoCancel(false)
                                 .setOngoing(true)
-                                .setContentText("Downloaded (" + progress+"%" + "/100%"+")");
+                                .setContentText(getString(R.string.downloaded)+"(" + progress+"%" + "/100%"+")");
                 mNotifyManager.notify(1, mBuilder.build());
                 mProgressBar.setVisibility(View.VISIBLE);
                 mBuildDescription.setVisibility(View.GONE);

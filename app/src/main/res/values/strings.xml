@@ -20,4 +20,21 @@
     <string name="no_network_available">No network available</string>
     <string name="something_went_wrong">Oops! Something went wrong</string>
     <string name="refresh">Refresh</string>
+    <string name="device_not_supported">Your device is not supported</string>
+    <string name="recovery_mount_point">"Recovery mount point "</string>
+    <string name="twrp_downloaded">"File downloaded at \n/sdcard/TwrpBuilder/Twrp.img . "</string>
+    <string name="download_complete">Download complete</string>
+    <string name="failed_to_download">"Failed To Download . "</string>
+    <string name="downloading">Downloading</string>
+    <string name="downloaded">Downloaded (</string>
+    <string name="uploading">Uploading</string>
+    <string name="uploaded">Uploaded (</string>
+    <string name="failed_to_upload">"Failed to upload data . "</string>
+    <string name="upload_finished">Upload complete</string>
+    <string name="Uploading_please_wait">"Uploading Please Wait... "</string>
+    <string name="warning_about_recovery_backup">If it takes more then 1 min to backup then send me recovery.img from email</string>
+    <string name="made_recovery_backup">"Made Recovery Backup. "</string>
+    <string name="no_network">No Network</string>
+    <string name="not_rooted">Not Rooted</string>
+    <string name="my_email">androidlover5842@gmail.com</string>
 </resources>
