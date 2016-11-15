@@ -1,6 +1,9 @@
 package github.grace5921.TwrpBuilder.Fragment;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,6 +72,11 @@ public class BackupFragment extends Fragment {
 
     /*Progress Bar*/
     private ProgressDialog mProgressDialog;
+
+    /*Notification*/
+    private NotificationManager mNotifyManager;
+    private NotificationCompat.Builder mBuilder;
+
     @Nullable
     @Override
 
@@ -85,7 +94,8 @@ public class BackupFragment extends Fragment {
         ShowOutput = (TextView) view.findViewById(R.id.show_output);
         mBuildDescription=(TextView)view.findViewById(R.id.build_description);
         mBuildApproved=(TextView)view.findViewById(R.id.build_approved);
-
+        /*Notification*/
+        mNotifyManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
         /*Define Methods*/
 
         file = Uri.fromFile(new File("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar"));
@@ -93,7 +103,7 @@ public class BackupFragment extends Fragment {
         getRecoveryStatus = storageRef.child("output/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + "Twrp.img");
 
         if(CheckDownloadedTwrp())
-        {mDownloadRecovery.setEnabled(false);}else{mDownloadRecovery.setEnabled(true);}
+        {mDownloadRecovery.setEnabled(false); mBuildDescription.setVisibility(View.GONE);}else{mDownloadRecovery.setEnabled(true); mBuildDescription.setVisibility(View.GONE);}
 
         /*Buttons Visibility */
         if (Config.checkBackup()) {
@@ -262,6 +272,9 @@ public class BackupFragment extends Fragment {
                 Snackbar.make(getView(), "Upload Finish. ", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 ShowOutput.setText(R.string.build_description_text);
+                mBuilder.setContentText("Upload complete");
+                mBuilder.setOngoing(false);
+                mNotifyManager.notify(1, mBuilder.build());
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -279,6 +292,14 @@ public class BackupFragment extends Fragment {
                 Log.d("uploadDataInMemory progress : ", String.valueOf(progress));
                 ShowOutput.setVisibility(View.VISIBLE);
                 ShowOutput.setText(String.valueOf(progress + "%"));
+                mBuilder =
+                        new NotificationCompat.Builder(getContext())
+                                .setSmallIcon(R.mipmap.ic_launcher)
+                                .setContentTitle("Uploading")
+                                .setAutoCancel(false)
+                                .setOngoing(true)
+                                .setContentText("Uploaded (" + progress+("%") + "/100%"+")");
+                mNotifyManager.notify(1, mBuilder.build());
                 updateProgress((int) progress);
             }
 
@@ -293,6 +314,9 @@ public class BackupFragment extends Fragment {
             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                 hideProgressDialog();
                 Snackbar.make(getView(), "File downloaded at \n/sdcard/TwrpBuilder/Twrp.img . ", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                mBuilder.setContentText("Download complete");
+                mBuilder.setOngoing(false);
+                mNotifyManager.notify(1, mBuilder.build());
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -304,9 +328,18 @@ public class BackupFragment extends Fragment {
             @Override
             public void onProgress(FileDownloadTask.TaskSnapshot taskSnapshot) {
                 double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                Log.d("uploadDataInMemory progress : ", String.valueOf(progress));
+                Log.d("Download progress : ", String.valueOf(progress));
                 ShowOutput.setVisibility(View.VISIBLE);
                 ShowOutput.setText(String.valueOf(progress + "%"));
+                mBuilder =
+                        new NotificationCompat.Builder(getContext())
+                                .setSmallIcon(R.mipmap.ic_launcher)
+                                .setContentTitle("Downloading")
+                                .setAutoCancel(false)
+                                .setOngoing(true)
+                                .setContentText("Downloaded (" + progress+"%" + "/100%"+")");
+                mNotifyManager.notify(1, mBuilder.build());
+
                 updateProgress((int) progress);
 
             }
