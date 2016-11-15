@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -77,6 +78,9 @@ public class BackupFragment extends Fragment {
     private NotificationManager mNotifyManager;
     private NotificationCompat.Builder mBuilder;
 
+    /**/
+    private ImageView mRequestApprovedImage;
+
     @Nullable
     @Override
 
@@ -99,6 +103,9 @@ public class BackupFragment extends Fragment {
 
         /*Progress Bar*/
         mProgressBar=(ProgressBar)view.findViewById(R.id.progress_bar);
+
+        /*ImageView*/
+        mRequestApprovedImage=(ImageView)view.findViewById(R.id.twrp_request_approved);
 
         /*Define Methods*/
 
@@ -138,6 +145,7 @@ public class BackupFragment extends Fragment {
                 mBuildDescription.setVisibility(View.GONE);
                 mBuildApproved.setText(R.string.request_approved);
                 mDownloadRecovery.setVisibility(View.VISIBLE);
+                mRequestApprovedImage.setVisibility(View.VISIBLE);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
