@@ -22,13 +22,14 @@
         </menu>
     </item>
     <item android:title="Credits">
-        <group android:checkableBehavior="single">
         <menu>
-            <item
-                android:id="@+id/nav_credits"
-                android:title="Credits" />
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/nav_credits"
+                    android:title="Credits" />
+            </group>
         </menu>
-        </group>
     </item>
 
 </menu>
