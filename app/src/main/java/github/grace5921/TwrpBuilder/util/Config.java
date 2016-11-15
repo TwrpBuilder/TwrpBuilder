@@ -1,4 +1,4 @@
-package github.grace5921.TwrpBuilder.config;
+package github.grace5921.TwrpBuilder.util;
 
 import java.io.File;
 
@@ -13,5 +13,6 @@ public class Config
    public static boolean suAvailable(){return new File("/system/xbin/su").isFile();}
    public static boolean checkBackup(){return new File("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar").isFile();}
    public static boolean CheckDownloadedTwrp(){return new File("/sdcard/TwrpBuilder/Twrp.img").isFile();}
+   public final static String URL_CONTRIBUTORS = "https://api.github.com/repos/grace5921/twrpBuilder/contributors";
 
 }

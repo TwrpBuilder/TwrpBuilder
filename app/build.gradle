@@ -49,6 +49,7 @@ dependencies {
     compile 'eu.chainfire:libsuperuser:1.0.0.+'
     compile 'com.google.firebase:firebase-storage:9.8.0'
     compile 'com.google.firebase:firebase-auth:9.8.0'
+    compile 'com.github.kevinsawicki:http-request:6.+'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

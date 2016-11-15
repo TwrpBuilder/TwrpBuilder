@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import github.grace5921.TwrpBuilder.Fragment.BackupFragment;
+import github.grace5921.TwrpBuilder.Fragment.CreditsFragment;
 import github.grace5921.TwrpBuilder.Fragment.HelpFragment;
 import github.grace5921.TwrpBuilder.Fragment.NoNetwork;
 import github.grace5921.TwrpBuilder.Fragment.NotRooted;
@@ -33,10 +34,11 @@ import github.grace5921.TwrpBuilder.util.ShellExecuter;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     /*Fragments*/
-    private Fragment mBackupFragment;
-    private Fragment mNotRooted;
-    private Fragment mHelpFragment;
-    private Fragment mNoNetwork;
+    private BackupFragment mBackupFragment;
+    private NotRooted mNotRooted;
+    private HelpFragment mHelpFragment;
+    private NoNetwork mNoNetwork;
+    private CreditsFragment mFragmentCredits;
     /*FireBase*/
     private FirebaseAuth firebaseAuth;
 
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity
         mNotRooted=new NotRooted();
         mHelpFragment=new HelpFragment();
         mNoNetwork=new NoNetwork();
+        mFragmentCredits=new CreditsFragment();
         /*Replace Fragment*/
         if(ShellExecuter.hasRoot()) {
             updateFragment(this.mBackupFragment);
@@ -111,7 +114,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_help) {
             updateFragment(mHelpFragment);
             setTitle("Help");
-    }
+    }else if (id==R.id.nav_credits);{
+            updateFragment(mFragmentCredits);
+            setTitle("Credits");
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

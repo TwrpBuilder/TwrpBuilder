@@ -33,10 +33,9 @@ import java.io.File;
 import java.util.List;
 import eu.chainfire.libsuperuser.Shell;
 import github.grace5921.TwrpBuilder.R;
-import github.grace5921.TwrpBuilder.config.Config;
-import github.grace5921.TwrpBuilder.util.ShellUtils;
+import github.grace5921.TwrpBuilder.util.Config;
 
-import static github.grace5921.TwrpBuilder.config.Config.CheckDownloadedTwrp;
+import static github.grace5921.TwrpBuilder.util.Config.CheckDownloadedTwrp;
 
 /**
  * Created by Sumit on 19.10.2016.

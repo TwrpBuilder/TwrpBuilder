@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <item android:title="Backup">
+        <menu>
+        <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_backup"
             android:title="Backup" />
     </group>
+        </menu>
+    </item>
 
     <item android:title="Help">
         <menu>
@@ -16,6 +20,15 @@
                 android:title="Help" />
             </group>
         </menu>
+    </item>
+    <item android:title="Credits">
+        <group android:checkableBehavior="single">
+        <menu>
+            <item
+                android:id="@+id/nav_credits"
+                android:title="Credits" />
+        </menu>
+        </group>
     </item>
 
 </menu>
