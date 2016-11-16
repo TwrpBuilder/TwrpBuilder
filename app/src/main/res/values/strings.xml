@@ -72,4 +72,9 @@
     <string name="lbl_forgot_password">Forgot password?</string>
     <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
     <string name="login_image">Login Image</string>
+    <string name="backup">Backup</string>
+    <string name="tools">Tools</string>
+    <string name="about">About</string>
+    <string name="help">Help</string>
+    <string name="credits">Credits</string>
 </resources>

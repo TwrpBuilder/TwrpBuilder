@@ -1,35 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Backup">
+    <item android:title="@string/tools">
         <menu>
         <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_backup"
-            android:title="Backup" />
-    </group>
+            android:title="@string/backup" />
+
+        </group>
         </menu>
     </item>
-
-    <item android:title="Help">
+    <item android:title="@string/about">
         <menu>
             <group android:checkableBehavior="single">
-
-            <item
-                android:id="@+id/nav_help"
-                android:title="Help" />
-            </group>
-        </menu>
-    </item>
-    <item android:title="Credits">
-        <menu>
-            <group android:checkableBehavior="single">
-
                 <item
-                    android:id="@+id/nav_credits"
-                    android:title="Credits" />
+                    android:title="@string/help"
+                    android:id="@+id/nav_help"/>
+                <item
+                    android:title="@string/credits"
+                    android:id="@+id/nav_credits"/>
             </group>
+
         </menu>
     </item>
+
 
 </menu>
