@@ -1,10 +1,14 @@
 package github.grace5921.TwrpBuilder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -131,36 +135,55 @@ public class MainActivity extends AppCompatActivity
     }
 
     private boolean checkPermission() {
-        int result = ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            int result = ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (result == PackageManager.PERMISSION_GRANTED) {
             return true;
         } else {
             return false;
         }
+        }
+        return false;
     }
 
     private void requestPermission() {
+        if (android.os.Build.VERSION.SDK_INT>= Build.VERSION_CODES.M) {
 
-        if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            Toast.makeText(MainActivity.this, "Write External Storage permission allows us to do store images. Please allow this permission in App Settings.", Toast.LENGTH_LONG).show();
-        } else {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                Toast.makeText(MainActivity.this, "Write External Storage permission allows us to do store images. Please allow this permission in App Settings.", Toast.LENGTH_LONG).show();
+            } else {
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            }
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case 1:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.e("value", "Permission Granted .");
-                } else {
-                    Log.e("value", "Permission Denied .");
-                    finish();
-                }
-                break;
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            switch (requestCode) {
+                case 1:
+                    if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        Log.e("value", "Permission Granted .");
+                    } else {
+                        Log.e("value", "Permission Denied .");
+                        finish();
+                    }
+                    break;
+            }
         }
     }
+
+    public void CheckOverlay() {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(this)) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:" + getPackageName()));
+                startActivityForResult(intent, 1234);
+            }
+        }
+    }
+
     /*
      * isOnline - Check if there is a NetworkConnection
      * @return boolean
