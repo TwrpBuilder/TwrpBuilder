@@ -16,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -61,6 +62,8 @@ public class MainActivity extends AppCompatActivity
     /*Ads */
     private AdView mAdView;
     private boolean mShowAds = false;
+    /*Navigation drawer*/
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         /*Fragments*/
         mBackupFragment=new BackupFragment();
@@ -110,7 +113,7 @@ public class MainActivity extends AppCompatActivity
                 .build();
         mAdView.loadAd(adRequest);
 
-        /**/
+        /*Ads don't touch this part please */
         mShowAds = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("show_ads", true);
         if(!mShowAds)
         {
@@ -119,9 +122,11 @@ public class MainActivity extends AppCompatActivity
         }else {
             mAdView.setVisibility(View.VISIBLE);
         }
+        /*My Functions :)*/
         checkPermission();
         requestPermission();
         isOnline();
+        hideItem();
     }
 
     @Override
@@ -230,6 +235,13 @@ public class MainActivity extends AppCompatActivity
             return false;
         }
     }
+    private void hideItem()
+    {
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        Menu nav_Menu = navigationView.getMenu();
+        nav_Menu.findItem(R.id.nav_preference).setVisible(false);
+    }
+
 
 }
 
