@@ -46,6 +46,7 @@ import github.grace5921.TwrpBuilder.Fragment.PreferencesFragment;
 import github.grace5921.TwrpBuilder.util.ShellExecuter;
 
 import static android.R.id.list;
+import static github.grace5921.TwrpBuilder.util.Config.suAvailable;
 import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity
         mFragmentCredits=new CreditsFragment();
         mFragmentPreferences=new PreferencesFragment();
         /*Replace Fragment*/
-        if(ShellExecuter.hasRoot()) {
+        if(suAvailable()) {
             updateFragment(this.mBackupFragment);
             setTitle("Request Twrp");
         }else {
@@ -240,6 +241,11 @@ public class MainActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         Menu nav_Menu = navigationView.getMenu();
         nav_Menu.findItem(R.id.nav_preference).setVisible(false);
+        if(suAvailable()){
+            /*Good Job!*/
+        }else {
+            nav_Menu.findItem(R.id.nav_backup).setVisible(false);
+        }
     }
 
 
