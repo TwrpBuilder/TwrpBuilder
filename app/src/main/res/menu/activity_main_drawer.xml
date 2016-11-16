@@ -13,6 +13,9 @@
             <item
                 android:id="@+id/nav_app_updates"
                 android:title="@string/app_updates" />
+            <item
+                android:title="Logout"
+                android:id="@+id/action_log_out"/>
 
         </group>
         </menu>

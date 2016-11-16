@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import github.grace5921.TwrpBuilder.Fragment.BackupFragment;
 import github.grace5921.TwrpBuilder.Fragment.CreditsFragment;
@@ -36,6 +37,7 @@ import github.grace5921.TwrpBuilder.Fragment.HelpFragment;
 import github.grace5921.TwrpBuilder.Fragment.NoNetwork;
 import github.grace5921.TwrpBuilder.Fragment.NotRooted;
 import github.grace5921.TwrpBuilder.Fragment.PreferencesFragment;
+import github.grace5921.TwrpBuilder.app.LoginActivity;
 import github.grace5921.TwrpBuilder.util.Config;
 
 import static github.grace5921.TwrpBuilder.util.Config.suAvailable;
@@ -155,7 +157,12 @@ public class MainActivity extends AppCompatActivity
         }else if (id==R.id.nav_app_updates){
             updateFragment(mFragmentRelApp);
             setTitle("App Updates");
+        }else if (id == R.id.action_log_out) {
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class)); //Go back to home page
+            finish();
         }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
