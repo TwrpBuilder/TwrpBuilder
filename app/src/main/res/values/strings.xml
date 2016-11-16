@@ -87,4 +87,7 @@
     <string name="banner_ad_unit_id_2">ca-app-pub-5248092130870106/9239792873</string>
     <string name="banner_ad_unit_id_3">ca-app-pub-5248092130870106/1716526074</string>
     <string name="banner_ad_unit_id_4">ca-app-pub-5248092130870106/3193259278</string>
+    <string name="upload_cancelled">Upload Cancelled.</string>
+    <string name="upload_resumed">Upload Resumed.</string>
+    <string name="upload_paused">Upload Paused.</string>
 </resources>
