@@ -62,6 +62,10 @@ public class MainActivity extends AppCompatActivity
     private FirebaseAuth firebaseAuth;
     /*Ads */
     private AdView mAdView;
+    private AdView mAdView1;
+    private AdView mAdView2;
+    private AdView mAdView3;
+    private AdView mAdView4;
     private boolean mShowAds = false;
     /*Navigation drawer*/
     private NavigationView navigationView;
@@ -110,9 +114,18 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
         mAdView = (AdView) findViewById(R.id.adView);
+        mAdView1 = (AdView) findViewById(R.id.adView1);
+        mAdView2 = (AdView) findViewById(R.id.adView2);
+        mAdView3 = (AdView) findViewById(R.id.adView3);
+        mAdView4 = (AdView) findViewById(R.id.adView4);
+
         AdRequest adRequest = new AdRequest.Builder()
                 .build();
         mAdView.loadAd(adRequest);
+        mAdView1.loadAd(adRequest);
+        mAdView2.loadAd(adRequest);
+        mAdView3.loadAd(adRequest);
+        mAdView4.loadAd(adRequest);
 
         /*Ads don't touch this part please */
         mShowAds = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("show_ads", true);

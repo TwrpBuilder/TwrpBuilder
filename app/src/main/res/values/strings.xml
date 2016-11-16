@@ -79,4 +79,8 @@
     <string name="credits">Credits</string>
     <string name="settings">Settings</string>
     <string name="show_ads">Show Ads</string>
+    <string name="banner_ad_unit_id_1">ca-app-pub-5248092130870106/7763059672</string>
+    <string name="banner_ad_unit_id_2">ca-app-pub-5248092130870106/9239792873</string>
+    <string name="banner_ad_unit_id_3">ca-app-pub-5248092130870106/1716526074</string>
+    <string name="banner_ad_unit_id_4">ca-app-pub-5248092130870106/3193259278</string>
 </resources>
