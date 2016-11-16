@@ -38,5 +38,10 @@
     <string name="not_rooted">Not Rooted</string>
     <string name="my_email">androidlover5842@gmail.com</string>
     <string name="banner_ad_unit_id">ca-app-pub-5248092130870106/2628182875</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="login">Login</string>
+    <string name="skip_this_step">Skip this step</string>
+    <string name="teamwin_login_screen_splash">TeamWin Login Screen Splash</string>
+    <string name="teamwin_login_screen_splash_text">TeamWin Login Screen Splash Text</string>
 
 </resources>

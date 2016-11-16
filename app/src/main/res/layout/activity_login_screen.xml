@@ -13,8 +13,9 @@
         android:baselineAligned="false">
 
     <ImageView
-        android:layout_width="200dp"
+        android:layout_width="0sp"
         android:src="@drawable/ic_teamwin_splashlogo"
+        android:contentDescription="@string/teamwin_login_screen_splash"
         android:layout_gravity="center_horizontal"
         android:layout_height="374dp"
         android:layout_weight="0.31" />
@@ -22,11 +23,12 @@
 
     <ImageView
     android:layout_width="match_parent"
-    android:src="@drawable/ic_splashteamwin"
+        android:contentDescription="@string/teamwin_login_screen_splash_text"
+        android:src="@drawable/ic_splashteamwin"
     android:layout_height="wrap_content" />
     <Button
         android:layout_width="match_parent"
-        android:text="Skip this step"
+        android:text="@string/skip_this_step"
         android:textAllCaps="false"
         android:layout_height="wrap_content"
         android:textSize="30sp" />
@@ -46,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
-                android:text="Sign Up"
+                android:text="@string/sign_up"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:textSize="30sp" />
@@ -57,7 +59,8 @@
             android:layout_weight="1">
             <Button
                 android:layout_width="match_parent"
-                android:text="Login"
+                android:text="@string/login"
+                android:shadowColor="@color/colorInfo"
                 android:layout_height="match_parent"
                 android:textSize="30sp" />
         </RelativeLayout>
