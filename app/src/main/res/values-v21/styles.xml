@@ -6,4 +6,6 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+    <style name="preferenceTheme" parent="android:Theme.Material.Dialog" />
 </resources>

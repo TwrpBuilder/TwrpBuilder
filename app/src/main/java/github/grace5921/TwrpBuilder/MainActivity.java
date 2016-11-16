@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -31,12 +32,20 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import github.grace5921.TwrpBuilder.Fragment.BackupFragment;
 import github.grace5921.TwrpBuilder.Fragment.CreditsFragment;
 import github.grace5921.TwrpBuilder.Fragment.HelpFragment;
 import github.grace5921.TwrpBuilder.Fragment.NoNetwork;
 import github.grace5921.TwrpBuilder.Fragment.NotRooted;
+import github.grace5921.TwrpBuilder.Fragment.PreferencesFragment;
 import github.grace5921.TwrpBuilder.util.ShellExecuter;
+
+import static android.R.id.list;
+import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,13 +55,13 @@ public class MainActivity extends AppCompatActivity
     private HelpFragment mHelpFragment;
     private NoNetwork mNoNetwork;
     private CreditsFragment mFragmentCredits;
+    private PreferencesFragment mFragmentPreferences;
     /*FireBase*/
     private FirebaseAuth firebaseAuth;
-
-    /*View*/
-    private View view;
-
+    /*Ads */
     private AdView mAdView;
+    private boolean mShowAds = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +83,7 @@ public class MainActivity extends AppCompatActivity
         mHelpFragment=new HelpFragment();
         mNoNetwork=new NoNetwork();
         mFragmentCredits=new CreditsFragment();
+        mFragmentPreferences=new PreferencesFragment();
         /*Replace Fragment*/
         if(ShellExecuter.hasRoot()) {
             updateFragment(this.mBackupFragment);
@@ -100,6 +110,15 @@ public class MainActivity extends AppCompatActivity
                 .build();
         mAdView.loadAd(adRequest);
 
+        /**/
+        mShowAds = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("show_ads", true);
+        if(!mShowAds)
+        {
+            mAdView.setVisibility(View.GONE);
+
+        }else {
+            mAdView.setVisibility(View.VISIBLE);
+        }
         checkPermission();
         requestPermission();
         isOnline();
@@ -130,6 +149,10 @@ public class MainActivity extends AppCompatActivity
     }else if (id == R.id.nav_credits) {
             updateFragment(mFragmentCredits);
             setTitle("Credits");
+        }else if (id==R.id.nav_preference)
+        {
+            updateFragment(mFragmentPreferences);
+            setTitle("Settings");
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
