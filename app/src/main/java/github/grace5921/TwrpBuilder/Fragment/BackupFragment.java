@@ -167,6 +167,7 @@ public class BackupFragment extends Fragment {
             RecoveryPartitonPath = Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep recovery");
             store_RecoveryPartitonPath_output = String.valueOf(RecoveryPartitonPath);
             parts = store_RecoveryPartitonPath_output.split("\\s+");
+            ShowOutput.setVisibility(View.VISIBLE);
             try {
                 recovery_output_last_value = parts[7].split("\\]");
                 recovery_output_path = recovery_output_last_value[0];

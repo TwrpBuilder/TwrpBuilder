@@ -10,44 +10,35 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.view.Menu;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import github.grace5921.TwrpBuilder.Fragment.BackupFragment;
 import github.grace5921.TwrpBuilder.Fragment.CreditsFragment;
+import github.grace5921.TwrpBuilder.Fragment.GithubReleasesFragment;
 import github.grace5921.TwrpBuilder.Fragment.HelpFragment;
 import github.grace5921.TwrpBuilder.Fragment.NoNetwork;
 import github.grace5921.TwrpBuilder.Fragment.NotRooted;
 import github.grace5921.TwrpBuilder.Fragment.PreferencesFragment;
-import github.grace5921.TwrpBuilder.util.ShellExecuter;
+import github.grace5921.TwrpBuilder.util.Config;
 
-import static android.R.id.list;
 import static github.grace5921.TwrpBuilder.util.Config.suAvailable;
-import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -58,8 +49,8 @@ public class MainActivity extends AppCompatActivity
     private NoNetwork mNoNetwork;
     private CreditsFragment mFragmentCredits;
     private PreferencesFragment mFragmentPreferences;
-    /*FireBase*/
-    private FirebaseAuth firebaseAuth;
+    private GithubReleasesFragment mFragmentRelApp;;
+
     /*Ads */
     private AdView mAdView;
     private AdView mAdView1;
@@ -92,6 +83,7 @@ public class MainActivity extends AppCompatActivity
         mNoNetwork=new NoNetwork();
         mFragmentCredits=new CreditsFragment();
         mFragmentPreferences=new PreferencesFragment();
+        mFragmentRelApp = new GithubReleasesFragment().setTargetURL(Config.URL_APP_RELEASES);
         /*Replace Fragment*/
         if(suAvailable()) {
             updateFragment(this.mBackupFragment);
@@ -100,19 +92,7 @@ public class MainActivity extends AppCompatActivity
             updateFragment(this.mNotRooted);
             setTitle("Device Not Rooted :(");
         }
-        //initializing firebase auth object
-        firebaseAuth = FirebaseAuth.getInstance();
 
-        firebaseAuth.signInWithEmailAndPassword("twrpbuilder@gmail.com", "notgoingtotell")
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        //if the task is successfull
-                        if(task.isSuccessful()){
-                            //start the profile activity
-                        }
-                    }
-                });
         mAdView = (AdView) findViewById(R.id.adView);
         mAdView1 = (AdView) findViewById(R.id.adView1);
         mAdView2 = (AdView) findViewById(R.id.adView2);
@@ -172,6 +152,9 @@ public class MainActivity extends AppCompatActivity
         {
             updateFragment(mFragmentPreferences);
             setTitle("Settings");
+        }else if (id==R.id.nav_app_updates){
+            updateFragment(mFragmentRelApp);
+            setTitle("App Updates");
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
