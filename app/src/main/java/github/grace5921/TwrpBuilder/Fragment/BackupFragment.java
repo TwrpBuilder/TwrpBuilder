@@ -47,9 +47,7 @@ public class BackupFragment extends Fragment {
     private Button mUploadBackup;
     private Button mDownloadRecovery;
     private Button mBackupButton;
-    private Button mPause;
     private Button mCancel;
-    private Button mResume;
     /*TextView*/
     private TextView ShowOutput;
     private TextView mBuildDescription;
@@ -93,9 +91,7 @@ public class BackupFragment extends Fragment {
         mBackupButton = (Button) view.findViewById(R.id.BackupRecovery);
         mUploadBackup = (Button) view.findViewById(R.id.UploadBackup);
         mDownloadRecovery = (Button) view.findViewById(R.id.get_recovery);
-        mCancel=(Button)view.findViewById(R.id.cancel);
-        mPause=(Button)view.findViewById(R.id.pause);
-        mResume=(Button)view.findViewById(R.id.resume);
+        mCancel=(Button)view.findViewById(R.id.cancel_upload);
 
         /*TextView*/
 
@@ -307,13 +303,11 @@ public class BackupFragment extends Fragment {
                         .setAction("Action", null).show();
                 mProgressBar.setVisibility(View.GONE);
                 mUploadBackup.setEnabled(true);
-                mPause.setVisibility(View.GONE);
                 mCancel.setVisibility(View.GONE);
-                mResume.setVisibility(View.GONE);
                 mBuilder.setContentText(getString(R.string.failed_to_upload));
                 mBuilder.setOngoing(false);
                 mNotifyManager.notify(1, mBuilder.build());
-
+                ShowOutput.setText(R.string.failed_to_upload);
                 /*hideProgressDialog();*/
 
             }
@@ -334,55 +328,17 @@ public class BackupFragment extends Fragment {
                 mNotifyManager.notify(1, mBuilder.build());
                 mProgressBar.setVisibility(View.VISIBLE);
                 /*updateProgress((int) progress);*/
-
-                /*Pause,cancel and resume makes user happy lol.*/
+                /*To cancel upload*/
                 mCancel.setVisibility(View.VISIBLE);
                 mCancel.setText("Cancel Upload");
-                mPause.setVisibility(View.VISIBLE);
-                mPause.setText("Pause Upload");
-                mPause.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        uploadTask.pause();
-                        mResume.setVisibility(View.VISIBLE);
-                        mPause.setEnabled(false);
-                        mResume.setText("Resume");
-                        mProgressBar.setVisibility(View.GONE);
-                        Snackbar.make(getView(), R.string.upload_paused, Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-                        mBuilder.setContentText(getString(R.string.upload_paused));
-                        mBuilder.setOngoing(false);
-                        mNotifyManager.notify(1, mBuilder.build());
-                    }
-                });
-                mResume.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        uploadTask.resume();
-                        mPause.setEnabled(true);
-                        mResume.setVisibility(View.GONE);
-                        Snackbar.make(getView(), R.string.upload_resumed, Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-                        mBuilder.setContentText(getString(R.string.upload_resumed));
-                        mBuilder.setOngoing(false);
-                        mNotifyManager.notify(1, mBuilder.build());
 
-                    }
-                });
                 mCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         uploadTask.cancel();
                         mCancel.setVisibility(View.GONE);
-                        mPause.setVisibility(View.GONE);
-                        mResume.setVisibility(View.GONE);
                         Snackbar.make(getView(), R.string.upload_cancelled, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
-                        mBuilder.setContentText(getString(R.string.upload_cancelled));
-                        mBuilder.setOngoing(false);
-                        mNotifyManager.notify(1, mBuilder.build());
-
-
                     }
                 });
 
@@ -428,48 +384,11 @@ public class BackupFragment extends Fragment {
                                 .setContentTitle(getString(R.string.downloading))
                                 .setAutoCancel(false)
                                 .setOngoing(true)
-                                .setContentText(getString(R.string.downloaded)+"(" + progress+"%" + "/100%"+")");
+                                .setContentText(getString(R.string.downloaded) + progress+"%" + "/100%"+")");
                 mNotifyManager.notify(1, mBuilder.build());
                 mProgressBar.setVisibility(View.VISIBLE);
                 mBuildDescription.setVisibility(View.GONE);
              /*   updateProgress((int) progress);*/
-                /*Wil modify this part later*/
-                mCancel.setVisibility(View.VISIBLE);
-                mCancel.setText("Cancel Download");
-                mPause.setVisibility(View.VISIBLE);
-                mPause.setText("Pause Download");
-                mPause.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        uploadTask.pause();
-                        mResume.setVisibility(View.VISIBLE);
-                        mPause.setEnabled(false);
-                        mResume.setText("Resume");
-                        Snackbar.make(getView(),"Download Paused.", Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-                    }
-                });
-                mResume.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        uploadTask.resume();
-                        mPause.setEnabled(true);
-                        mResume.setVisibility(View.GONE);
-                        Snackbar.make(getView(),"Download Resumed.", Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-                    }
-                });
-                mCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        uploadTask.cancel();
-                        mCancel.setVisibility(View.GONE);
-                        Snackbar.make(getView(),"Download Cancelled.", Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-
-                    }
-                });
-
 
             }
         });
