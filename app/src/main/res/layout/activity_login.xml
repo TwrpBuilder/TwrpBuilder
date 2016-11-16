@@ -21,7 +21,7 @@
             android:layout_gravity="center_horizontal"
             android:contentDescription="@string/login_image"
             android:layout_marginBottom="30sp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/ic_launcher_web" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
