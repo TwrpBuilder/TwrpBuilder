@@ -180,8 +180,12 @@ public class BackupFragment extends Fragment {
         if (Config.checkBackup()) {
             ShowOutput.setText(getString(R.string.recovery_mount_point) + recovery_output_path);
         } else {
-            mBackupButton.setVisibility(View.VISIBLE);
-            ShowOutput.setText(R.string.warning_about_recovery_backup);
+            if(mDownloadRecovery.getVisibility()==View.VISIBLE)
+            {
+                mBackupButton.setVisibility(View.GONE);
+            }else
+            { mBackupButton.setVisibility(View.VISIBLE);
+            ShowOutput.setText(R.string.warning_about_recovery_backup);}
         }
 
         /*On Click Listeners */
