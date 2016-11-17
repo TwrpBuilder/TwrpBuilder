@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -30,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnSignup, btnLogin, btnReset, btnLogin2;
     private LinearLayout btn_login_singup_linear;
     private TextInputLayout TextInputLayoutPass;
-
+    private ImageView TeamWinLoginLogo,XdaLoginLogo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +60,10 @@ public class LoginActivity extends AppCompatActivity {
         btn_login_singup_linear=(LinearLayout)findViewById(R.id.btn_login_singup_linear);
         TextInputLayoutPass=(TextInputLayout)findViewById(R.id.text_input_layout_password);
         btn_login_singup_linear.setVisibility(View.VISIBLE);
-       //Get Firebase auth instance
+        XdaLoginLogo=(ImageView)findViewById(R.id.xda_login_logo);
+        TeamWinLoginLogo=(ImageView)findViewById(R.id.teamwin_login_logo);
+        XdaLoginLogo.setVisibility(View.VISIBLE);
+        //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +90,8 @@ public class LoginActivity extends AppCompatActivity {
                 TextInputLayoutPass.setVisibility(View.VISIBLE);
                 inputPassword.setVisibility(View.VISIBLE);
                 btnReset.setVisibility(View.VISIBLE);
+                TeamWinLoginLogo.setVisibility(View.VISIBLE);
+                XdaLoginLogo.setVisibility(View.GONE);
 
             }
         });

@@ -2,6 +2,7 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/CoordinatorLayout_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -10,6 +11,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@color/colorPrimary"
+        android:id="@+id/login_linear_layout"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
@@ -27,7 +29,16 @@
             android:layout_gravity="center_horizontal"
             android:contentDescription="@string/login_image"
             android:layout_marginBottom="30sp"
+            android:visibility="gone"
+            android:id="@+id/teamwin_login_logo"
             android:src="@drawable/ic_launcher_web" />
+        <ImageView
+            android:layout_height="400dp"
+            android:layout_width="400dp"
+            android:id="@+id/xda_login_logo"
+            android:visibility="gone"
+            android:contentDescription="@string/login_image"
+            android:src="@drawable/ic_xda_developers" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
