@@ -3,12 +3,14 @@ package github.grace5921.TwrpBuilder.app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -25,7 +27,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
-    private Button btnSignup, btnLogin, btnReset;
+    private Button btnSignup, btnLogin, btnReset, btnLogin2;
+    private LinearLayout btn_login_singup_linear;
+    private TextInputLayout TextInputLayoutPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +55,11 @@ public class LoginActivity extends AppCompatActivity {
         btnSignup = (Button) findViewById(R.id.btn_signup);
         btnLogin = (Button) findViewById(R.id.btn_login);
         btnReset = (Button) findViewById(R.id.btn_reset_password);
-
-        //Get Firebase auth instance
+        btnLogin2=(Button)findViewById(R.id.btn_login_2);
+        btn_login_singup_linear=(LinearLayout)findViewById(R.id.btn_login_singup_linear);
+        TextInputLayoutPass=(TextInputLayout)findViewById(R.id.text_input_layout_password);
+        btn_login_singup_linear.setVisibility(View.VISIBLE);
+       //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +80,18 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btn_login_singup_linear.setVisibility(View.GONE);
+                btnLogin2.setVisibility(View.VISIBLE);
+                inputEmail.setVisibility(View.VISIBLE);
+                TextInputLayoutPass.setVisibility(View.VISIBLE);
+                inputPassword.setVisibility(View.VISIBLE);
+                btnReset.setVisibility(View.VISIBLE);
+
+            }
+        });
+        btnLogin2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 String email = inputEmail.getText().toString();
                 final String password = inputPassword.getText().toString();
 
