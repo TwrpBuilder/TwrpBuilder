@@ -90,4 +90,7 @@
     <string name="upload_cancelled">Upload Cancelled.</string>
     <string name="upload_resumed">Upload Resumed.</string>
     <string name="upload_paused">Upload Paused.</string>
+    <string name="twrp_builder_login_screen">Twrp Builder login Screen</string>
+    <string name="twrp_builder_reset_password">Twrp Builder Reset Password</string>
+    <string name="beta">[BETA]</string>
 </resources>

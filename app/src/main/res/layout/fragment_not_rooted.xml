@@ -8,6 +8,7 @@
         android:src="@drawable/ic_sad"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:contentDescription="@string/not_rooted"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="120dp" />
 
