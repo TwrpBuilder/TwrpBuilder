@@ -87,6 +87,29 @@
             android:textAllCaps="false"
             android:textColor="@color/colorAccent" />
 
+        <Button
+            android:id="@+id/sign_in_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:background="@null"
+            android:visibility="gone"
+            android:text="@string/btn_link_to_login"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+        <Button
+            android:id="@+id/create_account_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:background="@null"
+            android:visibility="gone"
+            android:text="@string/btn_link_to_register"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
         <!-- Link to Login Screen -->
 
         <LinearLayout
@@ -144,4 +167,13 @@
         android:visibility="gone"
         android:layout_height="wrap_content"
         android:id="@+id/btn_login_2" />
+    <Button
+        android:layout_width="match_parent"
+        android:background="@color/colorAccent"
+        android:layout_gravity="bottom"
+        android:text="@string/action_sign_in_short"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:id="@+id/sign_up_button" />
+
 </android.support.design.widget.CoordinatorLayout>

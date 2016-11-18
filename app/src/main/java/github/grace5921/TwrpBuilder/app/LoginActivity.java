@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
-    private Button btnSignup, btnLogin, btnReset, btnLogin2;
+    private Button btnSignup, btnLogin, btnReset, btnLogin2,btnSignUp,btnSignIn,btnCreateAccount;
     private LinearLayout btn_login_singup_linear;
     private TextInputLayout TextInputLayoutPass;
     private ImageView TeamWinLoginLogo,XdaLoginLogo;
@@ -63,14 +63,108 @@ public class LoginActivity extends AppCompatActivity {
         XdaLoginLogo=(ImageView)findViewById(R.id.xda_login_logo);
         TeamWinLoginLogo=(ImageView)findViewById(R.id.teamwin_login_logo);
         XdaLoginLogo.setVisibility(View.VISIBLE);
+        btnSignUp = (Button) findViewById(R.id.sign_up_button);
+        btnSignIn = (Button) findViewById(R.id.sign_in_button);
+        btnCreateAccount = (Button) findViewById(R.id.create_account_button);
+
+
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
-                finish();
+                btnSignUp.setVisibility(View.VISIBLE);
+                btn_login_singup_linear.setVisibility(View.GONE);
+                inputEmail.setVisibility(View.VISIBLE);
+                TextInputLayoutPass.setVisibility(View.VISIBLE);
+                inputPassword.setVisibility(View.VISIBLE);
+                btnSignIn.setVisibility(View.VISIBLE);
+                TeamWinLoginLogo.setVisibility(View.VISIBLE);
+                XdaLoginLogo.setVisibility(View.GONE);
+
+            }
+        });
+
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnSignIn.setVisibility(View.GONE);
+                btnSignUp.setVisibility(View.GONE);
+                btn_login_singup_linear.setVisibility(View.GONE);
+                btnCreateAccount.setVisibility(View.VISIBLE);
+                btnLogin2.setVisibility(View.VISIBLE);
+                inputEmail.setVisibility(View.VISIBLE);
+                TextInputLayoutPass.setVisibility(View.VISIBLE);
+                inputPassword.setVisibility(View.VISIBLE);
+                btnReset.setVisibility(View.VISIBLE);
+                TeamWinLoginLogo.setVisibility(View.VISIBLE);
+                XdaLoginLogo.setVisibility(View.GONE);
+
+
+            }
+        });
+
+        btnCreateAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnCreateAccount.setVisibility(View.GONE);
+                btnLogin2.setVisibility(View.GONE);
+                btnSignUp.setVisibility(View.VISIBLE);
+                btn_login_singup_linear.setVisibility(View.GONE);
+                inputEmail.setVisibility(View.VISIBLE);
+                TextInputLayoutPass.setVisibility(View.VISIBLE);
+                inputPassword.setVisibility(View.VISIBLE);
+                btnSignIn.setVisibility(View.VISIBLE);
+                TeamWinLoginLogo.setVisibility(View.VISIBLE);
+                XdaLoginLogo.setVisibility(View.GONE);
+
+            }
+        });
+
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String email = inputEmail.getText().toString().trim();
+                String password = inputPassword.getText().toString().trim();
+
+                if (TextUtils.isEmpty(email)) {
+                    Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(password)) {
+                    Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (password.length() < 6) {
+                    Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                progressBar.setVisibility(View.VISIBLE);
+                //create user
+                auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                Toast.makeText(LoginActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
+                                // If sign in fails, display a message to the user. If sign in succeeds
+                                // the auth state listener will be notified and logic to handle the
+                                // signed in user can be handled in the listener.
+                                if (!task.isSuccessful()) {
+                                    Toast.makeText(LoginActivity.this, "Authentication failed." + task.getException(),
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    finish();
+                                }
+                            }
+                        });
+
             }
         });
 
@@ -92,6 +186,7 @@ public class LoginActivity extends AppCompatActivity {
                 btnReset.setVisibility(View.VISIBLE);
                 TeamWinLoginLogo.setVisibility(View.VISIBLE);
                 XdaLoginLogo.setVisibility(View.GONE);
+                btnCreateAccount.setVisibility(View.VISIBLE);
 
             }
         });
