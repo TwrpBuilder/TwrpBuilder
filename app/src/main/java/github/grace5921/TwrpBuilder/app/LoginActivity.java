@@ -82,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                 btnSignIn.setVisibility(View.VISIBLE);
                 TeamWinLoginLogo.setVisibility(View.VISIBLE);
                 XdaLoginLogo.setVisibility(View.GONE);
+                btnReset.setVisibility(View.VISIBLE);
 
             }
         });
@@ -91,16 +92,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 btnSignIn.setVisibility(View.GONE);
                 btnSignUp.setVisibility(View.GONE);
-                btn_login_singup_linear.setVisibility(View.GONE);
                 btnCreateAccount.setVisibility(View.VISIBLE);
                 btnLogin2.setVisibility(View.VISIBLE);
-                inputEmail.setVisibility(View.VISIBLE);
-                TextInputLayoutPass.setVisibility(View.VISIBLE);
-                inputPassword.setVisibility(View.VISIBLE);
                 btnReset.setVisibility(View.VISIBLE);
-                TeamWinLoginLogo.setVisibility(View.VISIBLE);
-                XdaLoginLogo.setVisibility(View.GONE);
-
 
             }
         });
@@ -111,14 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                 btnCreateAccount.setVisibility(View.GONE);
                 btnLogin2.setVisibility(View.GONE);
                 btnSignUp.setVisibility(View.VISIBLE);
-                btn_login_singup_linear.setVisibility(View.GONE);
-                inputEmail.setVisibility(View.VISIBLE);
-                TextInputLayoutPass.setVisibility(View.VISIBLE);
-                inputPassword.setVisibility(View.VISIBLE);
                 btnSignIn.setVisibility(View.VISIBLE);
-                TeamWinLoginLogo.setVisibility(View.VISIBLE);
-                XdaLoginLogo.setVisibility(View.GONE);
-
             }
         });
 
