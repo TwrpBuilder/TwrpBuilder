@@ -96,4 +96,6 @@
     <string name="cancel_request">Cancel Request</string>
     <string name="failed_to_delete_data">Failed To  Delete Data.</string>
     <string name="successfully_delete_data">Successfully  Deleted Data.</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="delete">Delete</string>
 </resources>

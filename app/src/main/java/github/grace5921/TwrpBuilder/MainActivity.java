@@ -42,6 +42,7 @@ import github.grace5921.TwrpBuilder.Fragment.NoNetwork;
 import github.grace5921.TwrpBuilder.Fragment.NotRooted;
 import github.grace5921.TwrpBuilder.Fragment.PreferencesFragment;
 import github.grace5921.TwrpBuilder.app.LoginActivity;
+import github.grace5921.TwrpBuilder.app.SettingsActivity;
 import github.grace5921.TwrpBuilder.util.Config;
 
 import static github.grace5921.TwrpBuilder.Fragment.BackupFragment.mDownloadRecovery;
@@ -188,7 +189,15 @@ public class MainActivity extends AppCompatActivity
                 }
             });
 
+
             return true;
+        }
+
+        if(id==R.id.action_settings)
+        {
+            Intent i = new Intent(getBaseContext(), SettingsActivity.class);
+            startActivity(i);
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -213,7 +222,7 @@ public class MainActivity extends AppCompatActivity
         }else if (id==R.id.nav_preference)
         {
             updateFragment(mFragmentPreferences);
-            setTitle("Settings");
+            setTitle("SettingsActivity");
         }else if (id==R.id.nav_app_updates){
             updateFragment(mFragmentRelApp);
             setTitle("App Updates");
@@ -252,7 +261,7 @@ public class MainActivity extends AppCompatActivity
         if (android.os.Build.VERSION.SDK_INT>= Build.VERSION_CODES.M) {
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                Toast.makeText(MainActivity.this, "Write External Storage permission allows us to do store images. Please allow this permission in App Settings.", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Write External Storage permission allows us to do store images. Please allow this permission in App SettingsActivity.", Toast.LENGTH_LONG).show();
             } else {
                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
             }
