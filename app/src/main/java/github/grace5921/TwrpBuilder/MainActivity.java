@@ -151,13 +151,13 @@ public class MainActivity extends AppCompatActivity
         {
             /*Nothing to do*/
         }else {
-            item.setVisible(true);
+           // item.setVisible(true);
         }
         if(mDownloadRecovery.getVisibility()==View.VISIBLE) {
             /*Nothing to do*/
         }
         else {
-            item.setVisible(true);
+            //item.setVisible(true);
         }
         return true;
     }
