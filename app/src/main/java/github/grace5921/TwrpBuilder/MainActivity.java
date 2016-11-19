@@ -10,7 +10,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -28,6 +30,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 
 import github.grace5921.TwrpBuilder.Fragment.BackupFragment;
@@ -40,6 +44,9 @@ import github.grace5921.TwrpBuilder.Fragment.PreferencesFragment;
 import github.grace5921.TwrpBuilder.app.LoginActivity;
 import github.grace5921.TwrpBuilder.util.Config;
 
+import static github.grace5921.TwrpBuilder.Fragment.BackupFragment.mDownloadRecovery;
+import static github.grace5921.TwrpBuilder.Fragment.BackupFragment.mUploadBackup;
+import static github.grace5921.TwrpBuilder.Fragment.BackupFragment.riversRef;
 import static github.grace5921.TwrpBuilder.util.Config.suAvailable;
 
 public class MainActivity extends AppCompatActivity
@@ -134,6 +141,59 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main,menu);
+        MenuItem item = menu.findItem(R.id.action_cancel_request);
+        if(mUploadBackup.getVisibility()==View.VISIBLE)
+        {
+            /*Nothing to do*/
+        }else {
+            item.setVisible(true);
+        }
+        if(mDownloadRecovery.getVisibility()==View.VISIBLE) {
+            /*Nothing to do*/
+        }
+        else {
+            item.setVisible(true);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_cancel_request) {
+// Delete the file
+            riversRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Snackbar.make(getCurrentFocus(), R.string.successfully_delete_data, Snackbar.LENGTH_INDEFINITE)
+                            .setAction("Action", null).show();
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Snackbar.make(getCurrentFocus(), R.string.failed_to_delete_data, Snackbar.LENGTH_INDEFINITE)
+                            .setAction("Action", null).show();
+
+                }
+            });
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

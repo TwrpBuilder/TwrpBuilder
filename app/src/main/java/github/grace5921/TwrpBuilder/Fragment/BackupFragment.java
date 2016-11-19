@@ -44,8 +44,8 @@ import static github.grace5921.TwrpBuilder.util.Config.CheckDownloadedTwrp;
 public class BackupFragment extends Fragment {
 
     /*Buttons*/
-    private Button mUploadBackup;
-    private Button mDownloadRecovery;
+    public static Button mUploadBackup;
+    public static Button mDownloadRecovery;
     private Button mBackupButton;
     private Button mCancel;
     /*TextView*/
@@ -57,10 +57,10 @@ public class BackupFragment extends Fragment {
     private UploadTask uploadTask;
 
     /*FireBase*/
-    private FirebaseStorage storage = FirebaseStorage.getInstance();
-    private StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/");
-    private StorageReference riversRef;
-    private StorageReference getRecoveryStatus;
+    public static FirebaseStorage storage = FirebaseStorage.getInstance();
+    public static StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/");
+    public static StorageReference riversRef;
+    public static StorageReference getRecoveryStatus;
 
     /*Strings*/
     private String store_RecoveryPartitonPath_output;

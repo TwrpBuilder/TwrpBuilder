@@ -93,4 +93,7 @@
     <string name="twrp_builder_login_screen">Twrp Builder login Screen</string>
     <string name="twrp_builder_reset_password">Twrp Builder Reset Password</string>
     <string name="beta">[BETA]</string>
+    <string name="cancel_request">Cancel Request</string>
+    <string name="failed_to_delete_data">Failed To  Delete Data.</string>
+    <string name="successfully_delete_data">Successfully  Deleted Data.</string>
 </resources>
