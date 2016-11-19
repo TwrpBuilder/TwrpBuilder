@@ -2,6 +2,7 @@ package github.grace5921.TwrpBuilder.app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -82,8 +83,6 @@ public class LoginActivity extends AppCompatActivity {
                 btnSignIn.setVisibility(View.VISIBLE);
                 TeamWinLoginLogo.setVisibility(View.VISIBLE);
                 XdaLoginLogo.setVisibility(View.GONE);
-                btnReset.setVisibility(View.VISIBLE);
-
             }
         });
 
@@ -106,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                 btnLogin2.setVisibility(View.GONE);
                 btnSignUp.setVisibility(View.VISIBLE);
                 btnSignIn.setVisibility(View.VISIBLE);
+                btnReset.setVisibility(View.GONE);
             }
         });
 
@@ -221,5 +221,39 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    boolean doubleBackToExitPressedOnce = false;
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        XdaLoginLogo.setVisibility(View.VISIBLE);
+        btn_login_singup_linear.setVisibility(View.VISIBLE);
+        TeamWinLoginLogo.setVisibility(View.GONE);
+        btnLogin2.setVisibility(View.GONE);
+        inputEmail.setVisibility(View.GONE);
+        TextInputLayoutPass.setVisibility(View.GONE);
+        btnSignUp.setVisibility(View.GONE);
+        btnReset.setVisibility(View.GONE);
+        btnCreateAccount.setVisibility(View.GONE);
+        btnSignIn.setVisibility(View.GONE);
+        this.doubleBackToExitPressedOnce = true;
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
+
+
+
 }
 
