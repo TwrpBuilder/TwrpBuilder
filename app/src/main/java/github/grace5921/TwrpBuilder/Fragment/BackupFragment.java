@@ -36,6 +36,7 @@ import github.grace5921.TwrpBuilder.R;
 import github.grace5921.TwrpBuilder.util.Config;
 
 import static github.grace5921.TwrpBuilder.util.Config.CheckDownloadedTwrp;
+import static github.grace5921.TwrpBuilder.util.Config.checkBackup;
 
 /**
  * Created by Sumit on 19.10.2016.
@@ -44,23 +45,18 @@ import static github.grace5921.TwrpBuilder.util.Config.CheckDownloadedTwrp;
 public class BackupFragment extends Fragment {
 
     /*Buttons*/
-    public static Button mUploadBackup;
-    public static Button mDownloadRecovery;
-    private Button mBackupButton;
-    private Button mCancel;
+    public static Button mUploadBackup,mCancel,mBackupButton,mDownloadRecovery,mCancelRequest;
+
     /*TextView*/
-    private TextView ShowOutput;
-    private TextView mBuildDescription;
-    private TextView mBuildApproved;
-    /*Uri*/
+    private TextView ShowOutput,mBuildDescription,mBuildApproved;
+
+     /*Uri*/
     private Uri file;
     private UploadTask uploadTask;
 
     /*FireBase*/
     public static FirebaseStorage storage = FirebaseStorage.getInstance();
-    public static StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/");
-    public static StorageReference riversRef;
-    public static StorageReference getRecoveryStatus;
+    public static StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/"),riversRef,getRecoveryStatus;
 
     /*Strings*/
     private String store_RecoveryPartitonPath_output;
@@ -92,7 +88,7 @@ public class BackupFragment extends Fragment {
         mUploadBackup = (Button) view.findViewById(R.id.UploadBackup);
         mDownloadRecovery = (Button) view.findViewById(R.id.get_recovery);
         mCancel=(Button)view.findViewById(R.id.cancel_upload);
-
+        mCancelRequest=(Button)view.findViewById(R.id.btn_cancel_request);
         /*TextView*/
 
         ShowOutput = (TextView) view.findViewById(R.id.show_output);
@@ -125,7 +121,12 @@ public class BackupFragment extends Fragment {
                     mBuildDescription.setVisibility(View.VISIBLE);
                     ShowOutput.setVisibility(View.GONE);
                     if(mDownloadRecovery.getVisibility()==View.VISIBLE)
-                    {mBuildDescription.setVisibility(View.GONE);}else{mBuildDescription.setText(R.string.build_description_text);}
+                    {
+                        mBuildDescription.setVisibility(View.GONE);
+                    }else{
+                        mBuildDescription.setText(R.string.build_description_text);
+                        mCancelRequest.setVisibility(View.VISIBLE);
+                    }
 
 
                 }
@@ -191,6 +192,37 @@ public class BackupFragment extends Fragment {
         }
 
         /*On Click Listeners */
+
+        mCancelRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                riversRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Snackbar.make(getView(), "Request Canceled", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                        mBuildDescription.setVisibility(View.GONE);
+                        mCancel.setVisibility(View.GONE);
+                        if(checkBackup()){
+                            mBackupButton.setVisibility(View.VISIBLE);
+                            ShowOutput.setVisibility(View.VISIBLE);
+                        }else
+                        {
+                            mUploadBackup.setVisibility(View.VISIBLE);
+                            ShowOutput.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Snackbar.make(getView(), "Failed to cancel request", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+
+                    }
+                });
+
+            }
+        });
 
         mDownloadRecovery.setOnClickListener(
                 new View.OnClickListener() {
