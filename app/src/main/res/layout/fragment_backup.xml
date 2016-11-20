@@ -46,16 +46,6 @@
         android:visibility="gone"
         android:textSize="24sp" />
 
-    <Button
-        android:text="@string/cancel_request"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_cancel_request"
-        android:textAllCaps="false"
-        android:visibility="gone"
-        android:layout_gravity="center_horizontal"/>
-
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
