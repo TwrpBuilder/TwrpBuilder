@@ -42,6 +42,10 @@
         <activity
             android:name=".app.SettingsActivity"
             android:label="@string/settings"/>
+        <activity
+            android:name=".ads.AdsActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="Ads"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"

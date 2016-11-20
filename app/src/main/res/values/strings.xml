@@ -98,4 +98,5 @@
     <string name="successfully_delete_data">Successfully  Deleted Data.</string>
     <string name="delete_account">Delete Account</string>
     <string name="delete">Delete</string>
+    <string name="interstitial_full_screen">ca-app-pub-5248092130870106/9066179272</string>
 </resources>

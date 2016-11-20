@@ -3,6 +3,7 @@ package github.grace5921.TwrpBuilder.Fragment;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
@@ -29,10 +31,13 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
 import java.io.File;
 import java.util.List;
+
 import eu.chainfire.libsuperuser.Shell;
 import github.grace5921.TwrpBuilder.R;
+import github.grace5921.TwrpBuilder.ads.AdsActivity;
 import github.grace5921.TwrpBuilder.util.Config;
 
 import static github.grace5921.TwrpBuilder.util.Config.CheckDownloadedTwrp;
@@ -124,6 +129,8 @@ public class BackupFragment extends Fragment {
                     mUploadBackup.setVisibility(View.GONE);
                     mBuildDescription.setVisibility(View.VISIBLE);
                     ShowOutput.setVisibility(View.GONE);
+                    Intent intent = new Intent(getActivity(), AdsActivity.class);
+                    startActivity(intent);
                     if(mDownloadRecovery.getVisibility()==View.VISIBLE)
                     {mBuildDescription.setVisibility(View.GONE);}else{mBuildDescription.setText(R.string.build_description_text);}
 
@@ -294,6 +301,8 @@ public class BackupFragment extends Fragment {
                 mBuilder.setOngoing(false);
                 mNotifyManager.notify(1, mBuilder.build());
                 mProgressBar.setVisibility(View.GONE);
+                Intent intent = new Intent(getActivity(), AdsActivity.class);
+                startActivity(intent);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -361,6 +370,8 @@ public class BackupFragment extends Fragment {
                 mNotifyManager.notify(1, mBuilder.build());
                 mProgressBar.setVisibility(View.GONE);
                 mBuildDescription.setVisibility(View.GONE);
+                Intent intent = new Intent(getActivity(), AdsActivity.class);
+                startActivity(intent);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
