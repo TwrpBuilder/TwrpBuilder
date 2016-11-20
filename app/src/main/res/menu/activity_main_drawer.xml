@@ -33,6 +33,16 @@
 
         </menu>
     </item>
+    <item android:title="@string/say_thanks">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:title="@string/say_thanks"
+                    android:id="@+id/nav_thanks"/>
+            </group>
+
+        </menu>
+    </item>
 
 
 </menu>

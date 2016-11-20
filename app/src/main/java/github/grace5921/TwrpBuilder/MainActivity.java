@@ -38,6 +38,7 @@ import github.grace5921.TwrpBuilder.Fragment.BackupFragment;
 import github.grace5921.TwrpBuilder.Fragment.CreditsFragment;
 import github.grace5921.TwrpBuilder.Fragment.GithubReleasesFragment;
 import github.grace5921.TwrpBuilder.Fragment.HelpFragment;
+import github.grace5921.TwrpBuilder.Fragment.MakeMeHappy;
 import github.grace5921.TwrpBuilder.Fragment.NoNetwork;
 import github.grace5921.TwrpBuilder.Fragment.NotRooted;
 import github.grace5921.TwrpBuilder.Fragment.PreferencesFragment;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity
     private CreditsFragment mFragmentCredits;
     private PreferencesFragment mFragmentPreferences;
     private GithubReleasesFragment mFragmentRelApp;;
+    private MakeMeHappy mMakeMeHappy;
 
     /*Ads */
     private AdView mAdView;
@@ -94,6 +96,7 @@ public class MainActivity extends AppCompatActivity
         mFragmentCredits=new CreditsFragment();
         mFragmentPreferences=new PreferencesFragment();
         mFragmentRelApp = new GithubReleasesFragment().setTargetURL(Config.URL_APP_RELEASES);
+        mMakeMeHappy=new MakeMeHappy();
         /*Replace Fragment*/
         if(suAvailable()) {
             updateFragment(this.mBackupFragment);
@@ -230,6 +233,10 @@ public class MainActivity extends AppCompatActivity
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(MainActivity.this, LoginActivity.class)); //Go back to home page
             finish();
+        }else if (id==R.id.nav_thanks)
+        {
+            updateFragment(mMakeMeHappy);
+            setTitle("Say Thanks");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

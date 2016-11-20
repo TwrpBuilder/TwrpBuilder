@@ -99,4 +99,7 @@
     <string name="delete_account">Delete Account</string>
     <string name="delete">Delete</string>
     <string name="interstitial_full_screen">ca-app-pub-5248092130870106/9066179272</string>
+    <string name="watch">Watch</string>
+    <string name="watch_ads_to_say_thanks">Watch ads to say thanks</string>
+    <string name="say_thanks">Say Thanks</string>
 </resources>
