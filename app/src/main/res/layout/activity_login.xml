@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/ic_login_back"
         android:id="@+id/login_linear_layout"
         android:gravity="center"
         android:orientation="vertical"
@@ -33,8 +33,8 @@
             android:id="@+id/teamwin_login_logo"
             android:src="@drawable/ic_launcher_web" />
         <ImageView
-            android:layout_height="400dp"
-            android:layout_width="400dp"
+            android:layout_height="300dp"
+            android:layout_width="350dp"
             android:id="@+id/xda_login_logo"
             android:visibility="gone"
             android:contentDescription="@string/login_image"
@@ -85,7 +85,7 @@
             android:visibility="gone"
             android:text="@string/btn_forgot_password"
             android:textAllCaps="false"
-            android:textColor="@color/colorAccent" />
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/sign_in_button"
@@ -102,7 +102,7 @@
             android:id="@+id/create_account_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
+            android:layout_marginTop="3dp"
             android:background="@null"
             android:visibility="gone"
             android:text="@string/btn_link_to_register"
@@ -127,7 +127,6 @@
                     android:id="@+id/btn_login"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorAccent"
                     android:text="@string/btn_login"
                     android:textAllCaps="false"
                     android:textColor="@android:color/black"
@@ -146,7 +145,6 @@
                     android:id="@+id/btn_signup"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorAccent"
                     android:text="@string/btn_link_to_register"
                     android:textAllCaps="false"
                     android:textColor="@android:color/black"
@@ -161,7 +159,6 @@
 
     <Button
         android:layout_width="match_parent"
-        android:background="@color/colorAccent"
         android:layout_gravity="bottom"
         android:text="@string/btn_login"
         android:visibility="gone"
@@ -169,7 +166,6 @@
         android:id="@+id/btn_login_2" />
     <Button
         android:layout_width="match_parent"
-        android:background="@color/colorAccent"
         android:layout_gravity="bottom"
         android:text="@string/action_sign_in_short"
         android:visibility="gone"
