@@ -71,9 +71,10 @@ public class BackupFragment extends Fragment {
     public static StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/");
     public static StorageReference riversRef;
     public static StorageReference getRecoveryStatus;
-    private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
     private FirebaseAuth mFirebaseAuth;
+    private DatabaseReference mUploader;
+    private DatabaseReference mDownloader;
 
     /*Strings*/
     private String store_RecoveryPartitonPath_output;
@@ -124,7 +125,8 @@ public class BackupFragment extends Fragment {
         /*Define Methods*/
 
         mFirebaseInstance = FirebaseDatabase.getInstance();
-        mFirebaseDatabase = mFirebaseInstance.getReference("Opened App");
+        mUploader = mFirebaseInstance.getReference("Uploader");
+        mDownloader=mFirebaseInstance.getReference("Downloader");
         mFirebaseAuth=FirebaseAuth.getInstance();
         Email=mFirebaseAuth.getCurrentUser().getEmail();
         Uid=mFirebaseAuth.getCurrentUser().getUid();
@@ -146,9 +148,6 @@ public class BackupFragment extends Fragment {
                     try {
                         Intent intent = new Intent(getActivity(), AdsActivity.class);
                         startActivity(intent);
-                        userId = mFirebaseDatabase.push().getKey();
-                        User user = new User(Build.BRAND, Build.BOARD,Build.MODEL,Email,Uid,refreshedToken);
-                        mFirebaseDatabase.child(userId).setValue(user);
                     }catch (Exception exception)
                     {
                         Toast.makeText(getContext(), R.string.failed_to_load_ads, Toast.LENGTH_LONG).show();
@@ -266,12 +265,6 @@ public class BackupFragment extends Fragment {
 
 
     }
-    private void showProgressDialog(String title, String message) {
-        if (mProgressDialog != null && mProgressDialog.isShowing())
-            mProgressDialog.setMessage(message);
-        else
-            mProgressDialog = ProgressDialog.show(getActivity(), title, message, true, false);
-    }
 
     private void uploadStream() {
         riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + file.getLastPathSegment());
@@ -294,6 +287,10 @@ public class BackupFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), AdsActivity.class);
                 startActivity(intent);
                 mCancel.setVisibility(View.GONE);
+                userId = mUploader.push().getKey();
+                User user = new User(Build.BRAND, Build.BOARD,Build.MODEL,Email,Uid,refreshedToken);
+                mUploader.child(userId).setValue(user);
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -364,6 +361,10 @@ public class BackupFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), AdsActivity.class);
                 startActivity(intent);
                 mCancel.setVisibility(View.GONE);
+                userId = mDownloader.push().getKey();
+                User user = new User(Build.BRAND, Build.BOARD,Build.MODEL,Email,Uid,refreshedToken);
+                mDownloader.child(userId).setValue(user);
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
