@@ -11,9 +11,9 @@ import com.google.android.gms.ads.InterstitialAd;
 
 import github.grace5921.TwrpBuilder.R;
 
-public class AdsActivity extends AppCompatActivity {
+public class VideoAdsActivity extends AppCompatActivity {
 
-    private String TAG = AdsActivity.class.getSimpleName();
+    private String TAG = VideoAdsActivity.class.getSimpleName();
     InterstitialAd mInterstitialAd;
 
     @Override
@@ -21,11 +21,10 @@ public class AdsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ads_full_screen);
 
-
         mInterstitialAd = new InterstitialAd(this);
 
         // set the ad unit ID
-        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_full_screen));
+        mInterstitialAd.setAdUnitId(getString(R.string.video_ads));
 
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)

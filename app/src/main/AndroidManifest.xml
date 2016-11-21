@@ -46,6 +46,10 @@
             android:name=".ads.AdsActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:label="Ads"/>
+        <activity
+            android:name=".ads.VideoAdsActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="Ads"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"

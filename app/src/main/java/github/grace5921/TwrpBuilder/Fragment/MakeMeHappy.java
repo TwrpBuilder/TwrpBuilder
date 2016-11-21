@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import github.grace5921.TwrpBuilder.R;
-import github.grace5921.TwrpBuilder.ads.AdsActivity;
+import github.grace5921.TwrpBuilder.ads.VideoAdsActivity;
 
 /**
  * Created by sumit on 20/11/16.
@@ -28,7 +28,7 @@ public class MakeMeHappy extends Fragment {
         LoadAds.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AdsActivity.class);
+                Intent intent = new Intent(getActivity(), VideoAdsActivity.class);
                 startActivity(intent);
 
             }
