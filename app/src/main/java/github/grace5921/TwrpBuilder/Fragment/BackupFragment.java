@@ -44,7 +44,7 @@ import github.grace5921.TwrpBuilder.ads.AdsActivity;
 import github.grace5921.TwrpBuilder.util.Config;
 import github.grace5921.TwrpBuilder.util.User;
 
-import static github.grace5921.TwrpBuilder.app.FirebaseInstanceIDService.refreshedToken;
+import static github.grace5921.TwrpBuilder.firebase.FirebaseInstanceIDService.refreshedToken;
 import static github.grace5921.TwrpBuilder.util.Config.CheckDownloadedTwrp;
 
 /**

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package github.grace5921.TwrpBuilder.app;
+package github.grace5921.TwrpBuilder.firebase;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
