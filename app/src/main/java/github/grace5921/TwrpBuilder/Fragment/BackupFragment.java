@@ -131,8 +131,14 @@ public class BackupFragment extends Fragment {
                     mUploadBackup.setVisibility(View.GONE);
                     mBuildDescription.setVisibility(View.VISIBLE);
                     ShowOutput.setVisibility(View.GONE);
-                    Intent intent = new Intent(getActivity(), AdsActivity.class);
-                    startActivity(intent);
+                    try {
+                        Intent intent = new Intent(getActivity(), AdsActivity.class);
+                        startActivity(intent);
+                    }catch (Exception exception)
+                    {
+                        Toast.makeText(getContext(), R.string.failed_to_load_ads, Toast.LENGTH_LONG).show();
+
+                    }
                     if(mDownloadRecovery.getVisibility()==View.VISIBLE)
                     {mBuildDescription.setVisibility(View.GONE);}else{mBuildDescription.setText(R.string.build_description_text);}
 

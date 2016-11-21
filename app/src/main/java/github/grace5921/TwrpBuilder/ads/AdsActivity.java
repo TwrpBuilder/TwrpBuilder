@@ -28,9 +28,6 @@ public class AdsActivity extends AppCompatActivity {
         mInterstitialAd.setAdUnitId(getString(R.string.interstitial_full_screen));
 
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                // Check the LogCat to get your test device ID
-                .addTestDevice("C04B1BFFB0774708339BC273F8A43708")
                 .build();
 
         mInterstitialAd.loadAd(adRequest);
