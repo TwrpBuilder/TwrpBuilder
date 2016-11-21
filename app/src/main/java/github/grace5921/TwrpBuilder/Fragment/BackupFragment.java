@@ -73,6 +73,8 @@ public class BackupFragment extends Fragment {
     private String[] recovery_output_last_value;
     private String recovery_output_path;
     private List<String> RecoveryPartitonPath;
+    private String UserDeviceData=Build.BRAND + Build.BOARD + Build.MODEL;
+    //private String email = storageRef.getAuth().password.email;
 
     /*Progress Bar*/
     private ProgressDialog mProgressDialog;
@@ -303,6 +305,7 @@ public class BackupFragment extends Fragment {
                 mProgressBar.setVisibility(View.GONE);
                 Intent intent = new Intent(getActivity(), AdsActivity.class);
                 startActivity(intent);
+                mCancel.setVisibility(View.GONE);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -372,6 +375,7 @@ public class BackupFragment extends Fragment {
                 mBuildDescription.setVisibility(View.GONE);
                 Intent intent = new Intent(getActivity(), AdsActivity.class);
                 startActivity(intent);
+                mCancel.setVisibility(View.GONE);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
