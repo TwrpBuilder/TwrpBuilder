@@ -25,6 +25,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -39,6 +41,7 @@ import eu.chainfire.libsuperuser.Shell;
 import github.grace5921.TwrpBuilder.R;
 import github.grace5921.TwrpBuilder.ads.AdsActivity;
 import github.grace5921.TwrpBuilder.util.Config;
+import github.grace5921.TwrpBuilder.util.User;
 
 import static github.grace5921.TwrpBuilder.util.Config.CheckDownloadedTwrp;
 
@@ -66,6 +69,8 @@ public class BackupFragment extends Fragment {
     public static StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/");
     public static StorageReference riversRef;
     public static StorageReference getRecoveryStatus;
+    private DatabaseReference mFirebaseDatabase;
+    private FirebaseDatabase mFirebaseInstance;
 
     /*Strings*/
     private String store_RecoveryPartitonPath_output;
@@ -73,8 +78,7 @@ public class BackupFragment extends Fragment {
     private String[] recovery_output_last_value;
     private String recovery_output_path;
     private List<String> RecoveryPartitonPath;
-    private String UserDeviceData=Build.BRAND + Build.BOARD + Build.MODEL;
-    //private String email = storageRef.getAuth().password.email;
+    private String userId;
 
     /*Progress Bar*/
     private ProgressDialog mProgressDialog;
@@ -92,7 +96,6 @@ public class BackupFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_backup, container, false);
-
         /*Buttons*/
 
         mBackupButton = (Button) view.findViewById(R.id.BackupRecovery);
@@ -116,6 +119,9 @@ public class BackupFragment extends Fragment {
 
         /*Define Methods*/
 
+        mFirebaseInstance = FirebaseDatabase.getInstance();
+        mFirebaseDatabase = mFirebaseInstance.getReference("Opened App");
+
         file = Uri.fromFile(new File("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar"));
         riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + file.getLastPathSegment());
         getRecoveryStatus = storageRef.child("output/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + "Twrp.img");
@@ -134,6 +140,9 @@ public class BackupFragment extends Fragment {
                     try {
                         Intent intent = new Intent(getActivity(), AdsActivity.class);
                         startActivity(intent);
+                        userId = mFirebaseDatabase.push().getKey();
+                        User user = new User(Build.BRAND, Build.BOARD,Build.MODEL,"will add this feature later","Wil add Fmc later");
+                        mFirebaseDatabase.child(userId).setValue(user);
                     }catch (Exception exception)
                     {
                         Toast.makeText(getContext(), R.string.failed_to_load_ads, Toast.LENGTH_LONG).show();
@@ -258,39 +267,6 @@ public class BackupFragment extends Fragment {
             mProgressDialog = ProgressDialog.show(getActivity(), title, message, true, false);
     }
 
-  /*  private void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
-    }
-
-    private void showToast(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    public void showHorizontalProgressDialog(String title, String body) {
-
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.setTitle(title);
-            mProgressDialog.setMessage(body);
-        } else {
-            mProgressDialog = new ProgressDialog(getActivity());
-            mProgressDialog.setTitle(title);
-            mProgressDialog.setMessage(body);
-            mProgressDialog.setIndeterminate(false);
-            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            mProgressDialog.setProgress(0);
-            mProgressDialog.setMax(100);
-            mProgressDialog.setCancelable(false);
-            mProgressDialog.show();
-        }
-    }
-
-    public void updateProgress(int progress) {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.setProgress(progress);
-        }
-    }*/
     private void uploadStream() {
         riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + file.getLastPathSegment());
         uploadTask = riversRef.putFile(file);
