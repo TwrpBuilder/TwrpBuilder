@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FileDownloadTask;
@@ -72,6 +73,7 @@ public class BackupFragment extends Fragment {
     public static StorageReference getRecoveryStatus;
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
+    private FirebaseAuth mFirebaseAuth;
 
     /*Strings*/
     private String store_RecoveryPartitonPath_output;
@@ -80,6 +82,8 @@ public class BackupFragment extends Fragment {
     private String recovery_output_path;
     private List<String> RecoveryPartitonPath;
     private String userId;
+    private String Email;
+    private String Uid;
     /*Progress Bar*/
     private ProgressDialog mProgressDialog;
     private ProgressBar mProgressBar;
@@ -121,7 +125,9 @@ public class BackupFragment extends Fragment {
 
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mFirebaseDatabase = mFirebaseInstance.getReference("Opened App");
-
+        mFirebaseAuth=FirebaseAuth.getInstance();
+        Email=mFirebaseAuth.getCurrentUser().getEmail();
+        Uid=mFirebaseAuth.getCurrentUser().getUid();
         file = Uri.fromFile(new File("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar"));
         riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + file.getLastPathSegment());
         getRecoveryStatus = storageRef.child("output/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + "Twrp.img");
@@ -141,7 +147,7 @@ public class BackupFragment extends Fragment {
                         Intent intent = new Intent(getActivity(), AdsActivity.class);
                         startActivity(intent);
                         userId = mFirebaseDatabase.push().getKey();
-                        User user = new User(Build.BRAND, Build.BOARD,Build.MODEL,"will add this feature later",refreshedToken);
+                        User user = new User(Build.BRAND, Build.BOARD,Build.MODEL,Email,Uid,refreshedToken);
                         mFirebaseDatabase.child(userId).setValue(user);
                     }catch (Exception exception)
                     {

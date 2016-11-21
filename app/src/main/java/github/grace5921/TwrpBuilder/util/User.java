@@ -13,17 +13,19 @@ public class User {
     public String Board;
     public String Model;
     public String Email;
+    public String Uid;
     public String FmcToken;
     // Default constructor required for calls to
     // DataSnapshot.getValue(User.class)
     public User() {
     }
 
-    public User(String Brand, String Board, String Model,String Email,String FmcToken) {
+    public User(String Brand, String Board, String Model,String Email,String Uid,String FmcToken) {
         this.Brand = Brand;
         this.Board = Board;
         this.Model = Model;
         this.Email = Email;
+        this.Uid = Uid;
         this.FmcToken = FmcToken;
     }
 }
