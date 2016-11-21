@@ -43,6 +43,7 @@ import github.grace5921.TwrpBuilder.ads.AdsActivity;
 import github.grace5921.TwrpBuilder.util.Config;
 import github.grace5921.TwrpBuilder.util.User;
 
+import static github.grace5921.TwrpBuilder.app.FirebaseInstanceIDService.refreshedToken;
 import static github.grace5921.TwrpBuilder.util.Config.CheckDownloadedTwrp;
 
 /**
@@ -79,7 +80,6 @@ public class BackupFragment extends Fragment {
     private String recovery_output_path;
     private List<String> RecoveryPartitonPath;
     private String userId;
-
     /*Progress Bar*/
     private ProgressDialog mProgressDialog;
     private ProgressBar mProgressBar;
@@ -141,7 +141,7 @@ public class BackupFragment extends Fragment {
                         Intent intent = new Intent(getActivity(), AdsActivity.class);
                         startActivity(intent);
                         userId = mFirebaseDatabase.push().getKey();
-                        User user = new User(Build.BRAND, Build.BOARD,Build.MODEL,"will add this feature later","Wil add Fmc later");
+                        User user = new User(Build.BRAND, Build.BOARD,Build.MODEL,"will add this feature later",refreshedToken);
                         mFirebaseDatabase.child(userId).setValue(user);
                     }catch (Exception exception)
                     {
