@@ -14,7 +14,7 @@
                 android:id="@+id/nav_app_updates"
                 android:title="@string/app_updates" />
             <item
-                android:title="Logout"
+                android:title="@string/logout"
                 android:id="@+id/action_log_out"/>
 
         </group>
@@ -44,5 +44,16 @@
         </menu>
     </item>
 
+    <item android:title="@string/for_developers"
+        android:visible="false">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:title="@string/check_twrp"
+                    android:id="@+id/nav_dev_fragment"/>
+            </group>
+
+        </menu>
+    </item>
 
 </menu>

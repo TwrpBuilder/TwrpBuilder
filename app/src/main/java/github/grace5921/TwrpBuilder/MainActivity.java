@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -36,6 +37,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import github.grace5921.TwrpBuilder.Fragment.BackupFragment;
 import github.grace5921.TwrpBuilder.Fragment.CreditsFragment;
+import github.grace5921.TwrpBuilder.Fragment.DevsFragment;
 import github.grace5921.TwrpBuilder.Fragment.GithubReleasesFragment;
 import github.grace5921.TwrpBuilder.Fragment.HelpFragment;
 import github.grace5921.TwrpBuilder.Fragment.MakeMeHappy;
@@ -62,6 +64,12 @@ public class MainActivity extends AppCompatActivity
     private PreferencesFragment mFragmentPreferences;
     private GithubReleasesFragment mFragmentRelApp;;
     private MakeMeHappy mMakeMeHappy;
+    private DevsFragment mDevsFragment;
+    /*Strings*/
+    private String Email="user@user.com";
+
+    /*Firebase*/
+    private FirebaseAuth mFirebaseAuth;
 
     /*Ads */
     private AdView mAdView;
@@ -72,13 +80,17 @@ public class MainActivity extends AppCompatActivity
     private boolean mShowAds = false;
     /*Navigation drawer*/
     private NavigationView navigationView;
+    private View navHeaderView;
 
+    /*Text View*/
+    TextView mUserEmail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mFirebaseAuth=FirebaseAuth.getInstance();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -88,6 +100,9 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navHeaderView= navigationView.inflateHeaderView(R.layout.nav_header_main);
+        mUserEmail = (TextView) navHeaderView.findViewById(R.id.user_email);
+
         /*Fragments*/
         mBackupFragment=new BackupFragment();
         mNotRooted=new NotRooted();
@@ -97,6 +112,7 @@ public class MainActivity extends AppCompatActivity
         mFragmentPreferences=new PreferencesFragment();
         mFragmentRelApp = new GithubReleasesFragment().setTargetURL(Config.URL_APP_RELEASES);
         mMakeMeHappy=new MakeMeHappy();
+        mDevsFragment = new DevsFragment();
         /*Replace Fragment*/
         if(suAvailable()) {
             updateFragment(this.mBackupFragment);
@@ -105,12 +121,15 @@ public class MainActivity extends AppCompatActivity
             updateFragment(this.mNotRooted);
             setTitle("Device Not Rooted :(");
         }
-
+        /*ad view*/
         mAdView = (AdView) findViewById(R.id.adView);
         mAdView1 = (AdView) findViewById(R.id.adView1);
         mAdView2 = (AdView) findViewById(R.id.adView2);
         mAdView3 = (AdView) findViewById(R.id.adView3);
         mAdView4 = (AdView) findViewById(R.id.adView4);
+
+        /*Text View*/
+        mUserEmail=(TextView)navHeaderView.findViewById(R.id.user_email);
 
         AdRequest adRequest = new AdRequest.Builder()
                 .build();
@@ -129,6 +148,10 @@ public class MainActivity extends AppCompatActivity
         }else {
             mAdView.setVisibility(View.VISIBLE);
         }
+
+        /*replace email with users email*/
+        mUserEmail.setText(mFirebaseAuth.getCurrentUser().getEmail());
+
         /*My Functions :)*/
         checkPermission();
         requestPermission();
@@ -237,6 +260,10 @@ public class MainActivity extends AppCompatActivity
         {
             updateFragment(mMakeMeHappy);
             setTitle("Say Thanks");
+        }else if (id==R.id.nav_dev_fragment)
+        {
+            updateFragment(mDevsFragment);
+            setTitle("Devs stuff");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -324,6 +351,14 @@ public class MainActivity extends AppCompatActivity
             /*Good Job!*/
         }else {
             nav_Menu.findItem(R.id.nav_backup).setVisible(false);
+        }
+        if (mFirebaseAuth.getCurrentUser().getEmail()==Email)
+        {
+            nav_Menu.findItem(R.id.nav_dev_fragment).setVisible(true);
+        }
+        else
+        {
+            /*Can't do anything for your sorry*/
         }
     }
 

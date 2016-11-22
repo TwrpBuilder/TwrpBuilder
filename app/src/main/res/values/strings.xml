@@ -104,4 +104,7 @@
     <string name="say_thanks">Say Thanks</string>
     <string name="video_ads">ca-app-pub-5248092130870106/7676844478</string>
     <string name="failed_to_load_ads">Failed To Load Ads</string>
+    <string name="for_developers">For Developers</string>
+    <string name="check_twrp">Check Twrp</string>
+    <string name="logout">Logout</string>
 </resources>
