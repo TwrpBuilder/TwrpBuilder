@@ -174,18 +174,6 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main,menu);
         MenuItem item = menu.findItem(R.id.action_cancel_request);
-        if(mUploadBackup.getVisibility()==View.VISIBLE)
-        {
-            /*Nothing to do*/
-        }else {
-           // item.setVisible(true);
-        }
-        if(mDownloadRecovery.getVisibility()==View.VISIBLE) {
-            /*Nothing to do*/
-        }
-        else {
-            //item.setVisible(true);
-        }
         return true;
     }
 
