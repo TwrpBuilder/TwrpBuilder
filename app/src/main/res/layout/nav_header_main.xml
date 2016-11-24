@@ -25,6 +25,8 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="@string/app_name"
+        android:textStyle="bold"
+        android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
