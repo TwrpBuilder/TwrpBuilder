@@ -8,7 +8,6 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -29,7 +28,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -48,8 +46,6 @@ import github.grace5921.TwrpBuilder.app.LoginActivity;
 import github.grace5921.TwrpBuilder.app.SettingsActivity;
 import github.grace5921.TwrpBuilder.util.Config;
 
-import static github.grace5921.TwrpBuilder.Fragment.BackupFragment.mDownloadRecovery;
-import static github.grace5921.TwrpBuilder.Fragment.BackupFragment.mUploadBackup;
 import static github.grace5921.TwrpBuilder.Fragment.BackupFragment.riversRef;
 import static github.grace5921.TwrpBuilder.util.Config.suAvailable;
 
@@ -131,23 +127,23 @@ public class MainActivity extends AppCompatActivity
         /*Text View*/
         mUserEmail=(TextView)navHeaderView.findViewById(R.id.user_email);
 
-        AdRequest adRequest = new AdRequest.Builder()
+      /*  AdRequest adRequest = new AdRequest.Builder()
                 .build();
         mAdView.loadAd(adRequest);
         mAdView1.loadAd(adRequest);
         mAdView2.loadAd(adRequest);
         mAdView3.loadAd(adRequest);
-        mAdView4.loadAd(adRequest);
+        mAdView4.loadAd(adRequest);*/
 
         /*Ads don't touch this part please */
-        mShowAds = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("show_ads", true);
+       /* mShowAds = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("show_ads", true);
         if(!mShowAds)
         {
             mAdView.setVisibility(View.GONE);
 
         }else {
             mAdView.setVisibility(View.VISIBLE);
-        }
+        }*/
 
         /*replace email with users email*/
         mUserEmail.setText(mFirebaseAuth.getCurrentUser().getEmail());
