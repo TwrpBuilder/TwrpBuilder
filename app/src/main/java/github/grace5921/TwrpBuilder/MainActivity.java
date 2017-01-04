@@ -32,6 +32,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.twrpbuilder.rootchecker.RootChecker;
 
 import github.grace5921.TwrpBuilder.Fragment.BackupFragment;
 import github.grace5921.TwrpBuilder.Fragment.CreditsFragment;
@@ -47,7 +48,6 @@ import github.grace5921.TwrpBuilder.app.SettingsActivity;
 import github.grace5921.TwrpBuilder.util.Config;
 
 import static github.grace5921.TwrpBuilder.Fragment.BackupFragment.riversRef;
-import static github.grace5921.TwrpBuilder.util.Config.suAvailable;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity
         mMakeMeHappy=new MakeMeHappy();
         mDevsFragment = new DevsFragment();
         /*Replace Fragment*/
-        if(suAvailable()) {
+        if (RootChecker.isDeviceRooted()) {
             updateFragment(this.mBackupFragment);
             setTitle("Request Twrp");
         }else {
@@ -331,7 +331,7 @@ public class MainActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         Menu nav_Menu = navigationView.getMenu();
         nav_Menu.findItem(R.id.nav_preference).setVisible(false);
-        if(suAvailable()){
+        if(RootChecker.isDeviceRooted()){
             /*Good Job!*/
         }else {
             nav_Menu.findItem(R.id.nav_backup).setVisible(false);
