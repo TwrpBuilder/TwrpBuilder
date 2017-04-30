@@ -30,7 +30,8 @@ public final class RootChecker {
                 "/data/local/bin/",
                 "/system/sd/xbin/",
                 "/system/bin/failsafe/",
-                "/data/local/"
+                "/data/local/",
+                "/su/bin/"
         };
     }
 
