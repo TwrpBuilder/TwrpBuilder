@@ -62,4 +62,25 @@ public class ShellExecuter {
         boolean deleted = file.delete();
         Log.d(TAG,"File "+ name + " deleted .");
     }
+
+    public static void mkdir(String name){
+        File makedir = new File(Environment.getExternalStorageDirectory() +
+                File.separator +"/"+name );
+        Log.d(TAG,"Request to make folder "+name+" received .");
+        boolean success = true;
+        if (!makedir.exists()) {
+            success = makedir.mkdirs();
+            if (success) {
+                Log.i(TAG,"Dir "+name+" made .");
+            } else {
+                Log.e(TAG,"Failed to make dir "+name);
+            }
+        }else
+        {
+            Log.i(TAG,name+" dir alredy exist");
+            Log.e(TAG,"Failed to make dir "+name);
+
+        }
+       }
+
 }
