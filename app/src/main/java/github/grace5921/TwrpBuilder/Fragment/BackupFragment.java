@@ -35,6 +35,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import eu.chainfire.libsuperuser.Shell;
@@ -234,7 +235,12 @@ public class BackupFragment extends Fragment {
                     public void onClick(View v) {
                         mBackupButton.setVisibility(View.GONE);
                         ShellExecuter.mkdir("TwrpBuilder");
-                        Shell.SU.run("dd if=" + recovery_output_path + " of=/sdcard/TwrpBuilder/Recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` >  /sdcard/TwrpBuilder/mounts ; getprop ro.build.fingerprint > /sdcard/TwrpBuilder/fingerprint ; tar -c /sdcard/TwrpBuilder/Recovery.img /sdcard/TwrpBuilder/fingerprint /sdcard/TwrpBuilder/mounts > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
+                        try {
+                            ShellExecuter.cp("/system/build.prop","/sdcard/TwrpBuilder/build.prop");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        Shell.SU.run("dd if=" + recovery_output_path + " of=/sdcard/TwrpBuilder/recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` >  /sdcard/TwrpBuilder/mounts ; cd /sdcard/TwrpBuilder && tar -c recovery.img build.prop mounts > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
                         ShowOutput.setText("Backed up recovery " + recovery_output_path);
                         Snackbar.make(view, R.string.made_recovery_backup, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
