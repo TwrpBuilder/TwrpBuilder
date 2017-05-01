@@ -12,5 +12,6 @@
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/settings"
+        android:visible="false"
         app:showAsAction="never" />
 </menu>
