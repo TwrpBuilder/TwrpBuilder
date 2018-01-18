@@ -63,6 +63,11 @@ public class FragmentInQueue extends Fragment {
 
         lvQueue.setAdapter(adapter);
 
+        if (lvQueue.getCount() == 0)
+        {
+            TextView textView=view.findViewById(R.id.tv_no_build);
+            textView.setVisibility(View.VISIBLE);
+        }
 
         return view;
     }

@@ -105,7 +105,6 @@ public class DevsFragment extends Fragment {
                         storageRef.child("queue/" + model.WBrand() + "/" + model.WBoard() + "/" + model.WModel() + "/TwrpBuilderRecoveryBackup.tar" ).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                Log.i("Deva","yah");
                                 DownloadManager downloadManager = (DownloadManager) context.getSystemService(getContext().DOWNLOAD_SERVICE);
 
                                 DownloadManager.Request request = new DownloadManager.Request(uri);
@@ -148,7 +147,7 @@ public class DevsFragment extends Fragment {
                                     }
                                 });
 
-                        Queue user = new Queue(model.WBrand(),model.WBoard(),model.WModel(),model.WEmail(),model.WtDate());
+                        User user = new User(model.WBrand(),model.WBoard(),model.WModel(),model.WEmail(),model.WUid(),model.WFmcToken(),model.WtDate());
                         mUploader.child(userId).setValue(user);
                         System.out.println(model.WBrand()+model.WBoard()+model.WModel()+model.WEmail()+model.WtDate());
                     }

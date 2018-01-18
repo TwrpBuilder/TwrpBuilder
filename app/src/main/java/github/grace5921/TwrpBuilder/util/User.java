@@ -50,4 +50,12 @@ public class User {
     public String WModel() {
         return Model;
     }
+
+    public String WFmcToken() {
+        return FmcToken;
+    }
+
+    public String WUid() {
+        return Uid;
+    }
 }
