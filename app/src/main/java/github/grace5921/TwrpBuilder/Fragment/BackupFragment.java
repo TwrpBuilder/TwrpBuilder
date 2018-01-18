@@ -201,23 +201,23 @@ public class BackupFragment extends Fragment {
         try {
             RecoveryPartitonPath = Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep RECOVERY");
             store_RecoveryPartitonPath_output = String.valueOf(RecoveryPartitonPath);
-            parts = store_RecoveryPartitonPath_output.split("\\s+");
-            recovery_output_last_value = parts[7].split("\\]");
+            parts = store_RecoveryPartitonPath_output.split("->\\s");
+            recovery_output_last_value = parts[1].split("\\]");
             recovery_output_path = recovery_output_last_value[0];
             ShowOutput.setVisibility(View.VISIBLE);
         } catch (Exception e) {
             RecoveryPartitonPath = Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep recovery");
             store_RecoveryPartitonPath_output = String.valueOf(RecoveryPartitonPath);
-            parts = store_RecoveryPartitonPath_output.split("\\s+");
+            parts = store_RecoveryPartitonPath_output.split("->\\s");
             ShowOutput.setVisibility(View.VISIBLE);
             try {
-                recovery_output_last_value = parts[7].split("\\]");
+                recovery_output_last_value = parts[1].split("\\]");
                 recovery_output_path = recovery_output_last_value[0];
             } catch (Exception ExceptionE) {
                 Toast.makeText(getContext(), R.string.device_not_supported, Toast.LENGTH_LONG).show();
             }
         }
-
+System.out.println("path :="+recovery_output_path);
         /*Check For Backup */
 
         if (Config.checkBackup()) {
@@ -227,8 +227,10 @@ public class BackupFragment extends Fragment {
             {
                 mBackupButton.setVisibility(View.GONE);
             }else
-            { mBackupButton.setVisibility(View.VISIBLE);
-            ShowOutput.setText(R.string.warning_about_recovery_backup);}
+            {
+                mBackupButton.setVisibility(View.VISIBLE);
+                ShowOutput.setText(R.string.warning_about_recovery_backup);
+            }
         }
 
         /*On Click Listeners */
