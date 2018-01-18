@@ -40,4 +40,11 @@
         android:textColor="@color/colorInfo"
         android:textSize="13sp" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:text="Files"
+        android:textAllCaps="false"
+        android:id="@+id/BtFile"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>
