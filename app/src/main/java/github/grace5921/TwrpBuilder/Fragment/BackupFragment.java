@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -204,12 +205,10 @@ public class BackupFragment extends Fragment {
             parts = store_RecoveryPartitonPath_output.split("->\\s");
             recovery_output_last_value = parts[1].split("\\]");
             recovery_output_path = recovery_output_last_value[0];
-            ShowOutput.setVisibility(View.VISIBLE);
         } catch (Exception e) {
             RecoveryPartitonPath = Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep recovery");
             store_RecoveryPartitonPath_output = String.valueOf(RecoveryPartitonPath);
             parts = store_RecoveryPartitonPath_output.split("->\\s");
-            ShowOutput.setVisibility(View.VISIBLE);
             try {
                 recovery_output_last_value = parts[1].split("\\]");
                 recovery_output_path = recovery_output_last_value[0];
@@ -249,17 +248,8 @@ System.out.println("path :="+recovery_output_path);
                     @Override
                     public void onClick(View v) {
                         mBackupButton.setVisibility(View.GONE);
-                        ShellExecuter.mkdir("TwrpBuilder");
-                        try {
-                            ShellExecuter.cp("/system/build.prop","/sdcard/TwrpBuilder/build.prop");
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        Shell.SU.run("dd if=" + recovery_output_path + " of=/sdcard/TwrpBuilder/recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` >  /sdcard/TwrpBuilder/mounts ; cd /sdcard/TwrpBuilder && tar -c recovery.img build.prop mounts > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
-                        ShowOutput.setText("Backed up recovery " + recovery_output_path);
-                        Snackbar.make(view, R.string.made_recovery_backup, Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-                        mUploadBackup.setVisibility(View.VISIBLE);
+                        ShowOutput.setVisibility(View.VISIBLE);
+                        new BackupTask().execute();
                     }
                 }
         );
@@ -417,5 +407,32 @@ System.out.println("path :="+recovery_output_path);
             }
         });
     }
+
+    class BackupTask extends AsyncTask<Void,String,Void>
+    {
+
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            ShellExecuter.mkdir("TwrpBuilder");
+            try {
+                ShellExecuter.cp("/system/build.prop","/sdcard/TwrpBuilder/build.prop");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Shell.SU.run("dd if=" + recovery_output_path + " of=/sdcard/TwrpBuilder/recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` >  /sdcard/TwrpBuilder/mounts ; cd /sdcard/TwrpBuilder && tar -c recovery.img build.prop mounts > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            mUploadBackup.setVisibility(View.VISIBLE);
+            ShowOutput.setText("Backed up recovery " + recovery_output_path);
+            Snackbar.make(getView(), "Backup Done", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
+    }
+
 }
 
