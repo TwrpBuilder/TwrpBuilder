@@ -1,5 +1,9 @@
 package github.grace5921.TwrpBuilder.util;
 
+import android.content.Context;
+import android.os.Environment;
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +18,7 @@ import eu.chainfire.libsuperuser.Shell;
 
 public class ShellExecuter {
     public static String command;
+    public static String TAG="ShellExecuter";
 
     public static final  String runAsRoot()
     {
@@ -46,18 +51,15 @@ public class ShellExecuter {
             throw new RuntimeException(e);
         }
     }
-    public static boolean hasSelinux()
-    {
-        return new File("/sys/fs/selinux/enforce").isFile();
+    public static void rm(Context context,String name){
+        /*
+        * Usage
+        * rm (getContext,"path to file");
+        * */
+        File dir = Environment.getExternalStorageDirectory();
+        Log.d(TAG,"Request to delete "+ dir+"/"+name + " received .");
+        File file = new File(dir, "/"+name);
+        boolean deleted = file.delete();
+        Log.d(TAG,"File "+ name + " deleted .");
     }
-    public static boolean hasRoot()
-    {
-        return new File("/system/xbin/su").isFile();
-    }
-    public static List<String> SuperSu(){
-        return Shell.SH.run(command);
-    }
-    public static boolean hasGpu(){return new File("/sys/class/kgsl/kgsl-3d0/gpuclk").isFile();}
-    public static boolean hasFastCharge(){return new File("/sys/kernel/fast_charge/force_fast_charge").isFile();}
-
 }
