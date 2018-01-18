@@ -46,8 +46,7 @@
         </menu>
     </item>
 
-    <item android:title="@string/for_developers"
-        android:visible="false">
+    <item android:title="@string/for_developers">
         <menu>
             <group android:checkableBehavior="single">
                 <item

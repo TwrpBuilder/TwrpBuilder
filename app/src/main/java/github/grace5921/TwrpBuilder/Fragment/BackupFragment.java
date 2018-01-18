@@ -36,6 +36,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import eu.chainfire.libsuperuser.Shell;
@@ -96,6 +98,10 @@ public class BackupFragment extends Fragment {
     /**/
     private ImageView mRequestApprovedImage;
 
+    private Calendar calendar;
+    private SimpleDateFormat simpleDateFormat;
+    private String Date;
+
     @Nullable
     @Override
 
@@ -133,6 +139,12 @@ public class BackupFragment extends Fragment {
         file = Uri.fromFile(new File("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar"));
         riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + file.getLastPathSegment());
         getRecoveryStatus = storageRef.child("output/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + "Twrp.img");
+
+        calendar = Calendar.getInstance();
+
+        simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+        Date = simpleDateFormat.format(calendar.getTime());
+
 
         if(CheckDownloadedTwrp())
         {mDownloadRecovery.setEnabled(false); mBuildDescription.setVisibility(View.GONE);}else{mDownloadRecovery.setEnabled(true); mBuildDescription.setVisibility(View.GONE);}
@@ -294,7 +306,7 @@ public class BackupFragment extends Fragment {
                 startActivity(intent);*/
                 mCancel.setVisibility(View.GONE);
                 userId = mUploader.push().getKey();
-                User user = new User(Build.BRAND, Build.BOARD,Build.MODEL,Email,Uid,refreshedToken);
+                User user = new User(Build.BRAND, Build.BOARD,Build.MODEL,Email,Uid,refreshedToken,Date);
                 mUploader.child(userId).setValue(user);
 
             }
@@ -368,7 +380,7 @@ public class BackupFragment extends Fragment {
                 startActivity(intent);*/
                 mCancel.setVisibility(View.GONE);
                 userId = mDownloader.push().getKey();
-                User user = new User(Build.BRAND, Build.BOARD,Build.MODEL,Email,Uid,refreshedToken);
+                User user = new User(Build.BRAND, Build.BOARD,Build.MODEL,Email,Uid,refreshedToken,Date);
                 mDownloader.child(userId).setValue(user);
 
             }

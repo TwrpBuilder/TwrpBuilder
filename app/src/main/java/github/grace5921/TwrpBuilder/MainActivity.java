@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
     private MakeMeHappy mMakeMeHappy;
     private DevsFragment mDevsFragment;
     /*Strings*/
-    private String Email="user@user.com";
+    private String Email="anbook@g.com";
 
     /*Firebase*/
     private FirebaseAuth mFirebaseAuth;
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity
         mFragmentPreferences=new PreferencesFragment();
         mFragmentRelApp = new GithubReleasesFragment().setTargetURL(Config.URL_APP_RELEASES);
         mMakeMeHappy=new MakeMeHappy();
-        mDevsFragment = new DevsFragment();
+        mDevsFragment = new DevsFragment(getBaseContext());
         /*Replace Fragment*/
         if (RootChecker.isDeviceRooted()) {
             updateFragment(this.mBackupFragment);
@@ -328,6 +328,7 @@ public class MainActivity extends AppCompatActivity
     }
     private void hideItem()
     {
+        Toast.makeText(MainActivity.this,mUserEmail.getText(),Toast.LENGTH_LONG).show();
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         Menu nav_Menu = navigationView.getMenu();
         nav_Menu.findItem(R.id.nav_preference).setVisible(false);
@@ -336,16 +337,22 @@ public class MainActivity extends AppCompatActivity
         }else {
             nav_Menu.findItem(R.id.nav_backup).setVisible(false);
         }
-        if (mFirebaseAuth.getCurrentUser().getEmail()==Email)
+        if (mUserEmail.getText().equals(Email))
         {
             nav_Menu.findItem(R.id.nav_dev_fragment).setVisible(true);
         }
         else
         {
+            nav_Menu.findItem(R.id.nav_dev_fragment).setVisible(false);
+
             /*Can't do anything for your sorry*/
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
 
+    }
 }
 
