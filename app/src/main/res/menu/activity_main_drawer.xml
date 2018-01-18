@@ -12,6 +12,7 @@
                 android:title="@string/settings" />
             <item
                 android:id="@+id/nav_app_updates"
+                android:visible="false"
                 android:title="@string/app_updates" />
             <item
                 android:title="@string/logout"
@@ -37,6 +38,7 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
+                    android:visible="false"
                     android:title="@string/say_thanks"
                     android:id="@+id/nav_thanks"/>
             </group>
