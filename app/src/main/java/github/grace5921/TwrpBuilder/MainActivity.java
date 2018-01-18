@@ -43,6 +43,7 @@ import github.grace5921.TwrpBuilder.Fragment.MakeMeHappy;
 import github.grace5921.TwrpBuilder.Fragment.NoNetwork;
 import github.grace5921.TwrpBuilder.Fragment.NotRooted;
 import github.grace5921.TwrpBuilder.Fragment.PreferencesFragment;
+import github.grace5921.TwrpBuilder.Fragment.StatusFragment;
 import github.grace5921.TwrpBuilder.app.LoginActivity;
 import github.grace5921.TwrpBuilder.app.SettingsActivity;
 import github.grace5921.TwrpBuilder.util.Config;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity
     private GithubReleasesFragment mFragmentRelApp;;
     private MakeMeHappy mMakeMeHappy;
     private DevsFragment mDevsFragment;
+    private StatusFragment statusFragment;
     /*Strings*/
     private String Email="anbook@g.com";
 
@@ -109,6 +111,7 @@ public class MainActivity extends AppCompatActivity
         mFragmentRelApp = new GithubReleasesFragment().setTargetURL(Config.URL_APP_RELEASES);
         mMakeMeHappy=new MakeMeHappy();
         mDevsFragment = new DevsFragment(getBaseContext());
+        statusFragment=new StatusFragment(getBaseContext());
         /*Replace Fragment*/
         if (RootChecker.isDeviceRooted()) {
             updateFragment(this.mBackupFragment);
@@ -248,6 +251,10 @@ public class MainActivity extends AppCompatActivity
         {
             updateFragment(mDevsFragment);
             setTitle("Devs stuff");
+        }else if (id==R.id.check_status)
+        {
+            updateFragment(statusFragment);
+            setTitle("Status");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

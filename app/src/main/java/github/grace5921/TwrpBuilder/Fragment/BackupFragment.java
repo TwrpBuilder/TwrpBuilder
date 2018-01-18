@@ -132,7 +132,7 @@ public class BackupFragment extends Fragment {
         /*Define Methods*/
 
         mFirebaseInstance = FirebaseDatabase.getInstance();
-        mUploader = mFirebaseInstance.getReference("Uploader");
+        mUploader = mFirebaseInstance.getReference("InQueue");
         mDownloader=mFirebaseInstance.getReference("Downloader");
         mFirebaseAuth=FirebaseAuth.getInstance();
         Email=mFirebaseAuth.getCurrentUser().getEmail();

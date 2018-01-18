@@ -11,6 +11,9 @@
                 android:id="@+id/nav_preference"
                 android:title="@string/settings" />
             <item
+                android:id="@+id/check_status"
+                android:title="Build Status" />
+            <item
                 android:id="@+id/nav_app_updates"
                 android:visible="false"
                 android:title="@string/app_updates" />

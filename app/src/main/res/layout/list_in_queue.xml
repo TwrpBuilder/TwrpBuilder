@@ -13,6 +13,13 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/list_user_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorInfo"
+        android:textSize="13sp" />
+
+    <TextView
         android:id="@+id/list_user_device"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,33 +39,4 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorInfo"
         android:textSize="13sp" />
-
-    <TextView
-        android:id="@+id/list_user_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorInfo"
-        android:textSize="13sp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:text="Files"
-        android:textAllCaps="false"
-        android:id="@+id/BtFile"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:text="Start Build"
-        android:id="@+id/bt_start_build"
-        android:textAllCaps="false"
-        android:layout_height="wrap_content" />
-    <Button
-        android:layout_width="wrap_content"
-        android:text="Build Done"
-        android:id="@+id/bt_build_done"
-        android:textAllCaps="false"
-        android:visibility="gone"
-        android:layout_height="wrap_content" />
-
 </LinearLayout>
