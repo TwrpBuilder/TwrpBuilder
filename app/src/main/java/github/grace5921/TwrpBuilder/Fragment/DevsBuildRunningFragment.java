@@ -116,33 +116,6 @@ public class DevsBuildRunningFragment extends Fragment {
                     }
                 });
 
-                /*btStartBuild.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        btBuildDone.setVisibility(View.VISIBLE);
-                        btStartBuild.setVisibility(View.GONE);
-                        mFirebaseInstance.getReference("RunningBuild").addListenerForSingleValueEvent(
-                                new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        for (DataSnapshot child: dataSnapshot.getChildren()) {
-                                            child.getRef().removeValue();
-                                        }
-                                    }
-
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-                                        Log.w("TodoApp", "getUser:onCancelled", databaseError.toException());
-                                    }
-                                });
-
-                        User user = new User(model.WBrand(),model.WBoard(),model.WModel(),model.WEmail(),model.WUid(),model.WFmcToken(),model.WtDate());
-                        mUploader.child(userId).setValue(user);
-                        System.out.println(model.WBrand()+model.WBoard()+model.WModel()+model.WEmail()+model.WtDate());
-                    }
-                });*/
-
                 btBuildDone.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

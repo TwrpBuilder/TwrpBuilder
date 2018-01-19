@@ -71,8 +71,8 @@ public class ActivitySubmitBuild extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 mFirebaseInstance.getReference("RunningBuild")
-                                        .orderByChild("Board")
-                                        .equalTo(Board)
+                                        .orderByChild("Uid")
+                                        .equalTo(Uid)
                                         .addListenerForSingleValueEvent(
                                                 new ValueEventListener() {
                                                     @Override
