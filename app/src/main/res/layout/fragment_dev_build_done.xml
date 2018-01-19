@@ -7,9 +7,7 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:id="@+id/lv_build_started"
-        android:layout_height="match_parent">
-
-    </ListView>
+        android:id="@+id/lv_build_done"
+        android:layout_height="match_parent"></ListView>
 
 </LinearLayout>
