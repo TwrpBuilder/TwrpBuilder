@@ -1,11 +1,15 @@
 package github.grace5921.TwrpBuilder.app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -21,6 +25,21 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+
 import github.grace5921.TwrpBuilder.MainActivity;
 import github.grace5921.TwrpBuilder.R;
 
@@ -33,6 +52,10 @@ public class LoginActivity extends AppCompatActivity {
     private LinearLayout btn_login_singup_linear;
     private TextInputLayout TextInputLayoutPass;
     private ImageView TeamWinLoginLogo,XdaLoginLogo;
+    private ArrayList<String> jsonArrayList;
+    private JSONObject json_data;
+    private JSONArray jsonArray;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() != null) {
+            new CheckAdminTask().execute();
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         }
@@ -212,6 +236,7 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                                     }
                                 } else {
+                                    new CheckAdminTask().execute();
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(intent);
                                     finish();
@@ -254,6 +279,82 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    private static String readAll(Reader rd) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        int cp;
+        while ((cp = rd.read()) != -1) {
+            sb.append((char) cp);
+        }
+        return sb.toString();
+    }
+
+
+    class CheckAdminTask extends AsyncTask<String, Void, Void> {
+
+        @Override
+        public Void doInBackground(String... params) {
+            try {
+
+                URL url = new URL("https://twrpbuilder.firebaseapp.com/app/admin.json");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                connection.setRequestMethod("GET");
+                connection.setRequestProperty("USER-AGENT", "Mozilla/5.0");
+                connection.setRequestProperty("ACCEPT-LANGUAGE", "en-US,en;0.5");
+
+                int responseCode = connection.getResponseCode();
+
+                final StringBuilder output = new StringBuilder("Request URL " + url);
+                output.append(System.getProperty("line.separator") + "Response Code " + responseCode);
+                output.append(System.getProperty("line.separator") + "Type " + "GET");
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String line = "";
+                StringBuilder responseOutput = new StringBuilder();
+                while ((line = br.readLine()) != null) {
+                    responseOutput.append(line );
+                }
+                br.close();
+
+                String json = responseOutput.toString();
+                jsonArray=new JSONArray(json);
+                jsonArrayList=new ArrayList<>();
+                for (int i=0;i<jsonArray.length();i++)
+                {
+                    json_data=jsonArray.getJSONObject(i);
+                    String addr=json_data.getString("email");
+                    jsonArrayList.add(addr);
+
+                }
+            } catch (MalformedURLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            System.out.println("Email: "+auth.getCurrentUser().getEmail());
+            for (int i=0;i<jsonArrayList.size();i++)
+            {
+                System.out.println(jsonArrayList.get(i));
+                if (auth.getCurrentUser().getEmail().equals(jsonArrayList.get(i)))
+                {
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putBoolean("admin",true);
+                    editor.apply();
+                    Toast.makeText(getBaseContext(),"Admin: true",Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
 
 }
 

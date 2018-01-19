@@ -2,6 +2,7 @@ package github.grace5921.TwrpBuilder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -20,6 +21,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -34,6 +36,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.twrpbuilder.rootchecker.RootChecker;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 import github.grace5921.TwrpBuilder.Fragment.BackupFragment;
 import github.grace5921.TwrpBuilder.Fragment.CreditsFragment;
 import github.grace5921.TwrpBuilder.Fragment.DevsFragment;
@@ -47,7 +55,6 @@ import github.grace5921.TwrpBuilder.Fragment.StatusFragment;
 import github.grace5921.TwrpBuilder.app.LoginActivity;
 import github.grace5921.TwrpBuilder.app.SettingsActivity;
 import github.grace5921.TwrpBuilder.util.Config;
-
 import static github.grace5921.TwrpBuilder.Fragment.BackupFragment.riversRef;
 
 public class MainActivity extends AppCompatActivity
@@ -335,7 +342,6 @@ public class MainActivity extends AppCompatActivity
     }
     private void hideItem()
     {
-        Toast.makeText(MainActivity.this,mUserEmail.getText(),Toast.LENGTH_LONG).show();
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         Menu nav_Menu = navigationView.getMenu();
         nav_Menu.findItem(R.id.nav_preference).setVisible(false);
@@ -344,16 +350,16 @@ public class MainActivity extends AppCompatActivity
         }else {
             nav_Menu.findItem(R.id.nav_backup).setVisible(false);
         }
-        if (mUserEmail.getText().equals(Email))
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean name = preferences.getBoolean("admin",false);
+        System.out.println("HOLY: "+name);
+        if(name==true)
         {
             nav_Menu.findItem(R.id.nav_dev_fragment).setVisible(true);
-        }
-        else
-        {
+        }else {
             nav_Menu.findItem(R.id.nav_dev_fragment).setVisible(false);
-
-            /*Can't do anything for your sorry*/
         }
+
     }
 
     @Override
