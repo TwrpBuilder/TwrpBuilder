@@ -5,11 +5,18 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import github.grace5921.TwrpBuilder.R;
 
@@ -18,7 +25,6 @@ import github.grace5921.TwrpBuilder.R;
  */
 
 public class StatusFragment extends Fragment {
-    private FragmentTabHost mTabHost;
     private Context context;
 
 
@@ -30,23 +36,49 @@ public class StatusFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_status,container,false);
-        mTabHost = (FragmentTabHost) view.findViewById(android.R.id.tabhost);
-        mTabHost.setup(getActivity(), getChildFragmentManager(),
-                R.id.tabcontent);
+        ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
+        DevsFragment.ViewPagerAdapter adapter = new DevsFragment.ViewPagerAdapter(getChildFragmentManager());
+        adapter.addFragment(new FragmentBuildStarted(), "Builds Running");
+        adapter.addFragment(new FragmentInQueue(), "Builds In Queue");
+        adapter.addFragment(new FragmentBuildDone(),"Builds Completed");
+        viewPager.setAdapter(adapter);
 
-        mTabHost.addTab(mTabHost.newTabSpec("Building").setIndicator("Building"),
-                FragmentBuildStarted.class, null);
-
-        mTabHost.addTab(mTabHost.newTabSpec("In Queue").setIndicator("In Queue"),
-                FragmentInQueue.class, null);
-
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
         return view;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mTabHost = null;
+    public static class ViewPagerAdapter extends FragmentPagerAdapter {
+
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+
+
     }
+
 
 }

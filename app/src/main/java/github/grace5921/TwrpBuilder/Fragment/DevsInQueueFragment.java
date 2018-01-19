@@ -115,7 +115,7 @@ public class DevsInQueueFragment extends Fragment {
                     public void onClick(View v) {
                         btBuildDone.setVisibility(View.VISIBLE);
                         btStartBuild.setVisibility(View.GONE);
-                        mFirebaseInstance.getReference("InQueue").addListenerForSingleValueEvent(
+                        mFirebaseInstance.getReference("InQueue").orderByChild("Board").equalTo(model.WBoard()).addListenerForSingleValueEvent(
                                 new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {

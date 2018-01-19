@@ -58,7 +58,7 @@ public class DevsBuildDoneFragment extends Fragment {
         mUploader = mFirebaseInstance.getReference("Builds");
         userId = mUploader.push().getKey();
         query = FirebaseDatabase.getInstance()
-                .getReference("RunningBuild");
+                .getReference("Builds");
 
         FirebaseListOptions<User> options = new FirebaseListOptions.Builder<User>()
                 .setLayout(R.layout.list_developer_stuff)

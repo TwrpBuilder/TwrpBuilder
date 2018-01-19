@@ -72,7 +72,7 @@ public class DevsBuildRunningFragment extends Fragment {
             protected void populateView(View v, final User model, int position) {
                 TextView tvEmail = v.findViewById(R.id.list_user_email);
                 TextView tvDevice = v.findViewById(R.id.list_user_device);
-                TextView tvBoard = v.findViewById(R.id.list_user_board);
+                final TextView tvBoard = v.findViewById(R.id.list_user_board);
                 TextView tvDate= v.findViewById(R.id.list_user_date);
                 TextView tvBrand = v.findViewById(R.id.list_user_brand);
                 Button btFiles=v.findViewById(R.id.BtFile);
@@ -140,6 +140,32 @@ public class DevsBuildRunningFragment extends Fragment {
                     }
                 });*/
 
+                btBuildDone.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mFirebaseInstance.getReference("RunningBuild")
+                                .orderByChild("Board")
+                                .equalTo(model.WBoard())
+                                .addListenerForSingleValueEvent(
+                                new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot child: dataSnapshot.getChildren()) {
+                                            child.getRef().removeValue();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        Log.w("TodoApp", "getUser:onCancelled", databaseError.toException());
+                                    }
+                                });
+                        User user = new User(model.WBrand(),model.WBoard(),model.WModel(),model.WEmail(),model.WUid(),model.WFmcToken(),model.WtDate());
+                        mUploader.child(userId).setValue(user);
+                        System.out.println(model.WBrand()+model.WBoard()+model.WModel()+model.WEmail()+model.WtDate());
+
+                    }
+                });
 
             }
         };
