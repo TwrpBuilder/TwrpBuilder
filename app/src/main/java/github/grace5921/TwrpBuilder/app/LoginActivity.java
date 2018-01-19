@@ -64,7 +64,6 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() != null) {
-            new CheckAdminTask().execute();
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         }
