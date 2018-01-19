@@ -2,6 +2,7 @@ package github.grace5921.TwrpBuilder.Fragment;
 
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -31,6 +32,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import github.grace5921.TwrpBuilder.R;
+import github.grace5921.TwrpBuilder.app.ActivitySubmitBuild;
+import github.grace5921.TwrpBuilder.util.Pbuild;
 import github.grace5921.TwrpBuilder.util.User;
 
 /**
@@ -51,7 +54,7 @@ public class DevsBuildRunningFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_devs_inqueue, container, false);
         storage = FirebaseStorage.getInstance();
         storageRef=storage.getReference();
@@ -143,26 +146,17 @@ public class DevsBuildRunningFragment extends Fragment {
                 btBuildDone.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mFirebaseInstance.getReference("RunningBuild")
-                                .orderByChild("Board")
-                                .equalTo(model.WBoard())
-                                .addListenerForSingleValueEvent(
-                                new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        for (DataSnapshot child: dataSnapshot.getChildren()) {
-                                            child.getRef().removeValue();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-                                        Log.w("TodoApp", "getUser:onCancelled", databaseError.toException());
-                                    }
-                                });
-                        User user = new User(model.WBrand(),model.WBoard(),model.WModel(),model.WEmail(),model.WUid(),model.WFmcToken(),model.WtDate());
-                        mUploader.child(userId).setValue(user);
-                        System.out.println(model.WBrand()+model.WBoard()+model.WModel()+model.WEmail()+model.WtDate());
+                       // User user = new User(model.WBrand(),model.WBoard(),model.WModel(),model.WEmail(),model.WUid(),model.WFmcToken(),model.WtDate());
+                        //mUploader.child(userId).setValue(user);
+                        Intent intent=new Intent(getContext(), ActivitySubmitBuild.class);
+                        intent.putExtra("Brand",model.WBrand());
+                        intent.putExtra("Board",model.WBoard());
+                        intent.putExtra("Model",model.WModel());
+                        intent.putExtra("Email",model.WEmail());
+                        intent.putExtra("Uid",model.WUid());
+                        intent.putExtra("Fmc",model.WFmcToken());
+                        intent.putExtra("Date",model.WtDate());
+                        startActivity(intent);
 
                     }
                 });

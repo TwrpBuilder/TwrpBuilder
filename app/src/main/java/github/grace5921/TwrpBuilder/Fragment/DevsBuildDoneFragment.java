@@ -1,6 +1,7 @@
 package github.grace5921.TwrpBuilder.Fragment;
 
 import android.app.DownloadManager;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -26,6 +27,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import github.grace5921.TwrpBuilder.R;
+import github.grace5921.TwrpBuilder.util.Pbuild;
 import github.grace5921.TwrpBuilder.util.User;
 
 /**
@@ -34,7 +36,7 @@ import github.grace5921.TwrpBuilder.util.User;
 
 public class DevsBuildDoneFragment extends Fragment {
 
-    private FirebaseListAdapter<User> adapter;
+    private FirebaseListAdapter<Pbuild> adapter;
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private ListView mListView;
@@ -60,14 +62,14 @@ public class DevsBuildDoneFragment extends Fragment {
         query = FirebaseDatabase.getInstance()
                 .getReference("Builds");
 
-        FirebaseListOptions<User> options = new FirebaseListOptions.Builder<User>()
+        FirebaseListOptions<Pbuild> options = new FirebaseListOptions.Builder<Pbuild>()
                 .setLayout(R.layout.list_developer_stuff)
-                .setQuery(query,User.class)
+                .setQuery(query,Pbuild.class)
                 .build();
 
-        adapter = new FirebaseListAdapter<User>(options) {
+        adapter = new FirebaseListAdapter<Pbuild>(options) {
             @Override
-            protected void populateView(View v, final User model, int position) {
+            protected void populateView(View v, final Pbuild model, int position) {
                 TextView tvEmail = v.findViewById(R.id.list_user_email);
                 TextView tvDevice = v.findViewById(R.id.list_user_device);
                 TextView tvBoard = v.findViewById(R.id.list_user_board);
@@ -76,13 +78,14 @@ public class DevsBuildDoneFragment extends Fragment {
                 Button btFiles=v.findViewById(R.id.BtFile);
                 final Button btStartBuild=v.findViewById(R.id.bt_start_build);
                 final Button btBuildDone=v.findViewById(R.id.bt_build_done);
-                tvDate.setText("Date : "+model.WtDate());
+                tvDate.setText("Date : "+model.WDate());
                 tvEmail.setText("Email : "+model.WEmail());
                 tvDevice.setText("Model : " + model.WModel());
                 tvBoard.setText("Board : "+model.WBoard());
                 tvBrand.setText("Brand : " +model.WBrand());
                 btStartBuild.setVisibility(View.GONE);
                 btBuildDone.setVisibility(View.VISIBLE);
+                btBuildDone.setText("Recovery");
 
                 btFiles.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -111,33 +114,14 @@ public class DevsBuildDoneFragment extends Fragment {
                     }
                 });
 
-                /*btStartBuild.setOnClickListener(new View.OnClickListener() {
+                btBuildDone.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        btBuildDone.setVisibility(View.VISIBLE);
-                        btStartBuild.setVisibility(View.GONE);
-                        mFirebaseInstance.getReference("RunningBuild").addListenerForSingleValueEvent(
-                                new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        for (DataSnapshot child: dataSnapshot.getChildren()) {
-                                            child.getRef().removeValue();
-                                        }
-                                    }
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(model.WUrl()));
+                        startActivity(browserIntent);
 
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-                                        Log.w("TodoApp", "getUser:onCancelled", databaseError.toException());
-                                    }
-                                });
-
-                        User user = new User(model.WBrand(),model.WBoard(),model.WModel(),model.WEmail(),model.WUid(),model.WFmcToken(),model.WtDate());
-                        mUploader.child(userId).setValue(user);
-                        System.out.println(model.WBrand()+model.WBoard()+model.WModel()+model.WEmail()+model.WtDate());
                     }
-                });*/
-
+                });
 
             }
         };

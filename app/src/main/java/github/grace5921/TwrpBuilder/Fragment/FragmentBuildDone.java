@@ -1,5 +1,7 @@
 package github.grace5921.TwrpBuilder.Fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import github.grace5921.TwrpBuilder.R;
+import github.grace5921.TwrpBuilder.util.Pbuild;
 import github.grace5921.TwrpBuilder.util.Queue;
 
 /**
@@ -24,7 +28,7 @@ import github.grace5921.TwrpBuilder.util.Queue;
 
 public class FragmentBuildDone extends Fragment {
     private Query query;
-    private FirebaseListAdapter<Queue> adapter;
+    private FirebaseListAdapter<Pbuild> adapter;
 
     @Nullable
     @Override
@@ -36,24 +40,33 @@ public class FragmentBuildDone extends Fragment {
         query = FirebaseDatabase.getInstance()
                 .getReference("Builds");
 
-        FirebaseListOptions<Queue> options = new FirebaseListOptions.Builder<Queue>()
+        FirebaseListOptions<Pbuild> options = new FirebaseListOptions.Builder<Pbuild>()
                 .setLayout(R.layout.list_in_queue)
-                .setQuery(query,Queue.class)
+                .setQuery(query,Pbuild.class)
                 .build();
 
-        adapter=new FirebaseListAdapter<Queue>(options) {
+        adapter=new FirebaseListAdapter<Pbuild>(options) {
             @Override
-            protected void populateView(View v, Queue model, int position) {
+            protected void populateView(View v, final Pbuild model, int position) {
                 TextView tvEmail = v.findViewById(R.id.list_user_email);
                 TextView tvDevice = v.findViewById(R.id.list_user_device);
                 TextView tvBoard = v.findViewById(R.id.list_user_board);
                 TextView tvDate= v.findViewById(R.id.list_user_date);
                 TextView tvBrand = v.findViewById(R.id.list_user_brand);
-                tvDate.setText("Date : "+model.MDate());
-                tvEmail.setText("Email : "+model.MEmail());
-                tvDevice.setText("Model : " + model.MModel());
-                tvBoard.setText("Board : "+model.MBoard());
-                tvBrand.setText("Brand : " +model.MBrand());
+                Button btDownload=v.findViewById(R.id.bt_download);
+                tvDate.setText("Date : "+model.WDate());
+                tvEmail.setText("Email : "+model.WEmail());
+                tvDevice.setText("Model : " + model.WModel());
+                tvBoard.setText("Board : "+model.WBoard());
+                tvBrand.setText("Brand : " +model.WBrand());
+                btDownload.setVisibility(View.VISIBLE);
+                btDownload.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(model.WUrl()));
+                        startActivity(browserIntent);
+                    }
+                });
 
             }
         };
