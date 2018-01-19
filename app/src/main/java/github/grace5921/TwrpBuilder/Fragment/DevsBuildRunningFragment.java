@@ -38,7 +38,6 @@ import github.grace5921.TwrpBuilder.util.User;
  */
 
 public class DevsBuildRunningFragment extends Fragment {
-    private Context context;
     private FirebaseListAdapter<User> adapter;
     private FirebaseStorage storage;
     private StorageReference storageRef;
@@ -48,11 +47,6 @@ public class DevsBuildRunningFragment extends Fragment {
     private FirebaseDatabase mFirebaseInstance;
     private String userId;
     DevsBuildRunningFragment(){
-
-    }
-    public DevsBuildRunningFragment(Context context)
-    {
-        this.context=context;
     }
 
     @Nullable
@@ -98,7 +92,7 @@ public class DevsBuildRunningFragment extends Fragment {
                         storageRef.child("queue/" + model.WBrand() + "/" + model.WBoard() + "/" + model.WModel() + "/TwrpBuilderRecoveryBackup.tar" ).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                DownloadManager downloadManager = (DownloadManager) context.getSystemService(getContext().DOWNLOAD_SERVICE);
+                                DownloadManager downloadManager = (DownloadManager) getContext().getSystemService(getContext().DOWNLOAD_SERVICE);
 
                                 DownloadManager.Request request = new DownloadManager.Request(uri);
                                 String fileName=model.WModel()+"-"+model.WBoard()+"-"+model.WEmail()+".tar";
@@ -110,12 +104,12 @@ public class DevsBuildRunningFragment extends Fragment {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception exception) {
-                                Toast.makeText(context,"Failed",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(),"Failed",Toast.LENGTH_SHORT).show();
                             }
                         });
 
 
-                        Toast.makeText(context,model.WModel(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),model.WModel(),Toast.LENGTH_SHORT).show();
                     }
                 });
 
