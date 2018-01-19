@@ -25,12 +25,6 @@ import github.grace5921.TwrpBuilder.R;
  */
 
 public class StatusFragment extends Fragment {
-    private Context context;
-
-
-    public StatusFragment(Context context){
-        this.context=context;
-    }
 
     @Nullable
     @Override
@@ -38,8 +32,8 @@ public class StatusFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_status,container,false);
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
         DevsFragment.ViewPagerAdapter adapter = new DevsFragment.ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new FragmentBuildStarted(), "Builds Running");
         adapter.addFragment(new FragmentInQueue(), "Builds In Queue");
+        adapter.addFragment(new FragmentBuildStarted(), "Builds Running");
         adapter.addFragment(new FragmentBuildDone(),"Builds Completed");
         viewPager.setAdapter(adapter);
 

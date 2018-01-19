@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity
         mFragmentRelApp = new GithubReleasesFragment().setTargetURL(Config.URL_APP_RELEASES);
         mMakeMeHappy=new MakeMeHappy();
         mDevsFragment = new DevsFragment(getBaseContext());
-        statusFragment=new StatusFragment(getBaseContext());
+        statusFragment=new StatusFragment();
         /*Replace Fragment*/
         if (RootChecker.isDeviceRooted()) {
             updateFragment(this.mBackupFragment);

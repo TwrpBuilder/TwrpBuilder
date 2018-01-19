@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -103,6 +104,8 @@ public class BackupFragment extends Fragment {
     private SimpleDateFormat simpleDateFormat;
     private String Date;
 
+    private StatusFragment statusFragment;
+
     @Nullable
     @Override
 
@@ -145,6 +148,7 @@ public class BackupFragment extends Fragment {
 
         simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy");
         Date = simpleDateFormat.format(calendar.getTime());
+        statusFragment=new StatusFragment();
 
 
         if(CheckDownloadedTwrp())
@@ -167,7 +171,10 @@ public class BackupFragment extends Fragment {
 
                     }*/
                     if(mDownloadRecovery.getVisibility()==View.VISIBLE)
-                    {mBuildDescription.setVisibility(View.GONE);}else{mBuildDescription.setText(R.string.build_description_text);}
+                    {mBuildDescription.setVisibility(View.GONE);}else{
+                        mBuildDescription.setText(R.string.build_description_text);
+                        updateFragment(statusFragment);
+                    }
 
 
                 }
@@ -432,6 +439,15 @@ System.out.println("path :="+recovery_output_path);
             Snackbar.make(getView(), "Backup Done", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
+    }
+
+    protected void updateFragment(Fragment fragment)
+    {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        ft.replace(R.id.content_frame, fragment);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 
 }
