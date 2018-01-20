@@ -350,7 +350,6 @@ public class MainActivity extends AppCompatActivity
         nav_Menu.findItem(R.id.nav_preference).setVisible(false);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean name = preferences.getBoolean("admin",false);
-        System.out.println("HOLY: "+name);
         if(name==true)
         {
             nav_Menu.findItem(R.id.nav_dev_fragment).setVisible(true);
