@@ -47,6 +47,7 @@ import github.grace5921.TwrpBuilder.Fragment.CreditsFragment;
 import github.grace5921.TwrpBuilder.Fragment.DevsFragment;
 import github.grace5921.TwrpBuilder.Fragment.GithubReleasesFragment;
 import github.grace5921.TwrpBuilder.Fragment.HelpFragment;
+import github.grace5921.TwrpBuilder.Fragment.MainFragment;
 import github.grace5921.TwrpBuilder.Fragment.MakeMeHappy;
 import github.grace5921.TwrpBuilder.Fragment.NoNetwork;
 import github.grace5921.TwrpBuilder.Fragment.NotRooted;
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity
     private MakeMeHappy mMakeMeHappy;
     private DevsFragment mDevsFragment;
     private StatusFragment statusFragment;
+    private MainFragment mainFragment;
     /*Strings*/
     private String Email="anbook@g.com";
 
@@ -119,9 +121,10 @@ public class MainActivity extends AppCompatActivity
         mMakeMeHappy=new MakeMeHappy();
         mDevsFragment = new DevsFragment(getBaseContext());
         statusFragment=new StatusFragment();
+        mainFragment=new MainFragment();
         /*Replace Fragment*/
         if (RootChecker.isDeviceRooted()) {
-            updateFragment(this.mBackupFragment);
+            updateFragment(this.mainFragment);
             setTitle("Request Twrp");
         }else {
             updateFragment(this.mNotRooted);
@@ -230,9 +233,9 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_backup) {
-            updateFragment(mBackupFragment);
-            setTitle("Request Twrp");
+        if (id == R.id.nav_home) {
+            updateFragment(mainFragment);
+            setTitle("Home");
         } else if (id == R.id.nav_help) {
             updateFragment(mHelpFragment);
             setTitle("Help");
@@ -345,11 +348,6 @@ public class MainActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         Menu nav_Menu = navigationView.getMenu();
         nav_Menu.findItem(R.id.nav_preference).setVisible(false);
-        if(RootChecker.isDeviceRooted()){
-            /*Good Job!*/
-        }else {
-            nav_Menu.findItem(R.id.nav_backup).setVisible(false);
-        }
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean name = preferences.getBoolean("admin",false);
         System.out.println("HOLY: "+name);

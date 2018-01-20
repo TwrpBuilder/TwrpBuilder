@@ -5,8 +5,8 @@
         <menu>
         <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_backup"
-            android:title="@string/backup" />
+            android:id="@+id/nav_home"
+            android:title="@string/home" />
             <item
                 android:id="@+id/nav_preference"
                 android:title="@string/settings" />

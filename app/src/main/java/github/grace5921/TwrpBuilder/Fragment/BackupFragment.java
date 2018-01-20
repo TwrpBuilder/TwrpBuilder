@@ -59,13 +59,12 @@ public class BackupFragment extends Fragment {
 
     /*Buttons*/
     public static Button mUploadBackup;
-    public static Button mDownloadRecovery;
     private Button mBackupButton;
     private Button mCancel;
     /*TextView*/
     private TextView ShowOutput;
     private TextView mBuildDescription;
-    private TextView mBuildApproved;
+
     /*Uri*/
     private Uri file;
     private UploadTask uploadTask;
@@ -74,11 +73,9 @@ public class BackupFragment extends Fragment {
     public static FirebaseStorage storage = FirebaseStorage.getInstance();
     public static StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/");
     public static StorageReference riversRef;
-    public static StorageReference getRecoveryStatus;
     private FirebaseDatabase mFirebaseInstance;
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mUploader;
-    private DatabaseReference mDownloader;
 
     /*Strings*/
     private String store_RecoveryPartitonPath_output;
@@ -98,7 +95,6 @@ public class BackupFragment extends Fragment {
     private NotificationCompat.Builder mBuilder;
 
     /**/
-    private ImageView mRequestApprovedImage;
 
     private Calendar calendar;
     private SimpleDateFormat simpleDateFormat;
@@ -115,34 +111,27 @@ public class BackupFragment extends Fragment {
 
         mBackupButton = (Button) view.findViewById(R.id.BackupRecovery);
         mUploadBackup = (Button) view.findViewById(R.id.UploadBackup);
-        mDownloadRecovery = (Button) view.findViewById(R.id.get_recovery);
         mCancel=(Button)view.findViewById(R.id.cancel_upload);
 
         /*TextView*/
 
         ShowOutput = (TextView) view.findViewById(R.id.show_output);
         mBuildDescription=(TextView)view.findViewById(R.id.build_description);
-        mBuildApproved=(TextView)view.findViewById(R.id.build_approved);
         /*Notification*/
         mNotifyManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
 
         /*Progress Bar*/
         mProgressBar=(ProgressBar)view.findViewById(R.id.progress_bar);
 
-        /*ImageView*/
-        mRequestApprovedImage=(ImageView)view.findViewById(R.id.twrp_request_approved);
-
         /*Define Methods*/
 
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mUploader = mFirebaseInstance.getReference("InQueue");
-        mDownloader=mFirebaseInstance.getReference("Downloader");
         mFirebaseAuth=FirebaseAuth.getInstance();
         Email=mFirebaseAuth.getCurrentUser().getEmail();
         Uid=mFirebaseAuth.getCurrentUser().getUid();
         file = Uri.fromFile(new File("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar"));
         riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + file.getLastPathSegment());
-        getRecoveryStatus = storageRef.child("output/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + "Twrp.img");
 
         calendar = Calendar.getInstance();
 
@@ -150,9 +139,6 @@ public class BackupFragment extends Fragment {
         Date = simpleDateFormat.format(calendar.getTime());
         statusFragment=new StatusFragment();
 
-
-        if(CheckDownloadedTwrp())
-        {mDownloadRecovery.setEnabled(false); mBuildDescription.setVisibility(View.GONE);}else{mDownloadRecovery.setEnabled(true); mBuildDescription.setVisibility(View.GONE);}
 
         /*Buttons Visibility */
         if (Config.checkBackup()) {
@@ -162,23 +148,10 @@ public class BackupFragment extends Fragment {
                     mUploadBackup.setVisibility(View.GONE);
                     mBuildDescription.setVisibility(View.VISIBLE);
                     ShowOutput.setVisibility(View.GONE);
-                   /* try {
-                        Intent intent = new Intent(getActivity(), AdsActivity.class);
-                        startActivity(intent);
-                    }catch (Exception exception)
-                    {
-                        Toast.makeText(getContext(), R.string.failed_to_load_ads, Toast.LENGTH_LONG).show();
-
-                    }*/
-                    if(mDownloadRecovery.getVisibility()==View.VISIBLE)
-                    {mBuildDescription.setVisibility(View.GONE);}else{
-                        mBuildDescription.setText(R.string.build_description_text);
-                        updateFragment(statusFragment);
-                    }
-
 
                 }
-            }).addOnFailureListener(new OnFailureListener() {
+            })
+                    .addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
                     mUploadBackup.setVisibility(View.VISIBLE);
@@ -186,23 +159,6 @@ public class BackupFragment extends Fragment {
 
             });
         }
-
-        getRecoveryStatus.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
-            @Override
-            public void onSuccess(StorageMetadata storageMetadata) {
-                mBuildApproved.setVisibility(View.VISIBLE);
-                mBuildDescription.setVisibility(View.GONE);
-                mBuildApproved.setText(R.string.request_approved);
-                mDownloadRecovery.setVisibility(View.VISIBLE);
-                mRequestApprovedImage.setVisibility(View.VISIBLE);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Uh-oh, an error occurred!
-            }
-
-        });
 
         /*Find Recovery (Works if device supports /dev/block/platfrom/---/by-name) else gives Exception*/
 
@@ -223,32 +179,16 @@ public class BackupFragment extends Fragment {
                 Toast.makeText(getContext(), R.string.device_not_supported, Toast.LENGTH_LONG).show();
             }
         }
-System.out.println("path :="+recovery_output_path);
         /*Check For Backup */
 
         if (Config.checkBackup()) {
             ShowOutput.setText(getString(R.string.recovery_mount_point) + recovery_output_path);
         } else {
-            if(mDownloadRecovery.getVisibility()==View.VISIBLE)
-            {
-                mBackupButton.setVisibility(View.GONE);
-            }else
-            {
-                mBackupButton.setVisibility(View.VISIBLE);
-                ShowOutput.setText(R.string.warning_about_recovery_backup);
-            }
+
         }
 
         /*On Click Listeners */
 
-        mDownloadRecovery.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        DownloadStream();
-                    }
-                }
-        );
 
         mBackupButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -274,13 +214,6 @@ System.out.println("path :="+recovery_output_path);
         );
 
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-
     }
 
     private void uploadStream() {
@@ -360,60 +293,6 @@ System.out.println("path :="+recovery_output_path);
 
         });
     }
-    private void DownloadStream()  {
-
-        File localFile = new File(Environment.getExternalStorageDirectory(), "TwrpBuilder/Twrp.img");
-       /* showHorizontalProgressDialog("Downloading", "Please wait...");*/
-        mDownloadRecovery.setEnabled(false);
-        getRecoveryStatus.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-               /* hideProgressDialog();*/
-                Snackbar.make(getView(), R.string.twrp_downloaded, Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                mBuilder.setContentText(getString(R.string.download_complete));
-                mBuilder.setOngoing(false);
-                mNotifyManager.notify(1, mBuilder.build());
-                mProgressBar.setVisibility(View.GONE);
-                mBuildDescription.setVisibility(View.GONE);
-                /*Intent intent = new Intent(getActivity(), AdsActivity.class);
-                startActivity(intent);*/
-                mCancel.setVisibility(View.GONE);
-                userId = mDownloader.push().getKey();
-                User user = new User(Build.BRAND, Build.BOARD,Build.MODEL,Email,Uid,refreshedToken,Date);
-                mDownloader.child(userId).setValue(user);
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-               /* hideProgressDialog();*/
-                Snackbar.make(getView(), R.string.failed_to_download, Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                mProgressBar.setVisibility(View.GONE);
-                mDownloadRecovery.setEnabled(true);
-                mBuildDescription.setVisibility(View.GONE);
-            }
-        }).addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                Log.d("Download in progress : ", String.valueOf(progress));
-                ShowOutput.setVisibility(View.VISIBLE);
-                ShowOutput.setText(String.valueOf(progress + "%"));
-                mBuilder =
-                        new NotificationCompat.Builder(getContext())
-                                .setSmallIcon(R.mipmap.ic_launcher)
-                                .setContentTitle(getString(R.string.downloading))
-                                .setAutoCancel(false)
-                                .setOngoing(true)
-                                .setContentText(getString(R.string.downloaded) + progress+"%" + "/100%"+")");
-                mNotifyManager.notify(1, mBuilder.build());
-                mProgressBar.setVisibility(View.VISIBLE);
-                mBuildDescription.setVisibility(View.GONE);
-             /*   updateProgress((int) progress);*/
-
-            }
-        });
-    }
 
     class BackupTask extends AsyncTask<Void,String,Void>
     {
@@ -439,15 +318,6 @@ System.out.println("path :="+recovery_output_path);
             Snackbar.make(getView(), "Backup Done", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
-    }
-
-    protected void updateFragment(Fragment fragment)
-    {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-
-        ft.replace(R.id.content_frame, fragment);
-        ft.addToBackStack(null);
-        ft.commit();
     }
 
 }
