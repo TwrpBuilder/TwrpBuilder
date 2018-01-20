@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
@@ -38,10 +39,10 @@ import github.grace5921.TwrpBuilder.util.Pbuild;
  */
 
 public class LBuildsForDeviceFragment extends Fragment {
-    private Query query;
     private FirebaseDatabase mFirebaseInstance;
     private Handler handler;
     private Runnable runnable;
+    private ProgressBar progressBar;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -49,20 +50,13 @@ public class LBuildsForDeviceFragment extends Fragment {
         mFirebaseInstance = FirebaseDatabase.getInstance();
 
         final ListView lvRunningBuilds= view.findViewById(R.id.lv_build_started);
+        progressBar=view.findViewById(R.id.pb_builds);
         final ArrayList<String> da = new ArrayList<String>();
         final ArrayList<String> e = new ArrayList<String>();
         final ArrayList<String> bo = new ArrayList<String>();
         final ArrayList<String> ba = new ArrayList<String>();
         final ArrayList<String> ur = new ArrayList<String>();
         final ArrayList<String> mo = new ArrayList<String>();
-
-        query = FirebaseDatabase.getInstance()
-                .getReference("Builds");
-
-        FirebaseListOptions<Pbuild> options = new FirebaseListOptions.Builder<Pbuild>()
-                .setLayout(R.layout.list_in_queue)
-                .setQuery(query,Pbuild.class)
-                .build();
 
         mFirebaseInstance.getReference("Builds")
                 .orderByChild("Model")
@@ -99,15 +93,17 @@ public class LBuildsForDeviceFragment extends Fragment {
             public void run() {
                 if(da.isEmpty()) {
                     Log.i("e","null");
+                    progressBar.setVisibility(View.VISIBLE);
                     CheckBuilds();
                 }else {
+                    progressBar.setVisibility(View.GONE);
                     lvRunningBuilds.setAdapter(new LBuildsSDeviceAdapter(getContext(),e,da,mo,bo,ba,ur));
                 }
             }
         };
         handler=new Handler();
         //lvRunningBuilds.setAdapter(adapter);
-        handler.postAtTime(runnable, 2000);
+        handler.postAtTime(runnable, 1000);
 
         return view;
 
