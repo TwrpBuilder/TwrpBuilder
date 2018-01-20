@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import github.grace5921.TwrpBuilder.R;
+import github.grace5921.TwrpBuilder.util.DateUtils;
 import github.grace5921.TwrpBuilder.util.Pbuild;
 
 /**
@@ -29,7 +30,7 @@ import github.grace5921.TwrpBuilder.util.Pbuild;
 
 public class ActivitySubmitBuild extends AppCompatActivity {
 
-    private String Brand,Board,Model,Email,Fmc,Uid,Date,userId;
+    private String Brand,Board,Model,Email,Fmc,Uid,userId;
     private Bundle bundle;
     private EditText edGetUri;
     private Button btSubmit;
@@ -51,7 +52,6 @@ public class ActivitySubmitBuild extends AppCompatActivity {
         Email = bundle.getString("Email");
         Fmc = bundle.getString("Fmc");
         Uid = bundle.getString("Uid");
-        Date = bundle.getString("Date");
         userId = mUploader.push().getKey();
 
         edGetUri=(EditText)findViewById(R.id.ed_url);
@@ -66,7 +66,7 @@ public class ActivitySubmitBuild extends AppCompatActivity {
                     if (URLUtil.isValidUrl(edGetUri.getText().toString()))
                     {
                         System.out.println("Url " + edGetUri.getText());
-                        pbuild = new Pbuild(Brand, Board, Model, Email, Uid, Fmc, Date, edGetUri.getText().toString());
+                        pbuild = new Pbuild(Brand, Board, Model, Email, Uid, Fmc, DateUtils.getDate(), edGetUri.getText().toString());
                         mUploader.child(userId).setValue(pbuild).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {

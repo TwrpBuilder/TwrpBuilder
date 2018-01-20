@@ -18,16 +18,22 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseListOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.Date;
+
 import github.grace5921.TwrpBuilder.R;
+import github.grace5921.TwrpBuilder.util.DateUtils;
 import github.grace5921.TwrpBuilder.util.Pbuild;
+import github.grace5921.TwrpBuilder.util.Queue;
 import github.grace5921.TwrpBuilder.util.User;
 
 /**
@@ -44,6 +50,8 @@ public class DevsBuildDoneFragment extends Fragment {
     private DatabaseReference mUploader;
     private FirebaseDatabase mFirebaseInstance;
     private String userId;
+    private Button btAddBack;
+    private User user;
 
     DevsBuildDoneFragment(){
         //Empty Constructor
@@ -57,7 +65,7 @@ public class DevsBuildDoneFragment extends Fragment {
         storageRef=storage.getReference();
         mListView = (ListView) view.findViewById(R.id.lv_build_done);
         mFirebaseInstance = FirebaseDatabase.getInstance();
-        mUploader = mFirebaseInstance.getReference("Builds");
+        mUploader = mFirebaseInstance.getReference("InQueue");
         userId = mUploader.push().getKey();
         query = FirebaseDatabase.getInstance()
                 .getReference("Builds");
@@ -78,6 +86,8 @@ public class DevsBuildDoneFragment extends Fragment {
                 Button btFiles=v.findViewById(R.id.BtFile);
                 final Button btStartBuild=v.findViewById(R.id.bt_start_build);
                 final Button btBuildDone=v.findViewById(R.id.bt_build_done);
+                btAddBack=v.findViewById(R.id.bt_add_back);
+                btAddBack.setVisibility(View.VISIBLE);
                 tvDate.setText("Date : "+model.WDate());
                 tvEmail.setText("Email : "+model.WEmail());
                 tvDevice.setText("Model : " + model.WModel());
@@ -120,6 +130,14 @@ public class DevsBuildDoneFragment extends Fragment {
                         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(model.WUrl()));
                         startActivity(browserIntent);
 
+                    }
+                });
+
+                btAddBack.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        user = new User(model.WBrand(),model.WBoard(),model.WModel(),model.WEmail(),model.WUid(),model.WFmcToken(), DateUtils.getDate());
+                        mUploader.child(userId).setValue(user);
                     }
                 });
 

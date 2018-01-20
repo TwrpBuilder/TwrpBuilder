@@ -128,7 +128,6 @@ public class DevsBuildRunningFragment extends Fragment {
                         intent.putExtra("Email",model.WEmail());
                         intent.putExtra("Uid",model.WUid());
                         intent.putExtra("Fmc",model.WFmcToken());
-                        intent.putExtra("Date",model.WtDate());
                         startActivity(intent);
 
                     }

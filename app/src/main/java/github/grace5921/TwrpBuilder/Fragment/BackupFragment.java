@@ -45,6 +45,7 @@ import java.util.List;
 import eu.chainfire.libsuperuser.Shell;
 import github.grace5921.TwrpBuilder.R;
 import github.grace5921.TwrpBuilder.util.Config;
+import github.grace5921.TwrpBuilder.util.DateUtils;
 import github.grace5921.TwrpBuilder.util.ShellExecuter;
 import github.grace5921.TwrpBuilder.util.User;
 
@@ -94,14 +95,6 @@ public class BackupFragment extends Fragment {
     private NotificationManager mNotifyManager;
     private NotificationCompat.Builder mBuilder;
 
-    /**/
-
-    private Calendar calendar;
-    private SimpleDateFormat simpleDateFormat;
-    private String Date;
-
-    private StatusFragment statusFragment;
-
     @Nullable
     @Override
 
@@ -132,12 +125,6 @@ public class BackupFragment extends Fragment {
         Uid=mFirebaseAuth.getCurrentUser().getUid();
         file = Uri.fromFile(new File("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar"));
         riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + file.getLastPathSegment());
-
-        calendar = Calendar.getInstance();
-
-        simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-        Date = simpleDateFormat.format(calendar.getTime());
-        statusFragment=new StatusFragment();
 
 
         /*Buttons Visibility */
@@ -238,7 +225,7 @@ public class BackupFragment extends Fragment {
                 startActivity(intent);*/
                 mCancel.setVisibility(View.GONE);
                 userId = mUploader.push().getKey();
-                User user = new User(Build.BRAND, Build.BOARD,Build.MODEL,Email,Uid,refreshedToken,Date);
+                User user = new User(Build.BRAND, Build.BOARD,Build.MODEL,Email,Uid,refreshedToken, DateUtils.getDate());
                 mUploader.child(userId).setValue(user);
 
             }
