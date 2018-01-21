@@ -7,9 +7,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -45,13 +48,15 @@ import github.grace5921.TwrpBuilder.R;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText inputEmail, inputPassword;
+    private TextInputEditText inputEmail, inputPassword;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
+    private TextView loginRegisterTitle;
     private Button btnSignup, btnLogin, btnReset, btnLogin2,btnSignUp,btnSignIn,btnCreateAccount;
-    private LinearLayout btn_login_singup_linear;
-    private TextInputLayout TextInputLayoutPass;
-    private ImageView TeamWinLoginLogo,XdaLoginLogo;
+    //private LinearLayout btn_login_singup_linear;
+    private CardView btn_login_singup_linear, login_cardView;
+    //private TextInputLayout TextInputLayoutPass;
+    private ImageView TeamWinLoginLogo;
     private ArrayList<String> jsonArrayList;
     private JSONObject json_data;
     private JSONArray jsonArray;
@@ -74,19 +79,19 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        inputEmail = (EditText) findViewById(R.id.email);
-        inputPassword = (EditText) findViewById(R.id.password);
+        loginRegisterTitle = findViewById(R.id.title_text);
+        inputEmail = (TextInputEditText) findViewById(R.id.email);
+        inputPassword = (TextInputEditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         btnSignup = (Button) findViewById(R.id.btn_signup);
         btnLogin = (Button) findViewById(R.id.btn_login);
         btnReset = (Button) findViewById(R.id.btn_reset_password);
         btnLogin2=(Button)findViewById(R.id.btn_login_2);
-        btn_login_singup_linear=(LinearLayout)findViewById(R.id.btn_login_singup_linear);
-        TextInputLayoutPass=(TextInputLayout)findViewById(R.id.text_input_layout_password);
+        btn_login_singup_linear=findViewById(R.id.btn_login_singup_linear);
+        login_cardView = findViewById(R.id.login_cardview);
+        //TextInputLayoutPass=(TextInputLayout)findViewById(R.id.text_input_layout_password);
         btn_login_singup_linear.setVisibility(View.VISIBLE);
-        XdaLoginLogo=(ImageView)findViewById(R.id.xda_login_logo);
         TeamWinLoginLogo=(ImageView)findViewById(R.id.teamwin_login_logo);
-        XdaLoginLogo.setVisibility(View.VISIBLE);
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
         btnSignIn = (Button) findViewById(R.id.sign_in_button);
         btnCreateAccount = (Button) findViewById(R.id.create_account_button);
@@ -100,12 +105,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 btnSignUp.setVisibility(View.VISIBLE);
                 btn_login_singup_linear.setVisibility(View.GONE);
+                login_cardView.setVisibility(View.VISIBLE);
+                loginRegisterTitle.setText("Register to continue");
                 inputEmail.setVisibility(View.VISIBLE);
-                TextInputLayoutPass.setVisibility(View.VISIBLE);
+                //TextInputLayoutPass.setVisibility(View.VISIBLE);
                 inputPassword.setVisibility(View.VISIBLE);
                 btnSignIn.setVisibility(View.VISIBLE);
                 TeamWinLoginLogo.setVisibility(View.VISIBLE);
-                XdaLoginLogo.setVisibility(View.GONE);
             }
         });
 
@@ -117,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                 btnCreateAccount.setVisibility(View.VISIBLE);
                 btnLogin2.setVisibility(View.VISIBLE);
                 btnReset.setVisibility(View.VISIBLE);
+                loginRegisterTitle.setText("Login to continue");
 
             }
         });
@@ -129,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                 btnSignUp.setVisibility(View.VISIBLE);
                 btnSignIn.setVisibility(View.VISIBLE);
                 btnReset.setVisibility(View.GONE);
+                loginRegisterTitle.setText("Register to continue");
             }
         });
 
@@ -191,11 +199,12 @@ public class LoginActivity extends AppCompatActivity {
                 btn_login_singup_linear.setVisibility(View.GONE);
                 btnLogin2.setVisibility(View.VISIBLE);
                 inputEmail.setVisibility(View.VISIBLE);
-                TextInputLayoutPass.setVisibility(View.VISIBLE);
+                login_cardView.setVisibility(View.VISIBLE);
+                //TextInputLayoutPass.setVisibility(View.VISIBLE);
+                loginRegisterTitle.setText("Login to continue");
                 inputPassword.setVisibility(View.VISIBLE);
                 btnReset.setVisibility(View.VISIBLE);
                 TeamWinLoginLogo.setVisibility(View.VISIBLE);
-                XdaLoginLogo.setVisibility(View.GONE);
                 btnCreateAccount.setVisibility(View.VISIBLE);
 
             }
@@ -256,12 +265,12 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        XdaLoginLogo.setVisibility(View.VISIBLE);
         btn_login_singup_linear.setVisibility(View.VISIBLE);
+        login_cardView.setVisibility(View.GONE);
         TeamWinLoginLogo.setVisibility(View.GONE);
         btnLogin2.setVisibility(View.GONE);
         inputEmail.setVisibility(View.GONE);
-        TextInputLayoutPass.setVisibility(View.GONE);
+        //TextInputLayoutPass.setVisibility(View.GONE);
         btnSignUp.setVisibility(View.GONE);
         btnReset.setVisibility(View.GONE);
         btnCreateAccount.setVisibility(View.GONE);
