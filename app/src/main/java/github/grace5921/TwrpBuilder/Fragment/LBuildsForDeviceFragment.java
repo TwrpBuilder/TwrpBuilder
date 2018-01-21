@@ -21,6 +21,7 @@ import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseListOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -43,11 +44,15 @@ public class LBuildsForDeviceFragment extends Fragment {
     private Handler handler;
     private Runnable runnable;
     private ProgressBar progressBar;
+    private TextView textView;
+    private DatabaseReference rootRef;
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_build_started,container,false);
         mFirebaseInstance = FirebaseDatabase.getInstance();
+        textView=(TextView)view.findViewById(R.id.tv_no_build);
+        rootRef = FirebaseDatabase.getInstance().getReference("Builds");
 
         final ListView lvRunningBuilds= view.findViewById(R.id.lv_build_started);
         progressBar=view.findViewById(R.id.pb_builds);
@@ -66,7 +71,7 @@ public class LBuildsForDeviceFragment extends Fragment {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 for (DataSnapshot data : dataSnapshot.getChildren()) {
-
+                                    textView.setVisibility(View.GONE);
                                     String date1=data.child("Date").getValue(String.class);
                                     String email1=data.child("Email").getValue(String.class);
                                     String model1=data.child("Model").getValue(String.class);
@@ -92,11 +97,13 @@ public class LBuildsForDeviceFragment extends Fragment {
             @Override
             public void run() {
                 if(da.isEmpty()) {
-                    Log.i("e","null");
                     progressBar.setVisibility(View.VISIBLE);
                     CheckBuilds();
+                    System.out.println("Out NULL");
                 }else {
                     progressBar.setVisibility(View.GONE);
+                    textView.setVisibility(View.GONE);
+                    System.out.println("Not NULL");
                     lvRunningBuilds.setAdapter(new LBuildsSDeviceAdapter(getContext(),e,da,mo,bo,ba,ur));
                 }
             }
@@ -111,7 +118,34 @@ public class LBuildsForDeviceFragment extends Fragment {
 
     public void CheckBuilds(){
         //do what you want
-        handler.postDelayed(runnable, 2000);
+
+        progressBar.setVisibility(View.VISIBLE);
+        rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                for (DataSnapshot snap: snapshot.getChildren()) {
+                    if (snap.child("Model").getValue(String.class).equals(Build.MODEL)) {
+                        progressBar.setVisibility(View.VISIBLE);
+                        handler.postDelayed(runnable, 1000);
+                        break;
+                    }
+                    else {
+                        textView.setText("No builds found");
+                        progressBar.setVisibility(View.GONE);
+                        textView.setVisibility(View.VISIBLE);
+                        handler.postDelayed(runnable, 1000);
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
