@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ import java.util.Date;
 
 import github.grace5921.TwrpBuilder.R;
 import github.grace5921.TwrpBuilder.util.DateUtils;
+import github.grace5921.TwrpBuilder.util.FirebaseProgressBar;
 import github.grace5921.TwrpBuilder.util.Pbuild;
 import github.grace5921.TwrpBuilder.util.Queue;
 import github.grace5921.TwrpBuilder.util.User;
@@ -60,10 +62,10 @@ public class DevsBuildDoneFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_dev_build_done, container, false);
+        final View view = inflater.inflate(R.layout.fragment_devs_inqueue, container, false);
         storage = FirebaseStorage.getInstance();
         storageRef=storage.getReference();
-        mListView = (ListView) view.findViewById(R.id.lv_build_done);
+        mListView = (ListView) view.findViewById(R.id.Lv_devs);
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mUploader = mFirebaseInstance.getReference("InQueue");
         userId = mUploader.push().getKey();
@@ -143,6 +145,11 @@ public class DevsBuildDoneFragment extends Fragment {
 
             }
         };
+
+        ProgressBar progressBar=(ProgressBar)view.findViewById(R.id.pb_builds);
+        TextView textView=(TextView)view.findViewById(R.id.tv_no_build);
+        new FirebaseProgressBar().start(progressBar,textView,adapter,"Builds");
+
         mListView.setAdapter(adapter);
 
         return view;

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
@@ -18,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import github.grace5921.TwrpBuilder.R;
+import github.grace5921.TwrpBuilder.util.FirebaseProgressBar;
 import github.grace5921.TwrpBuilder.util.Queue;
 import github.grace5921.TwrpBuilder.util.User;
 
@@ -32,9 +34,9 @@ public class FragmentInQueue extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_inqueue,container,false);
+        View view=inflater.inflate(R.layout.fragment_build_started,container,false);
 
-        ListView lvQueue= view.findViewById(R.id.lv_inqueue);
+        ListView lvQueue= view.findViewById(R.id.lv_build_started);
 
         query = FirebaseDatabase.getInstance()
                 .getReference("InQueue");
@@ -61,13 +63,11 @@ public class FragmentInQueue extends Fragment {
             }
         };
 
-        lvQueue.setAdapter(adapter);
+        ProgressBar progressBar=(ProgressBar)view.findViewById(R.id.pb_builds);
+        TextView textView=(TextView)view.findViewById(R.id.tv_no_build);
+        new FirebaseProgressBar().start(progressBar,textView,adapter,"InQueue");
 
-        if (lvQueue.getCount() == 0)
-        {
-            TextView textView=view.findViewById(R.id.tv_no_build);
-            textView.setVisibility(View.VISIBLE);
-        }
+        lvQueue.setAdapter(adapter);
 
         return view;
     }

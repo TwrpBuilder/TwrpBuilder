@@ -3,6 +3,7 @@ package github.grace5921.TwrpBuilder.Fragment;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +35,7 @@ import com.google.firebase.storage.StorageReference;
 
 import github.grace5921.TwrpBuilder.R;
 import github.grace5921.TwrpBuilder.app.ActivitySubmitBuild;
+import github.grace5921.TwrpBuilder.util.FirebaseProgressBar;
 import github.grace5921.TwrpBuilder.util.Pbuild;
 import github.grace5921.TwrpBuilder.util.User;
 
@@ -49,6 +52,7 @@ public class DevsBuildRunningFragment extends Fragment {
     private DatabaseReference mUploader;
     private FirebaseDatabase mFirebaseInstance;
     private String userId;
+
     DevsBuildRunningFragment(){
     }
 
@@ -135,6 +139,9 @@ public class DevsBuildRunningFragment extends Fragment {
 
             }
         };
+        ProgressBar progressBar=(ProgressBar)view.findViewById(R.id.pb_builds);
+        TextView textView=(TextView)view.findViewById(R.id.tv_no_build);
+        new FirebaseProgressBar().start(progressBar,textView,adapter,"RunningBuild");
         mListView.setAdapter(adapter);
 
         return view;

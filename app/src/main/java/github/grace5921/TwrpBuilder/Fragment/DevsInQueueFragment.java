@@ -2,6 +2,7 @@ package github.grace5921.TwrpBuilder.Fragment;
 
 import android.app.DownloadManager;
 import android.content.Context;
+import android.database.DataSetObserver;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import github.grace5921.TwrpBuilder.R;
+import github.grace5921.TwrpBuilder.util.FirebaseProgressBar;
 import github.grace5921.TwrpBuilder.util.User;
 
 /**
@@ -46,6 +49,7 @@ public class DevsInQueueFragment extends Fragment {
     private DatabaseReference mUploader;
     private FirebaseDatabase mFirebaseInstance;
     private String userId;
+    private ProgressBar progressBar;
     DevsInQueueFragment(){}
 
     @Nullable
@@ -55,6 +59,7 @@ public class DevsInQueueFragment extends Fragment {
         storage = FirebaseStorage.getInstance();
         storageRef=storage.getReference();
         mListView = (ListView) view.findViewById(R.id.Lv_devs);
+        progressBar=(ProgressBar)view.findViewById(R.id.pb_builds);
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mUploader = mFirebaseInstance.getReference("RunningBuild");
         userId = mUploader.push().getKey();
@@ -140,6 +145,11 @@ public class DevsInQueueFragment extends Fragment {
 
             }
         };
+
+        ProgressBar progressBar=(ProgressBar)view.findViewById(R.id.pb_builds);
+        TextView textView=(TextView)view.findViewById(R.id.tv_no_build);
+        new FirebaseProgressBar().start(progressBar,textView,adapter,"InQueue");
+
         mListView.setAdapter(adapter);
 
         return view;
