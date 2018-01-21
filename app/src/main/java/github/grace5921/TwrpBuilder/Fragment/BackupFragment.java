@@ -3,6 +3,7 @@ package github.grace5921.TwrpBuilder.Fragment;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -14,6 +15,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
+import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -150,27 +152,10 @@ public class BackupFragment extends Fragment {
 
         /*Find Recovery (Works if device supports /dev/block/platfrom/---/by-name) else gives Exception*/
 
-        try {
-            RecoveryPartitonPath = Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep RECOVERY");
-            store_RecoveryPartitonPath_output = String.valueOf(RecoveryPartitonPath);
-            parts = store_RecoveryPartitonPath_output.split("->\\s");
-            recovery_output_last_value = parts[1].split("\\]");
-            recovery_output_path = recovery_output_last_value[0];
-        } catch (Exception e) {
-            RecoveryPartitonPath = Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep recovery");
-            store_RecoveryPartitonPath_output = String.valueOf(RecoveryPartitonPath);
-            parts = store_RecoveryPartitonPath_output.split("->\\s");
-            try {
-                recovery_output_last_value = parts[1].split("\\]");
-                recovery_output_path = recovery_output_last_value[0];
-            } catch (Exception ExceptionE) {
-                Toast.makeText(getContext(), R.string.device_not_supported, Toast.LENGTH_LONG).show();
-            }
-        }
         /*Check For Backup */
 
         if (Config.checkBackup()) {
-            ShowOutput.setText(getString(R.string.recovery_mount_point) + recovery_output_path);
+            ShowOutput.setText(getString(R.string.recovery_mount_point) + RecoveryPath());
         } else {
 
         }
@@ -204,6 +189,41 @@ public class BackupFragment extends Fragment {
         );
 
         return view;
+    }
+
+
+    private String RecoveryPath() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String name = preferences.getString("recoveryPath", "");
+        System.out.println("RecoveryPath "+ name);
+        if (name == null) {
+            try {
+                RecoveryPartitonPath = Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep RECOVERY");
+                store_RecoveryPartitonPath_output = String.valueOf(RecoveryPartitonPath);
+                parts = store_RecoveryPartitonPath_output.split("->\\s");
+                recovery_output_last_value = parts[1].split("\\]");
+                recovery_output_path = recovery_output_last_value[0];
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("recoveryPath", recovery_output_path);
+                editor.apply();
+
+            } catch (Exception e) {
+                RecoveryPartitonPath = Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep recovery");
+                store_RecoveryPartitonPath_output = String.valueOf(RecoveryPartitonPath);
+                parts = store_RecoveryPartitonPath_output.split("->\\s");
+                try {
+                    recovery_output_last_value = parts[1].split("\\]");
+                    recovery_output_path = recovery_output_last_value[0];
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("recoveryPath", recovery_output_path);
+                    editor.apply();
+                } catch (Exception ExceptionE) {
+                    Toast.makeText(getContext(), R.string.device_not_supported, Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+        return name;
+
     }
 
     private void uploadStream() {
@@ -296,7 +316,7 @@ public class BackupFragment extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Shell.SU.run("dd if=" + recovery_output_path + " of=/sdcard/TwrpBuilder/recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` >  /sdcard/TwrpBuilder/mounts ; cd /sdcard/TwrpBuilder && tar -c recovery.img build.prop mounts > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
+            Shell.SU.run("dd if=" + RecoveryPath() + " of=/sdcard/TwrpBuilder/recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` >  /sdcard/TwrpBuilder/mounts ; cd /sdcard/TwrpBuilder && tar -c recovery.img build.prop mounts > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
             return null;
         }
 
@@ -305,7 +325,7 @@ public class BackupFragment extends Fragment {
             super.onPostExecute(aVoid);
             mProgressBar.setVisibility(View.GONE);
             mUploadBackup.setVisibility(View.VISIBLE);
-            ShowOutput.setText("Backed up recovery " + recovery_output_path);
+            ShowOutput.setText("Backed up recovery " + RecoveryPath());
             Snackbar.make(getView(), "Backup Done", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
