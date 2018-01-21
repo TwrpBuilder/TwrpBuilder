@@ -88,7 +88,6 @@ public class BackupFragment extends Fragment {
     private String Email;
     private String Uid;
     /*Progress Bar*/
-    private ProgressDialog mProgressDialog;
     private ProgressBar mProgressBar;
 
     /*Notification*/
@@ -145,6 +144,8 @@ public class BackupFragment extends Fragment {
                 }
 
             });
+        }else {
+            mBackupButton.setVisibility(View.VISIBLE);
         }
 
         /*Find Recovery (Works if device supports /dev/block/platfrom/---/by-name) else gives Exception*/
@@ -182,7 +183,9 @@ public class BackupFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         mBackupButton.setVisibility(View.GONE);
+                        ShowOutput.setText(getString(R.string.warning_about_recovery_backup));
                         ShowOutput.setVisibility(View.VISIBLE);
+                        mProgressBar.setVisibility(View.VISIBLE);
                         new BackupTask().execute();
                     }
                 }
@@ -300,6 +303,7 @@ public class BackupFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            mProgressBar.setVisibility(View.GONE);
             mUploadBackup.setVisibility(View.VISIBLE);
             ShowOutput.setText("Backed up recovery " + recovery_output_path);
             Snackbar.make(getView(), "Backup Done", Snackbar.LENGTH_LONG)
