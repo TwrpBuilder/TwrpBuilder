@@ -18,24 +18,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import github.grace5921.TwrpBuilder.R;
+import github.grace5921.TwrpBuilder.adapter.LBuildsSDeviceAdapter;
 
 /**
  * Created by androidlover5842 on 20/1/18.
  */
 
 public class MainFragment extends Fragment{
+    private BackupFragment backupFragment;
+    private LBuildsForDeviceFragment lBuildsForDeviceFragment;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_status,container,false);
         ViewPager viewPager = view.findViewById(R.id.pager);
+        backupFragment=new BackupFragment();
+        lBuildsForDeviceFragment=new LBuildsForDeviceFragment();
+
         DevsFragment.ViewPagerAdapter adapter = new DevsFragment.ViewPagerAdapter(getChildFragmentManager());
         if(RootChecker.isDeviceRooted()){
-            adapter.addFragment(new BackupFragment(), "Make Request");
+            adapter.addFragment(backupFragment, "Make Request");
         }else {
             adapter.addFragment(new NotRooted(), "Make Request");
         }
-        adapter.addFragment(new LBuildsForDeviceFragment(), "Builds for this device");
+        adapter.addFragment(lBuildsForDeviceFragment, "Builds for this device");
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = view.findViewById(R.id.tabs);

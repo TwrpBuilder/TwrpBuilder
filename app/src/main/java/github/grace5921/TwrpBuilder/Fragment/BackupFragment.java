@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -46,11 +47,13 @@ import java.util.List;
 
 import eu.chainfire.libsuperuser.Shell;
 import github.grace5921.TwrpBuilder.R;
+import github.grace5921.TwrpBuilder.app.AsyncUploadTask;
 import github.grace5921.TwrpBuilder.util.Config;
 import github.grace5921.TwrpBuilder.util.DateUtils;
 import github.grace5921.TwrpBuilder.util.ShellExecuter;
 import github.grace5921.TwrpBuilder.util.User;
 
+import static github.grace5921.TwrpBuilder.app.AsyncUploadTask.running;
 import static github.grace5921.TwrpBuilder.firebase.FirebaseInstanceIDService.refreshedToken;
 import static github.grace5921.TwrpBuilder.util.Config.CheckDownloadedTwrp;
 
@@ -95,12 +98,13 @@ public class BackupFragment extends Fragment {
     /*Notification*/
     private NotificationManager mNotifyManager;
     private NotificationCompat.Builder mBuilder;
+    private boolean attached, detached;
 
     @Nullable
     @Override
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_backup, container, false);
+        final View view = getView() != null ? getView() : inflater.inflate(R.layout.fragment_backup, container, false);
         /*Buttons*/
 
         mBackupButton = view.findViewById(R.id.BackupRecovery);
@@ -183,7 +187,8 @@ public class BackupFragment extends Fragment {
                         Snackbar.make(view, R.string.Uploading_please_wait, Snackbar.LENGTH_INDEFINITE)
                                 .setAction("Action", null).show();
                         //creating a new user
-                        uploadStream();
+                        new AsyncUploadTask(getContext(),view,ShowOutput,mCancel,mUploadBackup,mProgressBar).execute();
+                        //uploadStream();
                     }
                 }
         );
@@ -222,86 +227,13 @@ public class BackupFragment extends Fragment {
                 }
             }
         }
-        return name;
 
+        return name;
     }
 
-    private void uploadStream() {
-        riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + file.getLastPathSegment());
-        uploadTask = riversRef.putFile(file);
-        mUploadBackup.setEnabled(false);
-        /*showHorizontalProgressDialog("Uploading", "Please wait...");*/
-        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-              /*  hideProgressDialog();*/
-                Log.d("Status", "uploadStream : " + taskSnapshot.getTotalByteCount());
-                mUploadBackup.setVisibility(View.GONE);
-                Snackbar.make(getView(), getString(R.string.upload_finished), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                ShowOutput.setText(R.string.build_description_text);
-                mBuilder.setContentText(getString(R.string.upload_finished));
-                mBuilder.setOngoing(false);
-                mNotifyManager.notify(1, mBuilder.build());
-                mProgressBar.setVisibility(View.GONE);
-               /* Intent intent = new Intent(getActivity(), AdsActivity.class);
-                startActivity(intent);*/
-                mCancel.setVisibility(View.GONE);
-                userId = mUploader.push().getKey();
-                User user = new User(Build.BRAND, Build.BOARD,Build.MODEL,Email,Uid,refreshedToken, DateUtils.getDate());
-                mUploader.child(userId).setValue(user);
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                mUploadBackup.setVisibility(View.VISIBLE);
-                Snackbar.make(getView(), R.string.failed_to_upload, Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
-                mProgressBar.setVisibility(View.GONE);
-                mUploadBackup.setEnabled(true);
-                mCancel.setVisibility(View.GONE);
-                mBuilder.setContentText(getString(R.string.failed_to_upload));
-                mBuilder.setOngoing(false);
-                mNotifyManager.notify(1, mBuilder.build());
-                ShowOutput.setText(R.string.failed_to_upload);
-                /*hideProgressDialog();*/
-
-            }
-        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                final double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                Log.d("uploadDataInMemory progress : ", String.valueOf(progress));
-                ShowOutput.setVisibility(View.VISIBLE);
-                ShowOutput.setText(String.valueOf(progress + "%"));
-                mBuilder =
-                        new NotificationCompat.Builder(getContext())
-                                .setSmallIcon(R.mipmap.ic_launcher)
-                                .setContentTitle(getString(R.string.uploading))
-                                .setAutoCancel(false)
-                                .setOngoing(true)
-                                .setContentText(getString(R.string.uploaded) + progress+("%") + "/100%"+")");
-                mNotifyManager.notify(1, mBuilder.build());
-                mProgressBar.setVisibility(View.VISIBLE);
-                /*updateProgress((int) progress);*/
-                /*To cancel upload*/
-                mCancel.setVisibility(View.VISIBLE);
-                mCancel.setText("Cancel Upload");
-
-                mCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        uploadTask.cancel();
-                        mCancel.setVisibility(View.GONE);
-                        Snackbar.make(getView(), R.string.upload_cancelled, Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-                    }
-                });
-
-            }
-
-        });
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     class BackupTask extends AsyncTask<Void,String,Void>
