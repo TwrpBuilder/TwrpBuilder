@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +17,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseListOptions;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.database.SnapshotParser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,107 +51,66 @@ public class LBuildsForDeviceFragment extends Fragment {
     private ProgressBar progressBar;
     private TextView textView;
     private DatabaseReference rootRef;
+    private FirebaseListAdapter<Pbuild> adapter;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_build_started,container,false);
+        View view=inflater.inflate(R.layout.fragment_build_for_device,container,false);
         mFirebaseInstance = FirebaseDatabase.getInstance();
         textView=(TextView)view.findViewById(R.id.tv_no_build);
-        rootRef = FirebaseDatabase.getInstance().getReference("Builds");
+        rootRef = FirebaseDatabase.getInstance().getReference();
 
-        final ListView lvRunningBuilds= view.findViewById(R.id.lv_build_started);
+        ListView buildList = view.findViewById(R.id.build_list_view);
         progressBar=view.findViewById(R.id.pb_builds);
-        final ArrayList<String> da = new ArrayList<String>();
-        final ArrayList<String> e = new ArrayList<String>();
-        final ArrayList<String> bo = new ArrayList<String>();
-        final ArrayList<String> ba = new ArrayList<String>();
-        final ArrayList<String> ur = new ArrayList<String>();
-        final ArrayList<String> mo = new ArrayList<String>();
 
-        mFirebaseInstance.getReference("Builds")
-                .orderByChild("Model")
-                .equalTo(Build.MODEL)
-                .addListenerForSingleValueEvent(
-                        new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                                    textView.setVisibility(View.GONE);
-                                    String date1=data.child("Date").getValue(String.class);
-                                    String email1=data.child("Email").getValue(String.class);
-                                    String model1=data.child("Model").getValue(String.class);
-                                    String board1=data.child("Board").getValue(String.class);
-                                    String brand1=data.child("Brand").getValue(String.class);
-                                    String url1=data.child("Url").getValue(String.class);
-                                    da.add(date1);
-                                    e.add(email1);
-                                    bo.add(board1);
-                                    ba.add(brand1);
-                                    ur.add(url1);
-                                    mo.add(model1);
-                                }
-                            }
+        Query query = FirebaseDatabase.getInstance().getReference().child("Builds").orderByChild("Model").equalTo(Build.MODEL);
+        FirebaseListOptions<Pbuild> options = new FirebaseListOptions.Builder<Pbuild>()
+                .setLayout(R.layout.list_in_queue)
+                .setQuery(query, new SnapshotParser<Pbuild>() {
+                    @NonNull
+                    @Override
+                    public Pbuild parseSnapshot(@NonNull DataSnapshot snapshot) {
+                        Pbuild model;
+                        model = snapshot.getValue(Pbuild.class);
+                        return model;
+                    }
+                })
+                .build();
 
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-
-        runnable = new Runnable() {
+        adapter=new FirebaseListAdapter<Pbuild>(options) {
             @Override
-            public void run() {
-                if(da.isEmpty()) {
-                    progressBar.setVisibility(View.VISIBLE);
-                    CheckBuilds();
-                    System.out.println("Out NULL");
-                }else {
-                    progressBar.setVisibility(View.GONE);
-                    textView.setVisibility(View.GONE);
-                    System.out.println("Not NULL");
-                    lvRunningBuilds.setAdapter(new LBuildsSDeviceAdapter(getContext(),e,da,mo,bo,ba,ur));
-                }
+            protected void populateView(View v, final Pbuild model, int position) {
+                TextView tvEmail = v.findViewById(R.id.list_user_email);
+                TextView tvDevice = v.findViewById(R.id.list_user_device);
+                TextView tvBoard = v.findViewById(R.id.list_user_board);
+                TextView tvDate= v.findViewById(R.id.list_user_date);
+                TextView tvBrand = v.findViewById(R.id.list_user_brand);
+                Button btDownload=v.findViewById(R.id.bt_download);
+                tvDate.setText("Date : "+model.WDate());
+                tvEmail.setText("Email : "+model.WEmail());
+                tvDevice.setText("Model : " + model.WModel());
+                tvBoard.setText("Board : "+model.WBoard());
+                tvBrand.setText("Brand : " +model.WBrand());
+                btDownload.setVisibility(View.VISIBLE);
+                btDownload.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(model.WUrl()));
+                        startActivity(browserIntent);
+                    }
+                });
+
             }
         };
-        handler=new Handler();
-        //lvRunningBuilds.setAdapter(adapter);
-        handler.postAtTime(runnable, 1000);
+
+        buildList.setAdapter(adapter);
 
         return view;
-
     }
 
-    public void CheckBuilds(){
-        //do what you want
-
-        progressBar.setVisibility(View.VISIBLE);
-        rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-
-                for (DataSnapshot snap: snapshot.getChildren()) {
-                    if (snap.child("Model").getValue(String.class).equals(Build.MODEL)) {
-                        progressBar.setVisibility(View.VISIBLE);
-                        handler.postDelayed(runnable, 1000);
-                        break;
-                    }
-                    else {
-                        textView.setText("No builds found");
-                        progressBar.setVisibility(View.GONE);
-                        textView.setVisibility(View.VISIBLE);
-                        handler.postDelayed(runnable, 1000);
-                    }
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
     }
-
-
 }

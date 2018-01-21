@@ -2,6 +2,7 @@ package github.grace5921.TwrpBuilder.app;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -18,7 +19,7 @@ import github.grace5921.TwrpBuilder.R;
 
 public class ResetPasswordActivity extends AppCompatActivity {
 
-    private EditText inputEmail;
+    private TextInputEditText inputEmail;
     private Button btnReset, btnBack;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
@@ -28,7 +29,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
 
-        inputEmail = (EditText) findViewById(R.id.email);
+        inputEmail = (TextInputEditText) findViewById(R.id.email);
         btnReset = (Button) findViewById(R.id.btn_reset_password);
         btnBack = (Button) findViewById(R.id.btn_back);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
