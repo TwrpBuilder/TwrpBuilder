@@ -15,15 +15,16 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseListOptions;
 import com.firebase.ui.database.SnapshotParser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import github.grace5921.TwrpBuilder.R;
 import github.grace5921.TwrpBuilder.util.FirebaseProgressBar;
@@ -40,7 +41,6 @@ public class LBuildsForDeviceFragment extends Fragment {
     private ProgressBar progressBar;
     private TextView textView;
     private DatabaseReference rootRef;
-    boolean isChildPresent;
     private FirebaseListAdapter<Pbuild> adapter;
     @Nullable
     @Override
@@ -60,7 +60,6 @@ public class LBuildsForDeviceFragment extends Fragment {
                     @NonNull
                     @Override
                     public Pbuild parseSnapshot(@NonNull DataSnapshot snapshot) {
-                        isChildPresent = snapshot.hasChildren();
                         Pbuild model;
                         model = snapshot.getValue(Pbuild.class);
                         return model;
@@ -94,21 +93,33 @@ public class LBuildsForDeviceFragment extends Fragment {
             }
         };
 
+
+        ProgressBar progressBar=(ProgressBar)view.findViewById(R.id.pb_builds);
+        final TextView textView=(TextView)view.findViewById(R.id.tv_no_build);
         new FirebaseProgressBar().start(progressBar,textView,adapter,"Builds");
 
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists())
+                {
+                    textView.setText("No builds found");
+                    textView.setVisibility(View.VISIBLE);
+
+                }
+                else {
+                    textView.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         buildList.setAdapter(adapter);
 
-        if (isChildPresent){
-            textView.setText("No builds found");
-            textView.setVisibility(View.VISIBLE);
-            progressBar.setVisibility(View.GONE);
-        }
-        else {
-            textView.setVisibility(View.GONE);
-        }
-
         return view;
-
     }
 
     @Override
