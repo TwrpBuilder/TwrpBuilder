@@ -66,14 +66,14 @@ public class DevsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_devs, container, false);
 
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
+        ViewPager viewPager = view.findViewById(R.id.pager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new DevsBuildRunningFragment(), "Builds Running");
         adapter.addFragment(new DevsInQueueFragment(), "Builds In Queue");
         adapter.addFragment(new DevsBuildDoneFragment(),"Builds Completed");
         viewPager.setAdapter(adapter);
 
-        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
+        TabLayout tabLayout = view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         return view;

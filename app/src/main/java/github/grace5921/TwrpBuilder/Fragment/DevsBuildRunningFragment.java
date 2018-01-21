@@ -62,7 +62,7 @@ public class DevsBuildRunningFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_devs_inqueue, container, false);
         storage = FirebaseStorage.getInstance();
         storageRef=storage.getReference();
-        mListView = (ListView) view.findViewById(R.id.Lv_devs);
+        mListView = view.findViewById(R.id.Lv_devs);
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mUploader = mFirebaseInstance.getReference("Builds");
         userId = mUploader.push().getKey();
@@ -139,8 +139,8 @@ public class DevsBuildRunningFragment extends Fragment {
 
             }
         };
-        ProgressBar progressBar=(ProgressBar)view.findViewById(R.id.pb_builds);
-        TextView textView=(TextView)view.findViewById(R.id.tv_no_build);
+        ProgressBar progressBar= view.findViewById(R.id.pb_builds);
+        TextView textView= view.findViewById(R.id.tv_no_build);
         new FirebaseProgressBar().start(progressBar,textView,adapter,"RunningBuild");
         mListView.setAdapter(adapter);
 

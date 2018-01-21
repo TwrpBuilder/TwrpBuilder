@@ -54,8 +54,8 @@ public class ActivitySubmitBuild extends AppCompatActivity {
         Uid = bundle.getString("Uid");
         userId = mUploader.push().getKey();
 
-        edGetUri=(EditText)findViewById(R.id.ed_url);
-        btSubmit=(Button)findViewById(R.id.bt_submit);
+        edGetUri= findViewById(R.id.ed_url);
+        btSubmit= findViewById(R.id.bt_submit);
 
         btSubmit.setOnClickListener(new View.OnClickListener() {
             @Override

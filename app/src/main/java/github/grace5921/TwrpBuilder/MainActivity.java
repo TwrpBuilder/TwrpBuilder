@@ -95,20 +95,20 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mFirebaseAuth=FirebaseAuth.getInstance();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navHeaderView= navigationView.inflateHeaderView(R.layout.nav_header_main);
-        mUserEmail = (TextView) navHeaderView.findViewById(R.id.user_email);
+        mUserEmail = navHeaderView.findViewById(R.id.user_email);
 
         /*Fragments*/
         mBackupFragment=new BackupFragment();
@@ -131,14 +131,14 @@ public class MainActivity extends AppCompatActivity
             setTitle("Device Not Rooted :(");
         }
         /*ad view*/
-        mAdView = (AdView) findViewById(R.id.adView);
-        mAdView1 = (AdView) findViewById(R.id.adView1);
-        mAdView2 = (AdView) findViewById(R.id.adView2);
-        mAdView3 = (AdView) findViewById(R.id.adView3);
-        mAdView4 = (AdView) findViewById(R.id.adView4);
+        mAdView = findViewById(R.id.adView);
+        mAdView1 = findViewById(R.id.adView1);
+        mAdView2 = findViewById(R.id.adView2);
+        mAdView3 = findViewById(R.id.adView3);
+        mAdView4 = findViewById(R.id.adView4);
 
         /*Text View*/
-        mUserEmail=(TextView)navHeaderView.findViewById(R.id.user_email);
+        mUserEmail= navHeaderView.findViewById(R.id.user_email);
 
       /*  AdRequest adRequest = new AdRequest.Builder()
                 .build();
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity
             setTitle("Status");
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -345,7 +345,7 @@ public class MainActivity extends AppCompatActivity
     }
     private void hideItem()
     {
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         Menu nav_Menu = navigationView.getMenu();
         nav_Menu.findItem(R.id.nav_preference).setVisible(false);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);

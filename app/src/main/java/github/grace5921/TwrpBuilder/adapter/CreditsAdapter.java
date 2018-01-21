@@ -29,8 +29,8 @@ public class CreditsAdapter extends GithubAdapterIDEA
         if (convertView == null)
             convertView = mInflater.inflate(R.layout.list_credits, parent, false);
 
-        TextView text1 = (TextView) convertView.findViewById(R.id.list_credits_name);
-        TextView text2 = (TextView) convertView.findViewById(R.id.list_credits_contributions);
+        TextView text1 = convertView.findViewById(R.id.list_credits_name);
+        TextView text2 = convertView.findViewById(R.id.list_credits_contributions);
         JSONObject release = (JSONObject) getItem(position);
 
         try

@@ -76,25 +76,25 @@ public class LoginActivity extends AppCompatActivity {
         // set the view now
         setContentView(R.layout.activity_login);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         loginRegisterTitle = findViewById(R.id.title_text);
-        inputEmail = (TextInputEditText) findViewById(R.id.email);
-        inputPassword = (TextInputEditText) findViewById(R.id.password);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        btnSignup = (Button) findViewById(R.id.btn_signup);
-        btnLogin = (Button) findViewById(R.id.btn_login);
-        btnReset = (Button) findViewById(R.id.btn_reset_password);
-        btnLogin2=(Button)findViewById(R.id.btn_login_2);
+        inputEmail = findViewById(R.id.email);
+        inputPassword = findViewById(R.id.password);
+        progressBar = findViewById(R.id.progressBar);
+        btnSignup = findViewById(R.id.btn_signup);
+        btnLogin = findViewById(R.id.btn_login);
+        btnReset = findViewById(R.id.btn_reset_password);
+        btnLogin2= findViewById(R.id.btn_login_2);
         btn_login_singup_linear=findViewById(R.id.btn_login_singup_linear);
         login_cardView = findViewById(R.id.login_cardview);
         //TextInputLayoutPass=(TextInputLayout)findViewById(R.id.text_input_layout_password);
         btn_login_singup_linear.setVisibility(View.VISIBLE);
-        TeamWinLoginLogo=(ImageView)findViewById(R.id.teamwin_login_logo);
-        btnSignUp = (Button) findViewById(R.id.sign_up_button);
-        btnSignIn = (Button) findViewById(R.id.sign_in_button);
-        btnCreateAccount = (Button) findViewById(R.id.create_account_button);
+        TeamWinLoginLogo= findViewById(R.id.teamwin_login_logo);
+        btnSignUp = findViewById(R.id.sign_up_button);
+        btnSignIn = findViewById(R.id.sign_in_button);
+        btnCreateAccount = findViewById(R.id.create_account_button);
 
 
         //Get Firebase auth instance

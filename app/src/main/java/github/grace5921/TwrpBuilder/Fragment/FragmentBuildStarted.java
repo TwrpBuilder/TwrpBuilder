@@ -63,8 +63,8 @@ public class FragmentBuildStarted extends Fragment {
 
         lvRunningBuilds.setAdapter(adapter);
 
-        ProgressBar progressBar=(ProgressBar)view.findViewById(R.id.pb_builds);
-        TextView textView=(TextView)view.findViewById(R.id.tv_no_build);
+        ProgressBar progressBar= view.findViewById(R.id.pb_builds);
+        TextView textView= view.findViewById(R.id.tv_no_build);
         new FirebaseProgressBar().start(progressBar,textView,adapter,"RunningBuild");
 
         return view;

@@ -102,19 +102,19 @@ public class BackupFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_backup, container, false);
         /*Buttons*/
 
-        mBackupButton = (Button) view.findViewById(R.id.BackupRecovery);
-        mUploadBackup = (Button) view.findViewById(R.id.UploadBackup);
-        mCancel=(Button)view.findViewById(R.id.cancel_upload);
+        mBackupButton = view.findViewById(R.id.BackupRecovery);
+        mUploadBackup = view.findViewById(R.id.UploadBackup);
+        mCancel= view.findViewById(R.id.cancel_upload);
 
         /*TextView*/
 
-        ShowOutput = (TextView) view.findViewById(R.id.show_output);
-        mBuildDescription=(TextView)view.findViewById(R.id.build_description);
+        ShowOutput = view.findViewById(R.id.show_output);
+        mBuildDescription= view.findViewById(R.id.build_description);
         /*Notification*/
         mNotifyManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
 
         /*Progress Bar*/
-        mProgressBar=(ProgressBar)view.findViewById(R.id.progress_bar);
+        mProgressBar= view.findViewById(R.id.progress_bar);
 
         /*Define Methods*/
 

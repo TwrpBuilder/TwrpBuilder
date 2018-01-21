@@ -67,10 +67,10 @@ public class GithubReleasesAdapter extends GithubAdapterIDEA
 		if (convertView == null)
 			convertView = mInflater.inflate(R.layout.list_release, parent, false);
 
-		TextView text1 = (TextView) convertView.findViewById(R.id.list_release_text1);
-		TextView text2 = (TextView) convertView.findViewById(R.id.list_release_text2);
-		TextView betaWarningText = (TextView) convertView.findViewById(R.id.list_release_beta_release_warning);
-		final Button actionButton = (Button) convertView.findViewById(R.id.list_release_action_button);
+		TextView text1 = convertView.findViewById(R.id.list_release_text1);
+		TextView text2 = convertView.findViewById(R.id.list_release_text2);
+		TextView betaWarningText = convertView.findViewById(R.id.list_release_beta_release_warning);
+		final Button actionButton = convertView.findViewById(R.id.list_release_action_button);
 
 		convertView.setOnClickListener(new View.OnClickListener()
 		{

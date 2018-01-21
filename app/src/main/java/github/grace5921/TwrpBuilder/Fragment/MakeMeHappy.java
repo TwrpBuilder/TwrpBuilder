@@ -23,8 +23,8 @@ public class MakeMeHappy extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_make_me_happy, container, false);
-        LoadAds=(Button)view.findViewById(R.id.btn_watch_ads);
-/*   LoadAdstextView=(Button)view.findViewById(R.id.watch_ads_textview);*/
+        LoadAds= view.findViewById(R.id.btn_watch_ads);
+/*   LoadAdstextView= view.findViewById(R.id.watch_ads_textview);*/
         LoadAds.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
