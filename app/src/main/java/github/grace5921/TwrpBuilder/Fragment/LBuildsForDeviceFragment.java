@@ -35,36 +35,18 @@ import github.grace5921.TwrpBuilder.util.Pbuild;
  */
 
 public class LBuildsForDeviceFragment extends Fragment {
-    private FirebaseDatabase mFirebaseInstance;
-    private Handler handler;
-    private Runnable runnable;
-    private ProgressBar progressBar;
-    private TextView textView;
-    private DatabaseReference rootRef;
     private FirebaseListAdapter<Pbuild> adapter;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_build_for_device,container,false);
-        mFirebaseInstance = FirebaseDatabase.getInstance();
-        textView=(TextView)view.findViewById(R.id.tv_no_build);
-        rootRef = FirebaseDatabase.getInstance().getReference();
 
         ListView buildList = view.findViewById(R.id.build_list_view);
-        progressBar=view.findViewById(R.id.pb_builds);
 
         Query query = FirebaseDatabase.getInstance().getReference().child("Builds").orderByChild("Model").equalTo(Build.MODEL);
         FirebaseListOptions<Pbuild> options = new FirebaseListOptions.Builder<Pbuild>()
                 .setLayout(R.layout.list_in_queue)
-                .setQuery(query, new SnapshotParser<Pbuild>() {
-                    @NonNull
-                    @Override
-                    public Pbuild parseSnapshot(@NonNull DataSnapshot snapshot) {
-                        Pbuild model;
-                        model = snapshot.getValue(Pbuild.class);
-                        return model;
-                    }
-                })
+                .setQuery(query, Pbuild.class)
                 .build();
 
         adapter=new FirebaseListAdapter<Pbuild>(options) {
