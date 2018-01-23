@@ -173,6 +173,7 @@ public class BackupFragment extends Fragment {
             mBuildDescription.setVisibility(View.VISIBLE);
             Snackbar.make(getView(), R.string.upload_finished, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
+            fromI=false;
         }
         else {
             mUploadBackup.setVisibility(View.VISIBLE);
