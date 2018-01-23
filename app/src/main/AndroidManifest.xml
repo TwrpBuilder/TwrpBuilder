@@ -52,6 +52,7 @@
             android:label="Ads"/>
 
         <activity android:name=".app.ActivitySubmitBuild"/>
+        <activity android:name=".app.UploaderActivity"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"

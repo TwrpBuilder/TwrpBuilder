@@ -1,28 +1,19 @@
 package github.grace5921.TwrpBuilder.Fragment;
 
-import android.app.NotificationManager;
-import android.app.ProgressDialog;
-import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,32 +21,24 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+
 import java.util.List;
 
 import eu.chainfire.libsuperuser.Shell;
 import github.grace5921.TwrpBuilder.R;
-import github.grace5921.TwrpBuilder.app.AsyncUploadTask;
+import github.grace5921.TwrpBuilder.app.UploaderActivity;
 import github.grace5921.TwrpBuilder.util.Config;
-import github.grace5921.TwrpBuilder.util.DateUtils;
 import github.grace5921.TwrpBuilder.util.ShellExecuter;
-import github.grace5921.TwrpBuilder.util.User;
 
-import static github.grace5921.TwrpBuilder.app.AsyncUploadTask.running;
-import static github.grace5921.TwrpBuilder.firebase.FirebaseInstanceIDService.refreshedToken;
-import static github.grace5921.TwrpBuilder.util.Config.CheckDownloadedTwrp;
+import static github.grace5921.TwrpBuilder.app.UploaderActivity.fromI;
+import static github.grace5921.TwrpBuilder.app.UploaderActivity.result;
+
 
 /**
  * Created by Sumit on 19.10.2016.
@@ -66,14 +49,13 @@ public class BackupFragment extends Fragment {
     /*Buttons*/
     public static Button mUploadBackup;
     private Button mBackupButton;
-    private Button mCancel;
-    /*TextView*/
-    private TextView ShowOutput;
-    private TextView mBuildDescription;
 
-    /*Uri*/
-    private Uri file;
-    private UploadTask uploadTask;
+    /*TextView*/
+    private TextView mBuildDescription;
+    private TextView ShowOutput;
+
+    /*ProgressBar*/
+    ProgressBar mProgressBar;
 
     /*FireBase*/
     public static FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -81,7 +63,6 @@ public class BackupFragment extends Fragment {
     public static StorageReference riversRef;
     private FirebaseDatabase mFirebaseInstance;
     private FirebaseAuth mFirebaseAuth;
-    private DatabaseReference mUploader;
 
     /*Strings*/
     private String store_RecoveryPartitonPath_output;
@@ -89,16 +70,9 @@ public class BackupFragment extends Fragment {
     private String[] recovery_output_last_value;
     private String recovery_output_path;
     private List<String> RecoveryPartitonPath;
-    private String userId;
-    private String Email;
-    private String Uid;
-    /*Progress Bar*/
-    private ProgressBar mProgressBar;
 
-    /*Notification*/
-    private NotificationManager mNotifyManager;
-    private NotificationCompat.Builder mBuilder;
-    private boolean attached, detached;
+    private UploaderActivity uploaderActivity;
+    private Intent intent;
 
     @Nullable
     @Override
@@ -109,28 +83,23 @@ public class BackupFragment extends Fragment {
 
         mBackupButton = view.findViewById(R.id.BackupRecovery);
         mUploadBackup = view.findViewById(R.id.UploadBackup);
-        mCancel= view.findViewById(R.id.cancel_upload);
 
         /*TextView*/
 
         ShowOutput = view.findViewById(R.id.show_output);
         mBuildDescription= view.findViewById(R.id.build_description);
-        /*Notification*/
-        mNotifyManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
 
-        /*Progress Bar*/
-        mProgressBar= view.findViewById(R.id.progress_bar);
+        /**/
+        mProgressBar=view.findViewById(R.id.progress_bar);
 
         /*Define Methods*/
 
         mFirebaseInstance = FirebaseDatabase.getInstance();
-        mUploader = mFirebaseInstance.getReference("InQueue");
         mFirebaseAuth=FirebaseAuth.getInstance();
-        Email=mFirebaseAuth.getCurrentUser().getEmail();
-        Uid=mFirebaseAuth.getCurrentUser().getUid();
-        file = Uri.fromFile(new File("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar"));
-        riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + file.getLastPathSegment());
+        riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/TwrpBuilderRecoveryBackup.tar");
 
+        uploaderActivity=new UploaderActivity();
+        intent=new Intent(getActivity(), uploaderActivity.getClass());
 
         /*Buttons Visibility */
         if (Config.checkBackup()) {
@@ -147,6 +116,7 @@ public class BackupFragment extends Fragment {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
                     mUploadBackup.setVisibility(View.VISIBLE);
+                    mBuildDescription.setVisibility(View.GONE);
                 }
 
             });
@@ -184,11 +154,8 @@ public class BackupFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Snackbar.make(view, R.string.Uploading_please_wait, Snackbar.LENGTH_INDEFINITE)
-                                .setAction("Action", null).show();
-                        //creating a new user
-                        new AsyncUploadTask(getContext(),view,ShowOutput,mCancel,mUploadBackup,mProgressBar).execute();
-                        //uploadStream();
+                        startActivity(intent);
+                        mUploadBackup.setVisibility(View.GONE);
                     }
                 }
         );
@@ -196,6 +163,25 @@ public class BackupFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(fromI==true)
+        {
+        if (result==true)
+        {
+            mBuildDescription.setVisibility(View.VISIBLE);
+            Snackbar.make(getView(), R.string.upload_finished, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
+        else {
+            mUploadBackup.setVisibility(View.VISIBLE);
+            Snackbar.make(getView(), R.string.failed_to_upload, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+            fromI=false;
+        }
+        }
+    }
 
     private String RecoveryPath() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -229,11 +215,6 @@ public class BackupFragment extends Fragment {
         }
 
         return name;
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
     }
 
     class BackupTask extends AsyncTask<Void,String,Void>
