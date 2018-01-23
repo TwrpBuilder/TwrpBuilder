@@ -56,7 +56,6 @@ import github.grace5921.TwrpBuilder.Fragment.StatusFragment;
 import github.grace5921.TwrpBuilder.app.LoginActivity;
 import github.grace5921.TwrpBuilder.app.SettingsActivity;
 import github.grace5921.TwrpBuilder.util.Config;
-import static github.grace5921.TwrpBuilder.Fragment.BackupFragment.riversRef;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -178,55 +177,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main,menu);
-        MenuItem item = menu.findItem(R.id.action_cancel_request);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_cancel_request) {
-// Delete the file
-            riversRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Snackbar.make(getCurrentFocus(), R.string.successfully_delete_data, Snackbar.LENGTH_INDEFINITE)
-                            .setAction("Action", null).show();
-
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Snackbar.make(getCurrentFocus(), R.string.failed_to_delete_data, Snackbar.LENGTH_INDEFINITE)
-                            .setAction("Action", null).show();
-
-                }
-            });
-
-
-            return true;
-        }
-
-        if(id==R.id.action_settings)
-        {
-            Intent i = new Intent(getBaseContext(), SettingsActivity.class);
-            startActivity(i);
-
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -252,6 +202,7 @@ public class MainActivity extends AppCompatActivity
         }else if (id == R.id.action_log_out) {
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(MainActivity.this, LoginActivity.class)); //Go back to home page
+            deleteAppData();
             finish();
         }else if (id==R.id.nav_thanks)
         {
@@ -319,16 +270,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void CheckOverlay() {
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!Settings.canDrawOverlays(this)) {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                        Uri.parse("package:" + getPackageName()));
-                startActivityForResult(intent, 1234);
-            }
-        }
-    }
-
     /*
      * isOnline - Check if there is a NetworkConnection
      * @return boolean
@@ -358,6 +299,18 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
+
+    private void deleteAppData() {
+        try {
+            // clearing app data
+            String packageName = getApplicationContext().getPackageName();
+            Runtime runtime = Runtime.getRuntime();
+            runtime.exec("pm clear "+packageName);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } }
+
 
     @Override
     protected void onStart() {
