@@ -34,6 +34,7 @@ import java.io.File;
 import static github.grace5921.TwrpBuilder.firebase.FirebaseInstanceIDService.refreshedToken;
 
 import github.grace5921.TwrpBuilder.R;
+import github.grace5921.TwrpBuilder.util.Config;
 import github.grace5921.TwrpBuilder.util.DateUtils;
 import github.grace5921.TwrpBuilder.util.User;
 
@@ -75,7 +76,7 @@ public class UploaderActivity extends AppCompatActivity {
         mFirebaseAuth=FirebaseAuth.getInstance();
         Email=mFirebaseAuth.getCurrentUser().getEmail();
         Uid=mFirebaseAuth.getCurrentUser().getUid();
-        file = Uri.fromFile(new File("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar"));
+        file = Uri.fromFile(new File("/sdcard/TwrpBuilder/"+ Config.TwrpBackFName));
         riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + file.getLastPathSegment());
 
         mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

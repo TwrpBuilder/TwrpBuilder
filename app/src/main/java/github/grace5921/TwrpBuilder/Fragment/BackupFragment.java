@@ -26,9 +26,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.zip.GZIPOutputStream;
 
 import eu.chainfire.libsuperuser.Shell;
 import github.grace5921.TwrpBuilder.R;
@@ -60,8 +63,6 @@ public class BackupFragment extends Fragment {
     public FirebaseStorage storage = FirebaseStorage.getInstance();
     public StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/");
     public StorageReference riversRef;
-    private FirebaseDatabase mFirebaseInstance;
-    private FirebaseAuth mFirebaseAuth;
 
     /*Strings*/
     private String store_RecoveryPartitonPath_output;
@@ -93,10 +94,7 @@ public class BackupFragment extends Fragment {
         mProgressBar=view.findViewById(R.id.progress_bar);
 
         /*Define Methods*/
-
-        mFirebaseInstance = FirebaseDatabase.getInstance();
-        mFirebaseAuth=FirebaseAuth.getInstance();
-        riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/TwrpBuilderRecoveryBackup.tar");
+        riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/"+Config.TwrpBackFName);
 
         uploaderActivity=new UploaderActivity();
         intent=new Intent(getActivity(), uploaderActivity.getClass());
@@ -177,7 +175,7 @@ public class BackupFragment extends Fragment {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String name = preferences.getString("recoveryPath", "");
         System.out.println("RecoveryPath "+ name);
-        if (name == null) {
+        if (name=="") {
             try {
                 RecoveryPartitonPath = Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep RECOVERY");
                 store_RecoveryPartitonPath_output = String.valueOf(RecoveryPartitonPath);
@@ -220,6 +218,7 @@ public class BackupFragment extends Fragment {
                 e.printStackTrace();
             }
             Shell.SU.run("dd if=" + RecoveryPath() + " of=/sdcard/TwrpBuilder/recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` >  /sdcard/TwrpBuilder/mounts ; cd /sdcard/TwrpBuilder && tar -c recovery.img build.prop mounts > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
+            compressGzipFile("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar","/sdcard/TwrpBuilder/"+Config.TwrpBackFName);
             return null;
         }
 
@@ -235,6 +234,27 @@ public class BackupFragment extends Fragment {
                     .setAction("Action", null).show();
         }
     }
+
+    private static void compressGzipFile(String file, String gzipFile) {
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            FileOutputStream fos = new FileOutputStream(gzipFile);
+            GZIPOutputStream gzipOS = new GZIPOutputStream(fos);
+            byte[] buffer = new byte[1024];
+            int len;
+            while((len=fis.read(buffer)) != -1){
+                gzipOS.write(buffer, 0, len);
+            }
+            //close resources
+            gzipOS.close();
+            fos.close();
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
 }
 

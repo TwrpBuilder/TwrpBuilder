@@ -32,6 +32,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.Date;
 
 import github.grace5921.TwrpBuilder.R;
+import github.grace5921.TwrpBuilder.util.Config;
 import github.grace5921.TwrpBuilder.util.DateUtils;
 import github.grace5921.TwrpBuilder.util.FirebaseProgressBar;
 import github.grace5921.TwrpBuilder.util.Pbuild;
@@ -102,7 +103,7 @@ public class DevsBuildDoneFragment extends Fragment {
                 btFiles.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view1) {
-                        storageRef.child("queue/" + model.WBrand() + "/" + model.WBoard() + "/" + model.WModel() + "/TwrpBuilderRecoveryBackup.tar" ).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        storageRef.child("queue/" + model.WBrand() + "/" + model.WBoard() + "/" + model.WModel() + "/"+ Config.TwrpBackFName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
                                 DownloadManager downloadManager = (DownloadManager) getContext().getSystemService(getContext().DOWNLOAD_SERVICE);
