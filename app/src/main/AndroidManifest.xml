@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="github.grace5921.TwrpBuilder">
+    package="com.github.TwrpBuilder">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -22,12 +22,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.github.TwrpBuilder.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".app.LoginActivity"
+            android:name="com.github.TwrpBuilder.app.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,30 +36,30 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".app.ResetPasswordActivity"
+            android:name="com.github.TwrpBuilder.app.ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".app.SettingsActivity"
+            android:name="com.github.TwrpBuilder.app.SettingsActivity"
             android:label="@string/settings"/>
         <activity
-            android:name=".ads.AdsActivity"
+            android:name="com.github.TwrpBuilder.ads.AdsActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:label="Ads"/>
         <activity
-            android:name=".ads.VideoAdsActivity"
+            android:name="com.github.TwrpBuilder.ads.VideoAdsActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:label="Ads"/>
 
-        <activity android:name=".app.ActivitySubmitBuild"/>
-        <activity android:name=".app.UploaderActivity"/>
-        <activity android:name=".app.CustomBackupActivity"/>
+        <activity android:name="com.github.TwrpBuilder.app.ActivitySubmitBuild"/>
+        <activity android:name="com.github.TwrpBuilder.app.UploaderActivity"/>
+        <activity android:name="com.github.TwrpBuilder.app.CustomBackupActivity"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="170780f99a1c0f42ee4bce379c8a786f3e295ea7" />
         <service
-            android:name=".firebase.FirebaseNotificationService">
+            android:name="com.github.TwrpBuilder.firebase.FirebaseNotificationService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
