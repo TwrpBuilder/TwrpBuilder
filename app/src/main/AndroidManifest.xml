@@ -53,6 +53,7 @@
 
         <activity android:name=".app.ActivitySubmitBuild"/>
         <activity android:name=".app.UploaderActivity"/>
+        <activity android:name=".app.CustomBackupActivity"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"

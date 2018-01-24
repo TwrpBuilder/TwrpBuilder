@@ -9,7 +9,6 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -36,12 +35,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.twrpbuilder.rootchecker.RootChecker;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
 import github.grace5921.TwrpBuilder.Fragment.BackupFragment;
 import github.grace5921.TwrpBuilder.Fragment.CreditsFragment;
 import github.grace5921.TwrpBuilder.Fragment.DevsFragment;
@@ -54,7 +47,6 @@ import github.grace5921.TwrpBuilder.Fragment.NotRooted;
 import github.grace5921.TwrpBuilder.Fragment.PreferencesFragment;
 import github.grace5921.TwrpBuilder.Fragment.StatusFragment;
 import github.grace5921.TwrpBuilder.app.LoginActivity;
-import github.grace5921.TwrpBuilder.app.SettingsActivity;
 import github.grace5921.TwrpBuilder.util.Config;
 
 public class MainActivity extends AppCompatActivity
@@ -71,8 +63,6 @@ public class MainActivity extends AppCompatActivity
     private DevsFragment mDevsFragment;
     private StatusFragment statusFragment;
     private MainFragment mainFragment;
-    /*Strings*/
-    private String Email="anbook@g.com";
 
     /*Firebase*/
     private FirebaseAuth mFirebaseAuth;

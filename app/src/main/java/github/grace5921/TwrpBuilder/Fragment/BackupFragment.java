@@ -35,10 +35,13 @@ import java.util.zip.GZIPOutputStream;
 
 import eu.chainfire.libsuperuser.Shell;
 import github.grace5921.TwrpBuilder.R;
+import github.grace5921.TwrpBuilder.app.CustomBackupActivity;
 import github.grace5921.TwrpBuilder.app.UploaderActivity;
 import github.grace5921.TwrpBuilder.util.Config;
 import github.grace5921.TwrpBuilder.util.ShellExecuter;
 
+import static github.grace5921.TwrpBuilder.app.CustomBackupActivity.FromCB;
+import static github.grace5921.TwrpBuilder.app.CustomBackupActivity.resultOfB;
 import static github.grace5921.TwrpBuilder.app.UploaderActivity.fromI;
 import static github.grace5921.TwrpBuilder.app.UploaderActivity.result;
 
@@ -52,6 +55,7 @@ public class BackupFragment extends Fragment {
     /*Buttons*/
     public  Button mUploadBackup;
     private Button mBackupButton;
+    private Button CustomBackUp;
 
     /*TextView*/
     private TextView mBuildDescription;
@@ -74,7 +78,7 @@ public class BackupFragment extends Fragment {
     private UploaderActivity uploaderActivity;
     private Intent intent;
 
-    private boolean hasUpB;
+    private boolean hasUpB,isSupport;
 
     @Nullable
     @Override
@@ -85,6 +89,7 @@ public class BackupFragment extends Fragment {
 
         mBackupButton = view.findViewById(R.id.BackupRecovery);
         mUploadBackup = view.findViewById(R.id.UploadBackup);
+        CustomBackUp=view.findViewById(R.id.bt_custom_backup);
 
         /*TextView*/
 
@@ -98,24 +103,46 @@ public class BackupFragment extends Fragment {
 
         uploaderActivity=new UploaderActivity();
         intent=new Intent(getActivity(), uploaderActivity.getClass());
+        mProgressBar.setVisibility(View.VISIBLE);
+
+        RecoveryPath();
 
         /*Buttons Visibility */
             riversRef.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
                 @Override
                 public void onSuccess(StorageMetadata storageMetadata) {
+                    mProgressBar.setVisibility(View.GONE);
                     mUploadBackup.setVisibility(View.GONE);
                     mBuildDescription.setVisibility(View.VISIBLE);
                     hasUpB=true;
-                    if (!Config.checkBackup()) {mBackupButton.setVisibility(View.VISIBLE);}
+                    if (isSupport) {
+                        if (!Config.checkBackup()) {mBackupButton.setVisibility(View.VISIBLE);}
+                    }else {
+                        if (!Config.checkBackup()) {CustomBackUp.setVisibility(View.VISIBLE);}
+                        Snackbar.make(getView(),"Device not supported",Snackbar.LENGTH_SHORT).show();
+                    }
                 }
             })
                     .addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
-                    if (!Config.checkBackup()) {mBackupButton.setVisibility(View.VISIBLE);}
-                    else {
-                        mUploadBackup.setVisibility(View.VISIBLE);
-                        mBuildDescription.setVisibility(View.GONE);
+                    mProgressBar.setVisibility(View.GONE);
+                    if (isSupport) {
+                        if (!Config.checkBackup()) {mBackupButton.setVisibility(View.VISIBLE);}
+                        else {
+                            mUploadBackup.setVisibility(View.VISIBLE);
+                            mBuildDescription.setVisibility(View.GONE);
+
+                        }
+                    }
+                else {
+                        if (!Config.checkBackup()) {CustomBackUp.setVisibility(View.VISIBLE);}
+                        else {
+                            mUploadBackup.setVisibility(View.VISIBLE);
+                            mBuildDescription.setVisibility(View.GONE);
+
+                        }
+                        Snackbar.make(getView(),"Device not supported",Snackbar.LENGTH_SHORT).show();
                     }
                 }
 
@@ -136,6 +163,14 @@ public class BackupFragment extends Fragment {
                     }
                 }
         );
+
+        CustomBackUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), CustomBackupActivity.class));
+                CustomBackUp.setVisibility(View.GONE);
+            }
+        });
 
         mUploadBackup.setOnClickListener(
                 new View.OnClickListener() {
@@ -169,6 +204,20 @@ public class BackupFragment extends Fragment {
             fromI=false;
         }
         }
+
+        if (FromCB==true)
+        {
+            System.out.println("Destroyed");
+            if (resultOfB==true)
+            {
+                if (!hasUpB) {
+                    System.out.println("Works");
+                    mUploadBackup.setVisibility(View.VISIBLE);
+                }else {
+                    mBuildDescription.setVisibility(View.VISIBLE);
+                }
+            }
+        }
     }
 
     private String RecoveryPath() {
@@ -185,6 +234,7 @@ public class BackupFragment extends Fragment {
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("recoveryPath", recovery_output_path);
                 editor.apply();
+                isSupport=true;
 
             } catch (Exception e) {
                 RecoveryPartitonPath = Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep recovery");
@@ -196,7 +246,10 @@ public class BackupFragment extends Fragment {
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("recoveryPath", recovery_output_path);
                     editor.apply();
+                    isSupport=true;
                 } catch (Exception ExceptionE) {
+                    isSupport=false;
+                    mBackupButton.setVisibility(View.GONE);
                     Toast.makeText(getContext(), R.string.device_not_supported, Toast.LENGTH_LONG).show();
                 }
             }
