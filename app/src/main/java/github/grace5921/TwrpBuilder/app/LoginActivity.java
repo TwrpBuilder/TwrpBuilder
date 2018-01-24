@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
     private ArrayList<String> jsonArrayList;
     private JSONObject json_data;
     private JSONArray jsonArray;
+    public static boolean name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,8 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() != null) {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            name = preferences.getBoolean("admin",false);
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         }
@@ -245,9 +248,6 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 } else {
                                     new CheckAdminTask().execute();
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
                                 }
                             }
                         });
@@ -358,6 +358,9 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putBoolean("admin",true);
                     editor.apply();
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
+                    name=true;
                     Toast.makeText(getBaseContext(),"Admin: true",Toast.LENGTH_SHORT).show();
                 }
             }

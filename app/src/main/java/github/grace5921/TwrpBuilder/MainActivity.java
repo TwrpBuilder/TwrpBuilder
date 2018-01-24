@@ -33,6 +33,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.twrpbuilder.rootchecker.RootChecker;
 
 import github.grace5921.TwrpBuilder.Fragment.BackupFragment;
@@ -48,6 +49,9 @@ import github.grace5921.TwrpBuilder.Fragment.PreferencesFragment;
 import github.grace5921.TwrpBuilder.Fragment.StatusFragment;
 import github.grace5921.TwrpBuilder.app.LoginActivity;
 import github.grace5921.TwrpBuilder.util.Config;
+import github.grace5921.TwrpBuilder.util.FirebaseDBInstance;
+
+import static github.grace5921.TwrpBuilder.app.LoginActivity.name;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -87,6 +91,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mFirebaseAuth=FirebaseAuth.getInstance();
+        FirebaseDBInstance.getDatabase();
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -191,8 +196,11 @@ public class MainActivity extends AppCompatActivity
             setTitle("App Updates");
         }else if (id == R.id.action_log_out) {
             FirebaseAuth.getInstance().signOut();
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("admin",false);
+            editor.apply();
             startActivity(new Intent(MainActivity.this, LoginActivity.class)); //Go back to home page
-            deleteAppData();
             finish();
         }else if (id==R.id.nav_thanks)
         {
@@ -279,28 +287,15 @@ public class MainActivity extends AppCompatActivity
         navigationView = findViewById(R.id.nav_view);
         Menu nav_Menu = navigationView.getMenu();
         nav_Menu.findItem(R.id.nav_preference).setVisible(false);
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean name = preferences.getBoolean("admin",false);
         if(name==true)
         {
             nav_Menu.findItem(R.id.nav_dev_fragment).setVisible(true);
-        }else {
+        }
+        else {
             nav_Menu.findItem(R.id.nav_dev_fragment).setVisible(false);
         }
 
     }
-
-    private void deleteAppData() {
-        try {
-            // clearing app data
-            String packageName = getApplicationContext().getPackageName();
-            Runtime runtime = Runtime.getRuntime();
-            runtime.exec("pm clear "+packageName);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } }
-
 
     @Override
     protected void onStart() {
