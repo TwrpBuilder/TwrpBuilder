@@ -80,6 +80,8 @@ public class BackupFragment extends Fragment {
 
     private boolean hasUpB,isSupport;
 
+    private SharedPreferences.Editor editor;
+
     @Nullable
     @Override
 
@@ -115,7 +117,7 @@ public class BackupFragment extends Fragment {
                     mUploadBackup.setVisibility(View.GONE);
                     mBuildDescription.setVisibility(View.VISIBLE);
                     hasUpB=true;
-                    if (isSupport) {
+                    if (isSupport==true) {
                         if (!Config.checkBackup()) {mBackupButton.setVisibility(View.VISIBLE);}
                     }else {
                         if (!Config.checkBackup()) {CustomBackUp.setVisibility(View.VISIBLE);}
@@ -127,7 +129,7 @@ public class BackupFragment extends Fragment {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
                     mProgressBar.setVisibility(View.GONE);
-                    if (isSupport) {
+                    if (isSupport==true) {
                         if (!Config.checkBackup()) {mBackupButton.setVisibility(View.VISIBLE);}
                         else {
                             mUploadBackup.setVisibility(View.VISIBLE);
@@ -207,15 +209,17 @@ public class BackupFragment extends Fragment {
 
         if (FromCB==true)
         {
-            System.out.println("Destroyed");
             if (resultOfB==true)
             {
                 if (!hasUpB) {
-                    System.out.println("Works");
                     mUploadBackup.setVisibility(View.VISIBLE);
                 }else {
                     mBuildDescription.setVisibility(View.VISIBLE);
                 }
+                resultOfB=false;
+            }
+            else {
+                CustomBackUp.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -231,8 +235,9 @@ public class BackupFragment extends Fragment {
                 parts = store_RecoveryPartitonPath_output.split("->\\s");
                 recovery_output_last_value = parts[1].split("\\]");
                 recovery_output_path = recovery_output_last_value[0];
-                SharedPreferences.Editor editor = preferences.edit();
+                editor = preferences.edit();
                 editor.putString("recoveryPath", recovery_output_path);
+                editor.putBoolean("isSupport",true);
                 editor.apply();
                 isSupport=true;
 
@@ -243,17 +248,22 @@ public class BackupFragment extends Fragment {
                 try {
                     recovery_output_last_value = parts[1].split("\\]");
                     recovery_output_path = recovery_output_last_value[0];
-                    SharedPreferences.Editor editor = preferences.edit();
+                    editor = preferences.edit();
                     editor.putString("recoveryPath", recovery_output_path);
+                    editor.putBoolean("isSupport",true);
                     editor.apply();
                     isSupport=true;
                 } catch (Exception ExceptionE) {
                     isSupport=false;
+                    editor = preferences.edit();
+                    editor.putBoolean("isSupport",false);
+                    editor.apply();
                     mBackupButton.setVisibility(View.GONE);
                     Toast.makeText(getContext(), R.string.device_not_supported, Toast.LENGTH_LONG).show();
                 }
             }
         }
+        isSupport=preferences.getBoolean("isSupport",false);
 
         return name;
     }

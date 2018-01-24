@@ -103,6 +103,18 @@ public class CustomBackupActivity extends AppCompatActivity {
         FromCB=true;
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FromCB=true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        FromCB=true;
+    }
+
     class GenrateBackup extends AsyncTask<Void,Void,Void>{
 
         @Override
