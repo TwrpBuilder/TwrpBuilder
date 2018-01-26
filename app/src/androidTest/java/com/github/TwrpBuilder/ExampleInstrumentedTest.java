@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("github.grace5921.TwrpBuilder", appContext.getPackageName());
+        assertEquals("com.github.TwrpBuilder", appContext.getPackageName());
     }
 }
