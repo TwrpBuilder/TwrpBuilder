@@ -10,6 +10,7 @@ import android.view.View;
 import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -70,14 +71,14 @@ public class ActivitySubmitBuild extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 mFirebaseInstance.getReference("RunningBuild")
-                                        .orderByChild("Uid")
-                                        .equalTo(Uid)
+                                        .orderByChild("Model")
+                                        .equalTo(Model)
                                         .addListenerForSingleValueEvent(
                                                 new ValueEventListener() {
                                                     @Override
                                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                                        for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                                            child.getRef().removeValue();
+                                                        for (DataSnapshot fuckingmoron : dataSnapshot.getChildren()) {
+                                                            fuckingmoron.getRef().removeValue();
                                                         }
                                                     }
 
