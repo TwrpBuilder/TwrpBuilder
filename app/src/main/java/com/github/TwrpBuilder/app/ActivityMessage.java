@@ -17,16 +17,24 @@ public class ActivityMessage extends android.app.Activity {
     private Message message;
     private Bundle bundle;
     private String Model;
+    public static boolean finished;
 
     @Override
     protected void onStart() {
+        super.onStart();
         bundle = getIntent().getExtras();
         Model = bundle.getString("Model");
         firebaseDatabase=FirebaseDatabase.getInstance();
         databaseReference=firebaseDatabase.getReference().child("messages");
-        message=new Message("Build is ready for "+ Model);
+        message=new Message("Twrp Builder","Build is ready for "+ Model);
         databaseReference.push().setValue(message);
+        finished=true;
         finish();
-        super.onStart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        finished=true;
+        super.onDestroy();
     }
 }

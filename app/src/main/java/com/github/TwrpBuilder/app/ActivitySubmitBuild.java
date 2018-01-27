@@ -1,5 +1,6 @@
 package com.github.TwrpBuilder.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,6 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.github.TwrpBuilder.R;
 import com.github.TwrpBuilder.util.DateUtils;
 import com.github.TwrpBuilder.util.Pbuild;
+
+import static com.github.TwrpBuilder.app.ActivityMessage.finished;
 
 /**
  * Created by androidlover5842 on 20/1/18.
@@ -72,7 +75,7 @@ public class ActivitySubmitBuild extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 mFirebaseInstance.getReference("RunningBuild").child(key).removeValue();
-                                finish();
+                                startActivity(new Intent(ActivitySubmitBuild.this,ActivityMessage.class).putExtra("Model",Model));
                             }
                         });
                     }
@@ -86,5 +89,12 @@ public class ActivitySubmitBuild extends AppCompatActivity {
 
         }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (finished==true)
+        {
+            finish();
+        }
+    }
 }

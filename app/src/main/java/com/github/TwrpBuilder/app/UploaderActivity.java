@@ -63,7 +63,6 @@ public class UploaderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_uploader);
-        System.out.println("SHit sharted");
         mCancel= findViewById(R.id.cancel_upload);
         ShowOutput = findViewById(R.id.show_output);
         mProgressBar= findViewById(R.id.progress_bar);

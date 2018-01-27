@@ -135,7 +135,6 @@ public class DevsBuildRunningFragment extends Fragment {
                                             @Override
                                             public void onDataChange(DataSnapshot dataSnapshot) {
                                                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                                    System.out.println(child.getKey());
                                                     intent.putExtra("somekey",child.getKey().toString());
                                                     startActivity(intent);
                                                 }

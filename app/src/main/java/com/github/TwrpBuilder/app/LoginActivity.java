@@ -342,10 +342,8 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            System.out.println("Email: "+auth.getCurrentUser().getEmail());
             for (int i=0;i<jsonArrayList.size();i++)
             {
-                System.out.println(jsonArrayList.get(i));
                 if (auth.getCurrentUser().getEmail().equals(jsonArrayList.get(i)))
                 {
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);

@@ -225,7 +225,6 @@ public class BackupFragment extends Fragment {
     private String RecoveryPath() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String name = preferences.getString("recoveryPath", "");
-        System.out.println("RecoveryPath "+ name);
         if (name=="") {
             try {
                 RecoveryPartitonPath = Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep RECOVERY");

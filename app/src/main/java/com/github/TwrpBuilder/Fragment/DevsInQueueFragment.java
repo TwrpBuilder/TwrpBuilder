@@ -132,7 +132,6 @@ public class DevsInQueueFragment extends Fragment {
 
                         User user = new User(model.WBrand(),model.WBoard(),model.WModel(),model.WEmail(),model.WUid(),model.WFmcToken(),model.WtDate());
                         mUploader.push().setValue(user);
-                        System.out.println(model.WBrand()+model.WBoard()+model.WModel()+model.WEmail()+model.WtDate());
                     }
                 });
 

@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.twrpbuilder.rootchecker.RootChecker;
 
 import com.github.TwrpBuilder.Fragment.BackupFragment;
@@ -145,10 +146,11 @@ public class MainActivity extends AppCompatActivity
         }else {
             mAdView.setVisibility(View.VISIBLE);
         }*/
+        FirebaseMessaging.getInstance().subscribeToTopic("pushNotification");
+        Toast.makeText(MainActivity.this, "Subscribed to Topic: Push Notifications", Toast.LENGTH_SHORT).show();
 
         /*replace email with users email*/
         mUserEmail.setText(mFirebaseAuth.getCurrentUser().getEmail());
-
         /*My Functions :)*/
         checkPermission();
         requestPermission();
