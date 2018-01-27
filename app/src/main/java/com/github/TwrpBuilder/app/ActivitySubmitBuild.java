@@ -30,7 +30,7 @@ import com.github.TwrpBuilder.util.Pbuild;
 
 public class ActivitySubmitBuild extends AppCompatActivity {
 
-    private String Brand,Board,Model,Email,Fmc,Uid,userId;
+    private String Brand,Board,Model,Email,Fmc,Uid,key;
     private Bundle bundle;
     private EditText edGetUri;
     private Button btSubmit;
@@ -52,7 +52,8 @@ public class ActivitySubmitBuild extends AppCompatActivity {
         Email = bundle.getString("Email");
         Fmc = bundle.getString("Fmc");
         Uid = bundle.getString("Uid");
-        userId = mUploader.push().getKey();
+        key = bundle.getString("somekey");
+
 
         edGetUri= findViewById(R.id.ed_url);
         btSubmit= findViewById(R.id.bt_submit);
@@ -67,26 +68,10 @@ public class ActivitySubmitBuild extends AppCompatActivity {
                     {
                         System.out.println("Url " + edGetUri.getText());
                         pbuild = new Pbuild(Brand, Board, Model, Email, Uid, Fmc, DateUtils.getDate(), edGetUri.getText().toString());
-                        mUploader.child(userId).setValue(pbuild).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        mUploader.push().setValue(pbuild).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                mFirebaseInstance.getReference("RunningBuild")
-                                        .orderByChild("Model")
-                                        .equalTo(Model)
-                                        .addListenerForSingleValueEvent(
-                                                new ValueEventListener() {
-                                                    @Override
-                                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                                        for (DataSnapshot fuckingmoron : dataSnapshot.getChildren()) {
-                                                            fuckingmoron.getRef().removeValue();
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onCancelled(DatabaseError databaseError) {
-                                                        Log.w("TodoApp", "getUser:onCancelled", databaseError.toException());
-                                                    }
-                                                });
+                                mFirebaseInstance.getReference("RunningBuild").child(key).removeValue();
                                 finish();
                             }
                         });

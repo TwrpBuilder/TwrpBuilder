@@ -47,7 +47,6 @@ public class DevsInQueueFragment extends Fragment {
     private Query query;
     private DatabaseReference mUploader;
     private FirebaseDatabase mFirebaseInstance;
-    private String userId;
     private ProgressBar progressBar;
     DevsInQueueFragment(){}
 
@@ -61,7 +60,6 @@ public class DevsInQueueFragment extends Fragment {
         progressBar= view.findViewById(R.id.pb_builds);
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mUploader = mFirebaseInstance.getReference("RunningBuild");
-        userId = mUploader.push().getKey();
         query = FirebaseDatabase.getInstance()
                 .getReference("InQueue");
 
@@ -133,7 +131,7 @@ public class DevsInQueueFragment extends Fragment {
                                 });
 
                         User user = new User(model.WBrand(),model.WBoard(),model.WModel(),model.WEmail(),model.WUid(),model.WFmcToken(),model.WtDate());
-                        mUploader.child(userId).setValue(user);
+                        mUploader.push().setValue(user);
                         System.out.println(model.WBrand()+model.WBoard()+model.WModel()+model.WEmail()+model.WtDate());
                     }
                 });

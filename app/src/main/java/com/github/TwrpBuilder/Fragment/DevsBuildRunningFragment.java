@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +22,12 @@ import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseListOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -116,14 +120,32 @@ public class DevsBuildRunningFragment extends Fragment {
                     public void onClick(View v) {
                        // User user = new User(model.WBrand(),model.WBoard(),model.WModel(),model.WEmail(),model.WUid(),model.WFmcToken(),model.WtDate());
                         //mUploader.child(userId).setValue(user);
-                        Intent intent=new Intent(getContext(), ActivitySubmitBuild.class);
+                        final Intent intent=new Intent(getContext(), ActivitySubmitBuild.class);
                         intent.putExtra("Brand",model.WBrand());
                         intent.putExtra("Board",model.WBoard());
                         intent.putExtra("Model",model.WModel());
                         intent.putExtra("Email",model.WEmail());
                         intent.putExtra("Uid",model.WUid());
                         intent.putExtra("Fmc",model.WFmcToken());
-                        startActivity(intent);
+                        mFirebaseInstance.getReference("RunningBuild")
+                                .orderByChild("Model")
+                                .equalTo(model.WModel())
+                                .addListenerForSingleValueEvent(
+                                        new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                                    System.out.println(child.getKey());
+                                                    intent.putExtra("somekey",child.getKey().toString());
+                                                    startActivity(intent);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+                                                Log.w("TodoApp", "getUser:onCancelled", databaseError.toException());
+                                            }
+                                        });
 
                     }
                 });
