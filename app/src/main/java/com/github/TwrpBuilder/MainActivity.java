@@ -147,7 +147,6 @@ public class MainActivity extends AppCompatActivity
             mAdView.setVisibility(View.VISIBLE);
         }*/
         FirebaseMessaging.getInstance().subscribeToTopic("pushNotification");
-        Toast.makeText(MainActivity.this, "Subscribed to Topic: Push Notifications", Toast.LENGTH_SHORT).show();
 
         /*replace email with users email*/
         mUserEmail.setText(mFirebaseAuth.getCurrentUser().getEmail());
