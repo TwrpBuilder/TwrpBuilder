@@ -64,7 +64,7 @@ public class DevsBuildRunningFragment extends Fragment {
                 .getReference("RunningBuild");
 
         FirebaseListOptions<User> options = new FirebaseListOptions.Builder<User>()
-                .setLayout(R.layout.list_developer_stuff)
+                .setLayout(R.layout.list_build_running)
                 .setQuery(query,User.class)
                 .build();
 
@@ -77,15 +77,12 @@ public class DevsBuildRunningFragment extends Fragment {
                 TextView tvDate= v.findViewById(R.id.list_user_date);
                 TextView tvBrand = v.findViewById(R.id.list_user_brand);
                 Button btFiles=v.findViewById(R.id.BtFile);
-                final Button btStartBuild=v.findViewById(R.id.bt_start_build);
                 final Button btBuildDone=v.findViewById(R.id.bt_build_done);
                 tvDate.setText("Date : "+model.WtDate());
                 tvEmail.setText("Email : "+model.WEmail());
                 tvDevice.setText("Model : " + model.WModel());
                 tvBoard.setText("Board : "+model.WBoard());
                 tvBrand.setText("Brand : " +model.WBrand());
-                btStartBuild.setVisibility(View.GONE);
-                btBuildDone.setVisibility(View.VISIBLE);
 
                 btFiles.setOnClickListener(new View.OnClickListener() {
                     @Override

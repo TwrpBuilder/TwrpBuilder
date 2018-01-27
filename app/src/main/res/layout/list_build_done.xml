@@ -49,8 +49,15 @@
 
     <Button
         android:layout_width="wrap_content"
-        android:text="Start Build"
-        android:id="@+id/bt_start_build"
+        android:text="Recovery"
+        android:id="@+id/bt_download_recovery"
+        android:textAllCaps="false"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:text="Add back to queue"
+        android:id="@+id/bt_add_back"
         android:textAllCaps="false"
         android:layout_height="wrap_content" />
 

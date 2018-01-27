@@ -47,7 +47,6 @@ public class DevsBuildDoneFragment extends Fragment {
     private Query query;
     private DatabaseReference mUploader;
     private FirebaseDatabase mFirebaseInstance;
-    private String userId;
     private Button btAddBack;
     private User user;
 
@@ -64,12 +63,11 @@ public class DevsBuildDoneFragment extends Fragment {
         mListView = view.findViewById(R.id.Lv_devs);
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mUploader = mFirebaseInstance.getReference("InQueue");
-        userId = mUploader.push().getKey();
         query = FirebaseDatabase.getInstance()
                 .getReference("Builds");
 
         FirebaseListOptions<Pbuild> options = new FirebaseListOptions.Builder<Pbuild>()
-                .setLayout(R.layout.list_developer_stuff)
+                .setLayout(R.layout.list_build_done)
                 .setQuery(query,Pbuild.class)
                 .build();
 
@@ -82,18 +80,13 @@ public class DevsBuildDoneFragment extends Fragment {
                 TextView tvDate= v.findViewById(R.id.list_user_date);
                 TextView tvBrand = v.findViewById(R.id.list_user_brand);
                 Button btFiles=v.findViewById(R.id.BtFile);
-                final Button btStartBuild=v.findViewById(R.id.bt_start_build);
-                final Button btBuildDone=v.findViewById(R.id.bt_build_done);
+                final Button btDRecovery=v.findViewById(R.id.bt_download_recovery);
                 btAddBack=v.findViewById(R.id.bt_add_back);
-                btAddBack.setVisibility(View.VISIBLE);
                 tvDate.setText("Date : "+model.WDate());
                 tvEmail.setText("Email : "+model.WEmail());
                 tvDevice.setText("Model : " + model.WModel());
                 tvBoard.setText("Board : "+model.WBoard());
                 tvBrand.setText("Brand : " +model.WBrand());
-                btStartBuild.setVisibility(View.GONE);
-                btBuildDone.setVisibility(View.VISIBLE);
-                btBuildDone.setText("Recovery");
 
                 btFiles.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -122,7 +115,7 @@ public class DevsBuildDoneFragment extends Fragment {
                     }
                 });
 
-                btBuildDone.setOnClickListener(new View.OnClickListener() {
+                btDRecovery.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(model.WUrl()));
@@ -135,7 +128,7 @@ public class DevsBuildDoneFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         user = new User(model.WBrand(),model.WBoard(),model.WModel(),model.WEmail(),model.WUid(),model.WFmcToken(), DateUtils.getDate());
-                        mUploader.child(userId).setValue(user);
+                        mUploader.push().setValue(user);
                     }
                 });
 

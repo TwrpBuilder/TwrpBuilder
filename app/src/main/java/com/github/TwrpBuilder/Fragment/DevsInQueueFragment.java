@@ -80,7 +80,6 @@ public class DevsInQueueFragment extends Fragment {
                 TextView tvBrand = v.findViewById(R.id.list_user_brand);
                 Button btFiles=v.findViewById(R.id.BtFile);
                 final Button btStartBuild=v.findViewById(R.id.bt_start_build);
-                final Button btBuildDone=v.findViewById(R.id.bt_build_done);
                 tvDate.setText("Date : "+model.WtDate());
                 tvEmail.setText("Email : "+model.WEmail());
                 tvDevice.setText("Model : " + model.WModel());
@@ -117,8 +116,6 @@ public class DevsInQueueFragment extends Fragment {
                 btStartBuild.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        btBuildDone.setVisibility(View.VISIBLE);
-                        btStartBuild.setVisibility(View.GONE);
                         mFirebaseInstance.getReference("InQueue").orderByChild("Model").equalTo(model.WModel()).addListenerForSingleValueEvent(
                                 new ValueEventListener() {
                                     @Override
