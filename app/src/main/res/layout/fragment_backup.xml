@@ -14,6 +14,7 @@
         android:layout_marginEnd="6dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
+        card_view:cardBackgroundColor="@color/background_dark"
         card_view:cardElevation="3dp">
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="vertical" android:layout_width="match_parent"
@@ -32,7 +33,6 @@
 
             <Button
                 android:text="@string/upload_backup"
-                android:textColor="#424242"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/UploadBackup"
@@ -41,7 +41,6 @@
 
             <Button
                 android:text="Custom Backup"
-                android:textColor="#424242"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/bt_custom_backup"

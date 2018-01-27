@@ -5,7 +5,8 @@
     android:id="@+id/CoordinatorLayout_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="@color/colorPrimaryDark">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -18,9 +19,9 @@
             android:id="@+id/login_cardview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
             app:cardCornerRadius="5dp"
-            app:cardElevation="3dp"
+            app:cardElevation="0dp"
             android:visibility="gone">
 
             <LinearLayout
@@ -39,17 +40,18 @@
 
                 <ImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/teamwin_login_logo"
-                    android:layout_width="96dp"
-                    android:layout_height="96dp"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/ic_launcher_web" />
+                    android:src="@drawable/twrpbuilder_w" />
 
                 <TextView
                     android:id="@+id/title_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:layout_marginBottom="25dp"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="Login to continue"
@@ -81,6 +83,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
                     android:hint="@string/hint_password"
                     app:hintAnimationEnabled="true"
                     app:passwordToggleEnabled="true">
@@ -132,8 +135,9 @@
             android:background="@null"
             android:visibility="gone"
             android:text="@string/btn_forgot_password"
-            android:textColor="#787878"
-            android:textAllCaps="false" />
+            android:textColor="@color/bg_main"
+            android:textAllCaps="false"
+            android:layout_gravity="bottom"/>
 
         <Button
             android:id="@+id/sign_in_button"
@@ -143,7 +147,7 @@
             android:background="@null"
             android:visibility="gone"
             android:text="@string/btn_link_to_login"
-            android:textColor="#787878"
+            android:textColor="@color/bg_main"
             android:textAllCaps="false"
             android:textSize="15sp" />
         <Button
@@ -154,9 +158,10 @@
             android:background="@null"
             android:visibility="gone"
             android:text="@string/btn_link_to_register"
-            android:textColor="#787878"
+            android:textColor="@color/bg_main"
             android:textAllCaps="false"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:layout_gravity="bottom"/>
 
     </LinearLayout>
 
@@ -166,7 +171,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         app:cardCornerRadius="5dp"
-        app:cardElevation="3dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/colorPrimaryDark"
         android:visibility="gone"
         android:layout_centerInParent="true">
 
@@ -174,16 +180,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingTop="20dp">
+            android:paddingTop="0dp">
 
             <ImageView
                 android:id="@+id/logo"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="220dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/ic_teamwin_splashlogo" />
+                android:src="@drawable/twrpbuilder_w" />
 
             <TextView
                 android:id="@+id/welcome_text1"
@@ -192,7 +198,8 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="TWRP Builder"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/signin_text"
@@ -202,13 +209,14 @@
                 android:gravity="center"
                 android:padding="5dp"
                 android:text="Login or Create account to get started"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/btn_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="0dp"
                 android:background="@android:color/transparent"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:text="@string/login" />
