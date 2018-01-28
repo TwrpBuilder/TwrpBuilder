@@ -51,9 +51,23 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:label="Ads"/>
 
-        <activity android:name="com.github.TwrpBuilder.app.ActivitySubmitBuild"/>
+        <activity
+            android:name="com.github.TwrpBuilder.app.ActivitySubmitBuild"
+            android:label="Submit Build"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity android:name="com.github.TwrpBuilder.app.UploaderActivity"/>
-        <activity android:name="com.github.TwrpBuilder.app.CustomBackupActivity"/>
+        <activity
+            android:name="com.github.TwrpBuilder.app.CustomBackupActivity"
+            android:label="Custom Backup"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity android:name=".app.ActivityMessage"/>
 
         <meta-data
