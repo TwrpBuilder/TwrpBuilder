@@ -6,20 +6,23 @@
         <group android:checkableBehavior="single">
             <item
                 android:id="@+id/nav_home"
-                android:title="@string/home" />
+                android:title="@string/home"
+                android:icon="@drawable/ic_home_white_24dp"/>
             <item
                 android:id="@+id/nav_preference"
                 android:title="@string/settings" />
             <item
                 android:id="@+id/check_status"
-                android:title="Build Status" />
+                android:title="Build Status"
+                android:icon="@drawable/ic_dvr_white_24dp"/>
             <item
                 android:id="@+id/nav_app_updates"
                 android:visible="false"
                 android:title="@string/app_updates" />
             <item
                 android:title="@string/logout"
-                android:id="@+id/action_log_out"/>
+                android:id="@+id/action_log_out"
+                android:icon="@drawable/ic_logout_white_24dp"/>
 
         </group>
         </menu>
@@ -29,10 +32,12 @@
             <group android:checkableBehavior="single">
                 <item
                     android:title="@string/help"
-                    android:id="@+id/nav_help"/>
+                    android:id="@+id/nav_help"
+                    android:icon="@drawable/ic_help_white_24dp"/>
                 <item
                     android:title="@string/credits"
-                    android:id="@+id/nav_credits"/>
+                    android:id="@+id/nav_credits"
+                    android:icon="@drawable/ic_code_white_24dp"/>
             </group>
 
         </menu>
@@ -53,8 +58,9 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:title="@string/check_twrp"
-                    android:id="@+id/nav_dev_fragment"/>
+                    android:title="@string/recovery_builds"
+                    android:id="@+id/nav_dev_fragment"
+                    android:icon="@drawable/ic_developer_mode_white_24dp"/>
             </group>
 
         </menu>

@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity
         /*Replace Fragment*/
         if (RootChecker.isDeviceRooted()) {
             updateFragment(this.mainFragment);
-            setTitle("Request Twrp");
+            setTitle("Request TWRP");
         }else {
             updateFragment(this.mNotRooted);
             setTitle("Device Not Rooted :(");
@@ -204,11 +204,11 @@ public class MainActivity extends AppCompatActivity
         }else if (id==R.id.nav_dev_fragment)
         {
             updateFragment(mDevsFragment);
-            setTitle("Devs stuff");
+            setTitle("Recovery Builds");
         }else if (id==R.id.check_status)
         {
             updateFragment(statusFragment);
-            setTitle("Status");
+            setTitle("Build Status");
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
