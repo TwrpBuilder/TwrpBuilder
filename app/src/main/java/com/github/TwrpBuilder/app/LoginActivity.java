@@ -274,6 +274,8 @@ public class LoginActivity extends AppCompatActivity {
         btnCreateAccount.setVisibility(View.GONE);
         btnSignIn.setVisibility(View.GONE);
         this.doubleBackToExitPressedOnce = true;
+        inputEmail.setText("");
+        inputPassword.setText("");
 
         new Handler().postDelayed(new Runnable() {
 
