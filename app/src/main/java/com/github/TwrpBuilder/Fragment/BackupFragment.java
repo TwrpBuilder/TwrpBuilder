@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +51,8 @@ import static com.github.TwrpBuilder.app.UploaderActivity.result;
 
 public class BackupFragment extends Fragment {
 
+    LinearLayout fragment_backup_child_linear;
+
     /*Buttons*/
     public  Button mUploadBackup;
     private Button mBackupButton;
@@ -85,6 +88,9 @@ public class BackupFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_backup, container, false);
+
+        fragment_backup_child_linear = view.findViewById(R.id.fragment_backup_child_linear);
+
         /*Buttons*/
 
         mBackupButton = view.findViewById(R.id.BackupRecovery);
@@ -119,7 +125,7 @@ public class BackupFragment extends Fragment {
                         if (!Config.checkBackup()) {mBackupButton.setVisibility(View.VISIBLE);}
                     }else {
                         if (!Config.checkBackup()) {CustomBackUp.setVisibility(View.VISIBLE);}
-                        Snackbar.make(getView(),"Device not supported",Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(fragment_backup_child_linear,"Device not supported",Snackbar.LENGTH_SHORT).show();
                     }
                 }
             })
@@ -142,7 +148,7 @@ public class BackupFragment extends Fragment {
                             mBuildDescription.setVisibility(View.GONE);
 
                         }
-                        Snackbar.make(getView(),"Device not supported",Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(fragment_backup_child_linear,"Device not supported",Snackbar.LENGTH_SHORT).show();
                     }
                 }
 
@@ -193,13 +199,13 @@ public class BackupFragment extends Fragment {
         if (result==true)
         {
             mBuildDescription.setVisibility(View.VISIBLE);
-            Snackbar.make(getView(), R.string.upload_finished, Snackbar.LENGTH_LONG)
+            Snackbar.make(fragment_backup_child_linear, R.string.upload_finished, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             fromI=false;
         }
         else {
             mUploadBackup.setVisibility(View.VISIBLE);
-            Snackbar.make(getView(), R.string.failed_to_upload, Snackbar.LENGTH_LONG)
+            Snackbar.make(fragment_backup_child_linear, R.string.failed_to_upload, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             fromI=false;
         }
@@ -290,7 +296,7 @@ public class BackupFragment extends Fragment {
                 mUploadBackup.setVisibility(View.VISIBLE);
             }
             mBuildDescription.setText("Backed up recovery " + RecoveryPath());
-            Snackbar.make(getView(), "Backup Done", Snackbar.LENGTH_LONG)
+            Snackbar.make(fragment_backup_child_linear, "Backup Done", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
     }
