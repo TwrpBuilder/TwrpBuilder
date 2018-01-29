@@ -17,6 +17,7 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:paddingRight="@dimen/activity_horizontal_margin"
         android:contentDescription="@string/app_name"
         app:srcCompat="@drawable/twrpbuilder_w" />
 
