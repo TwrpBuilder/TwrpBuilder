@@ -17,7 +17,7 @@ android {
         config {
             keyAlias 'TwrpBuilder'
             keyPassword 'twrpbuilder'
-            storeFile file('$(pwd)/publickey')
+            storeFile file('publickey')
             storePassword 'twrpbuilder'
         }
     }
@@ -33,14 +33,18 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
         debug {
             signingConfig signingConfigs.config
+            debuggable false
+            minifyEnabled true
         }
     }
     lintOptions {
+        checkReleaseBuilds false
         abortOnError false
     }
 }
