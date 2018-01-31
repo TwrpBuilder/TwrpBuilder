@@ -1,5 +1,7 @@
 package com.github.TwrpBuilder.util;
 
+import android.os.Environment;
+
 import java.io.File;
 
 /**
@@ -13,5 +15,6 @@ public class Config
    public final static String URL_CONTRIBUTORS = "https://api.github.com/repos/TwrpBuilder/TwrpBuilder/contributors";
    public final static String URL_APP_RELEASES ="https://api.github.com/repos/TwrpBuilder/TwrpBuilder/releases";
    public final static String TwrpBackFName ="TwrpBuilderRecoveryBackup.tar.gz";
+   public final static String Sdcard= Environment.getExternalStorageDirectory().getPath()+File.separator;
 
 }

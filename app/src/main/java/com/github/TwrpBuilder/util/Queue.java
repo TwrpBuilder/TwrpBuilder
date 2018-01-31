@@ -23,6 +23,22 @@ public class Queue {
         this.Date= Date;
     }
 
+    public void setBoard(String board) {
+        Board = board;
+    }
+
+    public void setBrand(String brand) {
+        Brand = brand;
+    }
+
+    public void setDate(String date) {
+        Date = date;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
     public String MBrand() {
         return Brand;
     }
