@@ -38,8 +38,6 @@ import com.github.TwrpBuilder.app.UploaderActivity;
 import com.github.TwrpBuilder.util.Config;
 import com.github.TwrpBuilder.util.ShellExecuter;
 
-import static com.github.TwrpBuilder.app.CustomBackupActivity.FromCB;
-import static com.github.TwrpBuilder.app.CustomBackupActivity.resultOfB;
 import static com.github.TwrpBuilder.app.UploaderActivity.fromI;
 import static com.github.TwrpBuilder.app.UploaderActivity.result;
 
@@ -53,7 +51,6 @@ public class BackupFragment extends Fragment {
     /*Buttons*/
     public  Button mUploadBackup;
     private Button mBackupButton;
-    private Button CustomBackUp;
 
     /*TextView*/
     private TextView mBuildDescription;
@@ -66,48 +63,31 @@ public class BackupFragment extends Fragment {
     public StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/");
     public StorageReference riversRef;
 
-    /*Strings*/
-    private String store_RecoveryPartitonPath_output;
-    private String[] parts;
-    private String[] recovery_output_last_value;
-    private String recovery_output_path;
-    private List<String> RecoveryPartitonPath;
-
     private UploaderActivity uploaderActivity;
     private Intent intent;
 
-    private boolean hasUpB,isSupport;
+    private boolean hasUpB;
 
-    private SharedPreferences.Editor editor;
+    private SharedPreferences preferences;
+
+    private String recoveryPath;
 
     @Nullable
     @Override
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_backup, container, false);
-        /*Buttons*/
-
         mBackupButton = view.findViewById(R.id.BackupRecovery);
         mUploadBackup = view.findViewById(R.id.UploadBackup);
-        CustomBackUp=view.findViewById(R.id.bt_custom_backup);
-
-        /*TextView*/
-
         mBuildDescription= view.findViewById(R.id.build_description);
-
-        /**/
         mProgressBar=view.findViewById(R.id.progress_bar);
-
-        /*Define Methods*/
         riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/"+Config.TwrpBackFName);
-
         uploaderActivity=new UploaderActivity();
         intent=new Intent(getActivity(), uploaderActivity.getClass());
         mProgressBar.setVisibility(View.VISIBLE);
+        preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        recoveryPath = preferences.getString("recoveryPath", "");
 
-        RecoveryPath();
-
-        /*Buttons Visibility */
             riversRef.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
                 @Override
                 public void onSuccess(StorageMetadata storageMetadata) {
@@ -115,41 +95,23 @@ public class BackupFragment extends Fragment {
                     mUploadBackup.setVisibility(View.GONE);
                     mBuildDescription.setVisibility(View.VISIBLE);
                     hasUpB=true;
-                    if (isSupport==true) {
                         if (!Config.checkBackup()) {mBackupButton.setVisibility(View.VISIBLE);}
-                    }else {
-                        if (!Config.checkBackup()) {CustomBackUp.setVisibility(View.VISIBLE);}
-                        Snackbar.make(getView(),"Device not supported",Snackbar.LENGTH_SHORT).show();
-                    }
+
                 }
             })
                     .addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
                     mProgressBar.setVisibility(View.GONE);
-                    if (isSupport==true) {
                         if (!Config.checkBackup()) {mBackupButton.setVisibility(View.VISIBLE);}
                         else {
                             mUploadBackup.setVisibility(View.VISIBLE);
                             mBuildDescription.setVisibility(View.GONE);
 
                         }
-                    }
-                else {
-                        if (!Config.checkBackup()) {CustomBackUp.setVisibility(View.VISIBLE);}
-                        else {
-                            mUploadBackup.setVisibility(View.VISIBLE);
-                            mBuildDescription.setVisibility(View.GONE);
-
-                        }
-                        Snackbar.make(getView(),"Device not supported",Snackbar.LENGTH_SHORT).show();
-                    }
                 }
 
             });
-
-        /*On Click Listeners */
-
 
         mBackupButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -163,14 +125,6 @@ public class BackupFragment extends Fragment {
                     }
                 }
         );
-
-        CustomBackUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), CustomBackupActivity.class));
-                CustomBackUp.setVisibility(View.GONE);
-            }
-        });
 
         mUploadBackup.setOnClickListener(
                 new View.OnClickListener() {
@@ -205,64 +159,6 @@ public class BackupFragment extends Fragment {
         }
         }
 
-        if (FromCB==true)
-        {
-            if (resultOfB==true)
-            {
-                if (!hasUpB) {
-                    mUploadBackup.setVisibility(View.VISIBLE);
-                }else {
-                    mBuildDescription.setVisibility(View.VISIBLE);
-                }
-                resultOfB=false;
-            }
-            else {
-                CustomBackUp.setVisibility(View.VISIBLE);
-            }
-        }
-    }
-
-    private String RecoveryPath() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String name = preferences.getString("recoveryPath", "");
-        if (name=="") {
-            try {
-                RecoveryPartitonPath = Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep RECOVERY");
-                store_RecoveryPartitonPath_output = String.valueOf(RecoveryPartitonPath);
-                parts = store_RecoveryPartitonPath_output.split("->\\s");
-                recovery_output_last_value = parts[1].split("\\]");
-                recovery_output_path = recovery_output_last_value[0];
-                editor = preferences.edit();
-                editor.putString("recoveryPath", recovery_output_path);
-                editor.putBoolean("isSupport",true);
-                editor.apply();
-                isSupport=true;
-
-            } catch (Exception e) {
-                RecoveryPartitonPath = Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` | grep recovery");
-                store_RecoveryPartitonPath_output = String.valueOf(RecoveryPartitonPath);
-                parts = store_RecoveryPartitonPath_output.split("->\\s");
-                try {
-                    recovery_output_last_value = parts[1].split("\\]");
-                    recovery_output_path = recovery_output_last_value[0];
-                    editor = preferences.edit();
-                    editor.putString("recoveryPath", recovery_output_path);
-                    editor.putBoolean("isSupport",true);
-                    editor.apply();
-                    isSupport=true;
-                } catch (Exception ExceptionE) {
-                    isSupport=false;
-                    editor = preferences.edit();
-                    editor.putBoolean("isSupport",false);
-                    editor.apply();
-                    mBackupButton.setVisibility(View.GONE);
-                    Toast.makeText(getContext(), R.string.device_not_supported, Toast.LENGTH_LONG).show();
-                }
-            }
-        }
-        isSupport=preferences.getBoolean("isSupport",false);
-
-        return name;
     }
 
     class BackupTask extends AsyncTask<Void,String,Void>
@@ -277,7 +173,7 @@ public class BackupFragment extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Shell.SU.run("dd if=" + RecoveryPath() + " of=/sdcard/TwrpBuilder/recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` >  /sdcard/TwrpBuilder/mounts ; cd /sdcard/TwrpBuilder && tar -c recovery.img build.prop mounts > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
+            Shell.SU.run("dd if=" + recoveryPath + " of=/sdcard/TwrpBuilder/recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` >  /sdcard/TwrpBuilder/mounts ; cd /sdcard/TwrpBuilder && tar -c recovery.img build.prop mounts > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
             compressGzipFile("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar","/sdcard/TwrpBuilder/"+Config.TwrpBackFName);
             return null;
         }
@@ -289,7 +185,7 @@ public class BackupFragment extends Fragment {
             if (!hasUpB) {
                 mUploadBackup.setVisibility(View.VISIBLE);
             }
-            mBuildDescription.setText("Backed up recovery " + RecoveryPath());
+            mBuildDescription.setText("Backed up recovery " + recoveryPath);
             Snackbar.make(getView(), "Backup Done", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }

@@ -24,7 +24,7 @@
             android:paddingTop="@dimen/activity_vertical_margin"
             android:layout_height="match_parent">
             <Button
-                android:text="@string/backup_recovery"
+                android:text="Custom Backup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/BackupRecovery"
