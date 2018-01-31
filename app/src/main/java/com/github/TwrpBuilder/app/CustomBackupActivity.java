@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -140,11 +142,12 @@ public class CustomBackupActivity extends AppCompatActivity {
             try {
                 ShellExecuter.cp("/system/build.prop","/sdcard/TwrpBuilder/build.prop");
                 ShellExecuter.cp(editText.getText().toString(),"/sdcard/TwrpBuilder/recovery.img");
+                Shell.SH.run("cd /sdcard/TwrpBuilder/ && tar -c build.prop recovery.img > TwrpBuilderRecoveryBackup.tar");
+                compressGzipFile("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar","/sdcard/TwrpBuilder/"+ Config.TwrpBackFName);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Shell.SU.run("ls -la `find /dev/block/platform/ -type d -name \"by-name\"` >  /sdcard/TwrpBuilder/mounts ; cd /sdcard/TwrpBuilder && tar -c recovery.img build.prop mounts > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar");
-            compressGzipFile("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar","/sdcard/TwrpBuilder/"+ Config.TwrpBackFName);
             return null;
         }
 

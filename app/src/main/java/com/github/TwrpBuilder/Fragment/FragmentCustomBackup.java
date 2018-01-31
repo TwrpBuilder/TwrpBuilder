@@ -112,7 +112,6 @@ public class FragmentCustomBackup extends Fragment {
                     @Override
                     public void onClick(View v) {
                         mBackupButton.setVisibility(View.GONE);
-                        mProgressBar.setVisibility(View.VISIBLE);
                         startActivity(new Intent(getContext(), CustomBackupActivity.class));
                     }
                 }
