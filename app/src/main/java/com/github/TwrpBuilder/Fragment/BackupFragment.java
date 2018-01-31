@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,8 +70,8 @@ public class BackupFragment extends Fragment {
     private boolean hasUpB;
 
     private SharedPreferences preferences;
-
     private String recoveryPath;
+    private LinearLayout fragment_backup_child_linear;
 
     @Nullable
     @Override
@@ -81,6 +82,7 @@ public class BackupFragment extends Fragment {
         mUploadBackup = view.findViewById(R.id.UploadBackup);
         mBuildDescription= view.findViewById(R.id.build_description);
         mProgressBar=view.findViewById(R.id.progress_bar);
+        fragment_backup_child_linear = view.findViewById(R.id.fragment_backup_child_linear);
         riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/"+Config.TwrpBackFName);
         uploaderActivity=new UploaderActivity();
         intent=new Intent(getActivity(), uploaderActivity.getClass());
@@ -147,13 +149,13 @@ public class BackupFragment extends Fragment {
         if (result==true)
         {
             mBuildDescription.setVisibility(View.VISIBLE);
-            Snackbar.make(getView(), R.string.upload_finished, Snackbar.LENGTH_LONG)
+            Snackbar.make(fragment_backup_child_linear, R.string.upload_finished, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             fromI=false;
         }
         else {
             mUploadBackup.setVisibility(View.VISIBLE);
-            Snackbar.make(getView(), R.string.failed_to_upload, Snackbar.LENGTH_LONG)
+            Snackbar.make(fragment_backup_child_linear, R.string.failed_to_upload, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             fromI=false;
         }
@@ -186,7 +188,7 @@ public class BackupFragment extends Fragment {
                 mUploadBackup.setVisibility(View.VISIBLE);
             }
             mBuildDescription.setText("Backed up recovery " + recoveryPath);
-            Snackbar.make(getView(), "Backup Done", Snackbar.LENGTH_LONG)
+            Snackbar.make(fragment_backup_child_linear, "Backup Done", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
     }

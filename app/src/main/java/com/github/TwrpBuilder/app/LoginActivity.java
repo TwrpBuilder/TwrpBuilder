@@ -109,6 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                 btnSignIn.setVisibility(View.VISIBLE);
                 TeamWinLoginLogo.setVisibility(View.VISIBLE);
                 developerTag.setVisibility(View.GONE);
+                doubleBackToExitPressedOnce = false;
             }
         });
 
@@ -121,6 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                 btnLogin2.setVisibility(View.VISIBLE);
                 btnReset.setVisibility(View.VISIBLE);
                 loginRegisterTitle.setText("Login to continue");
+                doubleBackToExitPressedOnce = false;
 
             }
         });
@@ -134,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                 btnSignIn.setVisibility(View.VISIBLE);
                 btnReset.setVisibility(View.GONE);
                 loginRegisterTitle.setText("Register to continue");
+                doubleBackToExitPressedOnce = false;
             }
         });
 
@@ -203,6 +206,7 @@ public class LoginActivity extends AppCompatActivity {
                 btnReset.setVisibility(View.VISIBLE);
                 TeamWinLoginLogo.setVisibility(View.VISIBLE);
                 btnCreateAccount.setVisibility(View.VISIBLE);
+                doubleBackToExitPressedOnce = false;
 
             }
         });
@@ -270,6 +274,8 @@ public class LoginActivity extends AppCompatActivity {
         btnCreateAccount.setVisibility(View.GONE);
         btnSignIn.setVisibility(View.GONE);
         this.doubleBackToExitPressedOnce = true;
+        inputEmail.setText("");
+        inputPassword.setText("");
 
         new Handler().postDelayed(new Runnable() {
 
