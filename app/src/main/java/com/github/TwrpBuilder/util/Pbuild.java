@@ -14,11 +14,12 @@ public class Pbuild {
     private String FmcToken;
     private String Date;
     private String Url;
+    private String DeveloperEmail;
 
     public Pbuild() {
     }
 
-    public Pbuild(String Brand, String Board, String Model,String Email,String Uid,String FmcToken,String Date,String Url) {
+    public Pbuild(String Brand, String Board, String Model,String Email,String Uid,String FmcToken,String Date,String Url,String DeveloperEmail) {
         this.Brand = Brand;
         this.Board = Board;
         this.Model = Model;
@@ -27,6 +28,7 @@ public class Pbuild {
         this.FmcToken = FmcToken;
         this.Date= Date;
         this.Url=Url;
+        this.DeveloperEmail=DeveloperEmail;
     }
 
     public String getEmail() {
@@ -61,6 +63,10 @@ public class Pbuild {
         return Url;
     }
 
+    public String getDeveloperEmail() {
+        return DeveloperEmail;
+    }
+
     public void setEmail(String email) {
         Email = email;
     }
@@ -91,5 +97,9 @@ public class Pbuild {
 
     public void setUrl(String url) {
         Url = url;
+    }
+
+    public void setDeveloperEmail(String developerEmail) {
+        DeveloperEmail = developerEmail;
     }
 }

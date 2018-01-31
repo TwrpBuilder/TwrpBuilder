@@ -35,6 +35,8 @@ import com.github.TwrpBuilder.util.FirebaseProgressBar;
 import com.github.TwrpBuilder.util.Pbuild;
 import com.github.TwrpBuilder.util.User;
 
+import org.w3c.dom.Text;
+
 /**
  * Created by androidlover5842 on 19/1/18.
  */
@@ -80,6 +82,7 @@ public class DevsBuildDoneFragment extends Fragment {
                 TextView tvBoard = v.findViewById(R.id.list_user_board);
                 TextView tvDate= v.findViewById(R.id.list_user_date);
                 TextView tvBrand = v.findViewById(R.id.list_user_brand);
+                TextView tvDeveloper=v.findViewById(R.id.list_developer_email);
                 Button btFiles=v.findViewById(R.id.BtFile);
                 final Button btDRecovery=v.findViewById(R.id.bt_download_recovery);
                 btAddBack=v.findViewById(R.id.bt_add_back);
@@ -88,6 +91,7 @@ public class DevsBuildDoneFragment extends Fragment {
                 tvDevice.setText("Model : " + model.getModel());
                 tvBoard.setText("Board : "+model.getBoard());
                 tvBrand.setText("Brand : " +model.getBrand());
+                tvDeveloper.setText("Dev Email: " +model.getDeveloperEmail());
 
                 btFiles.setOnClickListener(new View.OnClickListener() {
                     @Override
