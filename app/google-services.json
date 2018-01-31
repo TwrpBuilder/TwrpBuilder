@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1079738297898:android:49428911d1c8603a",
+        "mobilesdk_app_id": "1:1079738297898:android:eab7865fe6906d6b",
         "android_client_info": {
           "package_name": "com.github.TwrpBuilder"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1079738297898-vhjk9spqmm9v0uea143fjjso0tho9slb.apps.googleusercontent.com",
+          "client_id": "1079738297898-3u1vc1to4gubslcdjai36i9ctqjes74h.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.github.TwrpBuilder",
-            "certificate_hash": "A9B44A397BCBD9A1208D10AC0A431C45BD00E6DA"
+            "certificate_hash": "812a40c2d807e668114479bef9b474f9fd9fb626"
           }
         },
         {
