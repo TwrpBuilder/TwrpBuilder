@@ -5,16 +5,13 @@ package com.github.TwrpBuilder.util;
  */
 
 public class Queue {
-    public String Brand;
-    public String Board;
-    public String Model;
-    public  String Email;
-    public String Date;
+    private String Brand;
+    private String Board;
+    private String Model;
+    private String Email;
+    private String Date;
 
-    Queue(){
-
-    }
-
+    public Queue(){}
     public Queue(String Brand, String Board, String Model,String Email,String Date) {
         this.Brand = Brand;
         this.Board = Board;
@@ -39,23 +36,23 @@ public class Queue {
         Email = email;
     }
 
-    public String MBrand() {
+    public String getBrand() {
         return Brand;
     }
 
-    public String MBoard() {
+    public String getBoard() {
         return Board;
     }
 
-    public String MModel() {
+    public String getModel() {
         return Model;
     }
 
-    public String MEmail() {
+    public String getEmail() {
         return Email;
     }
 
-    public String MDate() {
+    public String getDate() {
         return Date;
     }
 }

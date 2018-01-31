@@ -83,22 +83,22 @@ public class DevsBuildDoneFragment extends Fragment {
                 Button btFiles=v.findViewById(R.id.BtFile);
                 final Button btDRecovery=v.findViewById(R.id.bt_download_recovery);
                 btAddBack=v.findViewById(R.id.bt_add_back);
-                tvDate.setText("Date : "+model.WDate());
-                tvEmail.setText("Email : "+model.WEmail());
-                tvDevice.setText("Model : " + model.WModel());
-                tvBoard.setText("Board : "+model.WBoard());
-                tvBrand.setText("Brand : " +model.WBrand());
+                tvDate.setText("Date : "+model.getDate());
+                tvEmail.setText("Email : "+model.getEmail());
+                tvDevice.setText("Model : " + model.getModel());
+                tvBoard.setText("Board : "+model.getBoard());
+                tvBrand.setText("Brand : " +model.getBrand());
 
                 btFiles.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view1) {
-                        storageRef.child("queue/" + model.WBrand() + "/" + model.WBoard() + "/" + model.WModel() + "/"+ Config.TwrpBackFName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        storageRef.child("queue/" + model.getBrand() + "/" + model.getBoard() + "/" + model.getModel() + "/"+ Config.TwrpBackFName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
                                 DownloadManager downloadManager = (DownloadManager) getContext().getSystemService(getContext().DOWNLOAD_SERVICE);
 
                                 DownloadManager.Request request = new DownloadManager.Request(uri);
-                                String fileName=model.WModel()+"-"+model.WBoard()+"-"+model.WEmail()+".tar.gz";
+                                String fileName=model.getModel()+"-"+model.getBoard()+"-"+model.getEmail()+".tar.gz";
                                 request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
 
                                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
@@ -112,14 +112,14 @@ public class DevsBuildDoneFragment extends Fragment {
                         });
 
 
-                        Toast.makeText(getContext(),model.WModel(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),model.getModel(),Toast.LENGTH_SHORT).show();
                     }
                 });
 
                 btDRecovery.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(model.WUrl()));
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(model.getUrl()));
                         startActivity(browserIntent);
 
                     }
@@ -128,9 +128,9 @@ public class DevsBuildDoneFragment extends Fragment {
                 btAddBack.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        user = new User(model.WBrand(),model.WBoard(),model.WModel(),model.WEmail(),model.WUid(),model.WFmcToken(), DateUtils.getDate());
+                        user = new User(model.getBrand(),model.getBoard(),model.getModel(),model.getEmail(),model.getUid(),model.getFmcToken(), DateUtils.getDate());
                         mUploader.push().setValue(user);
-                        Snackbar.make(view,"Add "+ model.WModel()+ " to queue",Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(view,"Add "+ model.getModel()+ " to queue",Snackbar.LENGTH_SHORT).show();
                     }
                 });
 

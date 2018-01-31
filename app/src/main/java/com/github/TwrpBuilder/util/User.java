@@ -9,13 +9,13 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class User {
 
-    public String Brand;
-    public String Board;
-    public String Model;
-    public  String Email;
-    public String Uid;
-    public String FmcToken;
-    public String Date;
+    private String Brand;
+    private String Board;
+    private String Model;
+    private String Email;
+    private String Uid;
+    private String FmcToken;
+    private String Date;
     // Default constructor required for calls to
     // DataSnapshot.getValue(User.class)
     public User() {
@@ -31,31 +31,59 @@ public class User {
         this.Date= Date;
     }
 
-    public String WEmail() {
-        return Email;
-    }
-
-    public String WBoard() {
+    public String getBoard() {
         return Board;
     }
 
-    public String WBrand() {
-        return Brand;
+    public String getUid() {
+        return Uid;
     }
 
-    public String WtDate() {
-        return Date;
-    }
-
-    public String WModel() {
-        return Model;
-    }
-
-    public String WFmcToken() {
+    public String getFmcToken() {
         return FmcToken;
     }
 
-    public String WUid() {
-        return Uid;
+    public String getBrand() {
+        return Brand;
+    }
+
+    public String getDate() {
+        return Date;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public String getModel() {
+        return Model;
+    }
+
+    public void setUid(String uid) {
+        Uid = uid;
+    }
+
+    public void setFmcToken(String fmcToken) {
+        FmcToken = fmcToken;
+    }
+
+    public void setBoard(String board) {
+        Board = board;
+    }
+
+    public void setModel(String model) {
+        Model = model;
+    }
+
+    public void setDate(String date) {
+        Date = date;
+    }
+
+    public void setBrand(String brand) {
+        Brand = brand;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
     }
 }

@@ -52,11 +52,11 @@ public class FragmentBuildStarted extends Fragment {
                 TextView tvBoard = v.findViewById(R.id.list_user_board);
                 TextView tvDate= v.findViewById(R.id.list_user_date);
                 TextView tvBrand = v.findViewById(R.id.list_user_brand);
-                tvDate.setText("Date : "+model.MDate());
-                tvEmail.setText("Email : "+model.MEmail());
-                tvDevice.setText("Model : " + model.MModel());
-                tvBoard.setText("Board : "+model.MBoard());
-                tvBrand.setText("Brand : " +model.MBrand());
+                tvDate.setText("Date : "+model.getDate());
+                tvEmail.setText("Email : "+model.getEmail());
+                tvDevice.setText("Model : " + model.getModel());
+                tvBoard.setText("Board : "+model.getBoard());
+                tvBrand.setText("Brand : " +model.getBrand());
 
             }
         };
