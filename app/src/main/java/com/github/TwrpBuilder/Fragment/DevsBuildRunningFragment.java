@@ -82,22 +82,22 @@ public class DevsBuildRunningFragment extends Fragment {
                 TextView tvBrand = v.findViewById(R.id.list_user_brand);
                 Button btFiles=v.findViewById(R.id.BtFile);
                 final Button btBuildDone=v.findViewById(R.id.bt_build_done);
-                tvDate.setText("Date : "+model.WtDate());
-                tvEmail.setText("Email : "+model.WEmail());
-                tvDevice.setText("Model : " + model.WModel());
-                tvBoard.setText("Board : "+model.WBoard());
-                tvBrand.setText("Brand : " +model.WBrand());
+                tvDate.setText("Date : "+model.getDate());
+                tvEmail.setText("Email : "+model.getEmail());
+                tvDevice.setText("Model : " + model.getModel());
+                tvBoard.setText("Board : "+model.getBoard());
+                tvBrand.setText("Brand : " +model.getBrand());
 
                 btFiles.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view1) {
-                        storageRef.child("queue/" + model.WBrand() + "/" + model.WBoard() + "/" + model.WModel() + "/"+ Config.TwrpBackFName ).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        storageRef.child("queue/" + model.getBrand() + "/" + model.getBoard() + "/" + model.getModel() + "/"+ Config.TwrpBackFName ).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
                                 DownloadManager downloadManager = (DownloadManager) getContext().getSystemService(getContext().DOWNLOAD_SERVICE);
 
                                 DownloadManager.Request request = new DownloadManager.Request(uri);
-                                String fileName=model.WModel()+"-"+model.WBoard()+"-"+model.WEmail()+".tar.gz";
+                                String fileName=model.getModel()+"-"+model.getBoard()+"-"+model.getEmail()+".tar.gz";
                                 request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
 
                                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
@@ -111,25 +111,25 @@ public class DevsBuildRunningFragment extends Fragment {
                         });
 
 
-                        Toast.makeText(getContext(),model.WModel(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),model.getModel(),Toast.LENGTH_SHORT).show();
                     }
                 });
 
                 btBuildDone.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                       // User user = new User(model.WBrand(),model.WBoard(),model.WModel(),model.WEmail(),model.WUid(),model.WFmcToken(),model.WtDate());
+                       // User user = new User(model.getBrand(),model.getBoard(),model.getModel(),model.getEmail(),model.WUid(),model.WFmcToken(),model.getDate());
                         //mUploader.child(userId).setValue(user);
                         final Intent intent=new Intent(getContext(), ActivitySubmitBuild.class);
-                        intent.putExtra("Brand",model.WBrand());
-                        intent.putExtra("Board",model.WBoard());
-                        intent.putExtra("Model",model.WModel());
-                        intent.putExtra("Email",model.WEmail());
-                        intent.putExtra("Uid",model.WUid());
-                        intent.putExtra("Fmc",model.WFmcToken());
+                        intent.putExtra("Brand",model.getBrand());
+                        intent.putExtra("Board",model.getBoard());
+                        intent.putExtra("Model",model.getModel());
+                        intent.putExtra("Email",model.getEmail());
+                        intent.putExtra("Uid",model.getUid());
+                        intent.putExtra("Fmc",model.getFmcToken());
                         mFirebaseInstance.getReference("RunningBuild")
                                 .orderByChild("Model")
-                                .equalTo(model.WModel())
+                                .equalTo(model.getModel())
                                 .addListenerForSingleValueEvent(
                                         new ValueEventListener() {
                                             @Override

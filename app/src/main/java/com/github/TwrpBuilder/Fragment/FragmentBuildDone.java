@@ -54,17 +54,20 @@ public class FragmentBuildDone extends Fragment {
                 TextView tvBoard = v.findViewById(R.id.list_user_board);
                 TextView tvDate= v.findViewById(R.id.list_user_date);
                 TextView tvBrand = v.findViewById(R.id.list_user_brand);
+                TextView tvDeveloper=v.findViewById(R.id.list_developer_email);
                 Button btDownload=v.findViewById(R.id.bt_download);
-                tvDate.setText("Date : "+model.WDate());
-                tvEmail.setText("Email : "+model.WEmail());
-                tvDevice.setText("Model : " + model.WModel());
-                tvBoard.setText("Board : "+model.WBoard());
-                tvBrand.setText("Brand : " +model.WBrand());
+                tvDeveloper.setVisibility(View.VISIBLE);
+                tvDate.setText("Date : "+model.getDate());
+                tvEmail.setText("Email : "+model.getEmail());
+                tvDevice.setText("Model : " + model.getModel());
+                tvBoard.setText("Board : "+model.getBoard());
+                tvBrand.setText("Brand : " +model.getBrand());
+                tvDeveloper.setText("Dev Email : " +model.getDeveloperEmail());
                 btDownload.setVisibility(View.VISIBLE);
                 btDownload.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(model.WUrl()));
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(model.getUrl()));
                         startActivity(browserIntent);
                     }
                 });

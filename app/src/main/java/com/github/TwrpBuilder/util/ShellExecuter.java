@@ -11,6 +11,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import static com.github.TwrpBuilder.util.Config.Sdcard;
+
 /**
  * Created by sumit on 5/11/16.
  */
@@ -63,8 +65,7 @@ public class ShellExecuter {
     }
 
     public static void mkdir(String name){
-        File makedir = new File(Environment.getExternalStorageDirectory() +
-                File.separator +"/"+name );
+        File makedir = new File(Sdcard+name );
         Log.d(TAG,"Request to make folder "+name+" received .");
         boolean success = true;
         if (!makedir.exists()) {

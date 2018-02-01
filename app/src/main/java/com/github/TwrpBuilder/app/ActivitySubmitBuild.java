@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,6 +44,7 @@ public class ActivitySubmitBuild extends AppCompatActivity {
     private DatabaseReference mUploader;
     private FirebaseDatabase mFirebaseInstance;
     private Pbuild pbuild;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class ActivitySubmitBuild extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         mFirebaseInstance = FirebaseDatabase.getInstance();
+        firebaseAuth=FirebaseAuth.getInstance();
         mUploader = mFirebaseInstance.getReference("Builds");
         bundle = getIntent().getExtras();
         Brand = bundle.getString("Brand");
@@ -78,7 +81,7 @@ public class ActivitySubmitBuild extends AppCompatActivity {
                     if (URLUtil.isValidUrl(edGetUri.getText().toString()))
                     {
                         System.out.println("Url " + edGetUri.getText());
-                        pbuild = new Pbuild(Brand, Board, Model, Email, Uid, Fmc, DateUtils.getDate(), edGetUri.getText().toString());
+                        pbuild = new Pbuild(Brand, Board, Model, Email, Uid, Fmc, DateUtils.getDate(), edGetUri.getText().toString(),firebaseAuth.getCurrentUser().getEmail());
                         mUploader.push().setValue(pbuild).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {

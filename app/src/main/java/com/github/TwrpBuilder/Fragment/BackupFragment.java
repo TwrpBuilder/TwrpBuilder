@@ -41,6 +41,7 @@ import com.github.TwrpBuilder.util.ShellExecuter;
 
 import static com.github.TwrpBuilder.app.UploaderActivity.fromI;
 import static com.github.TwrpBuilder.app.UploaderActivity.result;
+import static com.github.TwrpBuilder.util.Config.Sdcard;
 
 
 /**
@@ -171,12 +172,12 @@ public class BackupFragment extends Fragment {
         protected Void doInBackground(Void... params) {
             ShellExecuter.mkdir("TwrpBuilder");
             try {
-                ShellExecuter.cp("/system/build.prop","/sdcard/TwrpBuilder/build.prop");
+                ShellExecuter.cp("/system/build.prop",Sdcard+"TwrpBuilder/build.prop");
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Shell.SU.run("dd if=" + recoveryPath + " of=/sdcard/TwrpBuilder/recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` >  /sdcard/TwrpBuilder/mounts ; cd /sdcard/TwrpBuilder && tar -c recovery.img build.prop mounts > /sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
-            compressGzipFile("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar","/sdcard/TwrpBuilder/"+Config.TwrpBackFName);
+            Shell.SU.run("dd if=" + recoveryPath + " of="+Sdcard+"TwrpBuilder/recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` > "+Sdcard+"TwrpBuilder/mounts ; cd "+Sdcard+"TwrpBuilder && tar -c recovery.img build.prop mounts > "+Sdcard+"TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
+            compressGzipFile(Sdcard+"/TwrpBuilder/TwrpBuilderRecoveryBackup.tar",Sdcard+"TwrpBuilder/"+Config.TwrpBackFName);
             return null;
         }
 

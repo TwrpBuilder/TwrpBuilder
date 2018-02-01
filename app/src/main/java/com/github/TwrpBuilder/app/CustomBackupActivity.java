@@ -32,6 +32,8 @@ import com.github.TwrpBuilder.R;
 import com.github.TwrpBuilder.util.Config;
 import com.github.TwrpBuilder.util.ShellExecuter;
 
+import static com.github.TwrpBuilder.util.Config.Sdcard;
+
 /**
  * Created by androidlover5842 on 24/1/18.
  */
@@ -140,10 +142,10 @@ public class CustomBackupActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             ShellExecuter.mkdir("TwrpBuilder");
             try {
-                ShellExecuter.cp("/system/build.prop","/sdcard/TwrpBuilder/build.prop");
-                ShellExecuter.cp(editText.getText().toString(),"/sdcard/TwrpBuilder/recovery.img");
-                Shell.SH.run("cd /sdcard/TwrpBuilder/ && tar -c build.prop recovery.img > TwrpBuilderRecoveryBackup.tar");
-                compressGzipFile("/sdcard/TwrpBuilder/TwrpBuilderRecoveryBackup.tar","/sdcard/TwrpBuilder/"+ Config.TwrpBackFName);
+                ShellExecuter.cp("/system/build.prop",Sdcard+"TwrpBuilder/build.prop");
+                ShellExecuter.cp(editText.getText().toString(),Sdcard+"/TwrpBuilder/recovery.img");
+                Shell.SH.run("cd "+Sdcard+"/TwrpBuilder/ && tar -c build.prop recovery.img > TwrpBuilderRecoveryBackup.tar");
+                compressGzipFile(Sdcard+"TwrpBuilder/TwrpBuilderRecoveryBackup.tar",Sdcard+"TwrpBuilder/"+ Config.TwrpBackFName);
 
             } catch (IOException e) {
                 e.printStackTrace();

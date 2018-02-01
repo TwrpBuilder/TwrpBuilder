@@ -40,6 +40,14 @@
         android:textColor="@color/colorInfo"
         android:textSize="13sp" />
 
+    <TextView
+        android:id="@+id/list_developer_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:textColor="@color/colorInfo"
+        android:textSize="13sp" />
+
     <Button
         android:layout_width="wrap_content"
         android:text="Download"
