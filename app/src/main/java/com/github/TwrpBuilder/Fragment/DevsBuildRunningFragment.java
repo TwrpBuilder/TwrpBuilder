@@ -128,13 +128,14 @@ public class DevsBuildRunningFragment extends Fragment {
                         intent.putExtra("Uid",model.getUid());
                         intent.putExtra("Fmc",model.getFmcToken());
                         mFirebaseInstance.getReference("RunningBuild")
-                                .orderByChild("Model")
+                                .orderByChild("model")
                                 .equalTo(model.getModel())
                                 .addListenerForSingleValueEvent(
                                         new ValueEventListener() {
                                             @Override
                                             public void onDataChange(DataSnapshot dataSnapshot) {
                                                 for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                                    Log.i("TAG",child.getKey());
                                                     intent.putExtra("somekey",child.getKey().toString());
                                                     startActivity(intent);
                                                 }

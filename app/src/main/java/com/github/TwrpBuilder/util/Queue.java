@@ -36,6 +36,10 @@ public class Queue {
         Email = email;
     }
 
+    public void setModel(String model) {
+        Model = model;
+    }
+
     public String getBrand() {
         return Brand;
     }

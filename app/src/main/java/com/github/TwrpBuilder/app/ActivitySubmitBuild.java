@@ -114,6 +114,7 @@ public class ActivitySubmitBuild extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.i("TAG","Started");
         if (finished==true)
         {
             finish();
