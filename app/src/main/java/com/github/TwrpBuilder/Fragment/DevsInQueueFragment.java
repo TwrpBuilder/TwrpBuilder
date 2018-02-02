@@ -114,7 +114,7 @@ public class DevsInQueueFragment extends Fragment {
                 btStartBuild.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mFirebaseInstance.getReference("InQueue").orderByChild("Model").equalTo(model.getModel()).addListenerForSingleValueEvent(
+                        mFirebaseInstance.getReference("InQueue").orderByChild("model").equalTo(model.getModel()).addListenerForSingleValueEvent(
                                 new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
