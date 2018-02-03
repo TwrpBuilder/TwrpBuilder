@@ -132,7 +132,7 @@ public class DevsBuildDoneFragment extends Fragment {
                 btAddBack.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        user = new User(model.getBrand(),model.getBoard(),model.getModel(),model.getEmail(),model.getUid(),model.getFmcToken(), DateUtils.getDate());
+                        user = new User(model.getBrand(),model.getBoard(),model.getModel(),model.getCodeName(),model.getEmail(),model.getUid(),model.getFmcToken(), DateUtils.getDate());
                         mUploader.push().setValue(user);
                         Snackbar.make(view,"Add "+ model.getModel()+ " to queue",Snackbar.LENGTH_SHORT).show();
                     }

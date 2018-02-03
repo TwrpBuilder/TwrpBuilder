@@ -124,6 +124,7 @@ public class DevsBuildRunningFragment extends Fragment {
                         intent.putExtra("Brand",model.getBrand());
                         intent.putExtra("Board",model.getBoard());
                         intent.putExtra("Model",model.getModel());
+                        intent.putExtra("CodeName",model.getCodeName());
                         intent.putExtra("Email",model.getEmail());
                         intent.putExtra("Uid",model.getUid());
                         intent.putExtra("Fmc",model.getFmcToken());

@@ -130,7 +130,7 @@ public class DevsInQueueFragment extends Fragment {
                                     }
                                 });
 
-                        User user = new User(model.getBrand(),model.getBoard(),model.getModel(),model.getEmail(),model.getUid(),model.getFmcToken(),model.getDate());
+                        User user = new User(model.getBrand(),model.getBoard(),model.getModel(),model.getCodeName(),model.getEmail(),model.getUid(),model.getFmcToken(),model.getDate());
                         mUploader.push().setValue(user);
                     }
                 });

@@ -37,7 +37,7 @@ import static com.github.TwrpBuilder.app.ActivityMessage.finished;
 
 public class ActivitySubmitBuild extends AppCompatActivity {
 
-    private String Brand,Board,Model,Email,Fmc,Uid,key;
+    private String Brand,Board,Model,CodeName,Email,Fmc,Uid,key;
     private Bundle bundle;
     private EditText edGetUri;
     private Button btSubmit;
@@ -63,6 +63,7 @@ public class ActivitySubmitBuild extends AppCompatActivity {
         Brand = bundle.getString("Brand");
         Board = bundle.getString("Board");
         Model = bundle.getString("Model");
+        CodeName = bundle.getString("CodeName");
         Email = bundle.getString("Email");
         Fmc = bundle.getString("Fmc");
         Uid = bundle.getString("Uid");
@@ -81,7 +82,7 @@ public class ActivitySubmitBuild extends AppCompatActivity {
                     if (URLUtil.isValidUrl(edGetUri.getText().toString()))
                     {
                         System.out.println("Url " + edGetUri.getText());
-                        pbuild = new Pbuild(Brand, Board, Model, Email, Uid, Fmc, DateUtils.getDate(), edGetUri.getText().toString(),firebaseAuth.getCurrentUser().getEmail());
+                        pbuild = new Pbuild(Brand, Board, Model,CodeName, Email, Uid, Fmc, DateUtils.getDate(), edGetUri.getText().toString(),firebaseAuth.getCurrentUser().getEmail());
                         mUploader.push().setValue(pbuild).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
