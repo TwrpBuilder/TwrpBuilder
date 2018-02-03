@@ -117,10 +117,10 @@ public class MainActivity extends AppCompatActivity
         /*Replace Fragment*/
         if (RootChecker.isDeviceRooted()) {
             updateFragment(this.mainFragment);
-            setTitle("Request TWRP");
+            setTitle("Home");
         }else {
-            updateFragment(fragmentCustomBackup);
-            setTitle("Request TWRP");
+            updateFragment(mainFragment);
+            setTitle("Home");
         }
         /*ad view*/
         mAdView = findViewById(R.id.adView);
