@@ -60,7 +60,7 @@ public class MainFragment extends Fragment{
 
             }
         }else {
-            adapter.addFragment(new NotRooted(), "Make Request");
+            adapter.addFragment(fragmentCustomBackup, "Make Request");
         }
         adapter.addFragment(lBuildsForDeviceFragment, "Builds for this device");
         viewPager.setAdapter(adapter);
