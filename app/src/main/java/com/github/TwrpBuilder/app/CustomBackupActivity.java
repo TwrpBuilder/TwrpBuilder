@@ -46,6 +46,7 @@ public class CustomBackupActivity extends AppCompatActivity {
     private FilePickerDialogFragment.Builder  builder;
     private ProgressBar progressBar;
     public static boolean FromCB,resultOfB;
+    private String Cache;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +56,7 @@ public class CustomBackupActivity extends AppCompatActivity {
         if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        Cache=getCacheDir()+File.separator;
         button=findViewById(R.id.bt_generate_backup);
         editText=findViewById(R.id.ed_select_recovery);
         progressBar=findViewById(R.id.pb_gen_backup);
@@ -142,9 +144,11 @@ public class CustomBackupActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             ShellExecuter.mkdir("TwrpBuilder");
             try {
-                ShellExecuter.cp("/system/build.prop",Sdcard+"TwrpBuilder/build.prop");
-                ShellExecuter.cp(editText.getText().toString(),Sdcard+"/TwrpBuilder/recovery.img");
-                Shell.SH.run("cd "+Sdcard+"/TwrpBuilder/ && tar -c build.prop recovery.img > TwrpBuilderRecoveryBackup.tar");
+                Shell.SH.run("getprop > "+Cache+"build.prop");
+                ShellExecuter.cp(editText.getText().toString(),Cache+"recovery.img");
+                Shell.SH.run("cd "+Cache+" && tar -c build.prop recovery.img > TwrpBuilderRecoveryBackup.tar");
+                Shell.SH.run("cd "+Cache+" && tar -c build.prop recovery.img > TwrpBuilderRecoveryBackup.tar");
+                ShellExecuter.cp(Cache+"TwrpBuilderRecoveryBackup.tar",Sdcard+"/TwrpBuilder/TwrpBuilderRecoveryBackup.tar");
                 compressGzipFile(Sdcard+"TwrpBuilder/TwrpBuilderRecoveryBackup.tar",Sdcard+"TwrpBuilder/"+ Config.TwrpBackFName);
 
             } catch (IOException e) {
