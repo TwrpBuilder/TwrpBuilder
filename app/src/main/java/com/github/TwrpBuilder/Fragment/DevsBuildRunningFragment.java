@@ -51,7 +51,7 @@ public class DevsBuildRunningFragment extends Fragment {
     private FirebaseDatabase mFirebaseInstance;
     private String userId;
 
-    DevsBuildRunningFragment(){
+    public DevsBuildRunningFragment(){
     }
 
     @Nullable

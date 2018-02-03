@@ -53,7 +53,7 @@ public class DevsBuildDoneFragment extends Fragment {
     private Button btAddBack;
     private User user;
 
-    DevsBuildDoneFragment(){
+    public DevsBuildDoneFragment(){
         //Empty Constructor
     }
 

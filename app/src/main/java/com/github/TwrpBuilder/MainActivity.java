@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.TwrpBuilder.Fragment.FragmentCustomBackup;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity
     private DevsFragment mDevsFragment;
     private StatusFragment statusFragment;
     private MainFragment mainFragment;
+    private FragmentCustomBackup fragmentCustomBackup;
 
     /*Firebase*/
     private FirebaseAuth mFirebaseAuth;
@@ -108,16 +110,17 @@ public class MainActivity extends AppCompatActivity
         mFragmentPreferences=new PreferencesFragment();
         mFragmentRelApp = new GithubReleasesFragment().setTargetURL(Config.URL_APP_RELEASES);
         mMakeMeHappy=new MakeMeHappy();
-        mDevsFragment = new DevsFragment(getBaseContext());
+        mDevsFragment = new DevsFragment().getInstance(getBaseContext());
         statusFragment=new StatusFragment();
         mainFragment=new MainFragment();
+        fragmentCustomBackup=new FragmentCustomBackup();
         /*Replace Fragment*/
         if (RootChecker.isDeviceRooted()) {
             updateFragment(this.mainFragment);
             setTitle("Request TWRP");
         }else {
-            updateFragment(this.mNotRooted);
-            setTitle("Device Not Rooted :(");
+            updateFragment(fragmentCustomBackup);
+            setTitle("Request TWRP");
         }
         /*ad view*/
         mAdView = findViewById(R.id.adView);

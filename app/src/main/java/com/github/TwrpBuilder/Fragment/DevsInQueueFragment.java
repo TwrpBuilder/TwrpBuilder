@@ -48,7 +48,7 @@ public class DevsInQueueFragment extends Fragment {
     private DatabaseReference mUploader;
     private FirebaseDatabase mFirebaseInstance;
     private ProgressBar progressBar;
-    DevsInQueueFragment(){}
+    public DevsInQueueFragment() {}
 
     @Nullable
     @Override
