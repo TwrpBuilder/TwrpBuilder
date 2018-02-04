@@ -40,7 +40,7 @@ public class LBuildsForDeviceFragment extends Fragment {
 
         ListView buildList = view.findViewById(R.id.build_list_view);
 
-        Query query = FirebaseDatabase.getInstance().getReference().child("Builds").orderByChild("Model").equalTo(Build.MODEL);
+        Query query = FirebaseDatabase.getInstance().getReference().child("Builds").orderByChild("model").equalTo(Build.MODEL);
         FirebaseListOptions<Pbuild> options = new FirebaseListOptions.Builder<Pbuild>()
                 .setLayout(R.layout.list_in_queue)
                 .setQuery(query, Pbuild.class)
