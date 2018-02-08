@@ -18,10 +18,9 @@ import static com.github.TwrpBuilder.util.Config.Sdcard;
  */
 
 public class ShellExecuter {
-    public static String command;
     public static String TAG="ShellExecuter";
 
-    public static final  String runAsRoot()
+    public static final  String runAsRoot(String command)
     {
 
         try {
