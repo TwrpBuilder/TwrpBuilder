@@ -23,6 +23,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.zip.GZIPOutputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import easyfilepickerdialog.kingfisher.com.library.model.DialogConfig;
 import easyfilepickerdialog.kingfisher.com.library.model.SupportFile;
@@ -146,11 +148,9 @@ public class CustomBackupActivity extends AppCompatActivity {
             try {
                 Shell.SH.run("getprop > "+Cache+"build.prop");
                 ShellExecuter.cp(editText.getText().toString(),Cache+"recovery.img");
-                Shell.SH.run("cd "+Cache+" && tar -c build.prop recovery.img > TwrpBuilderRecoveryBackup.tar");
-                Shell.SH.run("cd "+Cache+" && tar -c build.prop recovery.img > TwrpBuilderRecoveryBackup.tar");
-                ShellExecuter.cp(Cache+"TwrpBuilderRecoveryBackup.tar",Sdcard+"/TwrpBuilder/TwrpBuilderRecoveryBackup.tar");
-                compressGzipFile(Sdcard+"TwrpBuilder/TwrpBuilderRecoveryBackup.tar",Sdcard+"TwrpBuilder/"+ Config.TwrpBackFName);
-
+                String[] file=new String[]{Cache+"build.prop",Cache+"recovery.img"};
+                zip(file,Cache+"TwrpBuilderRecoveryBackup.zip");
+                ShellExecuter.cp(Cache+"TwrpBuilderRecoveryBackup.zip",Sdcard+"TwrpBuilder/"+ Config.TwrpBackFName);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -165,24 +165,31 @@ public class CustomBackupActivity extends AppCompatActivity {
             finish();
         }
 
-        private void compressGzipFile(String file, String gzipFile) {
+        public void zip(String[] files, String zipFile) throws IOException {
+            BufferedInputStream origin = null;
+            ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(zipFile)));
             try {
-                FileInputStream fis = new FileInputStream(file);
-                FileOutputStream fos = new FileOutputStream(gzipFile);
-                GZIPOutputStream gzipOS = new GZIPOutputStream(fos);
-                byte[] buffer = new byte[1024];
-                int len;
-                while((len=fis.read(buffer)) != -1){
-                    gzipOS.write(buffer, 0, len);
-                }
-                //close resources
-                gzipOS.close();
-                fos.close();
-                fis.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                byte data[] = new byte[1024];
 
+                for (int i = 0; i < files.length; i++) {
+                    FileInputStream fi = new FileInputStream(files[i]);
+                    origin = new BufferedInputStream(fi, 1024);
+                    try {
+                        ZipEntry entry = new ZipEntry(files[i].substring(files[i].lastIndexOf("/") + 1));
+                        out.putNextEntry(entry);
+                        int count;
+                        while ((count = origin.read(data, 0, 1024)) != -1) {
+                            out.write(data, 0, count);
+                        }
+                    }
+                    finally {
+                        origin.close();
+                    }
+                }
+            }
+            finally {
+                out.close();
+            }
         }
     }
 }

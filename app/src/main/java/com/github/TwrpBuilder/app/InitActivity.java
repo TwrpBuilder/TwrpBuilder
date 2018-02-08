@@ -37,6 +37,8 @@ public class InitActivity extends AppCompatActivity {
     private String SonyName="/dev/block/platform/*/*/by-name/FOTAKernel";
     private String qcomBoot="/dev/block/bootdevice/by-name/recovery";
     private String qcomName="/dev/block/platform/*/*/by-name/recovery";
+    private String oldSocName="/dev/block/platform/*/*/by-name/RECOVERY";
+    private String oldBroadComName="/dev/block/platform/*/*/by-name/Recovery";
     private String Output;
     private SharedPreferences.Editor  editor;
 
@@ -51,6 +53,7 @@ public class InitActivity extends AppCompatActivity {
         }else {
             startActivity(new Intent(InitActivity.this, LoginActivity.class));
             isSupport=false;
+            finish();
         }
     }
 
@@ -93,6 +96,16 @@ public class InitActivity extends AppCompatActivity {
                     Output= Shell.SU.run("ls "+ qcomBoot).toString().replace("[","").replace("]","");
                     SharedP.putRecoveryString(getBaseContext(),Output,true);
                 }
+                else if (!Shell.SU.run("ls "+oldSocName).isEmpty())
+                {
+                    Output= Shell.SU.run("ls "+ oldSocName).toString().replace("[","").replace("]","");
+                    SharedP.putRecoveryString(getBaseContext(),Output,true);
+                }
+                else if (!Shell.SU.run("ls "+oldBroadComName).isEmpty())
+                {
+                    Output= Shell.SU.run("ls "+ oldBroadComName).toString().replace("[","").replace("]","");
+                    SharedP.putRecoveryString(getBaseContext(),Output,true);
+                }
                 else
                 {
                     isSupport=false;
@@ -111,6 +124,7 @@ public class InitActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             startActivity(new Intent(InitActivity.this, LoginActivity.class));
+            finish();
         }
 
         @Override
