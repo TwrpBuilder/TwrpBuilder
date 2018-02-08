@@ -30,12 +30,15 @@ public class InitActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
     public static boolean isSupport;
+    public static boolean isOldMtk;
+
     private String mtk="/dev/recovery";
     private String Sonyboot="/dev/block/bootdevice/by-name/FOTAKernel";
     private String SonyName="/dev/block/platform/*/*/by-name/FOTAKernel";
     private String qcomBoot="/dev/block/bootdevice/by-name/recovery";
     private String qcomName="/dev/block/platform/*/*/by-name/recovery";
     private String Output;
+    private SharedPreferences.Editor  editor;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,6 +77,10 @@ public class InitActivity extends AppCompatActivity {
                 {
                     Output= Shell.SU.run("ls "+ mtk).toString().replace("[","").replace("]","");
                     SharedP.putRecoveryString(getBaseContext(),Output,true);
+                    isOldMtk=true;
+                    editor = preferences.edit();
+                    editor.putBoolean("isOldMtk",true);
+                    editor.apply();
                 }
                 else if (!Shell.SU.run("ls "+qcomName).isEmpty())
                 {
@@ -89,12 +96,13 @@ public class InitActivity extends AppCompatActivity {
                 else
                 {
                     isSupport=false;
-                    SharedPreferences.Editor  editor = preferences.edit();
+                    editor = preferences.edit();
                     editor.putBoolean("isSupport",false);
                     editor.apply();
                 }
 
                 }
+            isOldMtk=preferences.getBoolean("isOldMtk",false);
             isSupport=preferences.getBoolean("isSupport",false);
             return name;
         }

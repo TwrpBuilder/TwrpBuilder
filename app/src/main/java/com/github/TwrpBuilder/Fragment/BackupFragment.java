@@ -39,6 +39,7 @@ import com.github.TwrpBuilder.app.UploaderActivity;
 import com.github.TwrpBuilder.util.Config;
 import com.github.TwrpBuilder.util.ShellExecuter;
 
+import static com.github.TwrpBuilder.app.InitActivity.isOldMtk;
 import static com.github.TwrpBuilder.app.UploaderActivity.fromI;
 import static com.github.TwrpBuilder.app.UploaderActivity.result;
 import static com.github.TwrpBuilder.util.Config.Sdcard;
@@ -176,7 +177,14 @@ public class BackupFragment extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Shell.SU.run("dd if=" + recoveryPath + " of="+Sdcard+"TwrpBuilder/recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` > "+Sdcard+"TwrpBuilder/mounts ; cd "+Sdcard+"TwrpBuilder && tar -c recovery.img build.prop mounts > "+Sdcard+"TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
+            if (isOldMtk==true)
+            {
+                Shell.SU.run("dd if=" + recoveryPath +" bs=6291456 count=1 of=" + Sdcard + "TwrpBuilder/recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` > " + Sdcard + "TwrpBuilder/mounts ; cd " + Sdcard + "TwrpBuilder && tar -c recovery.img build.prop mounts > " + Sdcard + "TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
+            }
+            else
+            {
+                Shell.SU.run("dd if=" + recoveryPath + " of=" + Sdcard + "TwrpBuilder/recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` > " + Sdcard + "TwrpBuilder/mounts ; cd " + Sdcard + "TwrpBuilder && tar -c recovery.img build.prop mounts > " + Sdcard + "TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
+            }
             compressGzipFile(Sdcard+"/TwrpBuilder/TwrpBuilderRecoveryBackup.tar",Sdcard+"TwrpBuilder/"+Config.TwrpBackFName);
             return null;
         }
