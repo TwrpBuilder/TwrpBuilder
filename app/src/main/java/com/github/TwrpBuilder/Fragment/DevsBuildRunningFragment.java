@@ -49,7 +49,6 @@ public class DevsBuildRunningFragment extends Fragment {
     private Query query;
     private DatabaseReference mUploader;
     private FirebaseDatabase mFirebaseInstance;
-    private String userId;
 
     public DevsBuildRunningFragment(){
     }
@@ -63,7 +62,6 @@ public class DevsBuildRunningFragment extends Fragment {
         mListView = view.findViewById(R.id.Lv_devs);
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mUploader = mFirebaseInstance.getReference("Builds");
-        userId = mUploader.push().getKey();
         query = FirebaseDatabase.getInstance()
                 .getReference("RunningBuild");
 

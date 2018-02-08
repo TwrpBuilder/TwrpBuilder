@@ -144,7 +144,7 @@ public class DevsBuildDoneFragment extends Fragment {
         ProgressBar progressBar= view.findViewById(R.id.pb_builds);
         TextView textView= view.findViewById(R.id.tv_no_build);
         new FirebaseProgressBar().start(progressBar,textView,adapter,"Builds");
-
+        mListView.setStackFromBottom(true);
         mListView.setAdapter(adapter);
 
         return view;

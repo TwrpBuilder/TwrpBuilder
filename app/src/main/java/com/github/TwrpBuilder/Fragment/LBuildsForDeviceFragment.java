@@ -54,13 +54,16 @@ public class LBuildsForDeviceFragment extends Fragment {
                 TextView tvBoard = v.findViewById(R.id.list_user_board);
                 TextView tvDate= v.findViewById(R.id.list_user_date);
                 TextView tvBrand = v.findViewById(R.id.list_user_brand);
+                TextView tvDevEmail=v.findViewById(R.id.list_developer_email);
                 Button btDownload=v.findViewById(R.id.bt_download);
                 tvDate.setText("Date : "+model.getDate());
                 tvEmail.setText("Email : "+model.getEmail());
                 tvDevice.setText("Model : " + model.getModel());
                 tvBoard.setText("Board : "+model.getBoard());
                 tvBrand.setText("Brand : " +model.getBrand());
+                tvDevEmail.setText("Developer : "+ model.getDeveloperEmail());
                 btDownload.setVisibility(View.VISIBLE);
+                tvDevEmail.setVisibility(View.VISIBLE);
                 btDownload.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -96,6 +99,7 @@ public class LBuildsForDeviceFragment extends Fragment {
 
             }
         });
+
         buildList.setAdapter(adapter);
 
         return view;
