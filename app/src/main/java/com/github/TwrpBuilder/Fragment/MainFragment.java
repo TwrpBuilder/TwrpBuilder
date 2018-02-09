@@ -15,12 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.twrpbuilder.rootchecker.RootChecker;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import com.github.TwrpBuilder.R;
+import com.stericson.RootTools.RootTools;
 
 import eu.chainfire.libsuperuser.Shell;
 
@@ -45,7 +44,7 @@ public class MainFragment extends Fragment{
         lBuildsForDeviceFragment=new LBuildsForDeviceFragment();
 
         DevsFragment.ViewPagerAdapter adapter = new DevsFragment.ViewPagerAdapter(getChildFragmentManager());
-        if(RootChecker.isDeviceRooted()){
+        if(RootTools.isAccessGiven()){
             if (isSupport==true) {
                 adapter.addFragment(backupFragment, "Make Request");
             }else {

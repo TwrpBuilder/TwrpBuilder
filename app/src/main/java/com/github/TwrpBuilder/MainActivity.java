@@ -29,7 +29,6 @@ import android.widget.Toast;
 import com.github.TwrpBuilder.Fragment.FragmentCustomBackup;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.twrpbuilder.rootchecker.RootChecker;
 
 import com.github.TwrpBuilder.Fragment.BackupFragment;
 import com.github.TwrpBuilder.Fragment.CreditsFragment;

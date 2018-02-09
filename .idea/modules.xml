@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TwrpBuilder.iml" filepath="$PROJECT_DIR$/TwrpBuilder.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rootchecker/rootchecker.iml" filepath="$PROJECT_DIR$/rootchecker/rootchecker.iml" />
     </modules>
   </component>
 </project>

@@ -1,24 +1,20 @@
 package com.github.TwrpBuilder.app;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.github.TwrpBuilder.MainActivity;
 import com.github.TwrpBuilder.R;
 import com.github.TwrpBuilder.util.SharedP;
-import com.github.TwrpBuilder.util.ShellExecuter;
-import com.twrpbuilder.rootchecker.RootChecker;
-
-import java.util.List;
+import com.stericson.RootTools.RootTools;
 
 import eu.chainfire.libsuperuser.Shell;
 
@@ -41,18 +37,31 @@ public class InitActivity extends AppCompatActivity {
     private String oldBroadComName="/dev/block/platform/*/*/by-name/Recovery";
     private String Output;
     private SharedPreferences.Editor  editor;
-
+    private int GoogleVersion;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_init);
         progressBar=findViewById(R.id.pb_init);
-        if (RootChecker.isDeviceRooted())
+        try {
+            GoogleVersion = getPackageManager().getPackageInfo("com.google.android.gms", 0 ).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Google version "+GoogleVersion);
+
+        if (GoogleVersion>=11800000) {
+            if (RootTools.isAccessGiven()) {
+                new getRecoveryMountTask().execute();
+            } else {
+                startActivity(new Intent(InitActivity.this, LoginActivity.class));
+                isSupport = false;
+                finish();
+            }
+        }else
         {
-            new getRecoveryMountTask().execute();
-        }else {
-            startActivity(new Intent(InitActivity.this, LoginActivity.class));
-            isSupport=false;
+            Toast.makeText(getBaseContext(),"Please update your Google Play services",Toast.LENGTH_SHORT).show();
             finish();
         }
     }
@@ -123,6 +132,7 @@ public class InitActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            progressBar.setVisibility(View.GONE);
             startActivity(new Intent(InitActivity.this, LoginActivity.class));
             finish();
         }

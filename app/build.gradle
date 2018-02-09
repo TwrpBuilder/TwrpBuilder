@@ -76,6 +76,6 @@ dependencies {
     }
     compile 'com.kingfisherphuoc:easy-file-folder-picker-dialog:1.4'
     testCompile 'junit:junit:4.12'
-    implementation project(path: ':rootchecker')
+    implementation files('libs/RootTools.jar')
 }
 apply plugin: 'com.google.gms.google-services'
