@@ -49,9 +49,8 @@ public class DevsBuildRunningFragment extends Fragment {
     private Query query;
     private DatabaseReference mUploader;
     private FirebaseDatabase mFirebaseInstance;
-    private String userId;
 
-    DevsBuildRunningFragment(){
+    public DevsBuildRunningFragment(){
     }
 
     @Nullable
@@ -63,7 +62,6 @@ public class DevsBuildRunningFragment extends Fragment {
         mListView = view.findViewById(R.id.Lv_devs);
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mUploader = mFirebaseInstance.getReference("Builds");
-        userId = mUploader.push().getKey();
         query = FirebaseDatabase.getInstance()
                 .getReference("RunningBuild");
 
@@ -124,17 +122,19 @@ public class DevsBuildRunningFragment extends Fragment {
                         intent.putExtra("Brand",model.getBrand());
                         intent.putExtra("Board",model.getBoard());
                         intent.putExtra("Model",model.getModel());
+                        intent.putExtra("CodeName",model.getCodeName());
                         intent.putExtra("Email",model.getEmail());
                         intent.putExtra("Uid",model.getUid());
                         intent.putExtra("Fmc",model.getFmcToken());
                         mFirebaseInstance.getReference("RunningBuild")
-                                .orderByChild("Model")
+                                .orderByChild("model")
                                 .equalTo(model.getModel())
                                 .addListenerForSingleValueEvent(
                                         new ValueEventListener() {
                                             @Override
                                             public void onDataChange(DataSnapshot dataSnapshot) {
                                                 for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                                    Log.i("TAG",child.getKey());
                                                     intent.putExtra("somekey",child.getKey().toString());
                                                     startActivity(intent);
                                                 }

@@ -62,7 +62,7 @@ public class FragmentBuildDone extends Fragment {
                 tvDevice.setText("Model : " + model.getModel());
                 tvBoard.setText("Board : "+model.getBoard());
                 tvBrand.setText("Brand : " +model.getBrand());
-                tvDeveloper.setText("Dev Email : " +model.getDeveloperEmail());
+                tvDeveloper.setText("Developer : " +model.getDeveloperEmail());
                 btDownload.setVisibility(View.VISIBLE);
                 btDownload.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -77,6 +77,7 @@ public class FragmentBuildDone extends Fragment {
 
         ProgressBar progressBar= view.findViewById(R.id.pb_builds);
         TextView textView= view.findViewById(R.id.tv_no_build);
+        lvRunningBuilds.setStackFromBottom(true);
         new FirebaseProgressBar().start(progressBar,textView,adapter,"Builds");
         lvRunningBuilds.setAdapter(adapter);
 

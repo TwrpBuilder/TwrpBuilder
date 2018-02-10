@@ -26,10 +26,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdView;
+import com.github.TwrpBuilder.Fragment.FragmentCustomBackup;
+import com.github.updater.FetchUpdateUri;
+import com.github.updater.Updater;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.twrpbuilder.rootchecker.RootChecker;
 
 import com.github.TwrpBuilder.Fragment.BackupFragment;
 import com.github.TwrpBuilder.Fragment.CreditsFragment;
@@ -62,17 +63,11 @@ public class MainActivity extends AppCompatActivity
     private DevsFragment mDevsFragment;
     private StatusFragment statusFragment;
     private MainFragment mainFragment;
+    private FragmentCustomBackup fragmentCustomBackup;
 
     /*Firebase*/
     private FirebaseAuth mFirebaseAuth;
 
-    /*Ads */
-    private AdView mAdView;
-    private AdView mAdView1;
-    private AdView mAdView2;
-    private AdView mAdView3;
-    private AdView mAdView4;
-    private boolean mShowAds = false;
     /*Navigation drawer*/
     private NavigationView navigationView;
     private View navHeaderView;
@@ -108,44 +103,17 @@ public class MainActivity extends AppCompatActivity
         mFragmentPreferences=new PreferencesFragment();
         mFragmentRelApp = new GithubReleasesFragment().setTargetURL(Config.URL_APP_RELEASES);
         mMakeMeHappy=new MakeMeHappy();
-        mDevsFragment = new DevsFragment(getBaseContext());
+        mDevsFragment = new DevsFragment().getInstance(getBaseContext());
         statusFragment=new StatusFragment();
         mainFragment=new MainFragment();
+        fragmentCustomBackup=new FragmentCustomBackup();
         /*Replace Fragment*/
-        if (RootChecker.isDeviceRooted()) {
-            updateFragment(this.mainFragment);
-            setTitle("Request TWRP");
-        }else {
-            updateFragment(this.mNotRooted);
-            setTitle("Device Not Rooted :(");
-        }
-        /*ad view*/
-        mAdView = findViewById(R.id.adView);
-        mAdView1 = findViewById(R.id.adView1);
-        mAdView2 = findViewById(R.id.adView2);
-        mAdView3 = findViewById(R.id.adView3);
-        mAdView4 = findViewById(R.id.adView4);
+        updateFragment(this.mainFragment);
+        setTitle("Home");
 
         /*Text View*/
         mUserEmail= navHeaderView.findViewById(R.id.user_email);
 
-      /*  AdRequest adRequest = new AdRequest.Builder()
-                .build();
-        mAdView.loadAd(adRequest);
-        mAdView1.loadAd(adRequest);
-        mAdView2.loadAd(adRequest);
-        mAdView3.loadAd(adRequest);
-        mAdView4.loadAd(adRequest);*/
-
-        /*Ads don't touch this part please */
-       /* mShowAds = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("show_ads", true);
-        if(!mShowAds)
-        {
-            mAdView.setVisibility(View.GONE);
-
-        }else {
-            mAdView.setVisibility(View.VISIBLE);
-        }*/
         FirebaseMessaging.getInstance().subscribeToTopic("pushNotification");
 
         /*replace email with users email*/
@@ -155,6 +123,7 @@ public class MainActivity extends AppCompatActivity
         requestPermission();
         isOnline();
         hideItem();
+            new Updater(MainActivity.this,1,"https://twrpbuilder.firebaseapp.com/app/version.json");
     }
 
     @Override

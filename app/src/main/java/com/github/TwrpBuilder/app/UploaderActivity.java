@@ -91,7 +91,7 @@ public class UploaderActivity extends AppCompatActivity {
                /* Intent intent = new Intent(getActivity(), AdsActivity.class);
                 startActivity(intent);*/
                 userId = mUploader.push().getKey();
-                User user = new User(Build.BRAND, Build.BOARD, Build.MODEL, Email, Uid, refreshedToken, DateUtils.getDate());
+                User user = new User(Build.BRAND, Build.BOARD, Build.MODEL,Build.PRODUCT, Email, Uid, refreshedToken, DateUtils.getDate());
                 mUploader.child(userId).setValue(user);
                 finish();
                 result=true;

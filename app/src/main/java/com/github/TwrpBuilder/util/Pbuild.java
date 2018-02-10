@@ -9,6 +9,7 @@ public class Pbuild {
     private String Brand;
     private String Board;
     private String Model;
+    private String CodeName;
     private String Email;
     private String Uid;
     private String FmcToken;
@@ -19,10 +20,11 @@ public class Pbuild {
     public Pbuild() {
     }
 
-    public Pbuild(String Brand, String Board, String Model,String Email,String Uid,String FmcToken,String Date,String Url,String DeveloperEmail) {
+    public Pbuild(String Brand, String Board, String Model,String CodeName,String Email,String Uid,String FmcToken,String Date,String Url,String DeveloperEmail) {
         this.Brand = Brand;
         this.Board = Board;
         this.Model = Model;
+        this.CodeName=CodeName;
         this.Email = Email;
         this.Uid = Uid;
         this.FmcToken = FmcToken;
@@ -49,6 +51,10 @@ public class Pbuild {
 
     public String getModel() {
         return Model;
+    }
+
+    public String getCodeName() {
+        return CodeName;
     }
 
     public String getFmcToken() {
@@ -81,6 +87,10 @@ public class Pbuild {
 
     public void setModel(String model) {
         Model = model;
+    }
+
+    public void setCodeName(String codeName) {
+        CodeName = codeName;
     }
 
     public void setBoard(String board) {

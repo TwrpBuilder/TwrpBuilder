@@ -12,6 +12,7 @@ public class User {
     private String Brand;
     private String Board;
     private String Model;
+    private String CodeName;
     private String Email;
     private String Uid;
     private String FmcToken;
@@ -21,7 +22,7 @@ public class User {
     public User() {
     }
 
-    public User(String Brand, String Board, String Model,String Email,String Uid,String FmcToken,String Date) {
+    public User(String Brand, String Board, String Model,String CodeName,String Email,String Uid,String FmcToken,String Date) {
         this.Brand = Brand;
         this.Board = Board;
         this.Model = Model;
@@ -29,6 +30,7 @@ public class User {
         this.Uid = Uid;
         this.FmcToken = FmcToken;
         this.Date= Date;
+        this.CodeName=CodeName;
     }
 
     public String getBoard() {
@@ -59,6 +61,10 @@ public class User {
         return Model;
     }
 
+    public String getCodeName() {
+        return CodeName;
+    }
+
     public void setUid(String uid) {
         Uid = uid;
     }
@@ -85,5 +91,9 @@ public class User {
 
     public void setEmail(String email) {
         Email = email;
+    }
+
+    public void setCodeName(String codeName) {
+        CodeName = codeName;
     }
 }

@@ -48,7 +48,7 @@ public class DevsInQueueFragment extends Fragment {
     private DatabaseReference mUploader;
     private FirebaseDatabase mFirebaseInstance;
     private ProgressBar progressBar;
-    DevsInQueueFragment(){}
+    public DevsInQueueFragment() {}
 
     @Nullable
     @Override
@@ -114,7 +114,7 @@ public class DevsInQueueFragment extends Fragment {
                 btStartBuild.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mFirebaseInstance.getReference("InQueue").orderByChild("Model").equalTo(model.getModel()).addListenerForSingleValueEvent(
+                        mFirebaseInstance.getReference("InQueue").orderByChild("model").equalTo(model.getModel()).addListenerForSingleValueEvent(
                                 new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -130,7 +130,7 @@ public class DevsInQueueFragment extends Fragment {
                                     }
                                 });
 
-                        User user = new User(model.getBrand(),model.getBoard(),model.getModel(),model.getEmail(),model.getUid(),model.getFmcToken(),model.getDate());
+                        User user = new User(model.getBrand(),model.getBoard(),model.getModel(),model.getCodeName(),model.getEmail(),model.getUid(),model.getFmcToken(),model.getDate());
                         mUploader.push().setValue(user);
                     }
                 });

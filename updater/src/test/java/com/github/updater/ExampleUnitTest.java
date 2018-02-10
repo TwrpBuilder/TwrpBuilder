@@ -1,4 +1,4 @@
-package io.github.otaupdater.rootchecker;
+package com.github.updater;
 
 import org.junit.Test;
 

@@ -24,8 +24,11 @@ import com.github.TwrpBuilder.R;
 public class DevsFragment extends Fragment {
 
     private Context context;
-    public DevsFragment(Context context) {
+    public DevsFragment(){}
+    public DevsFragment getInstance(Context context) {
         this.context = context;
+        DevsFragment devsFragment=new DevsFragment();
+        return devsFragment;
     }
 
     @Nullable

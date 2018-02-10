@@ -53,7 +53,7 @@ public class DevsBuildDoneFragment extends Fragment {
     private Button btAddBack;
     private User user;
 
-    DevsBuildDoneFragment(){
+    public DevsBuildDoneFragment(){
         //Empty Constructor
     }
 
@@ -132,7 +132,7 @@ public class DevsBuildDoneFragment extends Fragment {
                 btAddBack.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        user = new User(model.getBrand(),model.getBoard(),model.getModel(),model.getEmail(),model.getUid(),model.getFmcToken(), DateUtils.getDate());
+                        user = new User(model.getBrand(),model.getBoard(),model.getModel(),model.getCodeName(),model.getEmail(),model.getUid(),model.getFmcToken(), DateUtils.getDate());
                         mUploader.push().setValue(user);
                         Snackbar.make(view,"Add "+ model.getModel()+ " to queue",Snackbar.LENGTH_SHORT).show();
                     }
@@ -144,7 +144,7 @@ public class DevsBuildDoneFragment extends Fragment {
         ProgressBar progressBar= view.findViewById(R.id.pb_builds);
         TextView textView= view.findViewById(R.id.tv_no_build);
         new FirebaseProgressBar().start(progressBar,textView,adapter,"Builds");
-
+        mListView.setStackFromBottom(true);
         mListView.setAdapter(adapter);
 
         return view;
