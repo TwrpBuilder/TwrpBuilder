@@ -9,7 +9,7 @@ android:
   - android-26
 jdk:
 - oraclejdk8
-script: "./gradlew build && find -type f -name *.apk"
+script: "./gradlew build"
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -24,6 +24,6 @@ deploy:
   provider: releases
   api_key:
     secure: HYedeneMwFpBGR85NkpL32iIzT6xj+Y2wldpB0kHMgRO9sj/qprdkmlyQiRz49BpeUqjCC25aCwOeQjnJtIJTMbHpbmevrSyzU5EhPtX2q4G6GKtUs9y8pt9JZVjWZml6grzt7F3kOZLypQqAjTpfnpdna38kL0A4L/hSUCnjX8jkvilqOi0+5WPrEThwV37nMxCRyT/ANDxPsgSh+550hLTsi0DTRbLhFn/Nw+WIWuV/Bm+ZgE+Ysy6W0L2tHiMA6VwZVwrDVuOuuOMrwZl0f7X1jrbpRKiGaIhV8saOZBQgGdckzgGNa6Swm8zX33Lk126mBKKAuibTf9z3f2pIUmlNZoa+B6pwjXrrDJKmmNtV+oX9RwUfG03YYvcpMDLmd3/9xjoNfEzrP6xs3bT9+NUpNFpPy/TqBOM1XB86sV0lUGiaBYZbWiCx4bQCC1WEIh2b5Ut9oi0gO4ldJ4ory9mbXPNbcWLaiMmsCz/j92/Zef7TKPJiFzQ61pLSW4TOtIzu2xjXNSRXEgVK8daOd9Y4UU7CaaI7qcBSTNYPCt5VXiqpxdnZV/jRlnawjm1awM+rod8I3AtVNtsIKDiyv+G+yw79ooD5FRIXMkbxB3oYs1K6w4Mt49BkI9AWb9kfT7l97fVYOk2GHDE0td5ANv0/B94HCXypCWMcwDXKg4=
-  file: "./app/release/app-release.apk"
+  file: "./app/build/outputs/apk/release/app-release.apk"
   on:
     repo: TwrpBuilder/TwrpBuilder
