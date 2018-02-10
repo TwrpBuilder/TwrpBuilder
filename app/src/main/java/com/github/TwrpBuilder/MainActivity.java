@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity
         requestPermission();
         isOnline();
         hideItem();
-            new Updater();
+            new Updater(1);
     }
 
     @Override
