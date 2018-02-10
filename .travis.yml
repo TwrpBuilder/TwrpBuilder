@@ -9,7 +9,7 @@ android:
   - android-26
 jdk:
 - oraclejdk8
-script: "./gradlew release"
+script: "./gradlew build release"
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
