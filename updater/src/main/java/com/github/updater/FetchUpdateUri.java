@@ -1,12 +1,17 @@
 package com.github.updater;
 
+import android.app.DownloadManager;
+import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.net.URL;
 
 /**
@@ -15,8 +20,11 @@ import java.net.URL;
 
 public class FetchUpdateUri extends AsyncTask<Void,Void,Void> {
 
-   public FetchUpdateUri(){
-        this.execute();
+    private Context context;
+
+   public FetchUpdateUri(Context context){
+       this.context=context;
+       this.execute();
     }
 
     @Override
@@ -32,6 +40,16 @@ public class FetchUpdateUri extends AsyncTask<Void,Void,Void> {
             JSONObject jsonObj = jsonArray.getJSONObject(i);
 
             System.out.println(jsonObj.get("browser_download_url"));
+            Uri uri= Uri.parse(jsonObj.get("browser_download_url").toString());
+            String fileName=uri.getLastPathSegment();
+            DownloadManager downloadManager = (DownloadManager) context.getSystemService(context.DOWNLOAD_SERVICE);
+
+            DownloadManager.Request request = new DownloadManager.Request(uri);
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
+
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            Long reference = downloadManager.enqueue(request);
+
         }
         } catch (Exception e) {
             e.printStackTrace();

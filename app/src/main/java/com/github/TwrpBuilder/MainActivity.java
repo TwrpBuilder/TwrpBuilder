@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity
         requestPermission();
         isOnline();
         hideItem();
-            new Updater(1);
+            new Updater(MainActivity.this,1,"https://twrpbuilder.firebaseapp.com/app/version.json");
     }
 
     @Override
