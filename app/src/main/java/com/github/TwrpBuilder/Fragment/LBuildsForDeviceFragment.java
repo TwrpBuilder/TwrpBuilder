@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseListOptions;
+import com.github.TwrpBuilder.app.FlasherActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -26,6 +27,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.github.TwrpBuilder.R;
 import com.github.TwrpBuilder.util.FirebaseProgressBar;
 import com.github.TwrpBuilder.util.Pbuild;
+import com.stericson.RootTools.RootTools;
+
+import static com.github.TwrpBuilder.app.InitActivity.isSupport;
 
 /**
  * Created by androidlover5842 on 20/1/18.
@@ -56,6 +60,7 @@ public class LBuildsForDeviceFragment extends Fragment {
                 TextView tvBrand = v.findViewById(R.id.list_user_brand);
                 TextView tvDevEmail=v.findViewById(R.id.list_developer_email);
                 Button btDownload=v.findViewById(R.id.bt_download);
+                Button btFlash=v.findViewById(R.id.bt_flash);
                 tvDate.setText("Date : "+model.getDate());
                 tvEmail.setText("Email : "+model.getEmail());
                 tvDevice.setText("Model : " + model.getModel());
@@ -69,6 +74,18 @@ public class LBuildsForDeviceFragment extends Fragment {
                     public void onClick(View v) {
                         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(model.getUrl()));
                         startActivity(browserIntent);
+                    }
+                });
+
+                if (RootTools.isAccessGiven() && isSupport)
+                {
+                    btFlash.setVisibility(View.VISIBLE);
+                }
+
+                btFlash.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getContext(), FlasherActivity.class));
                     }
                 });
 
