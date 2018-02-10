@@ -19,7 +19,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
+        app:menu="@menu/activity_main_drawer"
+        android:theme="@style/AppTheme"
+        android:background="#162B36"/>
 
 </android.support.v4.widget.DrawerLayout>

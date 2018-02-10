@@ -10,3 +10,5 @@
 *.apk
 *~
 
+.idea/dictionaries/
+.idea/misc.xml

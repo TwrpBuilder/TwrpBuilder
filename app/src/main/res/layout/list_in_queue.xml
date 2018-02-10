@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/list_user_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/list_user_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorInfo"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/list_user_device"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorInfo"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/list_user_board"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorInfo"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/list_user_brand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorInfo"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/list_developer_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:textColor="@color/colorInfo"
+        android:textSize="13sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:text="Download"
+            android:textAllCaps="false"
+            android:visibility="gone"
+            android:id="@+id/bt_download"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:text="flash"
+            android:id="@+id/bt_flash"
+            android:visibility="gone"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

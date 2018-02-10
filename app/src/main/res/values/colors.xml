@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="colorInfo">#2b7b00</color>
+    <color name="colorPrimary">#162B36</color>
+    <color name="colorPrimaryDark">#162B36</color>
+    <color name="colorAccent">#428bca</color>
+    <color name="colorInfo">#428bca</color>
     <color name="grey">#a5aea0</color>
     <color name="dark_grey">#5c5e5b</color>
     <color name="bg_login">#26ae90</color>
@@ -20,4 +20,6 @@
     <color name="lbl_name">#333333</color>
     <color name="btn_logut_bg">#ff6861</color>
     <color name="Brown">#7b0008</color>
+    <color name="background_light">#182E3A</color>
+    <color name="background_dark">#162B36</color>
 </resources>

@@ -8,11 +8,11 @@
     <string name="upload_backup">Upload Backup</string>
     <string name="backup_recovery">Backup Recovery</string>
     <string name="download_recovery">Download Recovery</string>
-    <string name="build_description_text"> Twrp build Status :- \n\n Pending. \n \n What now ? \n \n Check this app next day if you "don't see download button then contact me via email or post comment on xda .</string>
-    <string name="backup_recovery_help_text">Backup Recovery :- \n\n This option backups your \n\n recovery , mounts and \n fingerprint of device . \n You will not \n see this option once you have clicked (delete TwrpBuilder/ folder to restore button). \n\n </string>
-    <string name="upload_backup_help_text">\n\n Upload Bakcup :- \n\n This option allows you to upload recovery Backup made from app (you "can't" upload if you have done \n one time ). \n\n </string>
-    <string name="download_recovery_help_text">\n\n Download Recovery :- \n\n This option allows to download recovery if "it's" ready on server (This button is hidden and shown when all processes is done ).\n\n </string>
-    <string name="request_approved">\n Recovery is ready ! \n Test recovery and send ne email it works or not. </string>
+    <string name="build_description_text"> You can make only one request until build is done  .</string>
+    <string name="backup_recovery_help_text">This option backups your recovery, mounts and fingerprint of device. You will not see this option once you have clicked (delete TwrpBuilder/ folder to restore button).</string>
+    <string name="upload_backup_help_text">This option allows you to upload recovery Backup made from app (you "can't" upload if you have done one time).</string>
+    <string name="download_recovery_help_text">This option allows to download recovery if "it's" ready on server (this button is hidden and shown when all processes is done).</string>
+    <string name="request_approved">\n Recovery is ready ! \n Test recovery and send me email it works or not. </string>
     <string name="contribution_counter_info">Made %d contributions</string>
     <string name="connecting_to_github">Connecting to Github…</string>
     <string name="loading">Loading…</string>
@@ -76,7 +76,7 @@
     <string name="lbl_forgot_password">Forgot password?</string>
     <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
     <string name="login_image">Login Image</string>
-    <string name="backup">Backup</string>
+    <string name="home">Home</string>
     <string name="tools">Tools</string>
     <string name="about">About</string>
     <string name="help">Help</string>
@@ -93,4 +93,18 @@
     <string name="twrp_builder_login_screen">Twrp Builder login Screen</string>
     <string name="twrp_builder_reset_password">Twrp Builder Reset Password</string>
     <string name="beta">[BETA]</string>
+    <string name="cancel_request">Cancel Request</string>
+    <string name="failed_to_delete_data">Failed To  Delete Data.</string>
+    <string name="successfully_delete_data">Successfully  Deleted Data.</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="delete">Delete</string>
+    <string name="interstitial_full_screen">ca-app-pub-5248092130870106/9066179272</string>
+    <string name="watch">Watch</string>
+    <string name="watch_ads_to_say_thanks">Watch ads to say thanks</string>
+    <string name="say_thanks">Say Thanks</string>
+    <string name="video_ads">ca-app-pub-5248092130870106/7676844478</string>
+    <string name="failed_to_load_ads">Failed To Load Ads</string>
+    <string name="for_developers">For Developers</string>
+    <string name="logout">Logout</string>
+    <string name="recovery_builds">Recovery Builds</string>
 </resources>
