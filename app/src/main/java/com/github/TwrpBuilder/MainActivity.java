@@ -35,13 +35,8 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.github.TwrpBuilder.Fragment.BackupFragment;
 import com.github.TwrpBuilder.Fragment.CreditsFragment;
 import com.github.TwrpBuilder.Fragment.DevsFragment;
-import com.github.TwrpBuilder.Fragment.GithubReleasesFragment;
-import com.github.TwrpBuilder.Fragment.HelpFragment;
 import com.github.TwrpBuilder.Fragment.MainFragment;
-import com.github.TwrpBuilder.Fragment.MakeMeHappy;
 import com.github.TwrpBuilder.Fragment.NoNetwork;
-import com.github.TwrpBuilder.Fragment.NotRooted;
-import com.github.TwrpBuilder.Fragment.PreferencesFragment;
 import com.github.TwrpBuilder.Fragment.StatusFragment;
 import com.github.TwrpBuilder.app.LoginActivity;
 import com.github.TwrpBuilder.util.Config;
@@ -53,13 +48,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     /*Fragments*/
     private BackupFragment mBackupFragment;
-    private NotRooted mNotRooted;
-    private HelpFragment mHelpFragment;
     private NoNetwork mNoNetwork;
     private CreditsFragment mFragmentCredits;
-    private PreferencesFragment mFragmentPreferences;
-    private GithubReleasesFragment mFragmentRelApp;;
-    private MakeMeHappy mMakeMeHappy;
     private DevsFragment mDevsFragment;
     private StatusFragment statusFragment;
     private MainFragment mainFragment;
@@ -96,13 +86,8 @@ public class MainActivity extends AppCompatActivity
 
         /*Fragments*/
         mBackupFragment=new BackupFragment();
-        mNotRooted=new NotRooted();
-        mHelpFragment=new HelpFragment();
         mNoNetwork=new NoNetwork();
         mFragmentCredits=new CreditsFragment();
-        mFragmentPreferences=new PreferencesFragment();
-        mFragmentRelApp = new GithubReleasesFragment().setTargetURL(Config.URL_APP_RELEASES);
-        mMakeMeHappy=new MakeMeHappy();
         mDevsFragment = new DevsFragment().getInstance(getBaseContext());
         statusFragment=new StatusFragment();
         mainFragment=new MainFragment();
@@ -145,19 +130,9 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             updateFragment(mainFragment);
             setTitle("Home");
-        } else if (id == R.id.nav_help) {
-            updateFragment(mHelpFragment);
-            setTitle("Help");
-    }else if (id == R.id.nav_credits) {
+        } else if (id == R.id.nav_credits) {
             updateFragment(mFragmentCredits);
             setTitle("Credits");
-        }else if (id==R.id.nav_preference)
-        {
-            updateFragment(mFragmentPreferences);
-            setTitle("SettingsActivity");
-        }else if (id==R.id.nav_app_updates){
-            updateFragment(mFragmentRelApp);
-            setTitle("App Updates");
         }else if (id == R.id.action_log_out) {
             FirebaseAuth.getInstance().signOut();
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
@@ -166,10 +141,6 @@ public class MainActivity extends AppCompatActivity
             editor.apply();
             startActivity(new Intent(MainActivity.this, LoginActivity.class)); //Go back to home page
             finish();
-        }else if (id==R.id.nav_thanks)
-        {
-            updateFragment(mMakeMeHappy);
-            setTitle("Say Thanks");
         }else if (id==R.id.nav_dev_fragment)
         {
             updateFragment(mDevsFragment);
@@ -250,7 +221,6 @@ public class MainActivity extends AppCompatActivity
     {
         navigationView = findViewById(R.id.nav_view);
         Menu nav_Menu = navigationView.getMenu();
-        nav_Menu.findItem(R.id.nav_preference).setVisible(false);
         if(name==true)
         {
             nav_Menu.findItem(R.id.nav_dev_fragment).setVisible(true);
