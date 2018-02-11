@@ -47,4 +47,10 @@
     <string name="cancel_warning">Are you sure you want to cancel?</string>
     <string name="select_file">Please select a file</string>
     <string name="enter_url">Please Enter Url</string>
+    <string name="build_status">Build Status</string>
+    <string name="queue">Queue</string>
+    <string name="running">Running</string>
+    <string name="completed">Completed</string>
+    <string name="make_request">Make Request</string>
+    <string name="builds_for_this_device">Builds for this device</string>
 </resources>

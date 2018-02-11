@@ -129,10 +129,10 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             updateFragment(mainFragment);
-            setTitle("Home");
+            setTitle(R.string.home);
         } else if (id == R.id.nav_credits) {
             updateFragment(mFragmentCredits);
-            setTitle("Credits");
+            setTitle(R.string.credits);
         }else if (id == R.id.action_log_out) {
             FirebaseAuth.getInstance().signOut();
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
@@ -144,11 +144,11 @@ public class MainActivity extends AppCompatActivity
         }else if (id==R.id.nav_dev_fragment)
         {
             updateFragment(mDevsFragment);
-            setTitle("Recovery Builds");
+            setTitle(R.string.recovery_builds);
         }else if (id==R.id.check_status)
         {
             updateFragment(statusFragment);
-            setTitle("Build Status");
+            setTitle(R.string.build_status);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

@@ -30,9 +30,9 @@ public class StatusFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_status,container,false);
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
         DevsFragment.ViewPagerAdapter adapter = new DevsFragment.ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new FragmentInQueue(), "Queue");
-        adapter.addFragment(new FragmentBuildStarted(), "Running");
-        adapter.addFragment(new FragmentBuildDone(),"Completed");
+        adapter.addFragment(new FragmentInQueue(), getString(R.string.queue));
+        adapter.addFragment(new FragmentBuildStarted(), getString(R.string.running));
+        adapter.addFragment(new FragmentBuildDone(),getString(R.string.completed));
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);

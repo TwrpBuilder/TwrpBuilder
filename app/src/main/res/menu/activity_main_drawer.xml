@@ -10,7 +10,7 @@
                 android:icon="@drawable/ic_home_white_24dp"/>
             <item
                 android:id="@+id/check_status"
-                android:title="Build Status"
+                android:title="@string/build_status"
                 android:icon="@drawable/ic_dvr_white_24dp"/>
             <item
                 android:title="@string/logout"

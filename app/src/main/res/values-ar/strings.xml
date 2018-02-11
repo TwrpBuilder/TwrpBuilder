@@ -46,5 +46,10 @@
     <string name="cancel_warning">هل أنت متأكد من اﻹلغاء؟</string>
     <string name="select_file">من فضلك اختر ملف</string>
     <string name="enter_url">من فضلك اختر رابط</string>
-
+    <string name="build_status">حالة البناء</string>
+    <string name="queue">المنتظرة</string>
+    <string name="running">الجارية</string>
+    <string name="completed">المنتهية</string>
+    <string name="make_request">تقديم طلب</string>
+    <string name="builds_for_this_device">نسخ الريكفري لهذا الجهاز</string>
 </resources>

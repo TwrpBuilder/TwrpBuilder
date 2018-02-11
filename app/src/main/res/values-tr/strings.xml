@@ -45,4 +45,10 @@
     <string name="cancel_warning">Sonlandırmak istediğinizden emin misiniz?</string>
     <string name="select_file">Lütfen bir dosya seçin</string>
     <string name="enter_url">Lütfen bir adres girin</string>
+    <string name="build_status">İnşa durumu</string>
+    <string name="queue">Kuyruk</string>
+    <string name="running">İşlemde</string>
+    <string name="completed">Tamamlanan</string>
+    <string name="make_request">İstekte bulun</string>
+    <string name="builds_for_this_device">Bu aygıt için inşalar</string>
 </resources>

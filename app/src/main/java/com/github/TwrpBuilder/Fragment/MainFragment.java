@@ -46,15 +46,15 @@ public class MainFragment extends Fragment{
         DevsFragment.ViewPagerAdapter adapter = new DevsFragment.ViewPagerAdapter(getChildFragmentManager());
         if(RootTools.isAccessGiven()){
             if (isSupport==true) {
-                adapter.addFragment(backupFragment, "Make Request");
+                adapter.addFragment(backupFragment, getString(R.string.make_request));
             }else {
-                adapter.addFragment(fragmentCustomBackup,"Make Request");
+                adapter.addFragment(fragmentCustomBackup,getString(R.string.make_request));
 
             }
         }else {
-            adapter.addFragment(fragmentCustomBackup, "Make Request");
+            adapter.addFragment(fragmentCustomBackup, getString(R.string.make_request));
         }
-        adapter.addFragment(lBuildsForDeviceFragment, "Builds for this device");
+        adapter.addFragment(lBuildsForDeviceFragment, getString(R.string.builds_for_this_device));
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = view.findViewById(R.id.tabs);
