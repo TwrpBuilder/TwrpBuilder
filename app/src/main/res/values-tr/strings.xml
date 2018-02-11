@@ -38,7 +38,7 @@
     <string name="nothing_to_show">Gösterilecek bir şey yok</string>
     <string name="something_went_wrong">Haydaa! Bir şeyler yanlış gitti</string>
     <string name="contribution_counter_info">%d katkıda bulundu</string>
-    <string name="connecting_to_github">GitHub'a bağlanılıyor…</string>
+    <string name="connecting_to_github">GitHub\'a bağlanılıyor…</string>
     <string name="enter_url_of_recovery">Kurtarma yansımasının adresini girin</string>
     <string name="submit">Onayla</string>
     <string name="cancel_upload">Yüklemeyi sonlandır</string>
