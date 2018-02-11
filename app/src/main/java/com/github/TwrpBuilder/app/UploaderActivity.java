@@ -67,7 +67,6 @@ public class UploaderActivity extends AppCompatActivity {
         mCancel= findViewById(R.id.cancel_upload);
         ShowOutput = findViewById(R.id.show_output);
         mProgressBar= findViewById(R.id.progress_bar);
-        ShowOutput.setText("Uploading ...");
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mUploader = mFirebaseInstance.getReference("InQueue");
         mFirebaseAuth=FirebaseAuth.getInstance();
@@ -79,17 +78,12 @@ public class UploaderActivity extends AppCompatActivity {
         mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         fromI=true;
         uploadTask = riversRef.putFile(file);
-        /*showHorizontalProgressDialog("Uploading", "Please wait...");*/
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-              /*  hideProgressDialog();*/
-                Log.d("Status", "uploadStream : " + taskSnapshot.getTotalByteCount());
                 mBuilder.setContentText(getString(R.string.upload_finished));
                 mBuilder.setOngoing(false);
                 mNotifyManager.notify(1, mBuilder.build());
-               /* Intent intent = new Intent(getActivity(), AdsActivity.class);
-                startActivity(intent);*/
                 userId = mUploader.push().getKey();
                 User user = new User(Build.BRAND, Build.BOARD, Build.MODEL,Build.PRODUCT, Email, Uid, refreshedToken, DateUtils.getDate());
                 mUploader.child(userId).setValue(user);
@@ -106,14 +100,12 @@ public class UploaderActivity extends AppCompatActivity {
                 ShowOutput.setText(R.string.failed_to_upload);
                 result=false;
                 finish();
-                /*hideProgressDialog();*/
 
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                 final double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                Log.d("uploadDataInMemory progress : ", String.valueOf(progress));
                 ShowOutput.setText(String.valueOf(progress + "%"));
                 mBuilder =
                         new NotificationCompat.Builder(UploaderActivity.this)
@@ -123,10 +115,6 @@ public class UploaderActivity extends AppCompatActivity {
                                 .setOngoing(true)
                                 .setContentText(getString(R.string.uploaded) + progress + ("%") + "/100%" + ")");
                 mNotifyManager.notify(1, mBuilder.build());
-                /*updateProgress((int) progress);*/
-                /*To cancel upload*/
-                mCancel.setText("Cancel Upload");
-
                 mCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -145,7 +133,7 @@ public class UploaderActivity extends AppCompatActivity {
      @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to cancel?")
+        builder.setMessage(R.string.cancel_warning)
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

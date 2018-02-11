@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Twrp Builder</string>
 
@@ -47,4 +48,5 @@
     <string name="cancel_warning">Are you sure you want to cancel?</string>
     <string name="select_file">Please select a file</string>
     <string name="enter_url">Please Enter Url</string>
+
 </resources>

@@ -98,7 +98,7 @@ public class CustomBackupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (TextUtils.isEmpty(editText.getText().toString()))
                 {
-                    Snackbar.make(getCurrentFocus(),"Please select a file",Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(getCurrentFocus(), R.string.select_file,Snackbar.LENGTH_SHORT).show();
                 }
                 else {
                     progressBar.setVisibility(View.VISIBLE);

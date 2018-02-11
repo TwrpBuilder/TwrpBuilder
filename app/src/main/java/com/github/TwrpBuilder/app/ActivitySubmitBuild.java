@@ -77,7 +77,7 @@ public class ActivitySubmitBuild extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (edGetUri.getText().toString().matches("")) {
-                    Snackbar.make(getCurrentFocus(),"Please Enter Url",Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(getCurrentFocus(), R.string.enter_url,Snackbar.LENGTH_SHORT).show();
                 }else {
                     if (URLUtil.isValidUrl(edGetUri.getText().toString()))
                     {
@@ -115,7 +115,6 @@ public class ActivitySubmitBuild extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("TAG","Started");
         if (finished==true)
         {
             finish();

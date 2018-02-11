@@ -24,12 +24,12 @@
     <EditText
         android:layout_width="match_parent"
         android:id="@+id/ed_url"
-        android:hint="Enter Url of recovery"
+        android:hint="@string/enter_url_of_recovery"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"/>
     <Button
         android:layout_width="wrap_content"
-        android:text="Submit"
+        android:text="@string/submit"
         android:textAllCaps="false"
         android:layout_gravity="center"
         android:id="@+id/bt_submit"
