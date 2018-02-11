@@ -42,7 +42,7 @@
     <string name="connecting_to_github">جاري التحديث من Github…</string>
     <string name="enter_url_of_recovery">أدخل رابط الريكفري</string>
     <string name="submit">تقديم</string>
-    <string name="cancel_upload">إالغاء الرفع</string>
+    <string name="cancel_upload">إلغاء الرفع</string>
     <string name="cancel_warning">هل أنت متأكد من اﻹلغاء؟</string>
     <string name="select_file">من فضلك اختر ملف</string>
     <string name="enter_url">من فضلك اختر رابط</string>
