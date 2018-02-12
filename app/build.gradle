@@ -74,7 +74,7 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true
     }
-    compile 'com.kingfisherphuoc:easy-file-folder-picker-dialog:1.4'
+    implementation 'com.kingfisherphuoc:easy-file-folder-picker-dialog:1.4'
     testCompile 'junit:junit:4.12'
     implementation files('libs/RootTools.jar')
     implementation project(':updater')
