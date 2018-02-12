@@ -359,7 +359,6 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
                     name=true;
-                    Toast.makeText(getBaseContext(),"Admin: true",Toast.LENGTH_SHORT).show();
                 }
             }
         }

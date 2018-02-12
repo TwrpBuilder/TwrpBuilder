@@ -39,7 +39,9 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorInfo"
         android:textSize="13sp" />
-
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
     <Button
         android:layout_width="wrap_content"
         android:text="Files"
@@ -53,5 +55,5 @@
         android:id="@+id/bt_build_done"
         android:textAllCaps="false"
         android:layout_height="wrap_content" />
-
+</LinearLayout>
 </LinearLayout>

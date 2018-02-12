@@ -38,9 +38,9 @@ public class DevsFragment extends Fragment {
 
         ViewPager viewPager = view.findViewById(R.id.pager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new DevsBuildRunningFragment(), "Running");
-        adapter.addFragment(new DevsInQueueFragment(), "Queue");
-        adapter.addFragment(new DevsBuildDoneFragment(),"Completed");
+        adapter.addFragment(new DevsBuildRunningFragment(), getString(R.string.running));
+        adapter.addFragment(new DevsInQueueFragment(), getString(R.string.queue));
+        adapter.addFragment(new DevsBuildDoneFragment(),getString(R.string.completed));
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = view.findViewById(R.id.tabs);

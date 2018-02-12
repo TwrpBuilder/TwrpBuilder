@@ -49,8 +49,6 @@ public class InitActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        System.out.println("Google version "+GoogleVersion);
-
         if (GoogleVersion>=11800000) {
             if (RootTools.isAccessGiven()) {
                 new getRecoveryMountTask().execute();
