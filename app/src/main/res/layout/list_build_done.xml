@@ -52,21 +52,21 @@
         android:layout_height="wrap_content">
     <Button
         android:layout_width="wrap_content"
-        android:text="Files"
+        android:text="@string/files"
         android:textAllCaps="false"
         android:id="@+id/BtFile"
         android:layout_height="wrap_content" />
 
     <Button
         android:layout_width="wrap_content"
-        android:text="Recovery"
+        android:text="@string/recovery"
         android:id="@+id/bt_download_recovery"
         android:textAllCaps="false"
         android:layout_height="wrap_content" />
 
     <Button
         android:layout_width="wrap_content"
-        android:text="Add back to queue"
+        android:text="@string/add_back_to_queue"
         android:id="@+id/bt_add_back"
         android:textAllCaps="false"
         android:layout_height="wrap_content" />

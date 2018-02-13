@@ -52,4 +52,11 @@
     <string name="completed">المنتهية</string>
     <string name="make_request">تقديم طلب</string>
     <string name="builds_for_this_device">نسخ الريكفري لهذا الجهاز</string>
+    <string name="files">الملفات</string>
+    <string name="build_done">اكتمل البناء</string>
+    <string name="recovery">الريكفري</string>
+    <string name="add_back_to_queue">إعادة للمنتظرة</string>
+    <string name="download">تحميل</string>
+    <string name="flash">تثبيت</string>
+    <string name="start_build">ابدء البناء</string>
 </resources>
