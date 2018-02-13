@@ -30,3 +30,6 @@ deploy:
   file: "./app/build/outputs/apk/release/app-release.apk"
   on:
     repo: TwrpBuilder/TwrpBuilder
+before_install:
+      - yes | sdkmanager "platforms;android-27"
+
