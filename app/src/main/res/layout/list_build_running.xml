@@ -44,14 +44,14 @@
     android:layout_height="wrap_content">
     <Button
         android:layout_width="wrap_content"
-        android:text="Files"
+        android:text="@string/files"
         android:textAllCaps="false"
         android:id="@+id/BtFile"
         android:layout_height="wrap_content" />
 
     <Button
         android:layout_width="wrap_content"
-        android:text="Build Done"
+        android:text="@string/build_done"
         android:id="@+id/bt_build_done"
         android:textAllCaps="false"
         android:layout_height="wrap_content" />

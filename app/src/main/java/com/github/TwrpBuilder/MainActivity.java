@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity
         requestPermission();
         isOnline();
         hideItem();
-            new Updater(MainActivity.this,1,"https://twrpbuilder.firebaseapp.com/app/version.json");
+            new Updater(MainActivity.this,1,"https://raw.githubusercontent.com/TwrpBuilder/TwrpBuilder/master/app/admin.json");
     }
 
     @Override

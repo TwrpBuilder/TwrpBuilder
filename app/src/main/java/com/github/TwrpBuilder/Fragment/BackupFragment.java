@@ -57,6 +57,7 @@ public class BackupFragment extends Fragment {
 
     /*TextView*/
     private TextView mBuildDescription;
+    private TextView textViewBrand,textViewModel,textViewBoard;
 
     /*ProgressBar*/
     ProgressBar mProgressBar;
@@ -91,6 +92,13 @@ public class BackupFragment extends Fragment {
         mProgressBar.setVisibility(View.VISIBLE);
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         recoveryPath = preferences.getString("recoveryPath", "");
+        textViewBrand=view.findViewById(R.id.tv_brand);
+        textViewModel=view.findViewById(R.id.tv_model);
+        textViewBoard=view.findViewById(R.id.tv_board);
+
+        textViewBrand.setText("Brand : "+Build.BRAND);
+        textViewModel.setText("Model : "+Build.MODEL);
+        textViewBoard.setText("Board "+Build.BOARD);
 
             riversRef.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
                 @Override
@@ -179,7 +187,7 @@ public class BackupFragment extends Fragment {
             }
             if (isOldMtk==true)
             {
-                Shell.SU.run("dd if=" + recoveryPath +" bs=20000000 count=1 of=" + Sdcard + "TwrpBuilder/recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` > " + Sdcard + "TwrpBuilder/mounts ; cd " + Sdcard + "TwrpBuilder && tar -c recovery.img build.prop mounts > " + Sdcard + "TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
+                Shell.SU.run("dd if=" + recoveryPath +" bs=20000000 count=1 of=" + Sdcard + "TwrpBuilder/recovery.img ; cat /proc/dumchar > " + Sdcard + "TwrpBuilder/mounts ; cd " + Sdcard + "TwrpBuilder && tar -c recovery.img build.prop mounts > " + Sdcard + "TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
             }
             else
             {

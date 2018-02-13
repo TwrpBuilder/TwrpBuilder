@@ -53,4 +53,11 @@
     <string name="completed">Completed</string>
     <string name="make_request">Make Request</string>
     <string name="builds_for_this_device">Builds for this device</string>
+    <string name="files">Files</string>
+    <string name="build_done">Build Done</string>
+    <string name="recovery">Recovery</string>
+    <string name="add_back_to_queue">Add back to queue</string>
+    <string name="download">Download</string>
+    <string name="flash">flash</string>
+    <string name="start_build">Start Build</string>
 </resources>

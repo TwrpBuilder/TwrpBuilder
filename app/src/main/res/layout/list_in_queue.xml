@@ -53,7 +53,7 @@
         android:layout_height="wrap_content">
         <Button
             android:layout_width="wrap_content"
-            android:text="Download"
+            android:text="@string/download"
             android:textAllCaps="false"
             android:visibility="gone"
             android:id="@+id/bt_download"
@@ -61,7 +61,7 @@
 
         <Button
             android:layout_width="wrap_content"
-            android:text="flash"
+            android:text="@string/flash"
             android:id="@+id/bt_flash"
             android:visibility="gone"
             android:layout_height="wrap_content" />

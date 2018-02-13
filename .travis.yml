@@ -1,12 +1,15 @@
 language: android
 android:
   components:
-  - extra-google-m2repository
-  - extra-android-m2repository
-  - platform-tools
-  - tools
-  - build-tools-27.0.3
-  - android-26
+    - tools
+    - platform-tools
+    - build-tools-27.0.3
+    - android-27
+    - add-on
+    - extra
+licenses:
+    - 'android-sdk-license-.+'
+
 jdk:
 - oraclejdk8
 script: "./gradlew build"
@@ -27,3 +30,6 @@ deploy:
   file: "./app/build/outputs/apk/release/app-release.apk"
   on:
     repo: TwrpBuilder/TwrpBuilder
+before_install:
+      - yes | sdkmanager "platforms;android-27"
+
