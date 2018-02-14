@@ -48,27 +48,31 @@
         android:textSize="13sp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    <Button
-        android:layout_width="wrap_content"
-        android:text="@string/files"
-        android:textAllCaps="false"
-        android:id="@+id/BtFile"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="wrap_content"
+            android:text="@string/files"
+            android:textAllCaps="false"
+            android:id="@+id/BtFile"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:text="@string/recovery"
+            android:id="@+id/bt_download_recovery"
+            android:textAllCaps="false"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
 
     <Button
-        android:layout_width="wrap_content"
-        android:text="@string/recovery"
-        android:id="@+id/bt_download_recovery"
-        android:textAllCaps="false"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:text="@string/add_back_to_queue"
         android:id="@+id/bt_add_back"
         android:textAllCaps="false"
         android:layout_height="wrap_content" />
-    </LinearLayout>
 </LinearLayout>

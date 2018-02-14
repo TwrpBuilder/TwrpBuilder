@@ -104,7 +104,6 @@ public class CustomBackupActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.VISIBLE);
                     button.setEnabled(false);
                     new GenrateBackup().execute();
-
                 }
             }
         });

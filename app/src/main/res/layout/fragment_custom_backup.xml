@@ -8,14 +8,14 @@
         android:layout_gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginRight="6dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="10dp"
         card_view:cardBackgroundColor="@color/background_dark"
-        card_view:cardElevation="3dp">
+        card_view:cardElevation="2dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -27,17 +27,14 @@
             <TextView
                 android:layout_width="match_parent"
                 android:id="@+id/tv_brand"
-                android:textSize="20sp"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="match_parent"
                 android:id="@+id/tv_model"
-                android:textSize="20sp"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="match_parent"
                 android:id="@+id/tv_board"
-                android:textSize="20sp"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
@@ -49,11 +46,11 @@
         android:layout_gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="6dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginRight="6dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="10dp"
         card_view:cardBackgroundColor="@color/background_dark"
         card_view:cardElevation="3dp">

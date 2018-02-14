@@ -154,9 +154,9 @@ public class BackupFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(fromI==true)
+        if(fromI)
         {
-        if (result==true)
+        if (result)
         {
             mBuildDescription.setVisibility(View.VISIBLE);
             Snackbar.make(fragment_backup_child_linear, R.string.upload_finished, Snackbar.LENGTH_LONG)
