@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity
         requestPermission();
         isOnline();
         hideItem();
-            new Updater(MainActivity.this,0,Config.APP_UPDATE_URL);
+            new Updater(MainActivity.this,1,Config.APP_UPDATE_URL);
     }
 
     @Override
@@ -223,6 +223,7 @@ public class MainActivity extends AppCompatActivity
         if(name==true)
         {
             nav_Menu.findItem(R.id.nav_dev_fragment).setVisible(true);
+            FirebaseMessaging.getInstance().subscribeToTopic("mqueue");
         }
         else {
             nav_Menu.findItem(R.id.nav_dev_fragment).setVisible(false);

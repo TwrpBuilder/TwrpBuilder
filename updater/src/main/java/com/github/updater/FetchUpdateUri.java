@@ -40,8 +40,6 @@ public class FetchUpdateUri extends AsyncTask<Void,Void,Void> {
         JSONArray jsonArray= jsonObject.getJSONArray("assets");
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObj = jsonArray.getJSONObject(i);
-
-            System.out.println(jsonObj.get("browser_download_url"));
             Uri uri= Uri.parse(jsonObj.get("browser_download_url").toString());
             String fileName=uri.getLastPathSegment();
             this.url=uri;

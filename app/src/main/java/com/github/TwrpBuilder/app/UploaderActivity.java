@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.github.TwrpBuilder.util.Message;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,6 +50,7 @@ public class UploaderActivity extends AppCompatActivity {
     private StorageReference riversRef;
     private StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/");
     private DatabaseReference mUploader;
+    private DatabaseReference mBuildAdded;
     private UploadTask uploadTask;
     private FirebaseAuth mFirebaseAuth;
     private NotificationManager mNotifyManager;
@@ -69,6 +71,7 @@ public class UploaderActivity extends AppCompatActivity {
         mProgressBar= findViewById(R.id.progress_bar);
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mUploader = mFirebaseInstance.getReference("InQueue");
+        mBuildAdded = mFirebaseInstance.getReference("mqueue");
         mFirebaseAuth=FirebaseAuth.getInstance();
         Email=mFirebaseAuth.getCurrentUser().getEmail();
         Uid=mFirebaseAuth.getCurrentUser().getUid();
@@ -86,7 +89,9 @@ public class UploaderActivity extends AppCompatActivity {
                 mNotifyManager.notify(1, mBuilder.build());
                 userId = mUploader.push().getKey();
                 User user = new User(Build.BRAND, Build.BOARD, Build.MODEL,Build.PRODUCT, Email, Uid, refreshedToken, DateUtils.getDate());
+                Message message=new Message("TwrpBuilder","New build in queue for "+Build.BRAND);
                 mUploader.child(userId).setValue(user);
+                mBuildAdded.push().setValue(message);
                 finish();
                 result=true;
 
