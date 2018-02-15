@@ -62,6 +62,7 @@ public class DevsInQueueFragment extends Fragment {
         mUploader = mFirebaseInstance.getReference("RunningBuild");
         query = FirebaseDatabase.getInstance()
                 .getReference("InQueue");
+        query.keepSynced(true);
 
         FirebaseListOptions<User> options = new FirebaseListOptions.Builder<User>()
                 .setLayout(R.layout.list_developer_stuff)

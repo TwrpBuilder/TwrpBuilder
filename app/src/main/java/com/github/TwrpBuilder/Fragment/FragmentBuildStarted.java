@@ -38,6 +38,7 @@ public class FragmentBuildStarted extends Fragment {
 
         query = FirebaseDatabase.getInstance()
                 .getReference("RunningBuild");
+        query.keepSynced(true);
 
         FirebaseListOptions<Queue> options = new FirebaseListOptions.Builder<Queue>()
                 .setLayout(R.layout.list_in_queue)

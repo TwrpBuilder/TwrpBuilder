@@ -64,6 +64,7 @@ public class DevsBuildRunningFragment extends Fragment {
         mUploader = mFirebaseInstance.getReference("Builds");
         query = FirebaseDatabase.getInstance()
                 .getReference("RunningBuild");
+        query.keepSynced(true);
 
         FirebaseListOptions<User> options = new FirebaseListOptions.Builder<User>()
                 .setLayout(R.layout.list_build_running)

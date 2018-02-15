@@ -27,7 +27,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.TwrpBuilder.Fragment.FragmentCustomBackup;
-import com.github.updater.FetchUpdateUri;
 import com.github.updater.Updater;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -108,7 +107,7 @@ public class MainActivity extends AppCompatActivity
         requestPermission();
         isOnline();
         hideItem();
-            new Updater(MainActivity.this,1,Config.APP_UPDATE_URL);
+            new Updater(MainActivity.this,0,Config.APP_UPDATE_URL);
     }
 
     @Override
