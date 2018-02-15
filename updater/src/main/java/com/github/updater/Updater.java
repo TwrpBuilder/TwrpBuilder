@@ -1,7 +1,9 @@
 package com.github.updater;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
@@ -21,6 +23,8 @@ public class Updater {
         //new RssParser("https://twrpbuilder.firebaseapp.com/app/version.xml");
         jsonParser=new JsonParser(url);
         final Handler ha=new Handler();
+        new FetchUpdateUri(context);
+
         dialog=new AlertDialog.Builder(context,R.style.Theme_AppCompat_Dialog_Alert).setTitle("Update");
 
         ha.postDelayed(new Runnable() {
@@ -32,16 +36,20 @@ public class Updater {
                 }
                 if (Version<version)
                 {
-                    System.out.println("Holy " + version);
                     dialog
                             .setMessage("Changelog :- \n"+ changelog)
                             .setCancelable(false)
                             .setPositiveButton("Download", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    Toast.makeText(context,"Please wait fetching url",Toast.LENGTH_SHORT).show();
-                                    new FetchUpdateUri(context);
+                                    Toast.makeText(context,"Please wait starting download",Toast.LENGTH_SHORT).show();
+                                    DownloadManager downloadManager = (DownloadManager) context.getSystemService(context.DOWNLOAD_SERVICE);
 
+                                    DownloadManager.Request request = new DownloadManager.Request(FetchUpdateUri.url);
+                                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, FetchUpdateUri.name);
+
+                                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                                    Long reference = downloadManager.enqueue(request);
                                 }
                             })
                             .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

@@ -22,6 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.TwrpBuilder.util.Config;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -370,7 +371,7 @@ public class LoginActivity extends AppCompatActivity {
         public Void doInBackground(String... params) {
             try {
 
-                URL url = new URL("https://twrpbuilder.firebaseapp.com/app/admin.json");
+                URL url = new URL(Config.ADMIN_JSON_URL);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 connection.setRequestMethod("GET");

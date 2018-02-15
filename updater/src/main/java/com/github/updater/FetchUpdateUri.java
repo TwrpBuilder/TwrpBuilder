@@ -21,6 +21,8 @@ import java.net.URL;
 public class FetchUpdateUri extends AsyncTask<Void,Void,Void> {
 
     private Context context;
+    public static Uri url;
+    public static String name;
 
    public FetchUpdateUri(Context context){
        this.context=context;
@@ -42,14 +44,8 @@ public class FetchUpdateUri extends AsyncTask<Void,Void,Void> {
             System.out.println(jsonObj.get("browser_download_url"));
             Uri uri= Uri.parse(jsonObj.get("browser_download_url").toString());
             String fileName=uri.getLastPathSegment();
-            DownloadManager downloadManager = (DownloadManager) context.getSystemService(context.DOWNLOAD_SERVICE);
-
-            DownloadManager.Request request = new DownloadManager.Request(uri);
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
-
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-            Long reference = downloadManager.enqueue(request);
-
+            this.url=uri;
+            this.name=fileName;
         }
         } catch (Exception e) {
             e.printStackTrace();

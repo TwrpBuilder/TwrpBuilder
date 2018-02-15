@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity
         requestPermission();
         isOnline();
         hideItem();
-            new Updater(MainActivity.this,1,"https://raw.githubusercontent.com/TwrpBuilder/TwrpBuilder/master/app/admin.json");
+            new Updater(MainActivity.this,1,Config.APP_UPDATE_URL);
     }
 
     @Override
