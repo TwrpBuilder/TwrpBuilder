@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -38,7 +39,15 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
 
 
         if (remoteMessage.getNotification() != null) {
-            sendNotification(remoteMessage.getNotification().getBody());
+            if (remoteMessage.getNotification().getBody().contains(Build.MODEL)) {
+                sendNotification(remoteMessage.getNotification().getBody());
+            }else if (remoteMessage.getNotification().getBody().contains("New build in queue for"))
+            {
+                sendNotification(remoteMessage.getNotification().getBody());
+            }else if (remoteMessage.getNotification().getBody().contains("email"))
+            {
+                sendNotification(remoteMessage.getNotification().getBody());
+            }
         }
 
     }
