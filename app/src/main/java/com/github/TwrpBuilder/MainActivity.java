@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity
         /*Text View*/
         mUserEmail= navHeaderView.findViewById(R.id.user_email);
 
-        FirebaseMessaging.getInstance().subscribeToTopic("pushNotification");
+        FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
 
         /*replace email with users email*/
         mUserEmail.setText(mFirebaseAuth.getCurrentUser().getEmail());
