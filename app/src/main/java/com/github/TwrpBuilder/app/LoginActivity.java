@@ -428,6 +428,10 @@ public class LoginActivity extends AppCompatActivity {
                     finish();
                     name=true;
                 }
+                else{
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
+                }
             }
         }
     }
