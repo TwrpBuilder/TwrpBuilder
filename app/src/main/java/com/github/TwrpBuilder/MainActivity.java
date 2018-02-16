@@ -46,13 +46,11 @@ import static com.github.TwrpBuilder.app.LoginActivity.name;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     /*Fragments*/
-    private BackupFragment mBackupFragment;
     private NoNetwork mNoNetwork;
     private CreditsFragment mFragmentCredits;
     private DevsFragment mDevsFragment;
     private StatusFragment statusFragment;
     private MainFragment mainFragment;
-    private FragmentCustomBackup fragmentCustomBackup;
 
     /*Firebase*/
     private FirebaseAuth mFirebaseAuth;
@@ -84,13 +82,11 @@ public class MainActivity extends AppCompatActivity
         mUserEmail = navHeaderView.findViewById(R.id.user_email);
 
         /*Fragments*/
-        mBackupFragment=new BackupFragment();
         mNoNetwork=new NoNetwork();
         mFragmentCredits=new CreditsFragment();
         mDevsFragment = new DevsFragment().getInstance(getBaseContext());
         statusFragment=new StatusFragment();
         mainFragment=new MainFragment();
-        fragmentCustomBackup=new FragmentCustomBackup();
         /*Replace Fragment*/
         updateFragment(this.mainFragment);
         setTitle("Home");

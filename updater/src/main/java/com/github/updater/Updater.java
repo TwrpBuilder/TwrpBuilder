@@ -20,7 +20,6 @@ public class Updater {
     private JsonParser jsonParser;
     private AlertDialog.Builder dialog;
     public Updater(final Context context, final int Version, String url){
-        //new RssParser("https://twrpbuilder.firebaseapp.com/app/version.xml");
         jsonParser=new JsonParser(url);
         final Handler ha=new Handler();
         new FetchUpdateUri(context);
@@ -32,7 +31,7 @@ public class Updater {
             @Override
             public void run() {
                 if (changelog==null) {
-                    ha.postDelayed(this, 10000);
+                    ha.postDelayed(this, 4000);
                 }
                 if (Version<version)
                 {
