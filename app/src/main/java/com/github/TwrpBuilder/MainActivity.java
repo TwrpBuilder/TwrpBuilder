@@ -26,7 +26,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.TwrpBuilder.Fragment.FragmentBuildDone;
 import com.github.TwrpBuilder.Fragment.FragmentCustomBackup;
+import com.github.TwrpBuilder.Fragment.FragmentRejectedBuilds;
 import com.github.updater.Updater;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -51,6 +53,8 @@ public class MainActivity extends AppCompatActivity
     private DevsFragment mDevsFragment;
     private StatusFragment statusFragment;
     private MainFragment mainFragment;
+    private FragmentBuildDone mFragmentBuildDone;
+    private FragmentRejectedBuilds mFragmentRejectedBuilds;
 
     /*Firebase*/
     private FirebaseAuth mFirebaseAuth;
@@ -87,6 +91,8 @@ public class MainActivity extends AppCompatActivity
         mDevsFragment = new DevsFragment().getInstance(getBaseContext());
         statusFragment=new StatusFragment();
         mainFragment=new MainFragment();
+        mFragmentBuildDone=new FragmentBuildDone();
+        mFragmentRejectedBuilds=new FragmentRejectedBuilds();
         /*Replace Fragment*/
         updateFragment(this.mainFragment);
         setTitle("Home");
@@ -128,7 +134,18 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_credits) {
             updateFragment(mFragmentCredits);
             setTitle(R.string.credits);
-        }else if (id == R.id.action_log_out) {
+        }
+        else if (id==R.id.nav_build_done)
+        {
+            updateFragment(mFragmentBuildDone);
+            setTitle(R.string.completed);
+        }
+        else if (id==R.id.nav_reject)
+        {
+            updateFragment(mFragmentRejectedBuilds);
+            setTitle(R.string.rejected);
+        }
+        else if (id == R.id.action_log_out) {
             FirebaseAuth.getInstance().signOut();
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
             SharedPreferences.Editor editor = preferences.edit();

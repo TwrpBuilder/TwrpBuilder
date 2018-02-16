@@ -12,10 +12,14 @@
                 android:id="@+id/check_status"
                 android:title="@string/build_status"
                 android:icon="@drawable/ic_dvr_white_24dp"/>
-            <item
-                android:title="@string/logout"
-                android:id="@+id/action_log_out"
-                android:icon="@drawable/ic_logout_white_24dp"/>
+
+            <item android:id="@+id/nav_build_done"
+                android:title="@string/completed"
+                android:icon="@drawable/ic_builds_done"/>
+
+            <item android:id="@+id/nav_reject"
+                android:title="@string/rejected"
+                android:icon="@drawable/ic_reject"/>
 
         </group>
         </menu>
@@ -41,6 +45,17 @@
                     android:icon="@drawable/ic_developer_mode_white_24dp"/>
             </group>
 
+        </menu>
+    </item>
+
+    <item android:title="@string/logout">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:title="@string/logout"
+                    android:id="@+id/action_log_out"
+                    android:icon="@drawable/ic_logout_white_24dp"/>
+            </group>
         </menu>
     </item>
 

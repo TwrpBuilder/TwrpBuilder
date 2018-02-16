@@ -44,17 +44,6 @@
             android:name="com.github.TwrpBuilder.app.ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
-            android:name="com.github.TwrpBuilder.app.SettingsActivity"
-            android:label="@string/settings"/>
-        <activity
-            android:name="com.github.TwrpBuilder.ads.AdsActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="Ads"/>
-        <activity
-            android:name="com.github.TwrpBuilder.ads.VideoAdsActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="Ads"/>
 
         <activity
             android:name="com.github.TwrpBuilder.app.ActivitySubmitBuild"
@@ -84,7 +73,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>

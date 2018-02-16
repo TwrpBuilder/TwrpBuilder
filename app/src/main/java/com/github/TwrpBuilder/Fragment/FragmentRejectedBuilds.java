@@ -66,6 +66,7 @@ public class FragmentRejectedBuilds extends Fragment {
         ProgressBar progressBar= v.findViewById(R.id.pb_builds);
         TextView textView= v.findViewById(R.id.tv_no_build);
         new FirebaseProgressBar().start(progressBar,textView,adapter,"Builds");
+        lvRunningBuilds.setStackFromBottom(true);
         lvRunningBuilds.setAdapter(adapter);
 
         return v;
