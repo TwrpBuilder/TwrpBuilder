@@ -26,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import com.github.TwrpBuilder.R;
 import com.github.TwrpBuilder.util.FirebaseProgressBar;
-import com.github.TwrpBuilder.util.Pbuild;
+import com.github.TwrpBuilder.model.Pbuild;
 import com.stericson.RootTools.RootTools;
 
 import static com.github.TwrpBuilder.app.InitActivity.isSupport;

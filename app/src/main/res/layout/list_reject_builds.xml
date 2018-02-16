@@ -4,7 +4,6 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="15dp">
-
     <TextView
         android:id="@+id/list_user_email"
         android:layout_width="wrap_content"
@@ -39,28 +38,19 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorInfo"
         android:textSize="13sp" />
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <Button
-        android:layout_width="wrap_content"
-        android:text="@string/files"
-        android:textAllCaps="false"
-        android:id="@+id/BtFile"
-        android:layout_height="wrap_content" />
 
-    <Button
+    <TextView
+        android:id="@+id/list_reject_email"
         android:layout_width="wrap_content"
-        android:text="@string/start_build"
-        android:id="@+id/bt_start_build"
-        android:textAllCaps="false"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorInfo"
+        android:textSize="13sp" />
 
-    <Button
+    <TextView
+        android:id="@+id/list_reject_note"
         android:layout_width="wrap_content"
-        android:text="@string/reject"
-        android:id="@+id/bt_reject"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorInfo"
+        android:textSize="13sp" />
 
-</LinearLayout>
 </LinearLayout>

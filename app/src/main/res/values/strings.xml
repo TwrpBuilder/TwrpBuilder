@@ -60,4 +60,6 @@
     <string name="download">Download</string>
     <string name="flash">flash</string>
     <string name="start_build">Start Build</string>
+    <string name="rejected">Rejected</string>
+    <string name="reject">Reject</string>
 </resources>

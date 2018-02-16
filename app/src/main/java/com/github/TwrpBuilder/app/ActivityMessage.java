@@ -1,9 +1,8 @@
 package com.github.TwrpBuilder.app;
 
-import android.app.*;
 import android.os.Bundle;
 
-import com.github.TwrpBuilder.util.Message;
+import com.github.TwrpBuilder.model.Message;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 

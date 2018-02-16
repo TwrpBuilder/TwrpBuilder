@@ -58,4 +58,6 @@
     <string name="download">İndir</string>
     <string name="flash">Yaz (Flash)</string>
     <string name="start_build">İnşayı başlat</string>
+    <string name="rejected">Rejected</string>
+    <string name="reject">reject</string>
 </resources>

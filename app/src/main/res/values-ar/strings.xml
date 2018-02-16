@@ -59,4 +59,7 @@
     <string name="download">تحميل</string>
     <string name="flash">تثبيت</string>
     <string name="start_build">ابدء البناء</string>
+    <string name="rejected">مرفوض</string>
+    <string name="reject">رفض</string>
+
 </resources>

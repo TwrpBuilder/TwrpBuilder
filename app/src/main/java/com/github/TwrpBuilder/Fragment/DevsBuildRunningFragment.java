@@ -35,7 +35,7 @@ import com.github.TwrpBuilder.R;
 import com.github.TwrpBuilder.app.ActivitySubmitBuild;
 import com.github.TwrpBuilder.util.Config;
 import com.github.TwrpBuilder.util.FirebaseProgressBar;
-import com.github.TwrpBuilder.util.User;
+import com.github.TwrpBuilder.model.User;
 
 /**
  * Created by androidlover5842 on 19/1/18.

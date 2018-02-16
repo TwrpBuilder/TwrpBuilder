@@ -1,23 +1,27 @@
-package com.github.TwrpBuilder.util;
+package com.github.TwrpBuilder.model;
 
 /**
- * Created by androidlover5842 on 18/1/18.
+ * Created by androidlover5842 on 16.2.2018.
  */
 
-public class Queue {
+public class Rejected {
     private String Brand;
     private String Board;
     private String Model;
     private String Email;
     private String Date;
+    private String Note;
+    private String Rejector;
 
-    public Queue(){}
-    public Queue(String Brand, String Board, String Model,String Email,String Date) {
+    public Rejected(){}
+    public Rejected(String Brand, String Board, String Model,String Email,String Date,String Note,String Rejector) {
         this.Brand = Brand;
         this.Board = Board;
         this.Model = Model;
         this.Email = Email;
         this.Date= Date;
+        this.Note=Note;
+        this.Rejector=Rejector;
     }
 
     public void setBoard(String board) {
@@ -40,6 +44,14 @@ public class Queue {
         Model = model;
     }
 
+    public void setNote(String note) {
+        Note = note;
+    }
+
+    public void setRejector(String rejector) {
+        Rejector = rejector;
+    }
+
     public String getBrand() {
         return Brand;
     }
@@ -58,5 +70,13 @@ public class Queue {
 
     public String getDate() {
         return Date;
+    }
+
+    public String getNote() {
+        return Note;
+    }
+
+    public String getRejector() {
+        return Rejector;
     }
 }

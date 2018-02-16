@@ -1,4 +1,4 @@
-package com.github.TwrpBuilder.util;
+package com.github.TwrpBuilder.model;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 

@@ -1,4 +1,4 @@
-package com.github.TwrpBuilder.util;
+package com.github.TwrpBuilder.model;
 
 /**
  * Created by androidlover5842 on 20/1/18.

@@ -18,7 +18,7 @@ import com.google.firebase.database.Query;
 
 import com.github.TwrpBuilder.R;
 import com.github.TwrpBuilder.util.FirebaseProgressBar;
-import com.github.TwrpBuilder.util.Queue;
+import com.github.TwrpBuilder.model.Queue;
 
 /**
  * Created by androidlover5842 on 18/1/18.
