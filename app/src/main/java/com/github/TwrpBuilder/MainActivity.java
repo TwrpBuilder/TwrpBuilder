@@ -20,22 +20,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.TwrpBuilder.Fragment.FragmentBuildDone;
-import com.github.TwrpBuilder.Fragment.FragmentCustomBackup;
 import com.github.TwrpBuilder.Fragment.FragmentRejectedBuilds;
 import com.github.updater.Updater;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import com.github.TwrpBuilder.Fragment.BackupFragment;
 import com.github.TwrpBuilder.Fragment.CreditsFragment;
-import com.github.TwrpBuilder.Fragment.DevsFragment;
 import com.github.TwrpBuilder.Fragment.MainFragment;
 import com.github.TwrpBuilder.Fragment.NoNetwork;
 import com.github.TwrpBuilder.Fragment.StatusFragment;
@@ -43,14 +39,11 @@ import com.github.TwrpBuilder.app.LoginActivity;
 import com.github.TwrpBuilder.util.Config;
 import com.github.TwrpBuilder.util.FirebaseDBInstance;
 
-import static com.github.TwrpBuilder.app.LoginActivity.name;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     /*Fragments*/
     private NoNetwork mNoNetwork;
     private CreditsFragment mFragmentCredits;
-    private DevsFragment mDevsFragment;
     private StatusFragment statusFragment;
     private MainFragment mainFragment;
     private FragmentBuildDone mFragmentBuildDone;
@@ -88,7 +81,6 @@ public class MainActivity extends AppCompatActivity
         /*Fragments*/
         mNoNetwork=new NoNetwork();
         mFragmentCredits=new CreditsFragment();
-        mDevsFragment = new DevsFragment().getInstance(getBaseContext());
         statusFragment=new StatusFragment();
         mainFragment=new MainFragment();
         mFragmentBuildDone=new FragmentBuildDone();
@@ -108,8 +100,7 @@ public class MainActivity extends AppCompatActivity
         checkPermission();
         requestPermission();
         isOnline();
-        hideItem();
-            new Updater(MainActivity.this,1,Config.APP_UPDATE_URL);
+        new Updater(MainActivity.this,1,Config.APP_UPDATE_URL);
     }
 
     @Override
@@ -153,10 +144,6 @@ public class MainActivity extends AppCompatActivity
             editor.apply();
             startActivity(new Intent(MainActivity.this, LoginActivity.class)); //Go back to home page
             finish();
-        }else if (id==R.id.nav_dev_fragment)
-        {
-            updateFragment(mDevsFragment);
-            setTitle(R.string.recovery_builds);
         }else if (id==R.id.check_status)
         {
             updateFragment(statusFragment);
@@ -228,20 +215,6 @@ public class MainActivity extends AppCompatActivity
             updateFragment(mNoNetwork);
             return false;
         }
-    }
-    private void hideItem()
-    {
-        navigationView = findViewById(R.id.nav_view);
-        Menu nav_Menu = navigationView.getMenu();
-        if(name==true)
-        {
-            nav_Menu.findItem(R.id.nav_dev_fragment).setVisible(true);
-            FirebaseMessaging.getInstance().subscribeToTopic("mqueue");
-        }
-        else {
-            nav_Menu.findItem(R.id.nav_dev_fragment).setVisible(false);
-        }
-
     }
 
     @Override

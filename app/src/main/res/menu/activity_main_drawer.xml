@@ -36,18 +36,6 @@
         </menu>
     </item>
 
-    <item android:title="@string/for_developers">
-        <menu>
-            <group android:checkableBehavior="single">
-                <item
-                    android:title="@string/recovery_builds"
-                    android:id="@+id/nav_dev_fragment"
-                    android:icon="@drawable/ic_developer_mode_white_24dp"/>
-            </group>
-
-        </menu>
-    </item>
-
     <item android:title="@string/logout">
         <menu>
             <group android:checkableBehavior="single">

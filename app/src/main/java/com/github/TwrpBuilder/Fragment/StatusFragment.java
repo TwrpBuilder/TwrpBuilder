@@ -29,7 +29,7 @@ public class StatusFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_status,container,false);
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
-        DevsFragment.ViewPagerAdapter adapter = new DevsFragment.ViewPagerAdapter(getChildFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new FragmentInQueue(), getString(R.string.queue));
         adapter.addFragment(new FragmentBuildStarted(), getString(R.string.running));
         viewPager.setAdapter(adapter);

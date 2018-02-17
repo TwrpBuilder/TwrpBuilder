@@ -21,8 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.github.TwrpBuilder.util.Config;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -33,20 +31,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
+import com.google.firebase.auth.FirebaseAuth;;
 
 import com.github.TwrpBuilder.MainActivity;
 import com.github.TwrpBuilder.R;
@@ -63,10 +48,6 @@ public class LoginActivity extends AppCompatActivity {
     private LinearLayout developerTag;
     private CardView btn_login_singup_linear, login_cardView;
     private ImageView TeamWinLoginLogo;
-    private ArrayList<String> jsonArrayList;
-    private JSONObject json_data;
-    private JSONArray jsonArray;
-    public static boolean name;
     private SignInButton gSignInButton;
     private GoogleSignInClient googleSignInClient;
     private GoogleSignInOptions googleSignInOptions;
@@ -75,17 +56,13 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() != null) {
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-            name = preferences.getBoolean("admin",false);
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         }
 
-        // set the view now
         setContentView(R.layout.activity_login);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -109,8 +86,6 @@ public class LoginActivity extends AppCompatActivity {
         developerTag = findViewById(R.id.developer_tag);
         gSignInButton=findViewById(R.id.google_signIn);
 
-
-        //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
         googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -185,7 +160,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 progressBar.setVisibility(View.VISIBLE);
-                //create user
                 auth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -250,24 +224,20 @@ public class LoginActivity extends AppCompatActivity {
 
                 progressBar.setVisibility(View.VISIBLE);
 
-                //authenticate user
                 auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                // If sign in fails, display a message to the user. If sign in succeeds
-                                // the auth state listener will be notified and logic to handle the
-                                // signed in user can be handled in the listener.
                                 progressBar.setVisibility(View.GONE);
                                 if (!task.isSuccessful()) {
-                                    // there was an error
                                     if (password.length() < 6) {
                                         inputPassword.setError(getString(R.string.minimum_password));
                                     } else {
                                         Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                                     }
                                 } else {
-                                    new CheckAdminTask().execute();
+                                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                                    finish();
                                 }
                             }
                         });
@@ -324,15 +294,12 @@ public class LoginActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == 1) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
-                // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
-                // Google Sign In failed, update UI appropriately
                 Log.w("TAG", "Google sign in failed", e);
                 // ...
             }
@@ -348,93 +315,19 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "signInWithCredential:success");
                             FirebaseUser user = auth.getCurrentUser();
-                            //updateUI(user);
-                            new CheckAdminTask().execute();
+                            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                            finish();
+
                         } else {
-                            // If sign in fails, display a message to the user.
                             Log.w("TAG", "signInWithCredential:failure", task.getException());
                             Snackbar.make(getCurrentFocus(), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
-                            //   updateUI(null);
                         }
-
-                        // ...
                     }
                 });
     }
 
-    class CheckAdminTask extends AsyncTask<String, Void, Void> {
-
-        @Override
-        public Void doInBackground(String... params) {
-            try {
-
-                URL url = new URL(Config.ADMIN_JSON_URL);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-                connection.setRequestMethod("GET");
-                connection.setRequestProperty("USER-AGENT", "Mozilla/5.0");
-                connection.setRequestProperty("ACCEPT-LANGUAGE", "en-US,en;0.5");
-
-                int responseCode = connection.getResponseCode();
-
-                final StringBuilder output = new StringBuilder("Request URL " + url);
-                output.append(System.getProperty("line.separator") + "Response Code " + responseCode);
-                output.append(System.getProperty("line.separator") + "Type " + "GET");
-                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String line = "";
-                StringBuilder responseOutput = new StringBuilder();
-                while ((line = br.readLine()) != null) {
-                    responseOutput.append(line );
-                }
-                br.close();
-
-                String json = responseOutput.toString();
-                jsonArray=new JSONArray(json);
-                jsonArrayList=new ArrayList<>();
-                for (int i=0;i<jsonArray.length();i++)
-                {
-                    json_data=jsonArray.getJSONObject(i);
-                    String addr=json_data.getString("email");
-                    jsonArrayList.add(addr);
-
-                }
-            } catch (MalformedURLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            for (int i=0;i<jsonArrayList.size();i++)
-            {
-                if (auth.getCurrentUser().getEmail().equals(jsonArrayList.get(i)))
-                {
-                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putBoolean("admin",true);
-                    editor.apply();
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
-                    name=true;
-                }
-                else{
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
-                }
-            }
-        }
-    }
 
 }
 

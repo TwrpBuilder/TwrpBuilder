@@ -43,7 +43,7 @@ public class MainFragment extends Fragment{
         fragmentCustomBackup=new FragmentCustomBackup();
         lBuildsForDeviceFragment=new LBuildsForDeviceFragment();
 
-        DevsFragment.ViewPagerAdapter adapter = new DevsFragment.ViewPagerAdapter(getChildFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         if(RootTools.isAccessGiven()){
             if (isSupport==true) {
                 adapter.addFragment(backupFragment, getString(R.string.make_request));
