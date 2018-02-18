@@ -28,14 +28,18 @@ public class InitActivity extends AppCompatActivity {
     public static boolean isSupport;
     public static boolean isOldMtk;
 
-    private String mtk="/dev/recovery";
-    private String Sonyboot="/dev/block/bootdevice/by-name/FOTAKernel";
-    private String SonyName="/dev/block/platform/*/*/by-name/FOTAKernel";
-    private String qcomBoot="/dev/block/bootdevice/by-name/recovery";
-    private String qcomName="/dev/block/platform/*/*/by-name/recovery";
-    private String oldSocName="/dev/block/platform/*/*/by-name/RECOVERY";
-    private String oldBroadComName="/dev/block/platform/*/*/by-name/Recovery";
     private String Output;
+    String file[]=new String[]{
+            "/dev/recovery",
+            "/dev/block/bootdevice/by-name/FOTAKernel",
+            "/dev/block/platform/*/*/by-name/FOTAKernel",
+            "/dev/block/bootdevice/by-name/recovery",
+            "/dev/block/platform/*/*/by-name/recovery",
+            "/dev/block/platform/*/*/by-name/RECOVERY",
+            "/dev/block/platform/*/*/by-name/Recovery",
+            "/dev/block/platform/*/by-name/recovery",
+            "/dev/block/platform/*/by-name/Recovery"
+    };
     private SharedPreferences.Editor  editor;
     private int GoogleVersion;
     @Override
@@ -70,57 +74,32 @@ public class InitActivity extends AppCompatActivity {
         @Override
         public String doInBackground(String... voids) {
 
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
             String name = preferences.getString("recoveryPath", "");
             if (name=="") {
-                if (!Shell.SU.run("ls "+Sonyboot).isEmpty())
-                {
-                    Output= Shell.SU.run("ls "+ Sonyboot).toString().replace("[","").replace("]","");
-                    SharedP.putRecoveryString(getBaseContext(),Output,true);
-                }
-                else if (!Shell.SU.run("ls "+SonyName).isEmpty())
-                {
-                    Output= Shell.SU.run("ls "+ SonyName).toString().replace("[","").replace("]","");
-                    SharedP.putRecoveryString(getBaseContext(),Output,true);
-                }
-                else if (!Shell.SU.run("ls "+mtk).isEmpty())
-                {
-                    Output= Shell.SU.run("ls "+ mtk).toString().replace("[","").replace("]","");
-                    SharedP.putRecoveryString(getBaseContext(),Output,true);
-                    isOldMtk=true;
-                    editor = preferences.edit();
-                    editor.putBoolean("isOldMtk",true);
-                    editor.apply();
-                }
-                else if (!Shell.SU.run("ls "+qcomName).isEmpty())
-                {
-
-                    Output= Shell.SU.run("ls "+ qcomName).toString().replace("[","").replace("]","");
-                    SharedP.putRecoveryString(getBaseContext(),Output,true);
-                }
-                else if (!Shell.SU.run("ls "+qcomBoot).isEmpty())
-                {
-                    Output= Shell.SU.run("ls "+ qcomBoot).toString().replace("[","").replace("]","");
-                    SharedP.putRecoveryString(getBaseContext(),Output,true);
-                }
-                else if (!Shell.SU.run("ls "+oldSocName).isEmpty())
-                {
-                    Output= Shell.SU.run("ls "+ oldSocName).toString().replace("[","").replace("]","");
-                    SharedP.putRecoveryString(getBaseContext(),Output,true);
-                }
-                else if (!Shell.SU.run("ls "+oldBroadComName).isEmpty())
-                {
-                    Output= Shell.SU.run("ls "+ oldBroadComName).toString().replace("[","").replace("]","");
-                    SharedP.putRecoveryString(getBaseContext(),Output,true);
-                }
-                else
-                {
-                    isSupport=false;
-                    editor = preferences.edit();
-                    editor.putBoolean("isSupport",false);
-                    editor.apply();
-                }
-
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (String string : file)
+                        {
+                            Output= Shell.SU.run("ls "+ string).toString().replace("[","").replace("]","");
+                            if (!Output.isEmpty())
+                            {
+                                if (Output.equals(file[1]))
+                                {
+                                    isOldMtk=true;
+                                    editor = preferences.edit();
+                                    editor.putBoolean("isOldMtk",true);
+                                    editor.apply();
+                                    SharedP.putRecoveryString(getBaseContext(), Output, true);
+                                }else {
+                                    SharedP.putRecoveryString(getBaseContext(), Output, true);
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }).start();
                 }
             isOldMtk=preferences.getBoolean("isOldMtk",false);
             isSupport=preferences.getBoolean("isSupport",false);
