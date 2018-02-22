@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity
         checkPermission();
         requestPermission();
         isOnline();
-        new Updater(MainActivity.this,1,Config.APP_UPDATE_URL);
+        new Updater(MainActivity.this,Config.Version,Config.APP_UPDATE_URL,false);
     }
 
     @Override

@@ -19,7 +19,7 @@ public class Updater {
 
     private JsonParser jsonParser;
     private AlertDialog.Builder dialog;
-    public Updater(final Context context, final int Version, String url){
+    public Updater(final Context context, final int Version, String url, final boolean Settings){
         jsonParser=new JsonParser(url);
         final Handler ha=new Handler();
         new FetchUpdateUri(context);
@@ -57,6 +57,11 @@ public class Updater {
 
                                 }
                             }).create().show();
+                }else {
+                    if (Settings)
+                    {
+                        Toast.makeText(context,"No updates were found",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         }, 10000);

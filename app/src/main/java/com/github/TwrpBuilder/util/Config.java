@@ -15,5 +15,6 @@ public class Config
    public final static String Sdcard= Environment.getExternalStorageDirectory().getPath()+File.separator;
    public static boolean checkBackup(){return new File(Sdcard+"/TwrpBuilder/"+TwrpBackFName).isFile();}
    public static String APP_UPDATE_URL="https://raw.githubusercontent.com/TwrpBuilder/TwrpBuilder/master/app/version.json";
+   public static int Version =1;
 
 }

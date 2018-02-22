@@ -1,12 +1,9 @@
 package com.github.TwrpBuilder.app;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.LocaleList;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -17,11 +14,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.TwrpBuilder.R;
+import com.github.TwrpBuilder.util.Config;
+import com.github.updater.Updater;
 
 import java.util.Locale;
-import java.util.Set;
 
 /**
  * Created by androidlover5842 on 23.2.2018.
@@ -44,7 +43,7 @@ public class SettingsActivity extends AppCompatActivity {
     };
     private LinearLayout linearLayout;
     private AlertDialog.Builder builderSingle;
-    private AlertDialog.Builder builderInner;
+    private CardView CheckUpdate;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +51,7 @@ public class SettingsActivity extends AppCompatActivity {
         cardView_Lang=findViewById(R.id.settings_lang);
         textView_currentLang=findViewById(R.id.current_lang);
         textView_currentLang.setText(myLang);
+        CheckUpdate=findViewById(R.id.settings_update);
         builderSingle = new AlertDialog.Builder(SettingsActivity.this);
         linearLayout=findViewById(R.id.settings_view);
 
@@ -66,6 +66,14 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+            }
+        });
+
+        CheckUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(SettingsActivity.this,"Checking for updates...",Toast.LENGTH_SHORT).show();
+                new Updater(SettingsActivity.this,Config.Version, Config.APP_UPDATE_URL,true);
             }
         });
 
