@@ -58,6 +58,36 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="20dp" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:id="@+id/settings_notification"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="20dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="Disable Notification"
+                        android:textSize="20sp"
+                        android:layout_height="match_parent" />
+
+                    <android.support.v7.widget.AppCompatCheckBox
+                        android:layout_width="wrap_content"
+                        android:id="@+id/settings_notification_checkBox"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
     </LinearLayout>
 
 </LinearLayout>

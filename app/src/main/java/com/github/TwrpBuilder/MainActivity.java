@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity
 
     /*Text View*/
     TextView mUserEmail;
+
+    private boolean enabled;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +84,8 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         navHeaderView= navigationView.inflateHeaderView(R.layout.nav_header_main);
         mUserEmail = navHeaderView.findViewById(R.id.user_email);
+        enabled = PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("notification", false);
 
         /*Fragments*/
         mNoNetwork=new NoNetwork();
@@ -96,9 +100,10 @@ public class MainActivity extends AppCompatActivity
 
         /*Text View*/
         mUserEmail= navHeaderView.findViewById(R.id.user_email);
+        if (!enabled) {
 
-        FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
-
+            FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
+        }
         /*replace email with users email*/
         mUserEmail.setText(mFirebaseAuth.getCurrentUser().getEmail());
         /*My Functions :)*/

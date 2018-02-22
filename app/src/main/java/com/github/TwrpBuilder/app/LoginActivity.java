@@ -51,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     private SignInButton gSignInButton;
     private GoogleSignInClient googleSignInClient;
     private GoogleSignInOptions googleSignInOptions;
+    private Boolean Notification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
