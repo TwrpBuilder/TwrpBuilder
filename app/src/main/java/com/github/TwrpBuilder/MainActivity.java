@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.github.TwrpBuilder.Fragment.FragmentBuildDone;
 import com.github.TwrpBuilder.Fragment.FragmentRejectedBuilds;
+import com.github.TwrpBuilder.app.SettingsActivity;
 import com.github.updater.Updater;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -118,8 +119,10 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId())
         {
-            case R.id.quit:
+                case R.id.quit:
                 finish();
+            case R.id.settings:
+                startActivity(new Intent(MainActivity.this,SettingsActivity.class));
                 default:
                     return super.onOptionsItemSelected(item);
         }

@@ -64,6 +64,7 @@
         </activity>
         <activity android:name=".app.ActivityMessage"/>
         <activity android:name=".app.FlasherActivity"/>
+        <activity android:name=".app.SettingsActivity"/>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="170780f99a1c0f42ee4bce379c8a786f3e295ea7" />
