@@ -60,4 +60,5 @@
     <string name="start_build">İnşayı başlat</string>
     <string name="rejected">Rejected</string>
     <string name="reject">reject</string>
+    <string name="quit">Çık</string>
 </resources>

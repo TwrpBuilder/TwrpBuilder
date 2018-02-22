@@ -62,4 +62,5 @@
     <string name="start_build">Start Build</string>
     <string name="rejected">Rejected</string>
     <string name="reject">Reject</string>
+    <string name="quit">Quit</string>
 </resources>

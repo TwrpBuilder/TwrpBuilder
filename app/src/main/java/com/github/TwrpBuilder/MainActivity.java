@@ -20,6 +20,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -38,6 +40,8 @@ import com.github.TwrpBuilder.Fragment.StatusFragment;
 import com.github.TwrpBuilder.app.LoginActivity;
 import com.github.TwrpBuilder.util.Config;
 import com.github.TwrpBuilder.util.FirebaseDBInstance;
+
+import static com.github.TwrpBuilder.R.menu.*;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -101,6 +105,24 @@ public class MainActivity extends AppCompatActivity
         requestPermission();
         isOnline();
         new Updater(MainActivity.this,1,Config.APP_UPDATE_URL);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater=getMenuInflater();
+        menuInflater.inflate(R.menu.activity_option,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.quit:
+                finish();
+                default:
+                    return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
