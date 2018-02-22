@@ -49,7 +49,7 @@ public class FragmentCustomBackup extends Fragment {
 
     /*TextView*/
     private TextView mBuildDescription;
-    private TextView textViewBrand,textViewModel,textViewBoard;
+    private TextView textViewBrand,textViewModel,textViewBoard,textViewSupported;
 
     /*ProgressBar*/
     ProgressBar mProgressBar;
@@ -64,9 +64,6 @@ public class FragmentCustomBackup extends Fragment {
 
     private boolean hasUpB;
 
-    private SharedPreferences preferences;
-
-    private String recoveryPath;
 
     @Nullable
     @Override
@@ -80,15 +77,15 @@ public class FragmentCustomBackup extends Fragment {
         uploaderActivity=new UploaderActivity();
         intent=new Intent(getActivity(), uploaderActivity.getClass());
         mProgressBar.setVisibility(View.VISIBLE);
-        preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        recoveryPath = preferences.getString("recoveryPath", "");
         textViewBrand=view.findViewById(R.id.tv_brand);
         textViewModel=view.findViewById(R.id.tv_model);
         textViewBoard=view.findViewById(R.id.tv_board);
+        textViewSupported=view.findViewById(R.id.tv_supported);
 
         textViewBrand.setText("Brand : "+Build.BRAND);
         textViewModel.setText("Model : "+Build.MODEL);
         textViewBoard.setText("Board : "+Build.BOARD);
+        textViewSupported.setText("Supported by app :- "+false);
 
         riversRef.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
             @Override

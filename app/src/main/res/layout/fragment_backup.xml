@@ -37,6 +37,10 @@
                 android:id="@+id/tv_board"
                 android:layout_height="wrap_content" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/tv_supported"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 

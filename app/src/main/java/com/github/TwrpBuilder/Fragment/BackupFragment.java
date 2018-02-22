@@ -57,7 +57,7 @@ public class BackupFragment extends Fragment {
 
     /*TextView*/
     private TextView mBuildDescription;
-    private TextView textViewBrand,textViewModel,textViewBoard;
+    private TextView textViewBrand,textViewModel,textViewBoard,textViewSupported;
 
     /*ProgressBar*/
     ProgressBar mProgressBar;
@@ -95,10 +95,12 @@ public class BackupFragment extends Fragment {
         textViewBrand=view.findViewById(R.id.tv_brand);
         textViewModel=view.findViewById(R.id.tv_model);
         textViewBoard=view.findViewById(R.id.tv_board);
+        textViewSupported=view.findViewById(R.id.tv_supported);
 
         textViewBrand.setText("Brand : "+Build.BRAND);
         textViewModel.setText("Model : "+Build.MODEL);
         textViewBoard.setText("Board "+Build.BOARD);
+        textViewSupported.setText("Supported by app :- "+true);
 
             riversRef.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
                 @Override
