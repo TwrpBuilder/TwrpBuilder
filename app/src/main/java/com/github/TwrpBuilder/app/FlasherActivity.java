@@ -9,6 +9,7 @@ import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,6 +44,8 @@ public class FlasherActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flasher);
+        Toolbar toolbar=findViewById(R.id.action_bar_tool);
+        toolbar.setTitle(R.string.flash);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         Recoverypath=preferences.getString("recoveryPath","");
         flasherPB=findViewById(R.id.pb_flasher);

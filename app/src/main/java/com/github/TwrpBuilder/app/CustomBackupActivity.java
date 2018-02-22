@@ -53,11 +53,8 @@ public class CustomBackupActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_backup);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null){
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        Toolbar toolbar=findViewById(R.id.action_bar_tool);
+        toolbar.setTitle(R.string.backup_recovery);
         Cache=getCacheDir()+File.separator;
         button=findViewById(R.id.bt_generate_backup);
         editText=findViewById(R.id.ed_select_recovery);

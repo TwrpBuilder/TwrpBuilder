@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.TwrpBuilder.Fragment.FragmentAbout;
 import com.github.TwrpBuilder.Fragment.FragmentBuildDone;
 import com.github.TwrpBuilder.Fragment.FragmentRejectedBuilds;
 import com.github.TwrpBuilder.app.SettingsActivity;
@@ -178,6 +179,10 @@ public class MainActivity extends AppCompatActivity
         {
             updateFragment(statusFragment);
             setTitle(R.string.build_status);
+        }else if (id==R.id.nav_about)
+        {
+            updateFragment(new FragmentAbout());
+            setTitle(R.string.app_name);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

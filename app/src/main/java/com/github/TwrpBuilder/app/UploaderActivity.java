@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -65,6 +66,8 @@ public class UploaderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_uploader);
+        Toolbar toolbar=findViewById(R.id.action_bar_tool);
+        toolbar.setTitle(R.string.uploading);
         mCancel= findViewById(R.id.cancel_upload);
         ShowOutput = findViewById(R.id.show_output);
         mProgressBar= findViewById(R.id.progress_bar);

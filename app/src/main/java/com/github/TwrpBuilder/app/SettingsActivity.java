@@ -41,7 +41,6 @@ public class SettingsActivity extends AppCompatActivity {
     private AlertDialog.Builder builderSingle;
     private CardView CheckUpdate;
     private AppCompatCheckBox NotificationCheckBox;
-    private boolean notificationEnabled;
     private String[] supportLangs=new String[]{
             "en",
             "ar",
