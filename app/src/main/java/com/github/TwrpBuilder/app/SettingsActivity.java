@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.github.TwrpBuilder.R;
 import com.github.TwrpBuilder.util.Config;
+import com.github.TwrpBuilder.util.setLocale;
 import com.github.updater.Updater;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -100,15 +101,20 @@ public class SettingsActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         final String strName = supportedLang.getItem(which);
                         if (strName.equals(langList[0])) {
-                            setLocale(supportLangs[0]);
+                            new setLocale(getBaseContext(),supportLangs[0]);
+                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[0]).commit();
                         }
                         else if (strName.equals(langList[1]))
                         {
-                            setLocale(supportLangs[1]);
+                            new setLocale(getBaseContext(),supportLangs[1]);
+                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[1]).commit();
                         }else if (strName.equals(langList[2]))
                         {
-                            setLocale(supportLangs[2]);
+                            new setLocale(getBaseContext(),supportLangs[2]);
+                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[2]).commit();
                         }
+                        Snackbar.make(linearLayout, R.string.restart_change,Snackbar.LENGTH_SHORT).show();
+
                     }
                 });
                 builderSingle.show();
@@ -130,16 +136,6 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    public void setLocale(String lang) {
-        Locale myLocale = new Locale(lang);
-        Resources res = getResources();
-        DisplayMetrics dm = res.getDisplayMetrics();
-        Configuration conf = res.getConfiguration();
-        conf.locale = myLocale;
-        res.updateConfiguration(conf, dm);
-        Snackbar.make(linearLayout, R.string.restart_change,Snackbar.LENGTH_SHORT).show();
     }
 
 

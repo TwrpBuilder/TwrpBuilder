@@ -21,6 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.TwrpBuilder.util.setLocale;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -51,15 +53,18 @@ public class LoginActivity extends AppCompatActivity {
     private SignInButton gSignInButton;
     private GoogleSignInClient googleSignInClient;
     private GoogleSignInOptions googleSignInOptions;
-    private Boolean Notification;
-
+    private String lang;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         auth = FirebaseAuth.getInstance();
-
+        lang=PreferenceManager.getDefaultSharedPreferences(this).getString("lang", "");
         if (auth.getCurrentUser() != null) {
+            if (!lang.equals(""))
+            {
+                new setLocale(getBaseContext(),lang);
+            }
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         }
