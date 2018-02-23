@@ -6,6 +6,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
+import com.github.TwrpBuilder.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,10 +36,10 @@ public class FirebaseProgressBar {
                 {
 
                     if (refId=="RunningBuild"){
-                        textView.setText("No running builds");
+                        textView.setText(R.string.no_running_builds);
                     }else if (refId=="Builds")
                     {
-                        textView.setText("No builds found");
+                        textView.setText(R.string.no_builds_found);
                     }
                     textView.setVisibility(View.VISIBLE);
                 }

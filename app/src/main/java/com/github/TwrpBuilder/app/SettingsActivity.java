@@ -75,8 +75,8 @@ public class SettingsActivity extends AppCompatActivity {
             supportedLang.add(s);
         }
         builderSingle
-                .setTitle("Select Language:-")
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                .setTitle(R.string.select_lang)
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -86,7 +86,7 @@ public class SettingsActivity extends AppCompatActivity {
         CheckUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(SettingsActivity.this,"Checking for updates...",Toast.LENGTH_SHORT).show();
+                Toast.makeText(SettingsActivity.this, R.string.checking_for_updates,Toast.LENGTH_SHORT).show();
                 new Updater(SettingsActivity.this,Config.Version, Config.APP_UPDATE_URL,true);
             }
         });
@@ -139,7 +139,7 @@ public class SettingsActivity extends AppCompatActivity {
         Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
-        Snackbar.make(linearLayout,"Restart app to apply changes",Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(linearLayout, R.string.restart_change,Snackbar.LENGTH_SHORT).show();
     }
 
 

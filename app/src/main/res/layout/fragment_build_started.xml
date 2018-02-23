@@ -33,7 +33,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_centerInParent="true"
-        android:text="No Builds in Queue"
+        android:text="@string/no_builds_in_queue"
         android:textAllCaps="false"
         android:visibility="gone"
         android:id="@+id/tv_no_build"

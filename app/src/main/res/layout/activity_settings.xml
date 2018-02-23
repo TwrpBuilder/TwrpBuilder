@@ -26,7 +26,7 @@
             android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
-                android:text="Language"
+                android:text="@string/language"
                 android:textSize="20sp"
                 android:layout_height="wrap_content" />
         <TextView
@@ -53,7 +53,7 @@
             android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
-                android:text="Check for update"
+                android:text="@string/check_for_update"
                 android:textSize="20sp"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -76,7 +76,7 @@
                     android:layout_height="match_parent">
                     <TextView
                         android:layout_width="wrap_content"
-                        android:text="Disable Notification"
+                        android:text="@string/disable_notification"
                         android:textSize="20sp"
                         android:layout_height="match_parent" />
 

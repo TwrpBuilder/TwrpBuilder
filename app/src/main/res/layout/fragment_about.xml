@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Official Website"
+                android:text="@string/official_website"
                 android:textSize="24sp" />
             <android.support.v4.widget.Space
                 android:layout_width="40dp"
@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Xda Thread"
+                android:text="@string/xda_thread"
                 android:textSize="24sp" />
             <android.support.v4.widget.Space
                 android:layout_width="40dp"
@@ -94,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Source"
+                android:text="@string/source"
                 android:textSize="24sp" />
             <android.support.v4.widget.Space
                 android:layout_width="40dp"
@@ -128,7 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Telegram Support"
+                android:text="@string/telegram_support"
                 android:textSize="24sp" />
             <android.support.v4.widget.Space
                 android:layout_width="40dp"

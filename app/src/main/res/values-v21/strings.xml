@@ -62,4 +62,18 @@
     <string name="rejected">Rejected</string>
     <string name="reject">Reject</string>
     <string name="quit">Quit</string>
+    <string name="select_lang">Select Language:-</string>
+    <string name="checking_for_updates">Checking for updates...</string>
+    <string name="restart_change">Restart app to apply changes</string>
+    <string name="cancel">cancel</string>
+    <string name="language">Language</string>
+    <string name="check_for_update">Check for update</string>
+    <string name="disable_notification">Disable Notification</string>
+    <string name="official_website">Official Website</string>
+    <string name="xda_thread">Xda Thread</string>
+    <string name="source">Source</string>
+    <string name="telegram_support">Telegram Support</string>
+    <string name="no_running_builds">No running builds</string>
+    <string name="no_builds_found">No builds found</string>
+    <string name="no_builds_in_queue">No Builds in Queue</string>
 </resources>
