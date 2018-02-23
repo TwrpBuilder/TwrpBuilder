@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -47,7 +48,7 @@ public class CustomBackupActivity extends AppCompatActivity {
     private DialogConfig dialogConfig;
     private FilePickerDialogFragment.Builder  builder;
     private ProgressBar progressBar;
-    public static boolean FromCB,resultOfB;
+    public static boolean FromCB,resultOfB,running;
     private String Cache;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,6 +101,7 @@ public class CustomBackupActivity extends AppCompatActivity {
                 else {
                     progressBar.setVisibility(View.VISIBLE);
                     button.setEnabled(false);
+                    running=true;
                     new GenrateBackup().execute();
                 }
             }
@@ -157,6 +159,7 @@ public class CustomBackupActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             progressBar.setVisibility(View.GONE);
+            running=false;
             resultOfB=true;
             finish();
         }
@@ -188,4 +191,16 @@ public class CustomBackupActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        if (running==false) {
+            super.onBackPressed();
+        }
+        else
+        {
+            Toast.makeText(getBaseContext(),"You can't exit until backup is finished",Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

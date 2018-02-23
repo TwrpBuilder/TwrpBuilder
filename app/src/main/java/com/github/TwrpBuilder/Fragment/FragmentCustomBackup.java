@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -37,6 +38,8 @@ import eu.chainfire.libsuperuser.Shell;
 
 import static com.github.TwrpBuilder.app.CustomBackupActivity.FromCB;
 import static com.github.TwrpBuilder.app.CustomBackupActivity.resultOfB;
+import static com.github.TwrpBuilder.app.UploaderActivity.fromI;
+import static com.github.TwrpBuilder.app.UploaderActivity.result;
 
 /**
  * Created by androidlover5842 on 31.1.2018.
@@ -63,6 +66,7 @@ public class FragmentCustomBackup extends Fragment {
     private Intent intent;
 
     private boolean hasUpB;
+    private LinearLayout fragment_backup_child_linear;
 
 
     @Nullable
@@ -81,6 +85,7 @@ public class FragmentCustomBackup extends Fragment {
         textViewModel=view.findViewById(R.id.tv_model);
         textViewBoard=view.findViewById(R.id.tv_board);
         textViewSupported=view.findViewById(R.id.tv_supported);
+        fragment_backup_child_linear= view.findViewById(R.id.fragment_backup_child_linear);
 
         textViewBrand.setText("Brand : "+Build.BRAND);
         textViewModel.setText("Model : "+Build.MODEL);
@@ -151,6 +156,23 @@ public class FragmentCustomBackup extends Fragment {
             }
             else {
                 mBackupButton.setVisibility(View.VISIBLE);
+            }
+        }
+
+        if(fromI)
+        {
+            if (result)
+            {
+                mBuildDescription.setVisibility(View.VISIBLE);
+                Snackbar.make(fragment_backup_child_linear, R.string.upload_finished, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                fromI=false;
+            }
+            else {
+                mUploadBackup.setVisibility(View.VISIBLE);
+                Snackbar.make(fragment_backup_child_linear, R.string.failed_to_upload, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                fromI=false;
             }
         }
     }

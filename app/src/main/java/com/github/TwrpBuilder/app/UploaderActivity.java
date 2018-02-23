@@ -94,8 +94,8 @@ public class UploaderActivity extends AppCompatActivity {
                 Message message=new Message("TwrpBuilder","New build in queue for "+Build.BRAND);
                 mUploader.child(userId).setValue(user);
                 mBuildAdded.push().setValue(message);
-                finish();
                 result=true;
+                finish();
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -105,7 +105,6 @@ public class UploaderActivity extends AppCompatActivity {
                 mBuilder.setOngoing(false);
                 mNotifyManager.notify(1, mBuilder.build());
                 ShowOutput.setText(R.string.failed_to_upload);
-                result=false;
                 finish();
 
             }
@@ -120,13 +119,12 @@ public class UploaderActivity extends AppCompatActivity {
                                 .setContentTitle(getString(R.string.uploading))
                                 .setAutoCancel(false)
                                 .setOngoing(true)
-                                .setContentText(getString(R.string.uploaded) + progress + ("%") + "/100%" + ")");
+                                .setContentText("Uploading " + progress + ("%") + "/100%" + ")");
                 mNotifyManager.notify(1, mBuilder.build());
                 mCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         uploadTask.cancel();
-                        result=false;
                         finish();
                     }
                 });
