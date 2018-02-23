@@ -16,6 +16,8 @@ import com.github.TwrpBuilder.R;
 import com.github.TwrpBuilder.util.SharedP;
 import com.stericson.RootTools.RootTools;
 
+import java.io.File;
+
 import eu.chainfire.libsuperuser.Shell;
 
 /**
@@ -30,16 +32,10 @@ public class InitActivity extends AppCompatActivity {
 
     private String Output;
     String file[]=new String[]{
-            "/dev/recovery",
-            "/dev/block/bootdevice/by-name/FOTAKernel",
-            "/dev/block/platform/*/*/by-name/FOTAKernel",
-            "/dev/block/bootdevice/by-name/recovery",
-            "/dev/block/platform/*/*/by-name/recovery",
-            "/dev/block/platform/*/*/by-name/RECOVERY",
-            "/dev/block/platform/*/*/by-name/Recovery",
-            "/dev/block/platform/*/by-name/recovery",
-            "/dev/block/platform/*/by-name/Recovery",
-            "/dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/recovery"
+            "RECOVERY",
+            "Recovery",
+            "FOTAKernel",
+            "recovery"
     };
     private SharedPreferences.Editor  editor;
     private int GoogleVersion;
@@ -77,31 +73,31 @@ public class InitActivity extends AppCompatActivity {
 
             final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
             String name = preferences.getString("recoveryPath", "");
-            if (name=="") {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (String string : file)
+            if (name=="")
+            {
+                Output = Shell.SU.run("find /dev/block/platform -type d -name by-name ").toString().replace("[", "").replace("]", "");
+                if (Output.isEmpty()) {
+                    Output = Shell.SU.run("ls /dev/recovery").toString().replace("[", "").replace("]", "");
+                    if (!Output.isEmpty()) {
+                        isOldMtk = true;
+                        editor = preferences.edit();
+                        editor.putBoolean("isOldMtk", true);
+                        editor.apply();
+                        SharedP.putRecoveryString(getBaseContext(), Output, true);
+                    }
+                } else {
+                    for (String f: file)
+                    {
+                        String o=Shell.SU.run("ls "+Output+File.separator+f).toString().replace("[", "").replace("]", "");
+                        if (!o.isEmpty())
                         {
-                            Output= Shell.SU.run("ls "+ string).toString().replace("[","").replace("]","");
-                            if (!Output.isEmpty())
-                            {
-                                if (Output.equals(file[1]))
-                                {
-                                    isOldMtk=true;
-                                    editor = preferences.edit();
-                                    editor.putBoolean("isOldMtk",true);
-                                    editor.apply();
-                                    SharedP.putRecoveryString(getBaseContext(), Output, true);
-                                }else {
-                                    SharedP.putRecoveryString(getBaseContext(), Output, true);
-                                }
-                                break;
-                            }
+                            SharedP.putRecoveryString(getBaseContext(), o, true);
+                            break;
                         }
                     }
-                }).start();
+
                 }
+            }
             isOldMtk=preferences.getBoolean("isOldMtk",false);
             isSupport=preferences.getBoolean("isSupport",false);
             return name;
