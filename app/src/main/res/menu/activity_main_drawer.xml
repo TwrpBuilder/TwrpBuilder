@@ -32,6 +32,7 @@
                     android:id="@+id/nav_credits"
                     android:icon="@drawable/ic_code_white_24dp"/>
                 <item android:title="@string/app_name"
+                    android:icon="@drawable/ic_info"
                     android:id="@+id/nav_about"/>
             </group>
 
