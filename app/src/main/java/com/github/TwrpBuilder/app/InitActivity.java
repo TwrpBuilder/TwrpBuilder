@@ -38,7 +38,8 @@ public class InitActivity extends AppCompatActivity {
             "/dev/block/platform/*/*/by-name/RECOVERY",
             "/dev/block/platform/*/*/by-name/Recovery",
             "/dev/block/platform/*/by-name/recovery",
-            "/dev/block/platform/*/by-name/Recovery"
+            "/dev/block/platform/*/by-name/Recovery",
+            "/dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/recovery"
     };
     private SharedPreferences.Editor  editor;
     private int GoogleVersion;
