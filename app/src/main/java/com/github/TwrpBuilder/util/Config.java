@@ -16,5 +16,9 @@ public class Config
    public static boolean checkBackup(){return new File(Sdcard+"/TwrpBuilder/"+TwrpBackFName).isFile();}
    public static String APP_UPDATE_URL="https://raw.githubusercontent.com/TwrpBuilder/TwrpBuilder/master/app/version.json";
    public static int Version =1;
+   public static String OfficialWebsite="https://twrpbuilder.github.io/";
+   public static String TGramSupport="https://t.me/TWBuilder";
+   public static String GithubSource="https://github.com/TwrpBuilder";
+   public static String XdaThread="https://forum.xda-developers.com/android/apps-games/twrpbuilder-t3744253";
 
 }
