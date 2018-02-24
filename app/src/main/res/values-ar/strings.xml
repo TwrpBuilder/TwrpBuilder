@@ -62,4 +62,18 @@
     <string name="rejected">مرفوض</string>
     <string name="reject">رفض</string>
     <string name="quit">استقال</string>
+    <string name="select_lang">اختر اللغة:-</string>
+    <string name="checking_for_updates">التحقق من التحديثات...</string>
+    <string name="restart_change">إعادة تشغيل التطبيق لتفعيل التغييرات</string>
+    <string name="cancel">إلغاء</string>
+    <string name="language">اللغة</string>
+    <string name="check_for_update">تحقق من التحديثات/string></string>
+    <string name="disable_notification">تعطيل الإشعارات</string>
+    <string name="official_website">الموقع الرسمي</string>
+    <string name="xda_thread">الموضوع على موقع المطورين</string>
+    <string name="source">الشفرة المصدرية</string>
+    <string name="telegram_support">الدعم على تيليجرام</string>
+    <string name="no_running_builds">لا توجد عمليات بناء حالية</string>
+    <string name="no_builds_found">لم يتم العثور على عمليات بناء</string>
+    <string name="no_builds_in_queue">لا توجد عمليات بناء في المنتظرة</string>
 </resources>

@@ -61,4 +61,18 @@
     <string name="rejected">Rejected</string>
     <string name="reject">reject</string>
     <string name="quit">Çık</string>
+    <string name="select_lang">Dil seçimi:</string>
+    <string name="checking_for_updates">Güncellemeler denetleniyor...</string>
+    <string name="restart_change">Değişiklikleri uygulamak için uygulamayı yeniden başlatın</string>
+    <string name="cancel">İptal</string>
+    <string name="language">Dil</string>
+    <string name="check_for_update">Güncellemeyi denetle</string>
+    <string name="disable_notification">Bildirimi devre dışı bırak</string>
+    <string name="official_website">Resmi Web Sayfamız</string>
+    <string name="xda_thread">XDA Konusu</string>
+    <string name="source">Kaynak</string>
+    <string name="telegram_support">Telegram Desteği</string>
+    <string name="no_running_builds">İşlemde hiçbir yapı bulunmuyor</string>
+    <string name="no_builds_found">Hiçbir yapı bulunamadı</string>
+    <string name="no_builds_in_queue">Kuyrukta hiçbir yapı bulunmuyor</string>
 </resources>
