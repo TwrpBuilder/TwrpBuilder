@@ -11,7 +11,7 @@
     <string name="forgot_password">هل نسيت كلمة السر؟</string>
     <string name="reset_password">إعادة ضبط كلمة السر</string>
     <string name="create_account">إنشاء حساب</string>
-    <string name="already_registerd">سجلت سابقا، دعني أسجل الدخول!</string>
+    <string name="already_registerd">سجلت سابقا، دعني أقوم بتسجل الدخول!</string>
     <string name="forgot_password_msg">نحتاج فقط إلى البريد الالكتروني الذي سجلت به، وسنقوم بإرسال تعليمات إعادة ضبط كلمة المرور.</string>
     <string name="btn_back"><![CDATA[<< رجوع]]></string>
     <string name="backup_recovery">عمل نسخة احتياطية من الريكفري</string>
@@ -61,7 +61,7 @@
     <string name="start_build">ابدء البناء</string>
     <string name="rejected">مرفوض</string>
     <string name="reject">رفض</string>
-    <string name="quit">استقال</string>
+    <string name="quit">خروج</string>
     <string name="select_lang">اختر اللغة:-</string>
     <string name="checking_for_updates">التحقق من التحديثات...</string>
     <string name="restart_change">إعادة تشغيل التطبيق لتفعيل التغييرات</string>
