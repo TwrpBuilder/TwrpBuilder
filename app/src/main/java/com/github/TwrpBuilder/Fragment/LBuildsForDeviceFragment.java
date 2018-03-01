@@ -103,7 +103,7 @@ public class LBuildsForDeviceFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.exists())
                 {
-                    textView.setText("No builds found");
+                    textView.setText(R.string.no_builds_found);
                     textView.setVisibility(View.VISIBLE);
 
                 }
