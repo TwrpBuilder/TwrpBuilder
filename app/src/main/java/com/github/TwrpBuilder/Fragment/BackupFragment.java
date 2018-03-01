@@ -102,30 +102,35 @@ public class BackupFragment extends Fragment {
         textViewBoard.setText("Board "+Build.BOARD);
         textViewSupported.setText(getString(R.string.app_support)+" "+true);
 
-            riversRef.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
-                @Override
-                public void onSuccess(StorageMetadata storageMetadata) {
-                    mProgressBar.setVisibility(View.GONE);
-                    mUploadBackup.setVisibility(View.GONE);
-                    mBuildDescription.setVisibility(View.VISIBLE);
-                    hasUpB=true;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                riversRef.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
+                    @Override
+                    public void onSuccess(StorageMetadata storageMetadata) {
+                        mProgressBar.setVisibility(View.GONE);
+                        mUploadBackup.setVisibility(View.GONE);
+                        mBuildDescription.setVisibility(View.VISIBLE);
+                        hasUpB=true;
                         if (!Config.checkBackup()) {mBackupButton.setVisibility(View.VISIBLE);}
 
-                }
-            })
-                    .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    mProgressBar.setVisibility(View.GONE);
-                        if (!Config.checkBackup()) {mBackupButton.setVisibility(View.VISIBLE);}
-                        else {
-                            mUploadBackup.setVisibility(View.VISIBLE);
-                            mBuildDescription.setVisibility(View.GONE);
+                    }
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                mProgressBar.setVisibility(View.GONE);
+                                if (!Config.checkBackup()) {mBackupButton.setVisibility(View.VISIBLE);}
+                                else {
+                                    mUploadBackup.setVisibility(View.VISIBLE);
+                                    mBuildDescription.setVisibility(View.GONE);
 
-                        }
-                }
+                                }
+                            }
 
-            });
+                        });
+            }
+        }).start();
 
         mBackupButton.setOnClickListener(
                 new View.OnClickListener() {
