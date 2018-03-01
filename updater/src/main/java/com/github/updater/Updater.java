@@ -31,7 +31,7 @@ public class Updater {
             @Override
             public void run() {
                 if (changelog==null) {
-                    ha.postDelayed(this, 4000);
+                    ha.postDelayed(this, 1000);
                 }
                 if (Version<version)
                 {
@@ -64,7 +64,7 @@ public class Updater {
                     }
                 }
             }
-        }, 10000);
+        }, 1000);
 
     }
 }
