@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -46,9 +47,9 @@ public class FragmentBuildDone extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_build_started,container,false);
+        View view=inflater.inflate(R.layout.fragment_builds_common,container,false);
 
-        lvRunningBuilds= view.findViewById(R.id.lv_build_started);
+        lvRunningBuilds= view.findViewById(R.id.lv_builds);
         searchView=view.findViewById(R.id.sv_builds);
         searchView.setVisibility(View.VISIBLE);
         query = FirebaseDatabase.getInstance()
@@ -84,7 +85,7 @@ public class FragmentBuildDone extends Fragment {
         });
 
         options = new FirebaseListOptions.Builder<Pbuild>()
-                .setLayout(R.layout.list_in_queue)
+                .setLayout(R.layout.list_build_common)
                 .setQuery(query,Pbuild.class)
                 .build();
 
@@ -97,7 +98,7 @@ public class FragmentBuildDone extends Fragment {
                 TextView tvDate= v.findViewById(R.id.list_user_date);
                 TextView tvBrand = v.findViewById(R.id.list_user_brand);
                 TextView tvDeveloper=v.findViewById(R.id.list_developer_email);
-                Button btDownload=v.findViewById(R.id.bt_download);
+                Button btDownload=v.findViewById(R.id.bt_download_recovery);
                 tvDeveloper.setVisibility(View.VISIBLE);
                 tvDate.setText("Date : "+model.getDate());
                 tvEmail.setText("Email : "+model.getEmail());
@@ -132,7 +133,7 @@ public class FragmentBuildDone extends Fragment {
         adapter.stopListening();
         lvRunningBuilds.setStackFromBottom(false);
         FilterOptions = new FirebaseListOptions.Builder<Pbuild>()
-                .setLayout(R.layout.list_in_queue)
+                .setLayout(R.layout.list_build_common)
                 .setQuery(FilterQuery,Pbuild.class)
                 .build();
         FilterAdapter=new FirebaseListAdapter<Pbuild>(FilterOptions) {
@@ -144,7 +145,7 @@ public class FragmentBuildDone extends Fragment {
                 TextView tvDate= v.findViewById(R.id.list_user_date);
                 TextView tvBrand = v.findViewById(R.id.list_user_brand);
                 TextView tvDeveloper=v.findViewById(R.id.list_developer_email);
-                Button btDownload=v.findViewById(R.id.bt_download);
+                Button btDownload=v.findViewById(R.id.bt_download_recovery);
                 tvDeveloper.setVisibility(View.VISIBLE);
                 tvDate.setText("Date : "+model.getDate());
                 tvEmail.setText("Email : "+model.getEmail());

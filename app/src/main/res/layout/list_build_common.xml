@@ -44,35 +44,41 @@
         android:id="@+id/list_developer_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:textColor="@color/colorInfo"
         android:textSize="13sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/list_reject_note"
+        android:textColor="@color/colorInfo"
+        android:textSize="13sp"
+        android:visibility="gone"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <Button
-            android:layout_width="wrap_content"
-            android:text="@string/files"
-            android:textAllCaps="false"
-            android:id="@+id/BtFile"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
 
         <Button
             android:layout_width="wrap_content"
             android:text="@string/recovery"
             android:id="@+id/bt_download_recovery"
+            android:visibility="gone"
+            android:textAllCaps="false"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:text="@string/flash"
+            android:visibility="gone"
+            android:id="@+id/bt_flash"
             android:textAllCaps="false"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
 
     </LinearLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:text="@string/add_back_to_queue"
-        android:id="@+id/bt_add_back"
-        android:textAllCaps="false"
-        android:layout_height="wrap_content" />
 </LinearLayout>

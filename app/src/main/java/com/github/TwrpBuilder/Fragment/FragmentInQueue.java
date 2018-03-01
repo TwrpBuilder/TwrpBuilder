@@ -31,16 +31,16 @@ public class FragmentInQueue extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_build_started,container,false);
+        View view=inflater.inflate(R.layout.fragment_builds_common,container,false);
 
-        ListView lvQueue= view.findViewById(R.id.lv_build_started);
+        ListView lvQueue= view.findViewById(R.id.lv_builds);
 
         query = FirebaseDatabase.getInstance()
                 .getReference("InQueue");
         query.keepSynced(true);
 
         FirebaseListOptions<Queue> options = new FirebaseListOptions.Builder<Queue>()
-                .setLayout(R.layout.list_in_queue)
+                .setLayout(R.layout.list_build_common)
                 .setQuery(query,Queue.class)
                 .build();
 

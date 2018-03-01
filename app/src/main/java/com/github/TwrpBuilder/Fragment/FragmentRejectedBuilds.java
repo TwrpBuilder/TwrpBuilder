@@ -31,14 +31,14 @@ public class FragmentRejectedBuilds extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v=inflater.inflate(R.layout.fragment_reject_builds,container,false);
-        ListView lvRunningBuilds= v.findViewById(R.id.lv_rej_builds);
+        View v=inflater.inflate(R.layout.fragment_builds_common,container,false);
+        ListView lvRunningBuilds= v.findViewById(R.id.lv_builds);
 
         query = FirebaseDatabase.getInstance()
                 .getReference("Rejected");
 
         FirebaseListOptions<Rejected> options = new FirebaseListOptions.Builder<Rejected>()
-                .setLayout(R.layout.list_reject_builds)
+                .setLayout(R.layout.list_build_common)
                 .setQuery(query,Rejected.class)
                 .build();
 
@@ -50,9 +50,10 @@ public class FragmentRejectedBuilds extends Fragment {
                 TextView tvBoard = v.findViewById(R.id.list_user_board);
                 TextView tvDate= v.findViewById(R.id.list_user_date);
                 TextView tvBrand = v.findViewById(R.id.list_user_brand);
-                TextView tvDeveloper=v.findViewById(R.id.list_reject_email);
+                TextView tvDeveloper=v.findViewById(R.id.list_developer_email);
                 TextView tvNote=v.findViewById(R.id.list_reject_note);
                 tvDeveloper.setVisibility(View.VISIBLE);
+                tvNote.setVisibility(View.VISIBLE);
                 tvDate.setText("Date : "+model.getDate());
                 tvEmail.setText("Email : "+model.getEmail());
                 tvDevice.setText("Model : " + model.getModel());

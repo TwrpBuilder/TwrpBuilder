@@ -44,7 +44,6 @@ import com.github.TwrpBuilder.model.User;
 public class UploaderActivity extends AppCompatActivity {
     private Button mCancel;
     private TextView ShowOutput;
-    private ProgressBar mProgressBar;
     private FirebaseDatabase mFirebaseInstance;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference riversRef;
@@ -70,7 +69,6 @@ public class UploaderActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.uploading);
         mCancel= findViewById(R.id.cancel_upload);
         ShowOutput = findViewById(R.id.show_output);
-        mProgressBar= findViewById(R.id.progress_bar);
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mUploader = mFirebaseInstance.getReference("InQueue");
         mBuildAdded = mFirebaseInstance.getReference("mqueue");

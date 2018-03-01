@@ -100,7 +100,7 @@ public class BackupFragment extends Fragment {
         textViewBrand.setText("Brand : "+Build.BRAND);
         textViewModel.setText("Model : "+Build.MODEL);
         textViewBoard.setText("Board "+Build.BOARD);
-        textViewSupported.setText("Supported by app :- "+true);
+        textViewSupported.setText(getString(R.string.app_support)+" "+true);
 
             riversRef.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
                 @Override

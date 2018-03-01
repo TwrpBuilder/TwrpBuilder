@@ -77,4 +77,5 @@
     <string name="no_running_builds">No running builds</string>
     <string name="no_builds_found">No builds found</string>
     <string name="no_builds_in_queue">No Builds in Queue</string>
+    <string name="app_support">Supported by app :-</string>
 </resources>

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -40,13 +41,13 @@ public class LBuildsForDeviceFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_build_for_device,container,false);
+        View view=inflater.inflate(R.layout.fragment_builds_common,container,false);
 
-        ListView buildList = view.findViewById(R.id.build_list_view);
+        ListView buildList = view.findViewById(R.id.lv_builds);
 
         Query query = FirebaseDatabase.getInstance().getReference().child("Builds").orderByChild("model").equalTo(Build.MODEL);
         FirebaseListOptions<Pbuild> options = new FirebaseListOptions.Builder<Pbuild>()
-                .setLayout(R.layout.list_in_queue)
+                .setLayout(R.layout.list_build_common)
                 .setQuery(query, Pbuild.class)
                 .build();
 
@@ -59,7 +60,7 @@ public class LBuildsForDeviceFragment extends Fragment {
                 TextView tvDate= v.findViewById(R.id.list_user_date);
                 TextView tvBrand = v.findViewById(R.id.list_user_brand);
                 TextView tvDevEmail=v.findViewById(R.id.list_developer_email);
-                Button btDownload=v.findViewById(R.id.bt_download);
+                Button btDownload=v.findViewById(R.id.bt_download_recovery);
                 Button btFlash=v.findViewById(R.id.bt_flash);
                 tvDate.setText("Date : "+model.getDate());
                 tvEmail.setText("Email : "+model.getEmail());
