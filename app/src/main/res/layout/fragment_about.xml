@@ -1,70 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <LinearLayout
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_margin="20dp"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:src="@drawable/twrpbuilder_w"
-        android:layout_height="wrap_content" />
+        android:layout_height="50dp"
+        android:layout_gravity="center"/>
 
+    <android.support.v4.widget.Space
+        android:layout_width="wrap_content"
+        android:layout_height="16dp" />
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:clickable="true"
         android:id="@+id/website"
-        android:layout_height="wrap_content">
-        <LinearLayout
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/background_dark">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_margin="20dp"
-            android:layout_height="match_parent">
-
+            android:layout_height="match_parent"
+            android:paddingTop="24dp"
+            android:padding="16dp">
             <TextView
+                android:id="@+id/official_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/official_website"
-                android:textSize="24sp" />
-            <android.support.v4.widget.Space
-                android:layout_width="40dp"
-                android:layout_height="wrap_content" />
+                android:textSize="18sp"
+                android:layout_centerVertical="true"/>
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@mipmap/ic_launcher" />
-        </LinearLayout>
+                android:src="@mipmap/ic_launcher"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v4.widget.Space
         android:layout_width="wrap_content"
-        android:layout_height="20dp" />
+        android:layout_height="16dp" />
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:id="@+id/xdaThread"
-        android:layout_height="wrap_content">
-        <LinearLayout
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/background_dark">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_margin="20dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="16dp">
 
             <TextView
+                android:id="@+id/xda_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/xda_thread"
-                android:textSize="24sp" />
-            <android.support.v4.widget.Space
-                android:layout_width="40dp"
-                android:layout_height="wrap_content" />
+                android:textSize="18sp"
+                android:layout_centerVertical="true"/>
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,22 +77,24 @@
                 android:adjustViewBounds="true"
                 android:maxWidth="60dp"
                 android:maxHeight="60dp"
-                android:src="@drawable/xda" />
-        </LinearLayout>
+                android:src="@drawable/ic_xda_white_36dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v4.widget.Space
         android:layout_width="wrap_content"
-        android:layout_height="20dp" />
+        android:layout_height="16dp" />
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:id="@+id/source"
-        android:layout_height="wrap_content">
-        <LinearLayout
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/background_dark">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_margin="20dp"
+            android:padding="16dp"
             android:layout_height="match_parent">
 
             <TextView
@@ -95,10 +102,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/source"
-                android:textSize="24sp" />
-            <android.support.v4.widget.Space
-                android:layout_width="40dp"
-                android:layout_height="wrap_content" />
+                android:textSize="18sp"
+                android:layout_centerVertical="true"/>
 
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="wrap_content"
@@ -107,21 +112,23 @@
                 android:adjustViewBounds="true"
                 android:maxWidth="60dp"
                 android:maxHeight="60dp"
-                android:src="@drawable/githublogo" />
-        </LinearLayout>
+                android:src="@drawable/ic_github_circle_white_36dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
     </android.support.v7.widget.CardView>
     <android.support.v4.widget.Space
         android:layout_width="wrap_content"
-        android:layout_height="20dp" />
+        android:layout_height="16dp" />
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:id="@+id/telegram"
-        android:layout_height="wrap_content">
-        <LinearLayout
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/background_dark">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_margin="20dp"
+            android:padding="16dp"
             android:layout_height="match_parent">
 
             <TextView
@@ -129,10 +136,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/telegram_support"
-                android:textSize="24sp" />
-            <android.support.v4.widget.Space
-                android:layout_width="40dp"
-                android:layout_height="wrap_content" />
+                android:textSize="18sp"
+                android:layout_centerVertical="true"/>
 
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="wrap_content"
@@ -141,13 +146,10 @@
                 android:adjustViewBounds="true"
                 android:maxWidth="60dp"
                 android:maxHeight="60dp"
-                android:src="@drawable/telegram" />
-        </LinearLayout>
+                android:src="@drawable/ic_telegram_white_36dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
     </android.support.v7.widget.CardView>
-    <android.support.v4.widget.Space
-        android:layout_width="wrap_content"
-        android:layout_height="20dp" />
-
-
 </LinearLayout>
 </ScrollView>

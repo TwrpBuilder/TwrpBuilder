@@ -125,13 +125,14 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId())
         {
-                case R.id.quit:
+            case R.id.quit:
                 finish();
+                break;
             case R.id.settings:
                 startActivity(new Intent(MainActivity.this,SettingsActivity.class));
-                default:
-                    return super.onOptionsItemSelected(item);
+                break;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
