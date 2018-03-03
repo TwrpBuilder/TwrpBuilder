@@ -35,6 +35,7 @@ public class InitActivity extends AppCompatActivity {
             "RECOVERY",
             "Recovery",
             "FOTAKernel",
+            "fotakernel",
             "recovery"
     };
     private SharedPreferences.Editor  editor;
