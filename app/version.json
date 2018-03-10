@@ -1,8 +1,8 @@
 {
 "TwrpBuilder": [
 	{
-	"version": "1",
-	"changelog": "none"
+	"version": "2",
+	"changelog": "- added support for old sony devices \n- added full support for mtk \n- updated translations \n- Fix UI problems \n- added settings \n- bug fixes"
 	}
 		]
 }
