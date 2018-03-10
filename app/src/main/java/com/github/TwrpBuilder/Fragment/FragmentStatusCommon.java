@@ -32,6 +32,7 @@ public class FragmentStatusCommon extends Fragment {
     private FirebaseListAdapter adapter;
     private String reference;
     private boolean bottom;
+    private String colon=" : ";
     public FragmentStatusCommon(){}
 
     public FragmentStatusCommon(String reference){
@@ -70,16 +71,16 @@ public class FragmentStatusCommon extends Fragment {
                 TextView tvNote=v.findViewById(R.id.list_reject_note);
                 Button btDownload=v.findViewById(R.id.bt_download_recovery);
 
-                tvDate.setText("Date : "+model.getDate());
-                tvEmail.setText("Email : "+model.getEmail());
-                tvDevice.setText("Model : " + model.getModel());
-                tvBoard.setText("Board : "+model.getBoard());
-                tvBrand.setText("Brand : " +model.getBrand());
+                tvDate.setText(getString(R.string.date)+colon+model.getDate());
+                tvEmail.setText(getString(R.string.email)+colon+model.getEmail());
+                tvDevice.setText(getString(R.string.model)+colon + model.getModel());
+                tvBoard.setText(getString(R.string.board)+colon+model.getBoard());
+                tvBrand.setText(getString(R.string.brand) +colon+model.getBrand());
                 if (reference.equals("Builds"))
                 {
                     tvDeveloper.setVisibility(View.VISIBLE);
                     btDownload.setVisibility(View.VISIBLE);
-                    tvDeveloper.setText("Developer : " +model.getDeveloperEmail());
+                    tvDeveloper.setText(getString(R.string.developer) +colon+model.getDeveloperEmail());
                     btDownload.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -92,8 +93,8 @@ public class FragmentStatusCommon extends Fragment {
                 {
                     tvDeveloper.setVisibility(View.VISIBLE);
                     tvNote.setVisibility(View.VISIBLE);
-                    tvDeveloper.setText("Rejected by : " +model.getRejector());
-                    tvNote.setText("Note: "+model.getNote());
+                    tvDeveloper.setText(getString(R.string.rejected_by)+colon +model.getRejector());
+                    tvNote.setText(getString(R.string.note)+colon+model.getNote());
 
                 }
 

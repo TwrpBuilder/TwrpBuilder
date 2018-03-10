@@ -67,6 +67,7 @@ public class FragmentCustomBackup extends Fragment {
 
     private boolean hasUpB;
     private LinearLayout fragment_backup_child_linear;
+    private String colon=" : ";
 
 
     @Nullable
@@ -87,9 +88,9 @@ public class FragmentCustomBackup extends Fragment {
         textViewSupported=view.findViewById(R.id.tv_supported);
         fragment_backup_child_linear= view.findViewById(R.id.fragment_backup_child_linear);
 
-        textViewBrand.setText("Brand : "+Build.BRAND);
-        textViewModel.setText("Model : "+Build.MODEL);
-        textViewBoard.setText("Board : "+Build.BOARD);
+        textViewBrand.setText(getString(R.string.brand)+colon+Build.BRAND);
+        textViewBoard.setText(getString(R.string.board)+colon+Build.BOARD);
+        textViewModel.setText(getString(R.string.model)+colon+Build.MODEL);
         textViewSupported.setText(getString(R.string.app_support)+" "+false);
 
         new Thread(new Runnable() {

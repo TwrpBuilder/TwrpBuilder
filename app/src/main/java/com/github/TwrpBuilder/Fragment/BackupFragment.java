@@ -75,6 +75,7 @@ public class BackupFragment extends Fragment {
     private SharedPreferences preferences;
     private String recoveryPath;
     private LinearLayout fragment_backup_child_linear;
+    private String colon=" : ";
 
     @Nullable
     @Override
@@ -97,9 +98,9 @@ public class BackupFragment extends Fragment {
         textViewBoard=view.findViewById(R.id.tv_board);
         textViewSupported=view.findViewById(R.id.tv_supported);
 
-        textViewBrand.setText("Brand : "+Build.BRAND);
-        textViewModel.setText("Model : "+Build.MODEL);
-        textViewBoard.setText("Board "+Build.BOARD);
+        textViewBrand.setText(getString(R.string.brand)+colon+Build.BRAND);
+        textViewBoard.setText(getString(R.string.board)+colon+Build.BOARD);
+        textViewModel.setText(getString(R.string.model)+colon+Build.MODEL);
         textViewSupported.setText(getString(R.string.app_support)+" "+true);
 
         new Thread(new Runnable() {
