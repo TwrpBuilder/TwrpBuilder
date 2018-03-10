@@ -77,7 +77,7 @@
     <string name="no_builds_found">No builds found</string>
     <string name="no_builds_in_queue">No Builds in Queue</string>
     <string name="date">Date</string>
-    <string name="email">Email :</string>
+    <string name="email">Email</string>
     <string name="model">Model</string>
     <string name="board">Board</string>
     <string name="brand">Brand</string>

@@ -68,7 +68,7 @@
   <string name="restart_change">إعادة تشغيل التطبيق لتفعيل التغييرات</string>
   <string name="cancel">إلغاء</string>
   <string name="language">اللغة</string>
-  <string name="check_for_update">تحقق من التحديثات</string>
+  <string name="check_for_update">تحقق من التحديثات/string&gt;</string>
   <string name="disable_notification">تعطيل الإشعارات</string>
   <string name="official_website">الموقع الرسمي</string>
   <string name="xda_thread">الموضوع على موقع المطورين</string>
@@ -78,4 +78,12 @@
   <string name="no_builds_found">لم يتم العثور على عمليات بناء</string>
   <string name="no_builds_in_queue">لا توجد عمليات بناء في المنتظرة</string>
   <string name="app_support">مدعوم بواسطة التطبيق</string>
+  <string name="date">التاريخ</string>
+  <string name="email">البريد الالكتروني </string>
+  <string name="model">الموديل</string>
+  <string name="board">اللوحة</string>
+  <string name="brand">العلامة التجارية</string>
+  <string name="developer">المطور</string>
+  <string name="rejected_by">مرفوض بواسطة</string>
+  <string name="note">ملاحظة</string>
 </resources>

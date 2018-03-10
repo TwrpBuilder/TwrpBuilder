@@ -117,6 +117,7 @@ public class SettingsActivity extends AppCompatActivity {
                         }else if (strName.equals(langList[3]))
                         {
                             new setLocale(getBaseContext(),supportLangs[3]);
+                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[3]).commit();
                         }
                         Snackbar.make(linearLayout, R.string.restart_change,Snackbar.LENGTH_SHORT).show();
 
