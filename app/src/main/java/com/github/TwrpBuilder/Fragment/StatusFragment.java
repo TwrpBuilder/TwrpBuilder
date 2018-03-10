@@ -28,13 +28,13 @@ public class StatusFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_status,container,false);
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
+        ViewPager viewPager = view.findViewById(R.id.pager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new FragmentInQueue(), getString(R.string.queue));
-        adapter.addFragment(new FragmentBuildStarted(), getString(R.string.running));
+        adapter.addFragment(new FragmentStatusCommon("InQueue"), getString(R.string.queue));
+        adapter.addFragment(new FragmentStatusCommon("RunningBuild"), getString(R.string.running));
         viewPager.setAdapter(adapter);
 
-        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
+        TabLayout tabLayout = view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         return view;
     }

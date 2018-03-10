@@ -28,8 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.TwrpBuilder.Fragment.FragmentAbout;
-import com.github.TwrpBuilder.Fragment.FragmentBuildDone;
-import com.github.TwrpBuilder.Fragment.FragmentRejectedBuilds;
+import com.github.TwrpBuilder.Fragment.FragmentStatusCommon;
 import com.github.TwrpBuilder.app.SettingsActivity;
 import com.github.updater.Updater;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,8 +51,6 @@ public class MainActivity extends AppCompatActivity
     private CreditsFragment mFragmentCredits;
     private StatusFragment statusFragment;
     private MainFragment mainFragment;
-    private FragmentBuildDone mFragmentBuildDone;
-    private FragmentRejectedBuilds mFragmentRejectedBuilds;
 
     /*Firebase*/
     private FirebaseAuth mFirebaseAuth;
@@ -93,8 +90,6 @@ public class MainActivity extends AppCompatActivity
         mFragmentCredits=new CreditsFragment();
         statusFragment=new StatusFragment();
         mainFragment=new MainFragment();
-        mFragmentBuildDone=new FragmentBuildDone();
-        mFragmentRejectedBuilds=new FragmentRejectedBuilds();
         /*Replace Fragment*/
         updateFragment(this.mainFragment);
         setTitle("Home");
@@ -160,12 +155,12 @@ public class MainActivity extends AppCompatActivity
         }
         else if (id==R.id.nav_build_done)
         {
-            updateFragment(mFragmentBuildDone);
+            updateFragment(new FragmentStatusCommon("Builds",true));
             setTitle(R.string.completed);
         }
         else if (id==R.id.nav_reject)
         {
-            updateFragment(mFragmentRejectedBuilds);
+            updateFragment(new FragmentStatusCommon("Rejected",true));
             setTitle(R.string.rejected);
         }
         else if (id == R.id.action_log_out) {

@@ -16,6 +16,8 @@ public class Pbuild {
     private String Date;
     private String Url;
     private String DeveloperEmail;
+    private String Note;
+    private String Rejector;
 
     public Pbuild() {
     }
@@ -73,6 +75,15 @@ public class Pbuild {
         return DeveloperEmail;
     }
 
+    public String getNote() {
+        return Note;
+    }
+
+    public String getRejector() {
+        return Rejector;
+    }
+
+
     public void setEmail(String email) {
         Email = email;
     }
@@ -111,5 +122,13 @@ public class Pbuild {
 
     public void setDeveloperEmail(String developerEmail) {
         DeveloperEmail = developerEmail;
+    }
+
+    public void setNote(String note) {
+        Note = note;
+    }
+
+    public void setRejector(String rejector) {
+        Rejector = rejector;
     }
 }
