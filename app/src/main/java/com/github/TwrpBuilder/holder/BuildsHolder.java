@@ -47,37 +47,30 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
         setTvBoard(board);
         setTvEmail(email);
         setTvBrand(brand);
-        setTvDeveloper(developer);
-        setTvNote(note);
         setTvDate(date);
         setTvDevice(device);
         if (reference.equals("Builds"))
         {
             tvDeveloper.setVisibility(View.VISIBLE);
             btDownload.setVisibility(View.VISIBLE);
-            // tvDeveloper.setText(getString(R.string.developer) +colon+model.getDeveloperEmail());
             setBtDownload(url);
+            setTvDeveloper(developer);
+            setTvNote(note);
             if (filterQuery)
             {
                 if (RootTools.isAccessGiven() && isSupport)
                 {
                     btFlash.setVisibility(View.VISIBLE);
                 }
-
-                btFlash.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        context.startActivity(new Intent(context, FlasherActivity.class));
-                    }
-                });
+              setBtFlash();
 
             }
         }else if (reference.equals("Rejected"))
         {
             tvDeveloper.setVisibility(View.VISIBLE);
             tvNote.setVisibility(View.VISIBLE);
-             tvDeveloper.setText(context.getString(R.string.rejected_by)+colon +reject);
-
+            setReject(reject);
+            setTvNote(note);
         }
     }
 
@@ -96,8 +89,13 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void setBtFlash(Button btFlash) {
-        this.btFlash = btFlash;
+    public void setBtFlash() {
+        btFlash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new Intent(context, FlasherActivity.class));
+            }
+        });
     }
 
     public void setTvBrand(String brand) {
@@ -122,5 +120,8 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
 
     public void setTvNote(String note) {
         tvNote.setText(context.getString(R.string.note)+colon +note);
+    }
+    private void setReject(String reject){
+        tvDeveloper.setText(context.getString(R.string.rejected_by)+colon+reject);
     }
 }

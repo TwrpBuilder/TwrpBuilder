@@ -48,7 +48,7 @@ public class FragmentStatusCommon extends Fragment {
     private View view;
     private String filterQuery=null;
     private String equalTo;
-
+    private LinearLayoutManager layoutManager;
     public FragmentStatusCommon(){}
 
     public FragmentStatusCommon(String reference){
@@ -109,18 +109,26 @@ public class FragmentStatusCommon extends Fragment {
                         model.getNote(),
                         model.getUrl());
             }
+
+            @Override
+            public void onDataChanged() {
+                super.onDataChanged();
+                ProgressBar progressBar= view.findViewById(R.id.pb_builds);
+                TextView textView= view.findViewById(R.id.tv_no_build);
+                new FirebaseProgressBar().start(progressBar,textView,adapter,reference);
+            }
         };
         ProgressBar progressBar= view.findViewById(R.id.pb_builds);
         TextView textView= view.findViewById(R.id.tv_no_build);
         new FirebaseProgressBar().start(progressBar,textView,adapter,reference);
 
-        LinearLayoutManager llm = new LinearLayoutManager(getContext());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         if (bottom)
         {
-            llm.setStackFromEnd(true);
+            layoutManager.setStackFromEnd(true);
         }
-        lvBuilds.setLayoutManager(llm);
+        lvBuilds.setLayoutManager(layoutManager);
         lvBuilds.setAdapter(adapter);
 
         return view;

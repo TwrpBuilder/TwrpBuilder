@@ -45,6 +45,9 @@ public class FirebaseProgressBar {
                     }
                     textView.setVisibility(View.VISIBLE);
                 }
+                else {
+                    textView.setVisibility(View.GONE);
+                }
 
             }
 
