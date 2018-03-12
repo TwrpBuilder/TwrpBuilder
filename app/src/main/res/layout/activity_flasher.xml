@@ -11,14 +11,14 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:hint="Select recovery"
+        android:hint="@string/select_file"
         android:id="@+id/ed_select_recovery"
         android:layout_height="wrap_content" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_gravity="center"
-        android:text="flash"
+        android:text="@string/flash"
         android:id="@+id/bt_flash"
         android:layout_height="wrap_content" />
 

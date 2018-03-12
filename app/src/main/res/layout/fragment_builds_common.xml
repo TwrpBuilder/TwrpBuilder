@@ -14,7 +14,7 @@
         android:visibility="gone"
         android:layout_height="wrap_content"/>
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/lv_builds"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

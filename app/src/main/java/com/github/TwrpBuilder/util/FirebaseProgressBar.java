@@ -1,11 +1,13 @@
 package com.github.TwrpBuilder.util;
 
 import android.database.DataSetObserver;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.github.TwrpBuilder.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,7 +23,7 @@ public class FirebaseProgressBar {
     private DatabaseReference ref;
     private FirebaseDatabase mFirebaseInstance;
 
-   public void start(final ProgressBar progressBar, final TextView textView, FirebaseListAdapter adapter, final String refId){
+   public void start(final ProgressBar progressBar, final TextView textView, FirebaseRecyclerAdapter adapter, final String refId){
         mFirebaseInstance = FirebaseDatabase.getInstance();
         ref = mFirebaseInstance.getReference(refId);
 
@@ -52,16 +54,11 @@ public class FirebaseProgressBar {
 
             }
         });
-        adapter.registerDataSetObserver(new DataSetObserver() {
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
                 super.onChanged();
                 progressBar.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onInvalidated() {
-                super.onInvalidated();
             }
         });
 
