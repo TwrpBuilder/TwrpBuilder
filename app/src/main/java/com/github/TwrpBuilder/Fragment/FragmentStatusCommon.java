@@ -2,6 +2,7 @@ package com.github.TwrpBuilder.Fragment;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,10 +18,14 @@ import android.widget.TextView;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseListOptions;
 import com.github.TwrpBuilder.R;
+import com.github.TwrpBuilder.app.FlasherActivity;
 import com.github.TwrpBuilder.model.Pbuild;
 import com.github.TwrpBuilder.util.FirebaseProgressBar;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.stericson.RootTools.RootTools;
+
+import static com.github.TwrpBuilder.app.InitActivity.isSupport;
 
 /**
  * Created by androidlover5842 on 10.3.2018.
@@ -33,6 +38,12 @@ public class FragmentStatusCommon extends Fragment {
     private String reference;
     private boolean bottom;
     private String colon=" : ";
+    private FirebaseListOptions options;
+    private ListView lvBuilds;
+    private View view;
+    private String filterQuery=null;
+    private String equalTo;
+
     public FragmentStatusCommon(){}
 
     public FragmentStatusCommon(String reference){
@@ -43,18 +54,29 @@ public class FragmentStatusCommon extends Fragment {
         this.reference=reference;
         this.bottom=bottom;
     }
+    public FragmentStatusCommon(String reference,String filterQuery,String equalTo){
+        this.reference=reference;
+        this.filterQuery=filterQuery;
+        this.equalTo=equalTo;
+    }
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_builds_common,container,false);
+        view=inflater.inflate(R.layout.fragment_builds_common,container,false);
 
-        ListView lvBuilds= view.findViewById(R.id.lv_builds);
+        lvBuilds= view.findViewById(R.id.lv_builds);
+        if (filterQuery!=null)
+        {
+            query = FirebaseDatabase.getInstance().getReference().child(reference).orderByChild(filterQuery).equalTo(equalTo);
 
-        query = FirebaseDatabase.getInstance()
-                .getReference(reference);
+        }else {
+            query = FirebaseDatabase.getInstance()
+                    .getReference(reference);
+        }
         query.keepSynced(true);
-        FirebaseListOptions options = new FirebaseListOptions.Builder()
+        options = new FirebaseListOptions.Builder()
                 .setLayout(R.layout.list_build_common)
                 .setQuery(query,Pbuild.class)
                 .build();
@@ -70,6 +92,7 @@ public class FragmentStatusCommon extends Fragment {
                 TextView tvDeveloper=v.findViewById(R.id.list_developer_email);
                 TextView tvNote=v.findViewById(R.id.list_reject_note);
                 Button btDownload=v.findViewById(R.id.bt_download_recovery);
+                Button btFlash=v.findViewById(R.id.bt_flash);
 
                 tvDate.setText(getString(R.string.date)+colon+model.getDate());
                 tvEmail.setText(getString(R.string.email)+colon+model.getEmail());
@@ -89,6 +112,21 @@ public class FragmentStatusCommon extends Fragment {
                         }
                     });
 
+                    if (filterQuery!=null)
+                    {
+                        if (RootTools.isAccessGiven() && isSupport)
+                        {
+                            btFlash.setVisibility(View.VISIBLE);
+                        }
+
+                        btFlash.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                startActivity(new Intent(getContext(), FlasherActivity.class));
+                            }
+                        });
+
+                    }
                 }else if (reference.equals("Rejected"))
                 {
                     tvDeveloper.setVisibility(View.VISIBLE);

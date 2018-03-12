@@ -1,6 +1,7 @@
 package com.github.TwrpBuilder.Fragment;
 
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,7 +32,6 @@ import static com.github.TwrpBuilder.app.InitActivity.isSupport;
 
 public class MainFragment extends Fragment{
     private BackupFragment backupFragment;
-    private LBuildsForDeviceFragment lBuildsForDeviceFragment;
     private FragmentCustomBackup fragmentCustomBackup;
 
     @Nullable
@@ -41,7 +41,6 @@ public class MainFragment extends Fragment{
         ViewPager viewPager = view.findViewById(R.id.pager);
         backupFragment=new BackupFragment();
         fragmentCustomBackup=new FragmentCustomBackup();
-        lBuildsForDeviceFragment=new LBuildsForDeviceFragment();
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         if(RootTools.isAccessGiven()){
@@ -54,7 +53,7 @@ public class MainFragment extends Fragment{
         }else {
             adapter.addFragment(fragmentCustomBackup, getString(R.string.make_request));
         }
-        adapter.addFragment(lBuildsForDeviceFragment, getString(R.string.builds_for_this_device));
+        adapter.addFragment(new FragmentStatusCommon("Builds","model", Build.MODEL), getString(R.string.builds_for_this_device));
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = view.findViewById(R.id.tabs);
