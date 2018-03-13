@@ -44,6 +44,7 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
     private boolean filterQuery;
     private String reference;
     private String colon=" : ";
+    private String email;
 
     public BuildsHolder(View v, String reference, boolean filterQuery, final Context context) {
         super(v);
@@ -64,6 +65,7 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(String email,String device,String board,String date,String brand,String developer,String reject,String note,String url){
+        this.email=email;
         setTvBoard(board);
         setTvEmail(email);
         setTvBrand(brand);
@@ -154,7 +156,7 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
                                         DatabaseReference feedBack=firebaseDatabase.getReference("FeedBack");
                                         if (CBworks.isChecked())
                                         {
-                                            Message message=new Message(Build.MODEL,editTextFeedBack.getText().toString(),true);
+                                            Message message=new Message(Build.MODEL,editTextFeedBack.getText().toString(),email,true);
                                             Toast.makeText(context, context.getString(R.string.sending), Toast.LENGTH_SHORT).show();
                                             feedBack.push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
@@ -170,7 +172,7 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
                                             });
                                         }else if (CBNotWorks.isChecked())
                                         {
-                                            Message message=new Message(Build.MODEL,editTextFeedBack.getText().toString(),false);
+                                            Message message=new Message(Build.MODEL,editTextFeedBack.getText().toString(),email,false);
                                             feedBack.push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {

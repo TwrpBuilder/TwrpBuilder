@@ -8,6 +8,7 @@ public class Message {
 
     private String title;
     private String body;
+    private String email;
     private boolean works;
     public Message() {
     }
@@ -17,9 +18,10 @@ public class Message {
         this.body = body;
     }
 
-    public Message(String title,String body,boolean works) {
+    public Message(String title,String body,String email,boolean works) {
         this.title=title;
         this.body = body;
+        this.email=email;
         this.works=works;
     }
 
@@ -29,6 +31,10 @@ public class Message {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public  boolean getWorks()
@@ -42,6 +48,10 @@ public class Message {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setTitle(String title) {
