@@ -30,13 +30,14 @@ import eu.chainfire.libsuperuser.Shell;
  * Created by androidlover5842 on 10.2.2018.
  */
 
-public class FlasherActivity extends AppCompatActivity {
+public class FlasherActivity extends AppCompatActivity implements View.OnClickListener{
     private String Recoverypath;
     private EditText editText;
     private Button button;
     private ProgressBar flasherPB;
     private boolean flashing;
-
+    private FileListerDialog fileListerDialog;
+    private String Filepath;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +50,15 @@ public class FlasherActivity extends AppCompatActivity {
 
         editText=findViewById(R.id.ed_select_recovery);
         button=findViewById(R.id.bt_flash);
-        final FileListerDialog fileListerDialog = FileListerDialog.createFileListerDialog(this);
-
+        Filepath=null;
+        editText.setTextIsSelectable(true);
+        fileListerDialog = FileListerDialog.createFileListerDialog(this);
+        button.setOnClickListener(this);
         fileListerDialog.setOnFileSelectedListener(new OnFileSelectedListener() {
             @Override
             public void onFileSelected(File file, String path) {
                 editText.setText(file.getAbsolutePath());
+                Filepath=editText.getText().toString();
             }
         });
 
@@ -66,25 +70,27 @@ public class FlasherActivity extends AppCompatActivity {
             }
         });
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (editText.getText()==null || editText.getText().equals(""))
-                {
-                    Snackbar.make(getCurrentFocus(),"Please select recovery",Snackbar.LENGTH_SHORT).show();
-                }
-                else
-                {
-                new FlashAsync().execute(editText.getText().toString());
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id=view.getId();
+        if (id==button.getId())
+        {
+            if (Filepath==null)
+            {
+                Snackbar.make(getCurrentFocus(),"Please select recovery",Snackbar.LENGTH_SHORT).show();
+            }
+            else
+            {
+                new FlashAsync().execute(Filepath);
                 editText.setEnabled(false);
                 button.setEnabled(false);
                 flasherPB.setVisibility(View.VISIBLE);
                 Snackbar.make(getCurrentFocus(),"Flashing ...",Snackbar.LENGTH_INDEFINITE).show();
-                }
-
             }
-        });
 
+        }
     }
 
     public class FlashAsync extends AsyncTask<String,Void,String>{
