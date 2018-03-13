@@ -113,15 +113,10 @@ public class FragmentStatusCommon extends Fragment {
             @Override
             public void onDataChanged() {
                 super.onDataChanged();
-                ProgressBar progressBar= view.findViewById(R.id.pb_builds);
-                TextView textView= view.findViewById(R.id.tv_no_build);
-                new FirebaseProgressBar().start(progressBar,textView,adapter,reference);
+            ProgressBar();
             }
         };
-        ProgressBar progressBar= view.findViewById(R.id.pb_builds);
-        TextView textView= view.findViewById(R.id.tv_no_build);
-        new FirebaseProgressBar().start(progressBar,textView,adapter,reference);
-
+        ProgressBar();
         layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         if (bottom)
@@ -132,6 +127,17 @@ public class FragmentStatusCommon extends Fragment {
         lvBuilds.setAdapter(adapter);
 
         return view;
+
+    }
+
+    private void ProgressBar(){
+        ProgressBar progressBar= view.findViewById(R.id.pb_builds);
+        TextView textView= view.findViewById(R.id.tv_no_build);
+        if (filterQuery!=null){
+            new FirebaseProgressBar(progressBar,textView,adapter,reference,true,filterQuery,equalTo);
+        }else {
+            new FirebaseProgressBar(progressBar, textView, adapter, reference);
+        }
 
     }
 
