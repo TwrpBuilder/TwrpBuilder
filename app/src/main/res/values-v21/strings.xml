@@ -84,5 +84,7 @@
     <string name="developer">Developer</string>
     <string name="rejected_by">Rejected by</string>
     <string name="note">Note</string>
-    <string name="one_time_request">You can make request one time only from this device . If you\'re facing any issues then please contact via Xda.</string>>
+    <string name="one_time_request">You can make request one time only from this device . If you\'re facing any issues then please contact via Xda.</string>
+    <string name="namma_per_uh">FileLister</string>
+    <string name="create_folder_hint">Enter Folder Name Here</string>
 </resources>

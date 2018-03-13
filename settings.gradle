@@ -1,1 +1,1 @@
-include ':app', ':updater', ':FilesLister'
+include ':app', ':updater'
