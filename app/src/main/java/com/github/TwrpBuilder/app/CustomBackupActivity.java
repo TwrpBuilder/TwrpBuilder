@@ -27,10 +27,10 @@ import java.util.zip.GZIPOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import easyfilepickerdialog.kingfisher.com.library.model.DialogConfig;
-import easyfilepickerdialog.kingfisher.com.library.model.SupportFile;
-import easyfilepickerdialog.kingfisher.com.library.view.FilePickerDialogFragment;
 import eu.chainfire.libsuperuser.Shell;
+import yogesh.firzen.filelister.FileListerDialog;
+import yogesh.firzen.filelister.OnFileSelectedListener;
+
 import com.github.TwrpBuilder.R;
 import com.github.TwrpBuilder.util.Config;
 import com.github.TwrpBuilder.util.ShellExecuter;
@@ -45,8 +45,6 @@ public class CustomBackupActivity extends AppCompatActivity {
 
     private EditText editText;
     private Button button;
-    private DialogConfig dialogConfig;
-    private FilePickerDialogFragment.Builder  builder;
     private ProgressBar progressBar;
     public static boolean FromCB,resultOfB,running;
     private String Cache;
@@ -60,34 +58,21 @@ public class CustomBackupActivity extends AppCompatActivity {
         button=findViewById(R.id.bt_generate_backup);
         editText=findViewById(R.id.ed_select_recovery);
         progressBar=findViewById(R.id.pb_gen_backup);
-        dialogConfig = new DialogConfig.Builder()
-                .enableMultipleSelect(true) // default is false
-                .enableFolderSelect(true) // default is false
-                .initialDirectory(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator)
-                .supportFiles(new SupportFile(".img",0))
-                .enableFolderSelect(false)
-                .enableMultipleSelect(false)
-                .build();
+        final FileListerDialog fileListerDialog = FileListerDialog.createFileListerDialog(this);
 
-        builder=new FilePickerDialogFragment.Builder();
+        fileListerDialog.setOnFileSelectedListener(new OnFileSelectedListener() {
+            @Override
+            public void onFileSelected(File file, String path) {
+                editText.setText(file.toString());
+            }
+        });
+
 
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                        builder
-                        .configs(dialogConfig)
-                        .onFilesSelected(new FilePickerDialogFragment.OnFilesSelectedListener() {
-                            @Override
-                            public void onFileSelected(List<File> list) {
-                                for (File file : list) {
-                                    editText.setText(file.toString());
-                                }
-                            }
-                        })
-                        .build()
-                        .show(getSupportFragmentManager(), null);
-
+                fileListerDialog.show();
             }
         });
 
