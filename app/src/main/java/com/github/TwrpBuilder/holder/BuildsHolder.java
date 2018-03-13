@@ -1,15 +1,34 @@
 package com.github.TwrpBuilder.holder;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.TwrpBuilder.R;
 import com.github.TwrpBuilder.app.FlasherActivity;
+import com.github.TwrpBuilder.model.Message;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.stericson.RootTools.RootTools;
 
 import static com.github.TwrpBuilder.app.InitActivity.isSupport;
@@ -20,7 +39,7 @@ import static com.github.TwrpBuilder.app.InitActivity.isSupport;
 
 public class BuildsHolder extends RecyclerView.ViewHolder {
     private TextView tvEmail,tvDevice,tvBoard,tvDate,tvBrand,tvDeveloper,tvNote;
-    private Button btDownload,btFlash;
+    private Button btDownload,btFlash,btFeedBack;
     private Context context;
     private boolean filterQuery;
     private String reference;
@@ -40,6 +59,7 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
         tvNote=v.findViewById(R.id.list_reject_note);
         btDownload=v.findViewById(R.id.bt_download_recovery);
         btFlash=v.findViewById(R.id.bt_flash);
+        btFeedBack=v.findViewById(R.id.bt_feedback);
 
     }
 
@@ -62,7 +82,9 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
                 {
                     btFlash.setVisibility(View.VISIBLE);
                 }
+                btFeedBack.setVisibility(View.VISIBLE);
               setBtFlash();
+              setBtFeedBack();
 
             }
         }else if (reference.equals("Rejected"))
@@ -94,6 +116,89 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 context.startActivity(new Intent(context, FlasherActivity.class));
+            }
+        });
+    }
+
+    private void setBtFeedBack(){
+        btFeedBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                LayoutInflater li = LayoutInflater.from(context);
+                View promptsView = li.inflate(R.layout.dialog_feedback, null);
+                alertDialogBuilder.setView(promptsView);
+                final CheckBox CBworks=promptsView.findViewById(R.id.checkbox_works);
+                final CheckBox CBNotWorks=promptsView.findViewById(R.id.checkbox_not_works);
+                final EditText editTextFeedBack=promptsView.findViewById(R.id.editTextDialogUserInput);
+                CBworks.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        CBNotWorks.setChecked(false);
+                    }
+                });
+
+                CBNotWorks.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        CBworks.setChecked(false);
+                    }
+                });
+
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton(context.getString(R.string.send),
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                                        DatabaseReference feedBack=firebaseDatabase.getReference("FeedBack");
+                                        if (CBworks.isChecked())
+                                        {
+                                            Message message=new Message(Build.MODEL,editTextFeedBack.getText().toString(),true);
+                                            Toast.makeText(context, context.getString(R.string.sending), Toast.LENGTH_SHORT).show();
+                                            feedBack.push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(context, context.getString(R.string.Feedback_sent), Toast.LENGTH_SHORT).show();
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(context, context.getString(R.string.feedback_failed), Toast.LENGTH_SHORT).show();
+
+                                                }
+                                            });
+                                        }else if (CBNotWorks.isChecked())
+                                        {
+                                            Message message=new Message(Build.MODEL,editTextFeedBack.getText().toString(),false);
+                                            feedBack.push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(context, context.getString(R.string.Feedback_sent), Toast.LENGTH_SHORT).show();
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(context, context.getString(R.string.feedback_failed), Toast.LENGTH_SHORT).show();
+
+                                                }
+                                            });
+
+                                        }else
+                                        {
+                                                Toast.makeText(context, context.getString(R.string.works_or_not), Toast.LENGTH_SHORT).show();
+                                        }
+
+                                    }
+                                })
+                        .setNegativeButton(context.getString(R.string.cancel),
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
         });
     }

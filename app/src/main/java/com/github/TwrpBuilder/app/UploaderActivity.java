@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.TwrpBuilder.model.Message;
+import com.github.TwrpBuilder.model.Pbuild;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,7 +36,6 @@ import static com.github.TwrpBuilder.util.Config.Sdcard;
 import com.github.TwrpBuilder.R;
 import com.github.TwrpBuilder.util.Config;
 import com.github.TwrpBuilder.util.DateUtils;
-import com.github.TwrpBuilder.model.User;
 
 /**
  * Created by androidlover5842 on 23/1/18.
@@ -88,7 +88,7 @@ public class UploaderActivity extends AppCompatActivity {
                 mBuilder.setOngoing(false);
                 mNotifyManager.notify(1, mBuilder.build());
                 userId = mUploader.push().getKey();
-                User user = new User(Build.BRAND, Build.BOARD, Build.MODEL,Build.PRODUCT, Email, Uid, refreshedToken, DateUtils.getDate());
+                Pbuild user = new Pbuild(Build.BRAND, Build.BOARD, Build.MODEL,Build.PRODUCT, Email, Uid, refreshedToken, DateUtils.getDate());
                 Message message=new Message("TwrpBuilder","New build in queue for "+Build.BRAND);
                 mUploader.child(userId).setValue(user);
                 mBuildAdded.push().setValue(message);
@@ -112,7 +112,7 @@ public class UploaderActivity extends AppCompatActivity {
                 final double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
                 ShowOutput.setText(String.valueOf(progress + "%"));
                 mBuilder =
-                        new NotificationCompat.Builder(UploaderActivity.this)
+                        new NotificationCompat.Builder(UploaderActivity.this,"2")
                                 .setSmallIcon(R.mipmap.ic_launcher)
                                 .setContentTitle(getString(R.string.uploading))
                                 .setAutoCancel(false)

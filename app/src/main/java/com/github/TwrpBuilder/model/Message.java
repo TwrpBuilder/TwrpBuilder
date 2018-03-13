@@ -8,7 +8,7 @@ public class Message {
 
     private String title;
     private String body;
-
+    private boolean works;
     public Message() {
     }
 
@@ -17,12 +17,27 @@ public class Message {
         this.body = body;
     }
 
+    public Message(String title,String body,boolean works) {
+        this.title=title;
+        this.body = body;
+        this.works=works;
+    }
+
     public String getBody() {
         return body;
     }
 
     public String getTitle() {
         return title;
+    }
+
+    public  boolean getWorks()
+    {
+        return works;
+    }
+
+    public void setWorks(boolean works) {
+        this.works = works;
     }
 
     public void setBody(String body) {

@@ -89,4 +89,14 @@
     <string name="one_time_request">You can make request one time only from this device . If you\'re facing any issues then please contact via Xda.</string>
     <string name="namma_per_uh">FileLister</string>
     <string name="create_folder_hint">Enter Folder Name Here</string>
+    <string name="works_or_not">Please check bok works or not works.</string>
+    <string name="tell_us_more_optional">Tell us more (optional)</string>
+    <string name="not_works">not works</string>
+    <string name="works">works</string>
+    <string name="Feedback">Feedback :</string>
+    <string name="feedback">feedback</string>
+    <string name="send">Send</string>
+    <string name="sending">Sending ...</string>
+    <string name="Feedback_sent">Feedback sent</string>
+    <string name="feedback_failed">Failed to send feedback</string>
 </resources>

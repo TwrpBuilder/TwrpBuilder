@@ -59,7 +59,7 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
                 PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this,"1")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("TwrpBuilder")
                 .setContentText(messageBody)

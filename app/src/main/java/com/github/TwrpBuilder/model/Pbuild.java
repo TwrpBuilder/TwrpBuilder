@@ -35,6 +35,17 @@ public class Pbuild {
         this.DeveloperEmail=DeveloperEmail;
     }
 
+    public Pbuild(String Brand, String Board, String Model,String CodeName,String Email,String Uid,String FmcToken,String Date) {
+        this.Brand = Brand;
+        this.Board = Board;
+        this.Model = Model;
+        this.Email = Email;
+        this.Uid = Uid;
+        this.FmcToken = FmcToken;
+        this.Date= Date;
+        this.CodeName=CodeName;
+    }
+
     public String getEmail() {
         return Email;
     }
