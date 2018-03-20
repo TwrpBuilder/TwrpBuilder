@@ -8,7 +8,6 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -21,15 +20,14 @@ import android.widget.Toast;
 import com.github.TwrpBuilder.R;
 import com.github.TwrpBuilder.app.FlasherActivity;
 import com.github.TwrpBuilder.model.Message;
+import com.github.TwrpBuilder.util.GMail;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.scottyab.aescrypt.AESCrypt;
 import com.stericson.RootTools.RootTools;
+
 
 import static com.github.TwrpBuilder.app.InitActivity.isSupport;
 
@@ -45,6 +43,11 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
     private String reference;
     private String colon=" : ";
     private String email;
+    private String developer;
+    private String brand;
+    private String device;
+    private String board;
+    private String date;
 
     public BuildsHolder(View v, String reference, boolean filterQuery, final Context context) {
         super(v);
@@ -66,6 +69,11 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
 
     public void bind(String email,String device,String board,String date,String brand,String developer,String reject,String note,String url){
         this.email=email;
+        this.developer=developer;
+        this.brand=brand;
+        this.device=device;
+        this.board=board;
+        this.date=date;
         setTvBoard(board);
         setTvEmail(email);
         setTvBrand(brand);
@@ -122,10 +130,20 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
         });
     }
 
+    private String content;
     private void setBtFeedBack(){
         btFeedBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                content="Your build made for \nbrand :- "
+                        +brand
+                        +"\nboard :- "
+                        +board
+                        +"\ndevice :- "
+                        +device
+                        +"\non date:-"
+                        +date;
+
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                 LayoutInflater li = LayoutInflater.from(context);
                 View promptsView = li.inflate(R.layout.dialog_feedback, null);
@@ -170,6 +188,7 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
 
                                                 }
                                             });
+                                            content+="\nhas successfully booted! . please push your source on twrpbuilder common github.";
                                         }else if (CBNotWorks.isChecked())
                                         {
                                             Message message=new Message(Build.MODEL,editTextFeedBack.getText().toString(),email,false);
@@ -185,12 +204,24 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
 
                                                 }
                                             });
-
+                                            content+="\nhas failed to boot :(.";
                                         }else
                                         {
                                                 Toast.makeText(context, context.getString(R.string.works_or_not), Toast.LENGTH_SHORT).show();
                                         }
-
+                                        try {
+                                            content+="\nrequester email :- "
+                                                    +email;
+                                            if (!editTextFeedBack.getText().toString().isEmpty()) {
+                                                content += "\nNotes by user :- " + editTextFeedBack.getText();
+                                            }
+                                            GMail sender = new GMail(AESCrypt.decrypt("R.menu.settings","oeI35mT0MnrmYd8J42FNEAIdF098+WdHpAld0e1SIIY="), AESCrypt.decrypt("R.menu.activity_option","5sQmagUbQrp1UjDpZiAIhFQBjPOzqw8pKsqVbd/PSoY="));
+                                            sender.sendMail("TwrpBuilder "+device, content,
+                                                    "twrpbuilder21@gmail.com",
+                                                    developer);
+                                        } catch (Exception e) {
+                                            System.out.println(e.getMessage());
+                                        }
                                     }
                                 })
                         .setNegativeButton(context.getString(R.string.cancel),

@@ -41,6 +41,9 @@ import com.github.TwrpBuilder.Fragment.StatusFragment;
 import com.github.TwrpBuilder.app.LoginActivity;
 import com.github.TwrpBuilder.util.Config;
 import com.github.TwrpBuilder.util.FirebaseDBInstance;
+import com.scottyab.aescrypt.AESCrypt;
+
+import java.security.GeneralSecurityException;
 
 import static com.github.TwrpBuilder.R.menu.*;
 
@@ -107,6 +110,7 @@ public class MainActivity extends AppCompatActivity
         requestPermission();
         isOnline();
         new Updater(MainActivity.this,Config.Version,Config.APP_UPDATE_URL,false);
+
     }
 
     @Override
