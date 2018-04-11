@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity
         mainFragment=new MainFragment();
         /*Replace Fragment*/
         updateFragment(this.mainFragment);
-        setTitle("Home");
+        setTitle(R.string.home);
 
         /*Text View*/
         mUserEmail= navHeaderView.findViewById(R.id.user_email);

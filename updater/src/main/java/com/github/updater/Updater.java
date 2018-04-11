@@ -60,7 +60,7 @@ public class Updater {
                 }else {
                     if (Settings)
                     {
-                        Toast.makeText(context,"No updates were found",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,R.string.No_updates_where_found,Toast.LENGTH_SHORT).show();
                     }
                 }
             }

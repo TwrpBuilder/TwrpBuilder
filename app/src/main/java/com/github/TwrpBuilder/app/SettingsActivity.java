@@ -46,13 +46,15 @@ public class SettingsActivity extends AppCompatActivity {
             "en",
             "ar",
             "tr",
-            "ro"
+            "ro",
+            "es"
     };
     private String[] langList=new String[]{
             "English",
             "Arabic",
             "Turkish",
-            "Romanian"
+            "Romanian",
+            "Spanish"
     };
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -118,6 +120,10 @@ public class SettingsActivity extends AppCompatActivity {
                         {
                             new setLocale(getBaseContext(),supportLangs[3]);
                             PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[3]).commit();
+                        }else if (strName.equals(langList[4]))
+                        {
+                            new setLocale(getBaseContext(),supportLangs[4]);
+                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[4]).commit();
                         }
                         Snackbar.make(linearLayout, R.string.restart_change,Snackbar.LENGTH_SHORT).show();
 
