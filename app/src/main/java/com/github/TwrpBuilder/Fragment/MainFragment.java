@@ -25,6 +25,7 @@ import com.stericson.RootTools.RootTools;
 import eu.chainfire.libsuperuser.Shell;
 
 import static com.github.TwrpBuilder.app.InitActivity.isSupport;
+import static com.github.TwrpBuilder.util.Config.getBuildModel;
 
 /**
  * Created by androidlover5842 on 20/1/18.
@@ -53,7 +54,7 @@ public class MainFragment extends Fragment{
         }else {
             adapter.addFragment(fragmentCustomBackup, getString(R.string.make_request));
         }
-        adapter.addFragment(new FragmentStatusCommon("Builds","model", Build.MODEL), getString(R.string.builds_for_this_device));
+        adapter.addFragment(new FragmentStatusCommon("Builds","model", getBuildModel()), getString(R.string.builds_for_this_device));
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = view.findViewById(R.id.tabs);

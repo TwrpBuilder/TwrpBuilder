@@ -32,6 +32,8 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.github.TwrpBuilder.Fragment.BackupFragment;
 import com.github.TwrpBuilder.R;
 
+import static com.github.TwrpBuilder.util.Config.getBuildModel;
+
 public class FirebaseNotificationService extends FirebaseMessagingService {
 
     @Override
@@ -39,13 +41,7 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
 
 
         if (remoteMessage.getNotification() != null) {
-            if (remoteMessage.getNotification().getBody().contains(Build.MODEL)) {
-                sendNotification(remoteMessage.getNotification().getBody());
-            }else if (remoteMessage.getNotification().getBody().contains("New build in queue for"))
-            {
-                sendNotification(remoteMessage.getNotification().getBody());
-            }else if (remoteMessage.getNotification().getBody().contains("email"))
-            {
+            if (remoteMessage.getNotification().getBody().contains(getBuildModel())) {
                 sendNotification(remoteMessage.getNotification().getBody());
             }
         }

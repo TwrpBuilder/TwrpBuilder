@@ -40,6 +40,9 @@ import static com.github.TwrpBuilder.app.CustomBackupActivity.FromCB;
 import static com.github.TwrpBuilder.app.CustomBackupActivity.resultOfB;
 import static com.github.TwrpBuilder.app.UploaderActivity.fromI;
 import static com.github.TwrpBuilder.app.UploaderActivity.result;
+import static com.github.TwrpBuilder.util.Config.getBuildBoard;
+import static com.github.TwrpBuilder.util.Config.getBuildBrand;
+import static com.github.TwrpBuilder.util.Config.getBuildModel;
 
 /**
  * Created by androidlover5842 on 31.1.2018.
@@ -78,7 +81,7 @@ public class FragmentCustomBackup extends Fragment {
         mUploadBackup = view.findViewById(R.id.UploadBackup);
         mBuildDescription= view.findViewById(R.id.build_description);
         mProgressBar=view.findViewById(R.id.progress_bar);
-        riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/"+ Config.TwrpBackFName);
+        riversRef = storageRef.child("queue/" + getBuildBrand() + "/" + getBuildBoard() + "/" + getBuildModel() + "/"+ Config.TwrpBackFName);
         uploaderActivity=new UploaderActivity();
         intent=new Intent(getActivity(), uploaderActivity.getClass());
         mProgressBar.setVisibility(View.VISIBLE);
@@ -88,7 +91,7 @@ public class FragmentCustomBackup extends Fragment {
         textViewSupported=view.findViewById(R.id.tv_supported);
         fragment_backup_child_linear= view.findViewById(R.id.fragment_backup_child_linear);
 
-        textViewBrand.setText(getString(R.string.brand)+colon+Config.getBuildBrand());
+        textViewBrand.setText(getString(R.string.brand)+colon+ getBuildBrand());
         textViewBoard.setText(getString(R.string.board)+colon+Config.getBuildBoard());
         textViewModel.setText(getString(R.string.model)+colon+Config.getBuildModel());
         textViewSupported.setText("Running in non-root mode "+" "+true);

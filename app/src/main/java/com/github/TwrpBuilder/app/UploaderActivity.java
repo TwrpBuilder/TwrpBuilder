@@ -30,8 +30,12 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 
+import static com.github.TwrpBuilder.MainActivity.Cache;
 import static com.github.TwrpBuilder.firebase.FirebaseInstanceIDService.refreshedToken;
-import static com.github.TwrpBuilder.util.Config.Sdcard;
+import static com.github.TwrpBuilder.util.Config.getBuildBoard;
+import static com.github.TwrpBuilder.util.Config.getBuildBrand;
+import static com.github.TwrpBuilder.util.Config.getBuildModel;
+import static com.github.TwrpBuilder.util.Config.getBuildProduct;
 
 import com.github.TwrpBuilder.R;
 import com.github.TwrpBuilder.util.Config;
@@ -75,8 +79,8 @@ public class UploaderActivity extends AppCompatActivity {
         mFirebaseAuth=FirebaseAuth.getInstance();
         Email=mFirebaseAuth.getCurrentUser().getEmail();
         Uid=mFirebaseAuth.getCurrentUser().getUid();
-        file = Uri.fromFile(new File(Sdcard+"TwrpBuilder/"+ Config.TwrpBackFName));
-        riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/" + file.getLastPathSegment());
+        file = Uri.fromFile(new File(Cache+ Config.TwrpBackFName));
+        riversRef = storageRef.child("queue/" + getBuildBrand() + "/" + getBuildBoard() + "/" + getBuildModel() + "/" + file.getLastPathSegment());
 
         mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         fromI=true;
@@ -88,8 +92,8 @@ public class UploaderActivity extends AppCompatActivity {
                 mBuilder.setOngoing(false);
                 mNotifyManager.notify(1, mBuilder.build());
                 userId = mUploader.push().getKey();
-                Pbuild user = new Pbuild(Build.BRAND, Build.BOARD, Build.MODEL,Build.PRODUCT, Email, Uid, refreshedToken, DateUtils.getDate());
-                Message message=new Message("TwrpBuilder","New build in queue for "+Build.BRAND);
+                Pbuild user = new Pbuild(getBuildBrand(), getBuildBoard(), getBuildModel(),getBuildProduct(), Email, Uid, refreshedToken, DateUtils.getDate());
+                Message message=new Message("TwrpBuilder","New build in queue for "+getBuildBrand());
                 mUploader.child(userId).setValue(user);
                 mBuildAdded.push().setValue(message);
                 result=true;

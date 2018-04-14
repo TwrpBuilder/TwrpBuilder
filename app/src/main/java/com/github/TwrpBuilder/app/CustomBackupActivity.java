@@ -31,8 +31,11 @@ import com.github.TwrpBuilder.R;
 import com.github.TwrpBuilder.filelister.FileListerDialog;
 import com.github.TwrpBuilder.filelister.OnFileSelectedListener;
 import com.github.TwrpBuilder.util.Config;
+import com.github.TwrpBuilder.util.FWriter;
 import com.github.TwrpBuilder.util.ShellExecuter;
-import static com.github.TwrpBuilder.util.Config.Sdcard;
+
+import static com.github.TwrpBuilder.MainActivity.Cache;
+import static com.github.TwrpBuilder.util.Config.buildProp;
 
 /**
  * Created by androidlover5842 on 24/1/18.
@@ -44,14 +47,12 @@ public class CustomBackupActivity extends AppCompatActivity {
     private Button button;
     private ProgressBar progressBar;
     public static boolean FromCB,resultOfB,running;
-    private String Cache;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_backup);
         Toolbar toolbar=findViewById(R.id.action_bar_tool);
         toolbar.setTitle(R.string.backup_recovery);
-        Cache=getCacheDir()+File.separator;
         button=findViewById(R.id.bt_generate_backup);
         editText=findViewById(R.id.ed_select_recovery);
         progressBar=findViewById(R.id.pb_gen_backup);
@@ -126,11 +127,12 @@ public class CustomBackupActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             ShellExecuter.mkdir("TwrpBuilder");
             try {
-                Shell.SH.run("getprop > "+Cache+"build.prop");
+                new FWriter(Cache+"build.prop",buildProp());
+
                 ShellExecuter.cp(editText.getText().toString(),Cache+"recovery.img");
                 String[] file=new String[]{Cache+"build.prop",Cache+"recovery.img"};
                 zip(file,Cache+"TwrpBuilderRecoveryBackup.zip");
-                ShellExecuter.cp(Cache+"TwrpBuilderRecoveryBackup.zip",Sdcard+"TwrpBuilder/"+ Config.TwrpBackFName);
+                ShellExecuter.cp(Cache+"TwrpBuilderRecoveryBackup.zip",Cache+ Config.TwrpBackFName);
             } catch (IOException e) {
                 e.printStackTrace();
             }

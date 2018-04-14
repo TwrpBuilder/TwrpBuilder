@@ -30,6 +30,7 @@ import com.stericson.RootTools.RootTools;
 
 
 import static com.github.TwrpBuilder.app.InitActivity.isSupport;
+import static com.github.TwrpBuilder.util.Config.getBuildModel;
 
 /**
  * Created by androidlover5842 on 12.3.2018.
@@ -174,7 +175,7 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
                                         DatabaseReference feedBack=firebaseDatabase.getReference("FeedBack");
                                         if (CBworks.isChecked())
                                         {
-                                            Message message=new Message(Build.MODEL,editTextFeedBack.getText().toString(),email,true);
+                                            Message message=new Message(getBuildModel(),editTextFeedBack.getText().toString(),email,true);
                                             Toast.makeText(context, context.getString(R.string.sending), Toast.LENGTH_SHORT).show();
                                             feedBack.push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
@@ -191,7 +192,7 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
                                             content+="\nhas successfully booted! . please push your source on twrpbuilder common github.";
                                         }else if (CBNotWorks.isChecked())
                                         {
-                                            Message message=new Message(Build.MODEL,editTextFeedBack.getText().toString(),email,false);
+                                            Message message=new Message(getBuildModel(),editTextFeedBack.getText().toString(),email,false);
                                             feedBack.push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {

@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.TwrpBuilder.util.FWriter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -34,16 +35,18 @@ import java.util.zip.GZIPOutputStream;
 
 import eu.chainfire.libsuperuser.Shell;
 import com.github.TwrpBuilder.R;
-import com.github.TwrpBuilder.app.CustomBackupActivity;
 import com.github.TwrpBuilder.app.UploaderActivity;
 import com.github.TwrpBuilder.util.Config;
 import com.github.TwrpBuilder.util.ShellExecuter;
 
+import static com.github.TwrpBuilder.MainActivity.Cache;
 import static com.github.TwrpBuilder.app.InitActivity.isOldMtk;
 import static com.github.TwrpBuilder.app.UploaderActivity.fromI;
 import static com.github.TwrpBuilder.app.UploaderActivity.result;
-import static com.github.TwrpBuilder.util.Config.Sdcard;
+import static com.github.TwrpBuilder.util.Config.buildProp;
 import static com.github.TwrpBuilder.util.Config.getBuildBoard;
+import static com.github.TwrpBuilder.util.Config.getBuildBrand;
+import static com.github.TwrpBuilder.util.Config.getBuildModel;
 
 
 /**
@@ -88,7 +91,7 @@ public class BackupFragment extends Fragment {
         mBuildDescription= view.findViewById(R.id.build_description);
         mProgressBar=view.findViewById(R.id.progress_bar);
         fragment_backup_child_linear = view.findViewById(R.id.fragment_backup_child_linear);
-        riversRef = storageRef.child("queue/" + Build.BRAND + "/" + Build.BOARD + "/" + Build.MODEL + "/"+Config.TwrpBackFName);
+        riversRef = storageRef.child("queue/" + getBuildBrand() + "/" + getBuildBoard() + "/" + getBuildModel() + "/"+ Config.TwrpBackFName);
         uploaderActivity=new UploaderActivity();
         intent=new Intent(getActivity(), uploaderActivity.getClass());
         mProgressBar.setVisibility(View.VISIBLE);
@@ -189,20 +192,16 @@ public class BackupFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
             ShellExecuter.mkdir("TwrpBuilder");
-            try {
-                ShellExecuter.cp("/system/build.prop",Sdcard+"TwrpBuilder/build.prop");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            new FWriter(Cache+"build.prop",buildProp());
             if (isOldMtk==true)
             {
-                Shell.SU.run("dd if=" + recoveryPath +" bs=20000000 count=1 of=" + Sdcard + "TwrpBuilder/recovery.img ; cat /proc/dumchar > " + Sdcard + "TwrpBuilder/mounts ; cd " + Sdcard + "TwrpBuilder && tar -c recovery.img build.prop mounts > " + Sdcard + "TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
+                Shell.SU.run("dd if=" + recoveryPath +" bs=20000000 count=1 of=" + Cache+"recovery.img ; cat /proc/dumchar > " + Cache+"/mounts ; cd " + Cache+" && tar -c recovery.img build.prop mounts > " + Cache + "TwrpBuilderRecoveryBackup.tar ");
             }
             else
             {
-                Shell.SU.run("dd if=" + recoveryPath + " of=" + Sdcard + "TwrpBuilder/recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` > " + Sdcard + "TwrpBuilder/mounts ; cd " + Sdcard + "TwrpBuilder && tar -c recovery.img build.prop mounts > " + Sdcard + "TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
+                Shell.SU.run("dd if=" + recoveryPath + " of=" + Cache+"recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` > " + Cache+"/mounts ; cd " + Cache+" && tar -c recovery.img build.prop mounts > " + Cache+"/TwrpBuilderRecoveryBackup.tar ");
             }
-            compressGzipFile(Sdcard+"/TwrpBuilder/TwrpBuilderRecoveryBackup.tar",Sdcard+"TwrpBuilder/"+Config.TwrpBackFName);
+            compressGzipFile(Cache+"/TwrpBuilderRecoveryBackup.tar",Cache+Config.TwrpBackFName);
             return null;
         }
 
@@ -238,7 +237,6 @@ public class BackupFragment extends Fragment {
         }
 
     }
-
 
 }
 

@@ -43,6 +43,7 @@ import com.github.TwrpBuilder.util.Config;
 import com.github.TwrpBuilder.util.FirebaseDBInstance;
 import com.scottyab.aescrypt.AESCrypt;
 
+import java.io.File;
 import java.security.GeneralSecurityException;
 
 import static com.github.TwrpBuilder.R.menu.*;
@@ -66,12 +67,15 @@ public class MainActivity extends AppCompatActivity
     TextView mUserEmail;
 
     private boolean enabled;
+    public static String Cache;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Cache=getCacheDir()+ File.separator;
         mFirebaseAuth=FirebaseAuth.getInstance();
         FirebaseDBInstance.getDatabase();
 
