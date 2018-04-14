@@ -93,7 +93,7 @@ public class UploaderActivity extends AppCompatActivity {
                 mNotifyManager.notify(1, mBuilder.build());
                 userId = mUploader.push().getKey();
                 Pbuild user = new Pbuild(getBuildBrand(), getBuildBoard(), getBuildModel(),getBuildProduct(), Email, Uid, refreshedToken, DateUtils.getDate());
-                Message message=new Message("TwrpBuilder","New build in queue for "+getBuildBrand());
+                Message message=new Message("TwrpBuilder","New build in queue for "+getBuildModel()+" "+getBuildBrand());
                 mUploader.child(userId).setValue(user);
                 mBuildAdded.push().setValue(message);
                 result=true;
