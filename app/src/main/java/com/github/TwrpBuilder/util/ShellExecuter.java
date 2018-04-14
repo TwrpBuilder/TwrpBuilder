@@ -11,6 +11,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import eu.chainfire.libsuperuser.Shell;
+
 import static com.github.TwrpBuilder.util.Config.Sdcard;
 
 /**
@@ -20,37 +22,11 @@ import static com.github.TwrpBuilder.util.Config.Sdcard;
 public class ShellExecuter {
     public static String TAG="ShellExecuter";
 
-    public static final  String runAsRoot(String command)
-    {
 
-        try {
-            // Executes the command.
-            Process process = Runtime.getRuntime().exec(command);
-            // Reads stdout.
-            // NOTE: You can write to stdin of the command using
-            //       process.getOutputStream().
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()));
-            int read;
-            char[] buffer = new char[4096];
-            StringBuffer output = new StringBuffer();
-            while ((read = reader.read(buffer)) > 0) {
-                output.append(buffer, 0, read);
-            }
-            reader.close();
-
-            // Waits for the command to finish.
-            process.waitFor();
-
-            return output.toString();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e)
-
-        {
-            throw new RuntimeException(e);
-        }
+    public static String command(String command){
+        return Shell.SH.run(command).toString().replace("[","").replace("]","");
     }
+
     public static void rm(Context context,String name){
         /*
         * Usage

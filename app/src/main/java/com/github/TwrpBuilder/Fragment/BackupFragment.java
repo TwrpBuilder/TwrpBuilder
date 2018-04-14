@@ -43,6 +43,7 @@ import static com.github.TwrpBuilder.app.InitActivity.isOldMtk;
 import static com.github.TwrpBuilder.app.UploaderActivity.fromI;
 import static com.github.TwrpBuilder.app.UploaderActivity.result;
 import static com.github.TwrpBuilder.util.Config.Sdcard;
+import static com.github.TwrpBuilder.util.Config.getBuildBoard;
 
 
 /**
@@ -98,10 +99,10 @@ public class BackupFragment extends Fragment {
         textViewBoard=view.findViewById(R.id.tv_board);
         textViewSupported=view.findViewById(R.id.tv_supported);
 
-        textViewBrand.setText(getString(R.string.brand)+colon+Build.BRAND);
-        textViewBoard.setText(getString(R.string.board)+colon+Build.BOARD);
-        textViewModel.setText(getString(R.string.model)+colon+Build.MODEL);
-        textViewSupported.setText(getString(R.string.app_support)+" "+true);
+        textViewBrand.setText(getString(R.string.brand)+colon+Config.getBuildBrand());
+        textViewBoard.setText(getString(R.string.board)+colon+Config.getBuildBoard());
+        textViewModel.setText(getString(R.string.model)+colon+Config.getBuildModel());
+        textViewSupported.setText("Running in non-root mode "+" "+false);
 
         new Thread(new Runnable() {
             @Override

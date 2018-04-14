@@ -88,10 +88,10 @@ public class FragmentCustomBackup extends Fragment {
         textViewSupported=view.findViewById(R.id.tv_supported);
         fragment_backup_child_linear= view.findViewById(R.id.fragment_backup_child_linear);
 
-        textViewBrand.setText(getString(R.string.brand)+colon+Build.BRAND);
-        textViewBoard.setText(getString(R.string.board)+colon+Build.BOARD);
-        textViewModel.setText(getString(R.string.model)+colon+Build.MODEL);
-        textViewSupported.setText(getString(R.string.app_support)+" "+false);
+        textViewBrand.setText(getString(R.string.brand)+colon+Config.getBuildBrand());
+        textViewBoard.setText(getString(R.string.board)+colon+Config.getBuildBoard());
+        textViewModel.setText(getString(R.string.model)+colon+Config.getBuildModel());
+        textViewSupported.setText("Running in non-root mode "+" "+true);
 
         new Thread(new Runnable() {
             @Override
