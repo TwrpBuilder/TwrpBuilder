@@ -191,15 +191,29 @@ public class BackupFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... params) {
-            ShellExecuter.mkdir("TwrpBuilder");
             new FWriter(Cache+"build.prop",buildProp());
             if (isOldMtk==true)
             {
-                Shell.SU.run("dd if=" + recoveryPath +" bs=20000000 count=1 of=" + Cache+"recovery.img ; cat /proc/dumchar > " + Cache+"/mounts ; cd " + Cache+" && tar -c recovery.img build.prop mounts > " + Cache + "TwrpBuilderRecoveryBackup.tar ");
+                Shell.SU.run(
+                        "dd if="
+                                + recoveryPath
+                                +" bs=20000000 count=1 of="
+                                + Cache+"recovery.img ; cat /proc/dumchar > "
+                                + Cache+"/mounts ; cd "
+                                + Cache+" && tar -c recovery.img build.prop mounts > "
+                                + Cache
+                                + "TwrpBuilderRecoveryBackup.tar ");
             }
             else
             {
-                Shell.SU.run("dd if=" + recoveryPath + " of=" + Cache+"recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` > " + Cache+"/mounts ; cd " + Cache+" && tar -c recovery.img build.prop mounts > " + Cache+"/TwrpBuilderRecoveryBackup.tar ");
+                Shell.SU.run(
+                        "dd if=" + recoveryPath + " of=" + Cache+"recovery.img ; " +
+                                "ls -la `find /dev/block/platform/ -type d -name \"by-name\"` > " + Cache+"/mounts "
+                                + "; echo ##Mount paths >> "+ Cache+"/mounts"
+                                +"; find /dev/block/ -type d -name \"by-name\"  >> "+ Cache+"/mounts "
+                                + "; cd " + Cache
+                                +" && tar -c recovery.img build.prop mounts > " + Cache+"/TwrpBuilderRecoveryBackup.tar "
+                );
             }
             compressGzipFile(Cache+"/TwrpBuilderRecoveryBackup.tar",Cache+Config.TwrpBackFName);
             return null;

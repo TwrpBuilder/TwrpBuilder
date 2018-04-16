@@ -17,7 +17,7 @@ public class Config
    public final static String URL_CONTRIBUTORS = "https://api.github.com/repos/TwrpBuilder/TwrpBuilder/contributors";
    public final static String TwrpBackFName ="TwrpBuilderRecoveryBackup.tar.gz";
    public final static String Sdcard= Environment.getExternalStorageDirectory().getPath()+File.separator;
-   public static boolean checkBackup(){return new File(Cache+TwrpBackFName).isFile();}
+   public static boolean checkBackup(){return new File(Cache+TwrpBackFName).exists();}
    public static String APP_UPDATE_URL="https://raw.githubusercontent.com/TwrpBuilder/TwrpBuilder/master/app/version.json";
    public static int Version =3;
    public static String OfficialWebsite="https://twrpbuilder.github.io/";

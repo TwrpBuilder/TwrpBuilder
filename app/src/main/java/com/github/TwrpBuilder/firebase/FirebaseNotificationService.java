@@ -45,7 +45,6 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
                 sendNotification(remoteMessage.getNotification().getBody());
             }
         }
-
     }
 
     private void sendNotification(String messageBody) {
