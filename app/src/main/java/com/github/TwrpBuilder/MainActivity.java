@@ -31,6 +31,9 @@ import com.github.TwrpBuilder.Fragment.FragmentAbout;
 import com.github.TwrpBuilder.Fragment.FragmentStatusCommon;
 import com.github.TwrpBuilder.app.SettingsActivity;
 import com.github.updater.Updater;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.security.ProviderInstaller;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -45,6 +48,11 @@ import com.scottyab.aescrypt.AESCrypt;
 
 import java.io.File;
 import java.security.GeneralSecurityException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLEngine;
 
 import static com.github.TwrpBuilder.R.menu.*;
 
@@ -78,6 +86,21 @@ public class MainActivity extends AppCompatActivity
         Cache=getCacheDir()+ File.separator;
         mFirebaseAuth=FirebaseAuth.getInstance();
         FirebaseDBInstance.getDatabase();
+        try {
+            ProviderInstaller.installIfNeeded(getApplicationContext());
+            SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
+            sslContext.init(null, null, null);
+            SSLEngine engine = sslContext.createSSLEngine();
+
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
