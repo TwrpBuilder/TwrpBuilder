@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.TwrpBuilder.app.CustomBackupActivity;
 import com.github.TwrpBuilder.util.FWriter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,6 +27,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -40,9 +42,12 @@ import com.github.TwrpBuilder.util.Config;
 import com.github.TwrpBuilder.util.ShellExecuter;
 
 import static com.github.TwrpBuilder.MainActivity.Cache;
+import static com.github.TwrpBuilder.app.CustomBackupActivity.FromCB;
+import static com.github.TwrpBuilder.app.CustomBackupActivity.resultOfB;
 import static com.github.TwrpBuilder.app.InitActivity.isOldMtk;
 import static com.github.TwrpBuilder.app.UploaderActivity.fromI;
 import static com.github.TwrpBuilder.app.UploaderActivity.result;
+import static com.github.TwrpBuilder.util.Config.TwrpBackFName;
 import static com.github.TwrpBuilder.util.Config.buildProp;
 import static com.github.TwrpBuilder.util.Config.getBuildBoard;
 import static com.github.TwrpBuilder.util.Config.getBuildBrand;
@@ -53,7 +58,7 @@ import static com.github.TwrpBuilder.util.Config.getBuildModel;
  * Created by Sumit on 19.10.2016.
  */
 
-public class BackupFragment extends Fragment {
+public class BackupFragment extends Fragment implements View.OnClickListener {
 
     /*Buttons*/
     public  Button mUploadBackup;
@@ -71,19 +76,20 @@ public class BackupFragment extends Fragment {
     public StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/");
     public StorageReference riversRef;
 
-    private UploaderActivity uploaderActivity;
-    private Intent intent;
-
     private boolean hasUpB;
 
     private SharedPreferences preferences;
     private String recoveryPath;
     private LinearLayout fragment_backup_child_linear;
     private String colon=" : ";
+    private boolean isSupported;
+
+    BackupFragment(boolean isSupported){
+        this.isSupported=isSupported;
+    }
 
     @Nullable
     @Override
-
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_backup, container, false);
         mBackupButton = view.findViewById(R.id.BackupRecovery);
@@ -91,9 +97,7 @@ public class BackupFragment extends Fragment {
         mBuildDescription= view.findViewById(R.id.build_description);
         mProgressBar=view.findViewById(R.id.progress_bar);
         fragment_backup_child_linear = view.findViewById(R.id.fragment_backup_child_linear);
-        riversRef = storageRef.child("queue/" + getBuildBrand() + "/" + getBuildBoard() + "/" + getBuildModel() + "/"+ Config.TwrpBackFName);
-        uploaderActivity=new UploaderActivity();
-        intent=new Intent(getActivity(), uploaderActivity.getClass());
+        riversRef = storageRef.child("queue/" + getBuildBrand() + "/" + getBuildBoard() + "/" + getBuildModel() + "/"+ TwrpBackFName);
         mProgressBar.setVisibility(View.VISIBLE);
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         recoveryPath = preferences.getString("recoveryPath", "");
@@ -105,8 +109,19 @@ public class BackupFragment extends Fragment {
         textViewBrand.setText(getString(R.string.brand)+colon+Config.getBuildBrand());
         textViewBoard.setText(getString(R.string.board)+colon+Config.getBuildBoard());
         textViewModel.setText(getString(R.string.model)+colon+Config.getBuildModel());
-        textViewSupported.setText("Running in non-root mode "+" "+false);
+        if (!isSupported)
+        {
+            textViewSupported.setText("Running in non-root mode");
+        }
 
+        checkRequest();
+
+        mBackupButton.setOnClickListener(this);
+        mUploadBackup.setOnClickListener(this);
+        return view;
+    }
+
+    private void checkRequest(){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -117,55 +132,38 @@ public class BackupFragment extends Fragment {
                         mUploadBackup.setVisibility(View.GONE);
                         mBuildDescription.setVisibility(View.VISIBLE);
                         hasUpB=true;
-                        if (!Config.checkBackup()) {mBackupButton.setVisibility(View.VISIBLE);}
-
+                        checkBackup();
                     }
                 })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception exception) {
                                 mProgressBar.setVisibility(View.GONE);
-                                if (!Config.checkBackup()) {mBackupButton.setVisibility(View.VISIBLE);}
-                                else {
-                                    mUploadBackup.setVisibility(View.VISIBLE);
-                                    mBuildDescription.setVisibility(View.GONE);
-
-                                }
+                                if (checkBackup()) {mUploadBackup.setVisibility(View.VISIBLE);}
                             }
 
                         });
             }
         }).start();
 
-        mBackupButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mBackupButton.setVisibility(View.GONE);
-                        mBuildDescription.setText(getString(R.string.warning_about_recovery_backup));
-                        mBuildDescription.setVisibility(View.VISIBLE);
-                        mProgressBar.setVisibility(View.VISIBLE);
-                        new BackupTask().execute();
-                    }
-                }
-        );
-
-        mUploadBackup.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(intent);
-                        mUploadBackup.setVisibility(View.GONE);
-                    }
-                }
-        );
-
-        return view;
     }
 
+    private boolean checkBackup(){
+        boolean thisExist=new File(Cache+TwrpBackFName).exists();
+        if (thisExist)
+        {
+            mBackupButton.setVisibility(View.GONE);
+        }
+        else {
+            mBackupButton.setVisibility(View.VISIBLE);
+        }
+        return thisExist;
+    }
     @Override
     public void onResume() {
         super.onResume();
+        checkBackup();
+        checkRequest();
         if(fromI)
         {
         if (result)
@@ -182,13 +180,53 @@ public class BackupFragment extends Fragment {
             fromI=false;
         }
         }
+        if (!isSupported)
+        {
+            if (FromCB==true)
+            {
+                if (resultOfB==true)
+                {
+                    if (!hasUpB) {
+                        mUploadBackup.setVisibility(View.VISIBLE);
+                    }else {
+                        mBuildDescription.setVisibility(View.VISIBLE);
+                    }
+                    resultOfB=false;
+                }
+                else {
+                    mBackupButton.setVisibility(View.VISIBLE);
+                }
+            }
 
+        }
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id=view.getId();
+        if (id==mBackupButton.getId())
+        {
+            if (isSupported) {
+                mBackupButton.setVisibility(View.GONE);
+                mBuildDescription.setText(getString(R.string.warning_about_recovery_backup));
+                mBuildDescription.setVisibility(View.VISIBLE);
+                mProgressBar.setVisibility(View.VISIBLE);
+                new BackupTask().execute();
+            }else {
+                mBackupButton.setVisibility(View.GONE);
+                startActivity(new Intent(getContext(), CustomBackupActivity.class));
+            }
+        }
+        else if (id==mUploadBackup.getId())
+        {
+            startActivity(new Intent(getActivity(),UploaderActivity.class));
+            mUploadBackup.setVisibility(View.GONE);
+        }
     }
 
     class BackupTask extends AsyncTask<Void,String,Void>
     {
-
-
         @Override
         protected Void doInBackground(Void... params) {
             new FWriter(Cache+"build.prop",buildProp());
@@ -215,7 +253,7 @@ public class BackupFragment extends Fragment {
                                 +" && tar -c recovery.img build.prop mounts > " + Cache+"/TwrpBuilderRecoveryBackup.tar "
                 );
             }
-            compressGzipFile(Cache+"/TwrpBuilderRecoveryBackup.tar",Cache+Config.TwrpBackFName);
+            compressGzipFile(Cache+"/TwrpBuilderRecoveryBackup.tar",Cache+ TwrpBackFName);
             return null;
         }
 

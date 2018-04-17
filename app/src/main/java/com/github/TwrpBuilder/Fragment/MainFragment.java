@@ -33,27 +33,22 @@ import static com.github.TwrpBuilder.util.Config.getBuildModel;
 
 public class MainFragment extends Fragment{
     private BackupFragment backupFragment;
-    private FragmentCustomBackup fragmentCustomBackup;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_status,container,false);
         ViewPager viewPager = view.findViewById(R.id.pager);
-        backupFragment=new BackupFragment();
-        fragmentCustomBackup=new FragmentCustomBackup();
+        if (isSupport && RootTools.isAccessGiven()) {
+            backupFragment = new BackupFragment(true);
+        }
+        else
+        {
+            backupFragment = new BackupFragment(false);
+        }
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        if(RootTools.isAccessGiven()){
-            if (isSupport==true) {
-                adapter.addFragment(backupFragment, getString(R.string.make_request));
-            }else {
-                adapter.addFragment(fragmentCustomBackup,getString(R.string.make_request));
-
-            }
-        }else {
-            adapter.addFragment(fragmentCustomBackup, getString(R.string.make_request));
-        }
+        adapter.addFragment(backupFragment, getString(R.string.make_request));
         adapter.addFragment(new FragmentStatusCommon("Builds","model", getBuildModel()), getString(R.string.builds_for_this_device));
         viewPager.setAdapter(adapter);
 

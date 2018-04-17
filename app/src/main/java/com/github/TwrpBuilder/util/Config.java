@@ -70,7 +70,7 @@ public class Config
    }
 
    public static String getBuildAbi(){
-      return shell.command("getprop ro.product.cpu.abi=");
+      return shell.command("getprop ro.product.cpu.abi");
    }
 
    public static String buildProp(){
