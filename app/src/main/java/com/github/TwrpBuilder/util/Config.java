@@ -69,6 +69,10 @@ public class Config
       return BuildBrand;
    }
 
+   public static String getBuildAbi(){
+      return shell.command("getprop ro.product.cpu.abi=");
+   }
+
    public static String buildProp(){
       String data="# Build.prop v1\n";
       data+="ro.product.brand="+getBuildBrand()+"\n";
@@ -76,6 +80,7 @@ public class Config
       data+="ro.product.model="+getBuildModel()+"\n";
       data+="ro.build.product="+getBuildProduct()+"\n";
       data+="ro.build.fingerprint="+getBuildFingerprint()+"\n";
+      data+="ro.product.cpu.abi="+getBuildAbi();
       return data;
    }
 

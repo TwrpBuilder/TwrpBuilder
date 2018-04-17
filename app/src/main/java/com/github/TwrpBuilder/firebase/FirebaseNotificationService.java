@@ -41,30 +41,30 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
 
 
         if (remoteMessage.getNotification() != null) {
-            if (remoteMessage.getNotification().getBody().contains(getBuildModel())) {
-                sendNotification(remoteMessage.getNotification().getBody());
+            String messageBody=remoteMessage.getNotification().getBody();
+            System.out.println("FirebaseNotificationService: i'm trigrred "+messageBody);
+            if (messageBody.endsWith(getBuildModel())) {
+                System.out.println("FirebaseNotificationService: fuck this "+getBuildModel());
+                System.out.println("FirebaseNotificationService: this can't be true "+messageBody);
+                Intent intent = new Intent(this, BackupFragment.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+                        PendingIntent.FLAG_ONE_SHOT);
+
+                Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "1")
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle("TwrpBuilder")
+                        .setContentText(messageBody)
+                        .setAutoCancel(true)
+                        .setSound(defaultSoundUri)
+                        .setContentIntent(pendingIntent);
+
+                NotificationManager notificationManager =
+                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+                notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
             }
         }
-    }
-
-    private void sendNotification(String messageBody) {
-        Intent intent = new Intent(this, BackupFragment.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
-
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this,"1")
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("TwrpBuilder")
-                .setContentText(messageBody)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
 }
