@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    protected void updateFragment(Fragment fragment)
+    private void updateFragment(Fragment fragment)
     {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 

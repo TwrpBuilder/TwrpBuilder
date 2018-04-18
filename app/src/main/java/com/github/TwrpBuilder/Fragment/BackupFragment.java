@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -112,10 +113,16 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
         }
 
         checkRequest();
-
+        updateFragment(new FragmentStatusCommon("Builds","model", getBuildModel()));
         mBackupButton.setOnClickListener(this);
         mUploadBackup.setOnClickListener(this);
         return view;
+    }
+    private void updateFragment(Fragment fragment)
+    {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fl_list_test_builds, fragment);
+        ft.commit();
     }
 
     private void checkRequest(){

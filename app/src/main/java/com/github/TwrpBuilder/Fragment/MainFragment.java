@@ -53,7 +53,7 @@ public class MainFragment extends Fragment{
 
         adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(backupFragment, getString(R.string.make_request));
-        adapter.addFragment(new FragmentStatusCommon("Builds","model", getBuildModel()), getString(R.string.builds_for_this_device));
+        adapter.addFragment(new FragmentStatusCommon("Builds","model", getBuildModel()), "Stable Builds");
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = view.findViewById(R.id.tabs);
