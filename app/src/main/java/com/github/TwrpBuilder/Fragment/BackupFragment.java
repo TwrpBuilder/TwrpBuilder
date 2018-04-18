@@ -237,23 +237,16 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
                                 + recoveryPath
                                 +" bs=20000000 count=1 of="
                                 + Cache+"recovery.img ; cat /proc/dumchar > "
-                                + Cache+"/mounts ; cd "
+                                + Cache+"mounts ; cd "
                                 + Cache+" && tar -c recovery.img build.prop mounts > "
                                 + Cache
                                 + "TwrpBuilderRecoveryBackup.tar ");
             }
             else
             {
-                Shell.SU.run(
-                        "dd if=" + recoveryPath + " of=" + Cache+"recovery.img ; " +
-                                "ls -la `find /dev/block/platform/ -type d -name \"by-name\"` > " + Cache+"/mounts "
-                                + "; echo ##Mount paths >> "+ Cache+"/mounts"
-                                +"; find /dev/block/ -type d -name \"by-name\"  >> "+ Cache+"/mounts "
-                                + "; cd " + Cache
-                                +" && tar -c recovery.img build.prop mounts > " + Cache+"/TwrpBuilderRecoveryBackup.tar "
-                );
+                ShellExecuter.command("dd if=" + recoveryPath + " of=" + Cache+"recovery.img && ls -la $(find /dev/block/platform/ -type d -name \"by-name\") > " + Cache+"mounts && echo \"#Mount Point\" >> "+Cache+"mounts && find /dev/block/ -type d -name \"by-name\"  >> "+ Cache+"mounts && cd "+Cache+" && tar -c recovery.img build.prop mounts > TwrpBuilderRecoveryBackup.tar && chmod 664  TwrpBuilderRecoveryBackup.tar",true);
             }
-            compressGzipFile(Cache+"/TwrpBuilderRecoveryBackup.tar",Cache+ TwrpBackFName);
+            compressGzipFile(getContext().getCacheDir()+"/TwrpBuilderRecoveryBackup.tar",Cache+ TwrpBackFName);
             return null;
         }
 

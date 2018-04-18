@@ -26,6 +26,9 @@ public class ShellExecuter {
     public static String command(String command){
         return Shell.SH.run(command).toString().replace("[","").replace("]","");
     }
+    public static String command(String command,boolean root){
+        return Shell.SU.run(command).toString().replace("[","").replace("]","");
+    }
 
     public static void rm(Context context,String name){
         /*
