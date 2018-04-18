@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:hint="Select Stock Recovery"
         android:id="@+id/ed_select_recovery"
+        android:focusableInTouchMode="false"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"/>
 
