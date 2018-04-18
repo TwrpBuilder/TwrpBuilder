@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.github.TwrpBuilder.R;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.stericson.RootTools.RootTools;
 
 import eu.chainfire.libsuperuser.Shell;
@@ -34,17 +33,12 @@ import static com.github.TwrpBuilder.util.Config.getBuildModel;
 
 public class MainFragment extends Fragment{
     private BackupFragment backupFragment;
-    private FirebaseRemoteConfig firebaseRemoteConfig;
     private ViewPagerAdapter adapter;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_status,container,false);
         ViewPager viewPager = view.findViewById(R.id.pager);
-        firebaseRemoteConfig=FirebaseRemoteConfig.getInstance();
-        if (!firebaseRemoteConfig.getBoolean("online"))
-            Toast.makeText(getContext(),"offline",Toast.LENGTH_LONG).show();
-
         if (isSupport && RootTools.isAccessGiven())
             backupFragment = new BackupFragment(true);
         else
@@ -53,7 +47,7 @@ public class MainFragment extends Fragment{
 
         adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(backupFragment, getString(R.string.make_request));
-        adapter.addFragment(new FragmentStatusCommon("Builds","model", getBuildModel()), "Stable Builds");
+        //adapter.addFragment(new FragmentStatusCommon("Builds","model", getBuildModel()), "Stable Builds");
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = view.findViewById(R.id.tabs);
