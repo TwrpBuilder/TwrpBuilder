@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.TwrpBuilder.app.CustomBackupActivity;
 import com.github.TwrpBuilder.util.FWriter;
@@ -32,7 +31,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import java.util.List;
 import java.util.zip.GZIPOutputStream;
 
 import eu.chainfire.libsuperuser.Shell;
@@ -41,14 +39,13 @@ import com.github.TwrpBuilder.app.UploaderActivity;
 import com.github.TwrpBuilder.util.Config;
 import com.github.TwrpBuilder.util.ShellExecuter;
 
-import static com.github.TwrpBuilder.MainActivity.Cache;
 import static com.github.TwrpBuilder.app.CustomBackupActivity.FromCB;
 import static com.github.TwrpBuilder.app.CustomBackupActivity.resultOfB;
 import static com.github.TwrpBuilder.app.InitActivity.isOldMtk;
 import static com.github.TwrpBuilder.app.UploaderActivity.fromI;
 import static com.github.TwrpBuilder.app.UploaderActivity.result;
+import static com.github.TwrpBuilder.util.Config.Sdcard;
 import static com.github.TwrpBuilder.util.Config.TwrpBackFName;
-import static com.github.TwrpBuilder.util.Config.buildProp;
 import static com.github.TwrpBuilder.util.Config.getBuildBoard;
 import static com.github.TwrpBuilder.util.Config.getBuildBrand;
 import static com.github.TwrpBuilder.util.Config.getBuildModel;
@@ -149,7 +146,7 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
     }
 
     private boolean checkBackup(){
-        boolean thisExist=new File(Cache+TwrpBackFName).exists();
+        boolean thisExist=new File(Sdcard+"TwrpBuilder/"+TwrpBackFName).exists();
         if (thisExist)
         {
             mBackupButton.setVisibility(View.GONE);
@@ -227,26 +224,25 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
 
     class BackupTask extends AsyncTask<Void,String,Void>
     {
+        private boolean failed;
         @Override
         protected Void doInBackground(Void... params) {
-            new FWriter(Cache+"build.prop",buildProp());
+            ShellExecuter.mkdir("TwrpBuilder");
+            new FWriter("build.prop",Config.buildProp());
+            try {
+                ShellExecuter.cp("/system/build.prop",Sdcard+"TwrpBuilder/build.prop");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             if (isOldMtk==true)
             {
-                Shell.SU.run(
-                        "dd if="
-                                + recoveryPath
-                                +" bs=20000000 count=1 of="
-                                + Cache+"recovery.img ; cat /proc/dumchar > "
-                                + Cache+"mounts ; cd "
-                                + Cache+" && tar -c recovery.img build.prop mounts > "
-                                + Cache
-                                + "TwrpBuilderRecoveryBackup.tar ");
+                Shell.SU.run("dd if=" + recoveryPath +" bs=20000000 count=1 of=" + Sdcard + "TwrpBuilder/recovery.img ; cat /proc/dumchar > " + Sdcard + "TwrpBuilder/mounts ; cd " + Sdcard + "TwrpBuilder && tar -c recovery.img build.prop mounts > " + Sdcard + "TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
             }
             else
             {
-                ShellExecuter.command("dd if=" + recoveryPath + " of=" + Cache+"recovery.img && ls -la $(find /dev/block/platform/ -type d -name \"by-name\") > " + Cache+"mounts && echo \"#Mount Point\" >> "+Cache+"mounts && find /dev/block/ -type d -name \"by-name\"  >> "+ Cache+"mounts && cd "+Cache+" && tar -c recovery.img build.prop mounts > TwrpBuilderRecoveryBackup.tar && chmod 664  TwrpBuilderRecoveryBackup.tar",true);
+                Shell.SU.run("dd if=" + recoveryPath + " of=" + Sdcard + "TwrpBuilder/recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` > " + Sdcard + "TwrpBuilder/mounts ; cd " + Sdcard + "TwrpBuilder && tar -c recovery.img build.prop mounts > " + Sdcard + "TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
             }
-            compressGzipFile(getContext().getCacheDir()+"/TwrpBuilderRecoveryBackup.tar",Cache+ TwrpBackFName);
+            compressGzipFile(Sdcard+"/TwrpBuilder/TwrpBuilderRecoveryBackup.tar",Sdcard+"TwrpBuilder/"+Config.TwrpBackFName);
             return null;
         }
 
@@ -254,34 +250,43 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             mProgressBar.setVisibility(View.GONE);
-            if (!hasUpB) {
-                mUploadBackup.setVisibility(View.VISIBLE);
+            if (failed)
+            {
+                mBuildDescription.setText("Failed to create backup .");
+                Snackbar.make(fragment_backup_child_linear, "Failed to backup", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+
+            }else {
+                if (!hasUpB) {
+                    mUploadBackup.setVisibility(View.VISIBLE);
+                }
+                mBuildDescription.setText("Backed up recovery " + recoveryPath);
+                Snackbar.make(fragment_backup_child_linear, "Backup Done", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
-            mBuildDescription.setText("Backed up recovery " + recoveryPath);
-            Snackbar.make(fragment_backup_child_linear, "Backup Done", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
         }
-    }
-
-    private static void compressGzipFile(String file, String gzipFile) {
-        try {
-            FileInputStream fis = new FileInputStream(file);
-            FileOutputStream fos = new FileOutputStream(gzipFile);
-            GZIPOutputStream gzipOS = new GZIPOutputStream(fos);
-            byte[] buffer = new byte[1024];
-            int len;
-            while((len=fis.read(buffer)) != -1){
-                gzipOS.write(buffer, 0, len);
+        private void compressGzipFile(String file, String gzipFile) {
+            try {
+                FileInputStream fis = new FileInputStream(file);
+                FileOutputStream fos = new FileOutputStream(gzipFile);
+                GZIPOutputStream gzipOS = new GZIPOutputStream(fos);
+                byte[] buffer = new byte[1024];
+                int len;
+                while((len=fis.read(buffer)) != -1){
+                    gzipOS.write(buffer, 0, len);
+                }
+                //close resources
+                gzipOS.close();
+                fos.close();
+                fis.close();
+            } catch (IOException e) {
+                failed=true;
+                e.printStackTrace();
             }
-            //close resources
-            gzipOS.close();
-            fos.close();
-            fis.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+
         }
 
-    }
 
+    }
 }
 

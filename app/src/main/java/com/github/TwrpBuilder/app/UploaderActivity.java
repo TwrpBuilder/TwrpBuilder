@@ -30,8 +30,9 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 
-import static com.github.TwrpBuilder.MainActivity.Cache;
 import static com.github.TwrpBuilder.firebase.FirebaseInstanceIDService.refreshedToken;
+import static com.github.TwrpBuilder.util.Config.Sdcard;
+import static com.github.TwrpBuilder.util.Config.TwrpBackFName;
 import static com.github.TwrpBuilder.util.Config.getBuildBoard;
 import static com.github.TwrpBuilder.util.Config.getBuildBrand;
 import static com.github.TwrpBuilder.util.Config.getBuildModel;
@@ -79,7 +80,7 @@ public class UploaderActivity extends AppCompatActivity {
         mFirebaseAuth=FirebaseAuth.getInstance();
         Email=mFirebaseAuth.getCurrentUser().getEmail();
         Uid=mFirebaseAuth.getCurrentUser().getUid();
-        file = Uri.fromFile(new File(Cache+ Config.TwrpBackFName));
+        file = Uri.fromFile(new File(Sdcard+"TwrpBuilder/"+TwrpBackFName));
         riversRef = storageRef.child("queue/" + getBuildBrand() + "/" + getBuildBoard() + "/" + getBuildModel() + "/" + file.getLastPathSegment());
 
         mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

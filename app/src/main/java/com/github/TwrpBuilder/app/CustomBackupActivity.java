@@ -35,6 +35,8 @@ import com.github.TwrpBuilder.util.FWriter;
 import com.github.TwrpBuilder.util.ShellExecuter;
 
 import static com.github.TwrpBuilder.MainActivity.Cache;
+import static com.github.TwrpBuilder.util.Config.Sdcard;
+import static com.github.TwrpBuilder.util.Config.TwrpBackFName;
 import static com.github.TwrpBuilder.util.Config.buildProp;
 
 /**
@@ -132,7 +134,7 @@ public class CustomBackupActivity extends AppCompatActivity {
                 ShellExecuter.cp(editText.getText().toString(),Cache+"recovery.img");
                 String[] file=new String[]{Cache+"build.prop",Cache+"recovery.img"};
                 zip(file,Cache+"TwrpBuilderRecoveryBackup.zip");
-                ShellExecuter.cp(Cache+"TwrpBuilderRecoveryBackup.zip",Cache+ Config.TwrpBackFName);
+                ShellExecuter.cp(Cache+"TwrpBuilderRecoveryBackup.zip",Sdcard+"TwrpBuilder/"+TwrpBackFName);
             } catch (IOException e) {
                 e.printStackTrace();
             }
