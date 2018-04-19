@@ -31,6 +31,7 @@
                 android:id="@+id/tv_his_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autoLink="email"
                 android:textIsSelectable="true"
                 android:textSize="13sp" />
             <TextView
@@ -38,11 +39,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textIsSelectable="true"
+                android:autoLink="web"
                 android:textSize="13sp" />
             <TextView
                 android:id="@+id/tv_his_xda"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autoLink="web"
                 android:textIsSelectable="true"
                 android:textSize="13sp" />
 
@@ -50,6 +53,7 @@
                 android:id="@+id/tv_his_donation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autoLink="web|phone"
                 android:textIsSelectable="true"
                 android:textSize="13sp" />
 

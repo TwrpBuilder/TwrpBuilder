@@ -16,7 +16,7 @@ import java.util.Collections;
  * Created by androidlover5842 on 12.3.2018.
  */
 
-public class ListContributorsHolder extends RecyclerView.ViewHolder {
+public class ListContributorsHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private Context context;
     private String colon = " : ";
     private String gitId, xdaUrl, donationUrl, description, email, photoUrl, name, key;
@@ -64,5 +64,10 @@ public class ListContributorsHolder extends RecyclerView.ViewHolder {
         else
             tvDescription.setVisibility(View.GONE);
         Glide.with(context.getApplicationContext()).load(photoUrl).into(imageViewProfile);
+    }
+
+    @Override
+    public void onClick(View view) {
+        
     }
 }
