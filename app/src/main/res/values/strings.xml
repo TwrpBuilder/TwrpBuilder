@@ -100,4 +100,5 @@
     <string name="Feedback_sent">Feedback sent</string>
     <string name="feedback_failed">Failed to send feedback</string>
     <string name="contributor">Contributor</string>
+    <string name="no_rejected">No rejected builds</string>
 </resources>

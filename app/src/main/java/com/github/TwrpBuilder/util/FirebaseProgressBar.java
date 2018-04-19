@@ -60,6 +60,10 @@ public class FirebaseProgressBar {
                         } else if (refId == "Builds") {
                             textView.setText(R.string.no_builds_found);
                         }
+                        else if (refId=="Rejected")
+                        {
+                            textView.setText(R.string.no_rejected);
+                        }
                     }
                     textView.setVisibility(View.VISIBLE);
                 }
