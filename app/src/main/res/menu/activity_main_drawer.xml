@@ -34,7 +34,7 @@
                 <item
                     android:title="Contributors"
                     android:id="@+id/nav_contributor"
-                    android:icon="@drawable/ic_code_white_24dp"/>
+                    android:icon="@drawable/ic_developers"/>
 
                 <item android:title="@string/about"
                     android:icon="@drawable/ic_info"
