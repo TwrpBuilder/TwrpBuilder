@@ -192,12 +192,12 @@ public class MainActivity extends AppCompatActivity
         }
         else if (id==R.id.nav_build_done)
         {
-            updateFragment(new FragmentStatusCommon("Builds",true));
+            updateFragment(new FragmentStatusCommon("Builds"));
             setTitle(R.string.completed);
         }
         else if (id==R.id.nav_reject)
         {
-            updateFragment(new FragmentStatusCommon("Rejected",true));
+            updateFragment(new FragmentStatusCommon("Rejected"));
             setTitle(R.string.rejected);
         }
         else if (id == R.id.action_log_out) {

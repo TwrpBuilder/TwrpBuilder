@@ -211,13 +211,14 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
                         +"\non date:-"
                         +date;
 
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                final BottomSheetDialog alertDialogBuilder = new BottomSheetDialog(context);
                 LayoutInflater li = LayoutInflater.from(context);
                 View promptsView = li.inflate(R.layout.dialog_feedback, null);
-                alertDialogBuilder.setView(promptsView);
+                alertDialogBuilder.setContentView(promptsView);
                 final CheckBox CBworks=promptsView.findViewById(R.id.checkbox_works);
                 final CheckBox CBNotWorks=promptsView.findViewById(R.id.checkbox_not_works);
                 final EditText editTextFeedBack=promptsView.findViewById(R.id.editTextDialogUserInput);
+                final  Button btSend=promptsView.findViewById(R.id.send_feedback);
                 CBworks.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -231,74 +232,66 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
                         CBworks.setChecked(false);
                     }
                 });
+                btSend.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                        DatabaseReference feedBack=firebaseDatabase.getReference("FeedBack");
+                        if (CBworks.isChecked())
+                        {
+                            Message message=new Message(getBuildModel(),editTextFeedBack.getText().toString(),email,true);
+                            Toast.makeText(context, context.getString(R.string.sending), Toast.LENGTH_SHORT).show();
+                            feedBack.push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(context, context.getString(R.string.Feedback_sent), Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(context, context.getString(R.string.feedback_failed), Toast.LENGTH_SHORT).show();
 
-                alertDialogBuilder
-                        .setCancelable(false)
-                        .setPositiveButton(context.getString(R.string.send),
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,int id) {
-                                        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                                        DatabaseReference feedBack=firebaseDatabase.getReference("FeedBack");
-                                        if (CBworks.isChecked())
-                                        {
-                                            Message message=new Message(getBuildModel(),editTextFeedBack.getText().toString(),email,true);
-                                            Toast.makeText(context, context.getString(R.string.sending), Toast.LENGTH_SHORT).show();
-                                            feedBack.push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    Toast.makeText(context, context.getString(R.string.Feedback_sent), Toast.LENGTH_SHORT).show();
-                                                }
-                                            }).addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Toast.makeText(context, context.getString(R.string.feedback_failed), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            content+="\nhas successfully booted! . please push your source on twrpbuilder common github.";
+                        }else if (CBNotWorks.isChecked())
+                        {
+                            Message message=new Message(getBuildModel(),editTextFeedBack.getText().toString(),email,false);
+                            feedBack.push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    alertDialogBuilder.dismiss();
+                                    Toast.makeText(context, context.getString(R.string.Feedback_sent), Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(context, context.getString(R.string.feedback_failed), Toast.LENGTH_SHORT).show();
 
-                                                }
-                                            });
-                                            content+="\nhas successfully booted! . please push your source on twrpbuilder common github.";
-                                        }else if (CBNotWorks.isChecked())
-                                        {
-                                            Message message=new Message(getBuildModel(),editTextFeedBack.getText().toString(),email,false);
-                                            feedBack.push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    Toast.makeText(context, context.getString(R.string.Feedback_sent), Toast.LENGTH_SHORT).show();
-                                                }
-                                            }).addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Toast.makeText(context, context.getString(R.string.feedback_failed), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            content+="\nhas failed to boot :(.";
+                        }else
+                        {
+                            Toast.makeText(context, context.getString(R.string.works_or_not), Toast.LENGTH_SHORT).show();
+                        }
+                        try {
+                            content+="\nrequester email :- "
+                                    +email;
+                            if (!editTextFeedBack.getText().toString().isEmpty()) {
+                                content += "\nNotes by user :- " + editTextFeedBack.getText();
+                            }
+                            GMail sender = new GMail(AESCrypt.decrypt("R.menu.settings","oeI35mT0MnrmYd8J42FNEAIdF098+WdHpAld0e1SIIY="), AESCrypt.decrypt("R.menu.activity_option","5sQmagUbQrp1UjDpZiAIhFQBjPOzqw8pKsqVbd/PSoY="));
+                            sender.sendMail("TwrpBuilder "+device, content,
+                                    "twrpbuilder21@gmail.com",
+                                    developer);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                });
 
-                                                }
-                                            });
-                                            content+="\nhas failed to boot :(.";
-                                        }else
-                                        {
-                                                Toast.makeText(context, context.getString(R.string.works_or_not), Toast.LENGTH_SHORT).show();
-                                        }
-                                        try {
-                                            content+="\nrequester email :- "
-                                                    +email;
-                                            if (!editTextFeedBack.getText().toString().isEmpty()) {
-                                                content += "\nNotes by user :- " + editTextFeedBack.getText();
-                                            }
-                                            GMail sender = new GMail(AESCrypt.decrypt("R.menu.settings","oeI35mT0MnrmYd8J42FNEAIdF098+WdHpAld0e1SIIY="), AESCrypt.decrypt("R.menu.activity_option","5sQmagUbQrp1UjDpZiAIhFQBjPOzqw8pKsqVbd/PSoY="));
-                                            sender.sendMail("TwrpBuilder "+device, content,
-                                                    "twrpbuilder21@gmail.com",
-                                                    developer);
-                                        } catch (Exception e) {
-                                            System.out.println(e.getMessage());
-                                        }
-                                    }
-                                })
-                        .setNegativeButton(context.getString(R.string.cancel),
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
+                alertDialogBuilder.show();
             }
         });
     }

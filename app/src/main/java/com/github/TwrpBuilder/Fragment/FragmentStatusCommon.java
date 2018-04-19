@@ -42,7 +42,6 @@ public class FragmentStatusCommon extends Fragment {
     private Query query;
     private FirebaseRecyclerAdapter adapter;
     private String reference;
-    private boolean bottom;
     private FirebaseRecyclerOptions options;
     private RecyclerView lvBuilds;
     private View view;
@@ -55,10 +54,6 @@ public class FragmentStatusCommon extends Fragment {
         this.reference=reference;
     }
 
-    public FragmentStatusCommon(String reference,boolean bottom){
-        this.reference=reference;
-        this.bottom=bottom;
-    }
     public FragmentStatusCommon(String reference,String filterQuery,String equalTo){
         this.reference=reference;
         this.filterQuery=filterQuery;
@@ -119,13 +114,10 @@ public class FragmentStatusCommon extends Fragment {
         ProgressBar();
         layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        if (bottom)
-        {
-            layoutManager.setStackFromEnd(true);
-        }
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
         lvBuilds.setLayoutManager(layoutManager);
         lvBuilds.setAdapter(adapter);
-
         return view;
 
     }
