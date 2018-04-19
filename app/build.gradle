@@ -71,6 +71,10 @@ dependencies {
     implementation 'commons-io:commons-io:2.6'
     implementation 'yogesh.firzen:MukkiyaSevaigal:1.0.6'
     implementation 'com.scottyab:aescrypt:0.0.1'
+    implementation ("com.github.bumptech.glide:glide:4.7.1") {
+        exclude group: "com.android.support"
+    }
+    implementation "com.android.support:support-fragment:27.0.2"
     implementation files('libs/RootTools.jar')
     implementation project(path: ':updater')
 }

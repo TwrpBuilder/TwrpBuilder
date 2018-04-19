@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.TwrpBuilder.Fragment.FragmentAbout;
+import com.github.TwrpBuilder.Fragment.FragmentListContributors;
 import com.github.TwrpBuilder.Fragment.FragmentStatusCommon;
 import com.github.TwrpBuilder.app.SettingsActivity;
 import com.github.updater.Updater;
@@ -183,6 +184,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_credits) {
             updateFragment(mFragmentCredits);
             setTitle(R.string.credits);
+        }
+        else if (id==R.id.nav_contributor)
+        {
+            updateFragment(new FragmentListContributors());
         }
         else if (id==R.id.nav_build_done)
         {
