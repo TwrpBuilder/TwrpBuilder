@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,20 +16,28 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.github.TwrpBuilder.R;
 import com.github.TwrpBuilder.app.FlasherActivity;
 import com.github.TwrpBuilder.model.Message;
 import com.github.TwrpBuilder.util.GMail;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.scottyab.aescrypt.AESCrypt;
 import com.stericson.RootTools.RootTools;
 
+
+import org.w3c.dom.Text;
 
 import static com.github.TwrpBuilder.app.InitActivity.isSupport;
 import static com.github.TwrpBuilder.util.Config.getBuildModel;
@@ -115,8 +125,64 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
         btDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                context.startActivity(browserIntent);
+                LayoutInflater li = LayoutInflater.from(context);
+                View downloadDialog=li.inflate(R.layout.dialog_download,null);
+                BottomSheetDialog dialog = new BottomSheetDialog(context);
+                dialog.setContentView(downloadDialog);
+                TextView model=downloadDialog.findViewById(R.id.tv_model);
+                TextView tvboard=downloadDialog.findViewById(R.id.tv_board);
+                TextView tvbrand=downloadDialog.findViewById(R.id.tv_brand);
+                final CardView cardView=downloadDialog.findViewById(R.id.cv_developerProfile);
+                final TextView tvGitId = downloadDialog.findViewById(R.id.tv_his_gitId);
+                final TextView tvXdaUrl = downloadDialog.findViewById(R.id.tv_his_xda);
+                final TextView tvDescription = downloadDialog.findViewById(R.id.tv_his_description);
+                final TextView tvName = downloadDialog.findViewById(R.id.tv_his_name);
+                final TextView textViewEmail = downloadDialog.findViewById(R.id.tv_his_email);
+                final TextView tvDonation = downloadDialog.findViewById(R.id.tv_his_donation);
+                final ImageView imageViewProfile = downloadDialog.findViewById(R.id.img_his_profile);
+                final Button btDownload=downloadDialog.findViewById(R.id.download);
+                tvbrand.setText(context.getString(R.string.brand)+colon+device);
+                tvboard.setText(context.getString(R.string.board)+colon+board);
+                model.setText(context.getString(R.string.model)+colon+brand);
+
+                Query query=FirebaseDatabase.getInstance().getReference().child("Developers").orderByChild("email").equalTo(developer);
+                query.keepSynced(true);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists())
+                        {
+                            for (DataSnapshot d:dataSnapshot.getChildren())
+                            {
+                                cardView.setVisibility(View.VISIBLE);
+                                tvGitId.setText("GitHub"+colon+d.child("gitId").getValue());
+                                tvName.setText("Name"+colon+d.child("name").getValue());
+                                textViewEmail.setText("Email"+colon+d.child("email").getValue());
+                                tvXdaUrl.setText("XDA"+colon+d.child("xdaUrl").getValue());
+                                tvDescription.setText("Bio"+colon+d.child("description").getValue());
+                                if (d.child("donationUrl").getValue()!=null)
+                                    tvDonation.setText("Donation"+colon+d.child("donationUrl").getValue());
+                                else
+                                    tvDonation.setVisibility(View.GONE);
+                                Glide.with(context.getApplicationContext()).load(d.child("photoUrl").getValue()).into(imageViewProfile);
+                                btDownload.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                                        context.startActivity(browserIntent);
+                                    }
+                                });
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                dialog.show();
+
             }
         });
 

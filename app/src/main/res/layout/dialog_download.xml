@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/background_dark"
+    android:backgroundTint="@color/background_dark"
     android:layout_height="match_parent">
 
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -39,64 +37,6 @@
                 android:layout_width="match_parent"
                 android:id="@+id/tv_board"
                 android:layout_height="wrap_content" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:id="@+id/tv_supported"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_view"
-        android:layout_gravity="center"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="10dp"
-        card_view:cardBackgroundColor="@color/background_dark"
-        card_view:cardElevation="3dp">
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:orientation="vertical" android:layout_width="match_parent"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:layout_height="match_parent">
-            <Button
-                android:text="@string/backup_recovery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/BackupRecovery"
-                android:visibility="gone"
-                android:layout_gravity="center_horizontal"/>
-
-            <Button
-                android:text="@string/upload_backup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/UploadBackup"
-                android:visibility="gone"
-                android:layout_gravity="center_horizontal"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/build_description"
-                android:text="@string/one_time_request"
-                android:visibility="gone"
-                android:textSize="20sp" />
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:visibility="gone"
-                android:id="@+id/progress_bar"
-                android:layout_gravity="center|center_horizontal"
-                android:layout_height="wrap_content" />
-
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
@@ -105,28 +45,88 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:id="@+id/cv_developerProfile"
+        android:visibility="gone"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="10dp"
         card_view:cardBackgroundColor="@color/background_dark"
         card_view:cardElevation="3dp">
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:orientation="vertical" android:layout_width="match_parent"
-            android:id="@+id/fragment_backup_child_linear"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:paddingBottom="@dimen/activity_vertical_margin"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin"
-            android:layout_height="match_parent">
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:id="@+id/fl_list_test_builds"
-                android:layout_height="match_parent"></FrameLayout>
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/tv_build_by"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Built by :- "
+                android:layout_gravity="center"
+                android:textSize="13sp" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_gravity="center"
+                android:id="@+id/img_his_profile"
+                android:layout_height="100dp" />
+
+            <TextView
+                android:id="@+id/tv_his_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textIsSelectable="true"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_his_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="email"
+                android:textIsSelectable="true"
+                android:textSize="13sp" />
+            <TextView
+                android:id="@+id/tv_his_gitId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textIsSelectable="true"
+                android:autoLink="web"
+                android:textSize="13sp" />
+            <TextView
+                android:id="@+id/tv_his_xda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:textIsSelectable="true"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_his_donation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="web|phone"
+                android:textIsSelectable="true"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_his_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textIsSelectable="true"
+                android:textSize="13sp" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:text="@string/download"
+        android:id="@+id/download"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
-</ScrollView>
