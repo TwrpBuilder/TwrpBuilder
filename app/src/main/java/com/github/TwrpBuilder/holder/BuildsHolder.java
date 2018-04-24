@@ -1,13 +1,10 @@
 package com.github.TwrpBuilder.holder;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -36,9 +33,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.scottyab.aescrypt.AESCrypt;
 import com.stericson.RootTools.RootTools;
 
-
-import org.w3c.dom.Text;
-
 import static com.github.TwrpBuilder.app.InitActivity.isSupport;
 import static com.github.TwrpBuilder.util.Config.getBuildModel;
 
@@ -47,7 +41,7 @@ import static com.github.TwrpBuilder.util.Config.getBuildModel;
  */
 
 public class BuildsHolder extends RecyclerView.ViewHolder {
-    private TextView tvEmail,tvDevice,tvBoard,tvDate,tvBrand,tvDeveloper,tvNote;
+    private TextView tvDevice, tvBoard, tvDate, tvBrand, tvDeveloper, tvNote;
     private Button btDownload,btFlash,btFeedBack;
     private Context context;
     private boolean filterQuery;
@@ -65,7 +59,6 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
         this.context=context;
         this.filterQuery=filterQuery;
         this.reference=reference;
-        tvEmail = v.findViewById(R.id.list_user_email);
         tvDevice = v.findViewById(R.id.list_user_device);
         tvBoard = v.findViewById(R.id.list_user_board);
         tvDate= v.findViewById(R.id.list_user_date);
@@ -86,7 +79,6 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
         this.board=board;
         this.date=date;
         setTvBoard(board);
-        setTvEmail(email);
         setTvBrand(brand);
         setTvDate(date);
         setTvDevice(device);
@@ -310,10 +302,6 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
 
     public void setTvDevice(String device) {
         tvDevice.setText(context.getString(R.string.model)+colon +device);
-    }
-
-    public void setTvEmail(String email) {
-        tvEmail.setText(context.getString(R.string.email)+colon +email);
     }
 
     public void setTvNote(String note) {
