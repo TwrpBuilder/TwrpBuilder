@@ -13,5 +13,4 @@ FilesLister/build
 updater/build
 .idea/dictionaries/
 .idea/misc.xml
-.idea/*
-
+.idea/
