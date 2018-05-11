@@ -54,7 +54,8 @@ public class SettingsActivity extends AppCompatActivity {
             "Arabic",
             "Turkish",
             "Romanian",
-            "Spanish"
+            "Spanish",
+            "French"
     };
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -124,7 +125,11 @@ public class SettingsActivity extends AppCompatActivity {
                         {
                             new setLocale(getBaseContext(),supportLangs[4]);
                             PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[4]).commit();
-                        }
+			}else if (strName.equals(langList[5]))
+                        {
+                            new setLocale(getBaseContext(),supportLangs[5]);
+                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[5]).commit();
+			 }
                         Snackbar.make(linearLayout, R.string.restart_change,Snackbar.LENGTH_SHORT).show();
 
                     }
