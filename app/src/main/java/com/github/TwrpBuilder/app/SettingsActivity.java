@@ -48,7 +48,8 @@ public class SettingsActivity extends AppCompatActivity {
             "tr",
             "ro",
             "es",
-	    "fr"
+	    "fr",
+            "it"
     };
     private String[] langList=new String[]{
             "English",
@@ -56,7 +57,8 @@ public class SettingsActivity extends AppCompatActivity {
             "Turkish",
             "Romanian",
             "Spanish",
-            "French"
+            "French",
+            "Italian"   
     };
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
