@@ -47,7 +47,8 @@ public class SettingsActivity extends AppCompatActivity {
             "ar",
             "tr",
             "ro",
-            "es"
+            "es",
+	    "fr"
     };
     private String[] langList=new String[]{
             "English",
