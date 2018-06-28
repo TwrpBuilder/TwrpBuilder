@@ -24,14 +24,11 @@ import com.github.TwrpBuilder.util.setLocale;
 import com.github.updater.Updater;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import java.util.Locale;
-
 /**
  * Created by androidlover5842 on 23.2.2018.
  */
 
 public class SettingsActivity extends AppCompatActivity {
-    private final String myLang = Locale.getDefault().getLanguage();
     private ArrayAdapter<String> supportedLang;
     private LinearLayout linearLayout;
     private AlertDialog.Builder builderSingle;
@@ -42,7 +39,7 @@ public class SettingsActivity extends AppCompatActivity {
             "tr",
             "ro",
             "es",
-	    "fr",
+            "fr",
             "it"
     };
     @NonNull
@@ -53,83 +50,63 @@ public class SettingsActivity extends AppCompatActivity {
             "Romanian",
             "Spanish",
             "French",
-            "Italian"   
+            "Italian"
     };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        Toolbar toolbar=findViewById(R.id.action_bar_tool);
+        Toolbar toolbar = findViewById(R.id.action_bar_tool);
         toolbar.setTitle(R.string.settings);
         CardView cardView_Lang = findViewById(R.id.settings_lang);
-        TextView textView_currentLang = findViewById(R.id.current_lang);
-        textView_currentLang.setText(myLang);
+        final TextView textView_currentLang = findViewById(R.id.current_lang);
+        textView_currentLang.setText(PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this)
+                .getString("lang", "en"));
         CardView checkUpdate = findViewById(R.id.settings_update);
         builderSingle = new AlertDialog.Builder(SettingsActivity.this);
         AppCompatCheckBox notificationCheckBox = findViewById(R.id.settings_notification_checkBox);
-        linearLayout=findViewById(R.id.settings_view);
-        supportedLang=new ArrayAdapter<>(SettingsActivity.this,android.R.layout.select_dialog_singlechoice);
+        linearLayout = findViewById(R.id.settings_view);
+        supportedLang = new ArrayAdapter<>(SettingsActivity.this, android.R.layout.select_dialog_singlechoice);
 
         boolean checked = PreferenceManager.getDefaultSharedPreferences(this)
                 .getBoolean("notification", false);
         notificationCheckBox.setChecked(checked);
 
-        for (String s: langList)
-        {
+        for (String s : langList) {
             supportedLang.add(s);
         }
         builderSingle
                 .setTitle(R.string.select_lang)
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(@NonNull DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+                    @Override
+                    public void onClick(@NonNull DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
 
         checkUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(SettingsActivity.this, R.string.checking_for_updates,Toast.LENGTH_SHORT).show();
-                new Updater(SettingsActivity.this,Config.Version, Config.APP_UPDATE_URL,true);
+                Toast.makeText(SettingsActivity.this, R.string.checking_for_updates, Toast.LENGTH_SHORT).show();
+                new Updater(SettingsActivity.this, Config.Version, Config.APP_UPDATE_URL, true);
             }
         });
 
         cardView_Lang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 builderSingle.setAdapter(supportedLang, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        final String strName = supportedLang.getItem(which);
-                        if (strName.equals(langList[0])) {
-                            new setLocale(getBaseContext(),supportLangs[0]);
-                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[0]).apply();
-                        }
-                        else if (strName.equals(langList[1]))
-                        {
-                            new setLocale(getBaseContext(),supportLangs[1]);
-                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[1]).apply();
-                        }else if (strName.equals(langList[2]))
-                        {
-                            new setLocale(getBaseContext(),supportLangs[2]);
-                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[2]).apply();
-                        }else if (strName.equals(langList[3]))
-                        {
-                            new setLocale(getBaseContext(),supportLangs[3]);
-                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[3]).apply();
-                        }else if (strName.equals(langList[4]))
-                        {
-                            new setLocale(getBaseContext(),supportLangs[4]);
-                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[4]).apply();
-			}else if (strName.equals(langList[5]))
-                        {
-                            new setLocale(getBaseContext(),supportLangs[5]);
-                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[5]).apply();
-			 }
-                        Snackbar.make(linearLayout, R.string.restart_change,Snackbar.LENGTH_SHORT).show();
-
+                        String lang = supportLangs[which];
+                        new setLocale(getBaseContext(), lang);
+                        PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this)
+                                .edit()
+                                .putString("lang", lang)
+                                .apply();
+                        textView_currentLang.setText(lang);
+                        Snackbar.make(linearLayout, R.string.restart_change, Snackbar.LENGTH_SHORT).show();
                     }
                 });
                 builderSingle.show();
@@ -141,11 +118,10 @@ public class SettingsActivity extends AppCompatActivity {
         notificationCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b)
-                {
+                if (b) {
                     PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putBoolean("notification", true).apply();
                     FirebaseMessaging.getInstance().unsubscribeFromTopic("pushNotifications");
-                }else {
+                } else {
                     PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putBoolean("notification", false).apply();
                     FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
                 }

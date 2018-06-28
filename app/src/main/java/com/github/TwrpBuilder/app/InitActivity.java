@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.github.TwrpBuilder.R;
 import com.github.TwrpBuilder.util.SharedP;
+import com.github.TwrpBuilder.util.setLocale;
 import com.stericson.RootTools.RootTools;
 
 import java.io.File;
@@ -53,6 +54,9 @@ public class InitActivity extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+
+        new setLocale(getBaseContext(), PreferenceManager.getDefaultSharedPreferences(InitActivity.this)
+                .getString("lang", "en"));
 
         if (GoogleVersion >= 11800000) {
             ROOT_GRANTED = RootTools.isAccessGiven();
