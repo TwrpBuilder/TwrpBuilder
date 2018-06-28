@@ -6,10 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.github.TwrpBuilder.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by: veli
@@ -29,11 +32,17 @@ public class CreditsAdapter extends GithubAdapterIDEA
         if (convertView == null)
             convertView = mInflater.inflate(R.layout.list_credits, parent, false);
 
+        CircleImageView circleImageView = convertView.findViewById(R.id.civ_contributor_dp);
         TextView text1 = convertView.findViewById(R.id.list_credits_name);
         TextView text2 = convertView.findViewById(R.id.list_credits_contributions);
         JSONObject release = (JSONObject) getItem(position);
 
         try {
+            if (release.has("avatar_url"))
+                Glide.with(getContext())
+                        .load(release.getString("avatar_url"))
+                        .into(circleImageView);
+
             if (release.has("login"))
                 text1.setText(release.getString("login"));
 
