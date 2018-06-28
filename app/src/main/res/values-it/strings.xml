@@ -80,4 +80,5 @@
     <string name="running_in_not_root_mode">Running in non-root mode</string>
     <string name="failed_to_create_backup">Failed to create backup .</string>
     <string name="backup_recovery_from_path">Backed up recovery</string>
+    <string name="reach_us">Reach Us</string>
 </resources>

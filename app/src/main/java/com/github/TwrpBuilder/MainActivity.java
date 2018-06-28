@@ -139,6 +139,15 @@ public class MainActivity extends AppCompatActivity
             case R.id.quit:
                 finish();
                 break;
+            case R.id.action_log_out:
+                FirebaseAuth.getInstance().signOut();
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putBoolean("admin", false);
+                editor.apply();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class)); //Go back to home page
+                finish();
+                break;
             case R.id.settings:
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 break;
@@ -182,16 +191,6 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_reject:
                 updateFragment(new FragmentStatusCommon("Rejected"));
                 setTitle(R.string.rejected);
-                break;
-            case R.id.action_log_out:
-                FirebaseAuth.getInstance().signOut();
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putBoolean("admin", false);
-                editor.apply();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class)); //Go back to home page
-
-                finish();
                 break;
             case R.id.nav_build_incomplete:
                 updateFragment(statusFragment);

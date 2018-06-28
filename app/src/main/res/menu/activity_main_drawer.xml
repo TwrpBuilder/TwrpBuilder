@@ -44,21 +44,9 @@
                 <item
                     android:id="@+id/nav_about"
                     android:icon="@drawable/ic_info"
-                    android:title="@string/about" />
+                    android:title="@string/reach_us" />
             </group>
 
         </menu>
     </item>
-
-    <item android:title="@string/logout">
-        <menu>
-            <group android:checkableBehavior="single">
-                <item
-                    android:id="@+id/action_log_out"
-                    android:icon="@drawable/ic_logout_white_24dp"
-                    android:title="@string/logout" />
-            </group>
-        </menu>
-    </item>
-
 </menu>

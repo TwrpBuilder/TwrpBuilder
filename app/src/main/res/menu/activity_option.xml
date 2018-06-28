@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/settings"
-        android:title="@string/settings"/>
-    <item android:id="@+id/quit"
-        android:title="@string/quit"/>
+    <item
+        android:id="@+id/settings"
+        android:title="@string/settings" />
+    <item
+        android:id="@+id/action_log_out"
+        android:title="@string/logout" />
+    <item
+        android:id="@+id/quit"
+        android:title="@string/quit" />
 </menu>

@@ -88,4 +88,5 @@
     <string name="failed_to_create_backup">Failed to create backup .</string>
     <string name="backup_recovery_from_path">Backed up recovery</string>
     <string name="folder">Folder</string>
+    <string name="reach_us">Reach Us</string>
 </resources>
