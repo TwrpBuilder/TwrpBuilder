@@ -1,10 +1,8 @@
 package com.github.TwrpBuilder.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,19 +18,15 @@ import com.github.TwrpBuilder.R;
 import com.github.TwrpBuilder.holder.ListContributorsHolder;
 import com.github.TwrpBuilder.model.Developer;
 import com.github.TwrpBuilder.util.FirebaseProgressBar;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.scottyab.aescrypt.AESCrypt;
-
-import java.security.GeneralSecurityException;
 
 
 /**
  * Created by androidlover5842 on 12.3.2018.
  */
 
-public class FragmentListContributors extends Fragment  implements View.OnClickListener{
+public class FragmentListDevs extends Fragment implements View.OnClickListener {
     private RecyclerView recyclerView;
     private FirebaseRecyclerAdapter adapter;
     private Query query;

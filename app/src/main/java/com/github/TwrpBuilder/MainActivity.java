@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -27,10 +28,17 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.TwrpBuilder.Fragment.ContributorsFragment;
 import com.github.TwrpBuilder.Fragment.FragmentAbout;
-import com.github.TwrpBuilder.Fragment.FragmentListContributors;
+import com.github.TwrpBuilder.Fragment.FragmentListDevs;
 import com.github.TwrpBuilder.Fragment.FragmentStatusCommon;
+import com.github.TwrpBuilder.Fragment.MainFragment;
+import com.github.TwrpBuilder.Fragment.NoNetwork;
+import com.github.TwrpBuilder.Fragment.StatusFragment;
+import com.github.TwrpBuilder.app.LoginActivity;
 import com.github.TwrpBuilder.app.SettingsActivity;
+import com.github.TwrpBuilder.util.Config;
+import com.github.TwrpBuilder.util.FirebaseDBInstance;
 import com.github.updater.Updater;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -38,30 +46,18 @@ import com.google.android.gms.security.ProviderInstaller;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import com.github.TwrpBuilder.Fragment.CreditsFragment;
-import com.github.TwrpBuilder.Fragment.MainFragment;
-import com.github.TwrpBuilder.Fragment.NoNetwork;
-import com.github.TwrpBuilder.Fragment.StatusFragment;
-import com.github.TwrpBuilder.app.LoginActivity;
-import com.github.TwrpBuilder.util.Config;
-import com.github.TwrpBuilder.util.FirebaseDBInstance;
-import com.scottyab.aescrypt.AESCrypt;
-
 import java.io.File;
-import java.security.GeneralSecurityException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
 
-import static com.github.TwrpBuilder.R.menu.*;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     /*Fragments*/
     private NoNetwork mNoNetwork;
-    private CreditsFragment mFragmentCredits;
+    private ContributorsFragment mFragmentContributors;
     private StatusFragment statusFragment;
     private MainFragment mainFragment;
 
@@ -84,8 +80,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Cache=getCacheDir()+ File.separator;
-        mFirebaseAuth=FirebaseAuth.getInstance();
+        Cache = getCacheDir() + File.separator;
+        mFirebaseAuth = FirebaseAuth.getInstance();
         FirebaseDBInstance.getDatabase();
         try {
             ProviderInstaller.installIfNeeded(getApplicationContext());
@@ -111,22 +107,22 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navHeaderView= navigationView.inflateHeaderView(R.layout.nav_header_main);
+        navHeaderView = navigationView.inflateHeaderView(R.layout.nav_header_main);
         mUserEmail = navHeaderView.findViewById(R.id.user_email);
         enabled = PreferenceManager.getDefaultSharedPreferences(this)
                 .getBoolean("notification", false);
 
         /*Fragments*/
-        mNoNetwork=new NoNetwork();
-        mFragmentCredits=new CreditsFragment();
-        statusFragment=new StatusFragment();
-        mainFragment=new MainFragment();
+        mNoNetwork = new NoNetwork();
+        mFragmentContributors = new ContributorsFragment();
+        statusFragment = new StatusFragment();
+        mainFragment = new MainFragment();
         /*Replace Fragment*/
         updateFragment(this.mainFragment);
         setTitle(R.string.home);
 
         /*Text View*/
-        mUserEmail= navHeaderView.findViewById(R.id.user_email);
+        mUserEmail = navHeaderView.findViewById(R.id.user_email);
         if (!enabled) {
 
             FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
@@ -137,26 +133,25 @@ public class MainActivity extends AppCompatActivity
         checkPermission();
         requestPermission();
         isOnline();
-        new Updater(MainActivity.this,Config.Version,Config.APP_UPDATE_URL,false);
+        new Updater(MainActivity.this, Config.Version, Config.APP_UPDATE_URL, false);
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater=getMenuInflater();
-        menuInflater.inflate(R.menu.activity_option,menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.activity_option, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.quit:
                 finish();
                 break;
             case R.id.settings:
-                startActivity(new Intent(MainActivity.this,SettingsActivity.class));
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -181,39 +176,30 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             updateFragment(mainFragment);
             setTitle(R.string.home);
-        } else if (id == R.id.nav_credits) {
-            updateFragment(mFragmentCredits);
-            setTitle(R.string.credits);
-        }
-        else if (id==R.id.nav_contributor)
-        {
-            updateFragment(new FragmentListContributors());
-            setTitle(getString(R.string.contributors));
-        }
-        else if (id==R.id.nav_build_done)
-        {
+        } else if (id == R.id.nav_contributors) {
+            updateFragment(mFragmentContributors);
+            setTitle(R.string.contributors);
+        } else if (id == R.id.nav_our_team) {
+            updateFragment(new FragmentListDevs());
+            setTitle(getString(R.string.our_team));
+        } else if (id == R.id.nav_build_done) {
             updateFragment(new FragmentStatusCommon("Builds"));
             setTitle(R.string.completed);
-        }
-        else if (id==R.id.nav_reject)
-        {
+        } else if (id == R.id.nav_reject) {
             updateFragment(new FragmentStatusCommon("Rejected"));
             setTitle(R.string.rejected);
-        }
-        else if (id == R.id.action_log_out) {
+        } else if (id == R.id.action_log_out) {
             FirebaseAuth.getInstance().signOut();
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean("admin",false);
+            editor.putBoolean("admin", false);
             editor.apply();
             startActivity(new Intent(MainActivity.this, LoginActivity.class)); //Go back to home page
             finish();
-        }else if (id==R.id.check_status)
-        {
+        } else if (id == R.id.nav_build_incomplete) {
             updateFragment(statusFragment);
-            setTitle(R.string.build_status);
-        }else if (id==R.id.nav_about)
-        {
+            setTitle(R.string.incomplete);
+        } else if (id == R.id.nav_about) {
             updateFragment(new FragmentAbout());
             setTitle(R.string.app_name);
         }
@@ -222,8 +208,8 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    private void updateFragment(Fragment fragment)
-    {
+
+    private void updateFragment(Fragment fragment) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         ft.replace(R.id.content_frame, fragment);
@@ -234,17 +220,13 @@ public class MainActivity extends AppCompatActivity
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
             int result = ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (result == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        } else {
-            return false;
-        }
+            return result == PackageManager.PERMISSION_GRANTED;
         }
         return false;
     }
 
     private void requestPermission() {
-        if (android.os.Build.VERSION.SDK_INT>= Build.VERSION_CODES.M) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 Toast.makeText(MainActivity.this, "Write External Storage permission allows us to do store images. Please allow this permission in App SettingsActivity.", Toast.LENGTH_LONG).show();
@@ -255,7 +237,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             switch (requestCode) {
                 case 1:
@@ -272,16 +254,16 @@ public class MainActivity extends AppCompatActivity
 
     /*
      * isOnline - Check if there is a NetworkConnection
-     * @return boolean
+     * @return void
      */
-    protected boolean isOnline() {
+    protected void isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnected()) {
-            return true;
-        } else {
+        NetworkInfo netInfo = null;
+        if (cm != null) {
+            netInfo = cm.getActiveNetworkInfo();
+        }
+        if (netInfo == null || !netInfo.isConnected()) {
             updateFragment(mNoNetwork);
-            return false;
         }
     }
 

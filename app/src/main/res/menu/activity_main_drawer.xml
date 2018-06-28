@@ -1,44 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="@string/tools">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:checked="true"
+            android:icon="@drawable/ic_home_white_24dp"
+            android:title="@string/home" />
+    </group>
+    <item android:title="@string/build_status">
         <menu>
-        <group android:checkableBehavior="single">
-            <item
-                android:id="@+id/nav_home"
-                android:title="@string/home"
-                android:icon="@drawable/ic_home_white_24dp"/>
-            <item
-                android:id="@+id/check_status"
-                android:title="@string/build_status"
-                android:icon="@drawable/ic_dvr_white_24dp"/>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_build_incomplete"
+                    android:icon="@drawable/ic_incomplete_builds"
+                    android:title="@string/incomplete" />
 
-            <item android:id="@+id/nav_build_done"
-                android:title="@string/completed"
-                android:icon="@drawable/ic_builds_done"/>
+                <item
+                    android:id="@+id/nav_build_done"
+                    android:icon="@drawable/ic_builds_done"
+                    android:title="@string/completed" />
 
-            <item android:id="@+id/nav_reject"
-                android:title="@string/rejected"
-                android:icon="@drawable/ic_reject"/>
+                <item
+                    android:id="@+id/nav_reject"
+                    android:icon="@drawable/ic_reject"
+                    android:title="@string/rejected" />
 
-        </group>
+            </group>
         </menu>
     </item>
     <item android:title="@string/about">
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:title="@string/contributors"
-                    android:id="@+id/nav_credits"
-                    android:icon="@drawable/ic_code_white_24dp"/>
+                    android:id="@+id/nav_contributors"
+                    android:icon="@drawable/ic_code_white_24dp"
+                    android:title="@string/contributors" />
                 <item
-                    android:title="@string/our_team"
-                    android:id="@+id/nav_contributor"
-                    android:icon="@drawable/ic_developers"/>
+                    android:id="@+id/nav_our_team"
+                    android:icon="@drawable/ic_developers"
+                    android:title="@string/our_team" />
 
-                <item android:title="@string/about"
+                <item
+                    android:id="@+id/nav_about"
                     android:icon="@drawable/ic_info"
-                    android:id="@+id/nav_about"/>
+                    android:title="@string/about" />
             </group>
 
         </menu>
@@ -48,9 +54,9 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:title="@string/logout"
                     android:id="@+id/action_log_out"
-                    android:icon="@drawable/ic_logout_white_24dp"/>
+                    android:icon="@drawable/ic_logout_white_24dp"
+                    android:title="@string/logout" />
             </group>
         </menu>
     </item>

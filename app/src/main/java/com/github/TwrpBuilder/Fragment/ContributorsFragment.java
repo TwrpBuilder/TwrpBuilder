@@ -10,7 +10,7 @@ import com.github.TwrpBuilder.util.Config;
  * Date: 19.10.2016 12:43 AM
  */
 
-public class CreditsFragment extends AbstractGithubFragment
+public class ContributorsFragment extends AbstractGithubFragment
 {
     @Override
     public String onTargetURL()
