@@ -32,10 +32,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.scottyab.aescrypt.AESCrypt;
-import com.stericson.RootTools.RootTools;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.github.TwrpBuilder.app.InitActivity.ROOT_GRANTED;
 import static com.github.TwrpBuilder.app.InitActivity.isSupport;
 import static com.github.TwrpBuilder.util.Config.getBuildModel;
 
@@ -56,6 +56,7 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
     private String device;
     private String board;
     private String date;
+    private String content;
 
     public BuildsHolder(View v, String reference, boolean filterQuery, final Context context) {
         super(v);
@@ -92,7 +93,7 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
             setTvDeveloper(developer);
             setTvNote(note);
             if (filterQuery) {
-                if (RootTools.isAccessGiven() && isSupport) {
+                if (ROOT_GRANTED && isSupport) {
                     btFlash.setVisibility(View.VISIBLE);
                 }
                 btFeedBack.setVisibility(View.VISIBLE);
@@ -148,7 +149,7 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
                                 tvName.setText(d.child("name").getValue().toString());
                                 textViewEmail.setText(d.child("email").getValue().toString());
                                 tvXdaUrl.setText(d.child("xdaUrl").getValue().toString());
-                                if (d.child("description").getValue() != null){
+                                if (d.child("description").getValue() != null) {
                                     tvDescription.setText(d.child("description").getValue().toString());
                                     tvDescription.setVisibility(View.VISIBLE);
                                 }
@@ -191,8 +192,6 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
             }
         });
     }
-
-    private String content;
 
     private void setBtFeedBack() {
         btFeedBack.setOnClickListener(new View.OnClickListener() {

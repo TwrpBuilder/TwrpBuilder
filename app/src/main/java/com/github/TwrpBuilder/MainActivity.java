@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity
 
     /*Navigation drawer*/
     private NavigationView navigationView;
-    private View navHeaderView;
 
     /*Text View*/
     TextView mUserEmail;
@@ -107,7 +106,7 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navHeaderView = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        View navHeaderView = navigationView.inflateHeaderView(R.layout.nav_header_main);
         mUserEmail = navHeaderView.findViewById(R.id.user_email);
         enabled = PreferenceManager.getDefaultSharedPreferences(this)
                 .getBoolean("notification", false);
@@ -211,14 +210,12 @@ public class MainActivity extends AppCompatActivity
 
     private void updateFragment(Fragment fragment) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-
         ft.replace(R.id.content_frame, fragment);
         ft.commit();
     }
 
     private boolean checkPermission() {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
             int result = ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
             return result == PackageManager.PERMISSION_GRANTED;
         }
@@ -227,7 +224,6 @@ public class MainActivity extends AppCompatActivity
 
     private void requestPermission() {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 Toast.makeText(MainActivity.this, "Write External Storage permission allows us to do store images. Please allow this permission in App SettingsActivity.", Toast.LENGTH_LONG).show();
             } else {

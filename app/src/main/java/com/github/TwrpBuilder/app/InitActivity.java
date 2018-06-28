@@ -29,69 +29,65 @@ public class InitActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     public static boolean isSupport;
     public static boolean isOldMtk;
+    public static boolean ROOT_GRANTED;
 
-    private String Output;
-    String file[]=new String[]{
+    String file[] = new String[]{
             "RECOVERY",
             "Recovery",
             "FOTAKernel",
             "fotakernel",
             "recovery"
     };
-    private SharedPreferences.Editor  editor;
     private int GoogleVersion;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_init);
-        progressBar=findViewById(R.id.pb_init);
+        progressBar = findViewById(R.id.pb_init);
         try {
-            GoogleVersion = getPackageManager().getPackageInfo("com.google.android.gms", 0 ).versionCode;
+            GoogleVersion = getPackageManager().getPackageInfo("com.google.android.gms", 0).versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
 
-        if (GoogleVersion>=11800000) {
-            if (RootTools.isAccessGiven()) {
+        if (GoogleVersion >= 11800000) {
+            ROOT_GRANTED = RootTools.isAccessGiven();
+            if (ROOT_GRANTED) {
                 new getRecoveryMountTask().execute();
             } else {
                 startActivity(new Intent(InitActivity.this, LoginActivity.class));
                 isSupport = false;
                 finish();
             }
-        }else
-        {
-            Toast.makeText(getBaseContext(),"Please update your Google Play services",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getBaseContext(), "Please update your Google Play services", Toast.LENGTH_SHORT).show();
             finish();
         }
     }
 
-    public class getRecoveryMountTask extends AsyncTask<String,String,String>{
-
+    public class getRecoveryMountTask extends AsyncTask<String, String, String> {
 
         @Override
         public String doInBackground(String... voids) {
 
             final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
             String name = preferences.getString("recoveryPath", "");
-            if (name=="")
-            {
-                Output = Shell.SU.run("find /dev/block/platform -type d -name by-name ").toString().replace("[", "").replace("]", "");
-                if (Output.isEmpty()) {
-                    Output = Shell.SU.run("ls /dev/recovery").toString().replace("[", "").replace("]", "");
-                    if (!Output.isEmpty()) {
+            if (name.equals("")) {
+                String output = Shell.SU.run("find /dev/block/platform -type d -name by-name ").toString().replace("[", "").replace("]", "");
+                if (output.isEmpty()) {
+                    output = Shell.SU.run("ls /dev/recovery").toString().replace("[", "").replace("]", "");
+                    if (!output.isEmpty()) {
                         isOldMtk = true;
-                        editor = preferences.edit();
+                        SharedPreferences.Editor editor = preferences.edit();
                         editor.putBoolean("isOldMtk", true);
                         editor.apply();
-                        SharedP.putRecoveryString(getBaseContext(), Output, true);
+                        SharedP.putRecoveryString(getBaseContext(), output, true);
                     }
                 } else {
-                    for (String f: file)
-                    {
-                        String o=Shell.SU.run("ls "+Output+File.separator+f).toString().replace("[", "").replace("]", "");
-                        if (!o.isEmpty())
-                        {
+                    for (String f : file) {
+                        String o = Shell.SU.run("ls " + output + File.separator + f).toString().replace("[", "").replace("]", "");
+                        if (!o.isEmpty()) {
                             SharedP.putRecoveryString(getBaseContext(), o, true);
                             break;
                         }
@@ -99,8 +95,8 @@ public class InitActivity extends AppCompatActivity {
 
                 }
             }
-            isOldMtk=preferences.getBoolean("isOldMtk",false);
-            isSupport=preferences.getBoolean("isSupport",false);
+            isOldMtk = preferences.getBoolean("isOldMtk", false);
+            isSupport = preferences.getBoolean("isSupport", false);
             return name;
         }
 

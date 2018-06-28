@@ -4,11 +4,13 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="5dp"
     android:background="@color/background_dark">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:background="@color/background_dark">
+        android:background="@color/background_dark"
+        android:padding="16dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -16,84 +18,86 @@
             android:layout_marginStart="10dp"
             android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/list_user_device"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorInfo"
-        android:textSize="13sp" />
+            <TextView
+                android:id="@+id/list_user_device"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorInfo"
+                android:textSize="13sp" />
 
-    <TextView
-        android:id="@+id/list_user_board"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorInfo"
-        android:textSize="13sp" />
+            <TextView
+                android:id="@+id/list_user_board"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorInfo"
+                android:textSize="13sp" />
 
-    <TextView
-        android:id="@+id/list_user_brand"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorInfo"
-        android:textSize="13sp" />
+            <TextView
+                android:id="@+id/list_user_brand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorInfo"
+                android:textSize="13sp" />
 
-    <TextView
-        android:id="@+id/list_user_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorInfo"
-        android:textSize="13sp" />
+            <TextView
+                android:id="@+id/list_user_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorInfo"
+                android:textSize="13sp" />
 
-    <TextView
-        android:id="@+id/list_developer_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:textColor="@color/colorInfo"
-        android:textSize="13sp" />
+            <TextView
+                android:id="@+id/list_developer_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorInfo"
+                android:textSize="13sp"
+                android:visibility="gone" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:id="@+id/list_reject_note"
-        android:textColor="@color/colorInfo"
-        android:textSize="13sp"
-        android:visibility="gone"
-        android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/list_reject_note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorInfo"
+                android:textSize="13sp"
+                android:visibility="gone" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:text="@string/recovery"
-            android:id="@+id/bt_download_recovery"
-            android:visibility="gone"
-            android:textAllCaps="false"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+                <Button
+                    android:id="@+id/bt_download_recovery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_minus4sdp"
+                    android:layout_marginStart="@dimen/_minus4sdp"
+                    android:layout_weight="1"
+                    android:text="@string/recovery"
+                    android:textAllCaps="false"
+                    android:visibility="gone" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:text="@string/flash"
-            android:visibility="gone"
-            android:id="@+id/bt_flash"
-            android:textAllCaps="false"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+                <Button
+                    android:id="@+id/bt_flash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/flash"
+                    android:textAllCaps="false"
+                    android:visibility="gone" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:text="@string/feedback"
-            android:visibility="gone"
-            android:id="@+id/bt_feedback"
-            android:textAllCaps="false"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+                <Button
+                    android:id="@+id/bt_feedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/feedback"
+                    android:textAllCaps="false"
+                    android:visibility="gone" />
 
-    </LinearLayout>
+            </LinearLayout>
 
-</LinearLayout>
+        </LinearLayout>
     </RelativeLayout>
 </android.support.v7.widget.CardView>
