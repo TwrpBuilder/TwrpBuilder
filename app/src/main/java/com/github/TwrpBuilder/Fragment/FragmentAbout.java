@@ -37,7 +37,7 @@ public class FragmentAbout extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View view)
+    public void onClick(@NonNull View view)
     {
         int id=view.getId();
        if (id==cardViewWebsite.getId())

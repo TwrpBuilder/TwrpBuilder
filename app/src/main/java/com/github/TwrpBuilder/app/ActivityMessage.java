@@ -11,21 +11,16 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 
 public class ActivityMessage extends android.app.Activity {
-    private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference;
-    private Message message;
-    private Bundle bundle;
-    private String Model;
     public static boolean finished;
 
     @Override
     protected void onStart() {
         super.onStart();
-        bundle = getIntent().getExtras();
-        Model = bundle.getString("Model");
-        firebaseDatabase=FirebaseDatabase.getInstance();
-        databaseReference=firebaseDatabase.getReference().child("messages");
-        message=new Message("Twrp Builder","Build is ready for "+ Model);
+        Bundle bundle = getIntent().getExtras();
+        String model = bundle.getString("Model");
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference().child("messages");
+        Message message = new Message("Twrp Builder", "Build is ready for " + model);
         databaseReference.push().setValue(message);
         finished=true;
         finish();

@@ -1,6 +1,9 @@
 package com.github.TwrpBuilder.Fragment;
 
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.github.TwrpBuilder.adapter.AbstractGithubAdapter;
 import com.github.TwrpBuilder.adapter.CreditsAdapter;
 import com.github.TwrpBuilder.util.Config;
@@ -12,15 +15,15 @@ import com.github.TwrpBuilder.util.Config;
 
 public class ContributorsFragment extends AbstractGithubFragment
 {
+    @NonNull
     @Override
-    public String onTargetURL()
-    {
+    public String onTargetURL() {
         return Config.URL_CONTRIBUTORS;
     }
 
+    @Nullable
     @Override
-    public AbstractGithubAdapter onAdapter()
-    {
+    public AbstractGithubAdapter onAdapter() {
         return new CreditsAdapter(getActivity());
     }
 }

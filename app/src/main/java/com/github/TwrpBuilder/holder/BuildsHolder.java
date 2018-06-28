@@ -44,12 +44,20 @@ import static com.github.TwrpBuilder.util.Config.getBuildModel;
  */
 
 public class BuildsHolder extends RecyclerView.ViewHolder {
-    private TextView tvDevice, tvBoard, tvDate, tvBrand, tvDeveloper, tvNote;
-    private Button btDownload, btFlash, btFeedBack;
-    private Context context;
-    private boolean filterQuery;
-    private String reference;
-    private String colon = " : ";
+    private final TextView tvDevice;
+    private final TextView tvBoard;
+    private final TextView tvDate;
+    private final TextView tvBrand;
+    private final TextView tvDeveloper;
+    private final TextView tvNote;
+    private final Button btDownload;
+    private final Button btFlash;
+    private final Button btFeedBack;
+    private final Context context;
+    private final boolean filterQuery;
+    private final String reference;
+    @NonNull
+    private final String colon = " : ";
     private String email;
     private String developer;
     private String brand;
@@ -58,7 +66,7 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
     private String date;
     private String content;
 
-    public BuildsHolder(View v, String reference, boolean filterQuery, final Context context) {
+    public BuildsHolder(@NonNull View v, String reference, boolean filterQuery, final Context context) {
         super(v);
         this.context = context;
         this.filterQuery = filterQuery;
@@ -118,7 +126,7 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 LayoutInflater li = LayoutInflater.from(context);
-                View downloadDialog = li.inflate(R.layout.dialog_download, null);
+                @SuppressLint("InflateParams") View downloadDialog = li.inflate(R.layout.dialog_download, null);
                 BottomSheetDialog dialog = new BottomSheetDialog(context);
                 dialog.setContentView(downloadDialog);
                 TextView model = downloadDialog.findViewById(R.id.tv_model);

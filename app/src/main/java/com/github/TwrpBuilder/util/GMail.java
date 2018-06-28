@@ -1,6 +1,8 @@
 package com.github.TwrpBuilder.util;
 
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -11,24 +13,18 @@ import java.util.Properties;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
-import javax.activation.FileDataSource;
-import javax.mail.BodyPart;
 import javax.mail.Message;
-import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
 
 /**
  * Created by androidlover5842 on 20.3.2018.
  */
 
 public class GMail extends javax.mail.Authenticator {
-    private String mailhost = "smtp.gmail.com";
     private String user;
     private String password;
     private Session session;
@@ -43,6 +39,7 @@ public class GMail extends javax.mail.Authenticator {
 
         Properties props = new Properties();
         props.setProperty("mail.transport.protocol", "smtp");
+        String mailhost = "smtp.gmail.com";
         props.setProperty("mail.host", mailhost);
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");
@@ -55,31 +52,23 @@ public class GMail extends javax.mail.Authenticator {
         session = Session.getDefaultInstance(props, this);
     }
 
+    @NonNull
     protected PasswordAuthentication getPasswordAuthentication() {
         return new PasswordAuthentication(user, password);
     }
 
-    public synchronized void sendMail(String subject, String body, String sender, String recipients) throws Exception {
-        new mainThread(body,sender,subject,recipients).execute();
+    public synchronized void sendMail(String subject, String body, String sender, String recipients) {
+        new mainThread(body, sender, subject, recipients).execute();
     }
 
-    public class ByteArrayDataSource implements DataSource {
-        private byte[] data;
-        private String type;
+    class ByteArrayDataSource implements DataSource {
+        private final byte[] data;
+        private final String type;
 
-        public ByteArrayDataSource(byte[] data, String type) {
+        ByteArrayDataSource(byte[] data) {
             super();
             this.data = data;
-            this.type = type;
-        }
-
-        public ByteArrayDataSource(byte[] data) {
-            super();
-            this.data = data;
-        }
-
-        public void setType(String type) {
-            this.type = type;
+            this.type = "text/plain";
         }
 
         public String getContentType() {
@@ -89,37 +78,42 @@ public class GMail extends javax.mail.Authenticator {
                 return type;
         }
 
-        public InputStream getInputStream() throws IOException {
+        @NonNull
+        public InputStream getInputStream() {
             return new ByteArrayInputStream(data);
         }
 
+        @NonNull
         public String getName() {
             return "ByteArrayDataSource";
         }
 
+        @NonNull
         public OutputStream getOutputStream() throws IOException {
             throw new IOException("Not Supported");
         }
     }
 
-    public class mainThread extends AsyncTask<String,String,String>{
+    class mainThread extends AsyncTask<String, String, String> {
 
-        String body;
-        String sender;
-        String subject;
-        String recipients;
-        public mainThread(String body,String sender,String subject,String recipients){
-            this.body=body;
-            this.sender=sender;
-            this.subject=subject;
-            this.recipients=recipients;
+        final String body;
+        final String sender;
+        final String subject;
+        final String recipients;
+
+        mainThread(String body, String sender, String subject, String recipients) {
+            this.body = body;
+            this.sender = sender;
+            this.subject = subject;
+            this.recipients = recipients;
         }
 
+        @Nullable
         @Override
         protected String doInBackground(String... strings) {
-            try{
+            try {
                 MimeMessage message = new MimeMessage(session);
-                DataHandler handler = new DataHandler(new ByteArrayDataSource(body.getBytes(), "text/plain"));
+                DataHandler handler = new DataHandler(new ByteArrayDataSource(body.getBytes()));
                 message.setSender(new InternetAddress(sender));
                 message.setSubject(subject);
                 message.setDataHandler(handler);
@@ -128,7 +122,7 @@ public class GMail extends javax.mail.Authenticator {
                 else
                     message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipients));
                 Transport.send(message);
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;

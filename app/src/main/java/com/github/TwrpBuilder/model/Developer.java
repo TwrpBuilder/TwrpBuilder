@@ -23,34 +23,6 @@ public class Developer {
         this.description=description;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
-    }
-
-    public void setXdaUrl(String xdaUrl) {
-        this.xdaUrl = xdaUrl;
-    }
-
-    public void setGitId(String gitId) {
-        this.gitId = gitId;
-    }
-
-    public void setDonationUrl(String donationUrl) {
-        this.donationUrl = donationUrl;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getEmail() {
         return email;
     }

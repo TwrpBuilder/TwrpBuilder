@@ -9,13 +9,12 @@ import com.google.firebase.database.FirebaseDatabase;
 public class FirebaseDBInstance {
     private static FirebaseDatabase mData;
 
-    public static FirebaseDatabase getDatabase() {
+    public static void getDatabase() {
         if (mData == null) {
 
             mData = FirebaseDatabase.getInstance();
             mData.setPersistenceEnabled(true);
         }
-        return mData;
     }
 
 }

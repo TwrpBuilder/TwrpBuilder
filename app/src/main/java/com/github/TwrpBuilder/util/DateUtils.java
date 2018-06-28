@@ -2,21 +2,18 @@ package com.github.TwrpBuilder.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by androidlover5842 on 21/1/18.
  */
 
 public class DateUtils {
-    public static Calendar calendar;
-    public static SimpleDateFormat simpleDateFormat;
-    public static String Dat;
 
-      public static String getDate(){
-        calendar = Calendar.getInstance();
-        simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-        Dat = simpleDateFormat.format(calendar.getTime());
+    public static String getDate() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
 
-        return Dat;
+        return simpleDateFormat.format(calendar.getTime());
     }
 }

@@ -14,15 +14,14 @@ import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.github.TwrpBuilder.R;
+import com.github.TwrpBuilder.model.Pbuild;
+import com.github.TwrpBuilder.util.DateUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import com.github.TwrpBuilder.R;
-import com.github.TwrpBuilder.util.DateUtils;
-import com.github.TwrpBuilder.model.Pbuild;
 
 import static com.github.TwrpBuilder.app.ActivityMessage.finished;
 
@@ -32,12 +31,12 @@ import static com.github.TwrpBuilder.app.ActivityMessage.finished;
 
 public class ActivitySubmitBuild extends AppCompatActivity {
 
+    @Nullable
     private String Brand,Board,Model,CodeName,Email,Fmc,Uid,key;
-    private Bundle bundle;
     private EditText edGetUri;
-    private Button btSubmit;
     private DatabaseReference mUploader;
     private FirebaseDatabase mFirebaseInstance;
+    @Nullable
     private Pbuild pbuild;
     private FirebaseAuth firebaseAuth;
 
@@ -54,7 +53,7 @@ public class ActivitySubmitBuild extends AppCompatActivity {
         mFirebaseInstance = FirebaseDatabase.getInstance();
         firebaseAuth=FirebaseAuth.getInstance();
         mUploader = mFirebaseInstance.getReference("Builds");
-        bundle = getIntent().getExtras();
+        Bundle bundle = getIntent().getExtras();
         Brand = bundle.getString("Brand");
         Board = bundle.getString("Board");
         Model = bundle.getString("Model");
@@ -66,7 +65,7 @@ public class ActivitySubmitBuild extends AppCompatActivity {
 
 
         edGetUri= findViewById(R.id.ed_url);
-        btSubmit= findViewById(R.id.bt_submit);
+        Button btSubmit = findViewById(R.id.bt_submit);
 
         btSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +96,7 @@ public class ActivitySubmitBuild extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId())
         {
             case android.R.id.home:
@@ -110,7 +109,7 @@ public class ActivitySubmitBuild extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (finished==true)
+        if (finished)
         {
             finish();
         }

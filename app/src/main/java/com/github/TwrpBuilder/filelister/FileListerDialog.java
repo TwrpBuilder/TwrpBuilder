@@ -6,8 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
-import java.io.File;
-
 import static android.content.DialogInterface.BUTTON_NEGATIVE;
 import static android.content.DialogInterface.BUTTON_NEUTRAL;
 import static android.content.DialogInterface.BUTTON_POSITIVE;
@@ -18,7 +16,7 @@ import static android.content.DialogInterface.BUTTON_POSITIVE;
 
 public class FileListerDialog {
 
-    private AlertDialog alertDialog;
+    private final AlertDialog alertDialog;
 
     private FilesListerView filesListerView;
 
@@ -46,23 +44,12 @@ public class FileListerDialog {
         return new FileListerDialog(context);
     }
 
-    /**
-     * Creates an instance of FileListerDialog with the specified Theme
-     *
-     * @param context Context of the App
-     * @param themeId Theme Id for the dialog
-     * @return Instance of FileListerDialog
-     */
-    public static FileListerDialog createFileListerDialog(@NonNull Context context, int themeId) {
-        return new FileListerDialog(context, themeId);
-    }
-
     private void init(Context context) {
         filesListerView = new FilesListerView(context);
         alertDialog.setView(filesListerView);
         alertDialog.setButton(BUTTON_POSITIVE, "Select", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(@NonNull DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
                 if (onFileSelectedListener != null)
                     onFileSelectedListener.onFileSelected(filesListerView.getSelected(), filesListerView.getSelected().getAbsolutePath());
@@ -76,7 +63,7 @@ public class FileListerDialog {
         });
         alertDialog.setButton(BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(@NonNull DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
             }
         });

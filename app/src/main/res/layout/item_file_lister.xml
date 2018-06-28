@@ -19,13 +19,13 @@
 
         <TextView
             android:id="@+id/name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
             android:layout_weight="0.9"
             android:gravity="center_vertical"
-            android:text="Folder"
+            android:text="@string/folder"
             android:textSize="15sp" />
     </LinearLayout>
 </RelativeLayout>

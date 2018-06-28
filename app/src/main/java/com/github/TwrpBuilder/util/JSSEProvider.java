@@ -1,5 +1,7 @@
 package com.github.TwrpBuilder.util;
 
+import android.support.annotation.Nullable;
+
 import java.security.AccessController;
 import java.security.Provider;
 
@@ -7,11 +9,12 @@ import java.security.Provider;
  * Created by androidlover5842 on 20.3.2018.
  */
 
-public final class JSSEProvider extends Provider {
+final class JSSEProvider extends Provider {
 
     public JSSEProvider() {
         super("HarmonyJSSE", 1.0, "Harmony JSSE Provider");
         AccessController.doPrivileged(new java.security.PrivilegedAction<Void>() {
+            @Nullable
             public Void run() {
                 put("SSLContext.TLS",
                         "org.apache.harmony.xnet.provider.jsse.SSLContextImpl");

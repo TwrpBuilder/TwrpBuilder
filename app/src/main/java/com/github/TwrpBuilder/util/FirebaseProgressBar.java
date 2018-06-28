@@ -1,17 +1,15 @@
 package com.github.TwrpBuilder.util;
 
-import android.database.DataSetObserver;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.github.TwrpBuilder.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -21,22 +19,21 @@ import com.google.firebase.database.ValueEventListener;
  */
 
 public class FirebaseProgressBar {
-    private Query query;
-    private FirebaseDatabase mFirebaseInstance;
 
-    public FirebaseProgressBar(final ProgressBar progressBar, final TextView textView, FirebaseRecyclerAdapter adapter, final String refId){
+    public FirebaseProgressBar(@NonNull final ProgressBar progressBar, @NonNull final TextView textView, @NonNull FirebaseRecyclerAdapter adapter, @NonNull final String refId) {
         start(progressBar,textView,adapter,refId,false,null,null);
     }
 
-    public FirebaseProgressBar(final ProgressBar progressBar, final TextView textView, FirebaseRecyclerAdapter adapter, final String refId,boolean filter,String from ,String where){
+    public FirebaseProgressBar(@NonNull final ProgressBar progressBar, @NonNull final TextView textView, @NonNull FirebaseRecyclerAdapter adapter, @NonNull final String refId, boolean filter, @NonNull String from, String where) {
         start(progressBar,textView,adapter,refId,filter,from,where);
     }
 
-   private void start(final ProgressBar progressBar, final TextView textView, FirebaseRecyclerAdapter adapter, final String refId, final boolean filter,String from,String equalto){
-        mFirebaseInstance = FirebaseDatabase.getInstance();
+    private void start(final ProgressBar progressBar, @NonNull final TextView textView, @NonNull FirebaseRecyclerAdapter adapter, @NonNull final String refId, final boolean filter, @NonNull String from, String equalto) {
+        FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
 
 
         progressBar.setVisibility(View.VISIBLE);
+        Query query;
         if (filter)
         {
             query = mFirebaseInstance.getReference(refId).orderByChild(from).equalTo(equalto);
@@ -45,7 +42,7 @@ public class FirebaseProgressBar {
         }
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 progressBar.setVisibility(View.GONE);
                 if (!dataSnapshot.exists())
                 {
@@ -55,14 +52,16 @@ public class FirebaseProgressBar {
                         textView.setText(R.string.no_builds_found);
                     }
                     else {
-                        if (refId == "RunningBuild") {
-                            textView.setText(R.string.no_running_builds);
-                        } else if (refId == "Builds") {
-                            textView.setText(R.string.no_builds_found);
-                        }
-                        else if (refId=="Rejected")
-                        {
-                            textView.setText(R.string.no_rejected);
+                        switch (refId) {
+                            case "RunningBuild":
+                                textView.setText(R.string.no_running_builds);
+                                break;
+                            case "Builds":
+                                textView.setText(R.string.no_builds_found);
+                                break;
+                            case "Rejected":
+                                textView.setText(R.string.no_rejected);
+                                break;
                         }
                     }
                     textView.setVisibility(View.VISIBLE);
@@ -74,7 +73,7 @@ public class FirebaseProgressBar {
             }
 
             @Override
-            public void onCancelled(DatabaseError firebaseError) {
+            public void onCancelled(@NonNull DatabaseError firebaseError) {
                 progressBar.setVisibility(View.GONE);
 
             }

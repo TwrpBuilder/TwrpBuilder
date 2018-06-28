@@ -1,6 +1,7 @@
 package com.github.updater;
 
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,33 +14,15 @@ import java.net.URL;
  * Created by androidlover5842 on 10.2.2018.
  */
 
-public class JsonParser extends AsyncTask<Void,Void,Void>{
+class JsonParser extends AsyncTask<Void, Void, Void> {
 
-    private String uri;
-    private String data;
+    static String changelog;
     public static int version;
-    public static String changelog;
+    private final String uri;
 
     JsonParser(String uri){
         this.uri=uri;
         this.execute();
-    }
-
-    @Override
-    protected Void doInBackground(Void... voids) {
-        try {
-            data = readUrl(uri);
-            JSONObject jsonObject = new JSONObject(data);
-            JSONArray jsonArray= jsonObject.getJSONArray("TwrpBuilder");
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObj = jsonArray.getJSONObject(i);
-                version= Integer.valueOf(jsonObj.get("version").toString());
-                changelog=jsonObj.get("changelog").toString();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     private static String readUrl(String urlString) throws Exception {
@@ -47,7 +30,7 @@ public class JsonParser extends AsyncTask<Void,Void,Void>{
         try {
             URL url = new URL(urlString);
             reader = new BufferedReader(new InputStreamReader(url.openStream()));
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             int read;
             char[] chars = new char[1024];
             while ((read = reader.read(chars)) != -1)
@@ -58,6 +41,24 @@ public class JsonParser extends AsyncTask<Void,Void,Void>{
             if (reader != null)
                 reader.close();
         }
+    }
+
+    @Nullable
+    @Override
+    protected Void doInBackground(Void... voids) {
+        try {
+            String data = readUrl(uri);
+            JSONObject jsonObject = new JSONObject(data);
+            JSONArray jsonArray = jsonObject.getJSONArray("TwrpBuilder");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObj = jsonArray.getJSONObject(i);
+                version = Integer.valueOf(jsonObj.get("version").toString());
+                changelog = jsonObj.get("changelog").toString();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override

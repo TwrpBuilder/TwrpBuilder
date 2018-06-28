@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,7 +9,6 @@
     android:background="@color/background_dark">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/btn_login_singup_linear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="20dp"
@@ -25,13 +25,14 @@
             android:paddingTop="40dp">
 
             <ImageView
-                android:id="@+id/logo"
                 android:layout_width="220dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/twrpbuilder_w" />
+                android:contentDescription="@string/todo"
+                android:src="@drawable/twrpbuilder_w"
+                tools:ignore="ContentDescription" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -45,6 +46,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginStart="15dp"
+                android:contentDescription="@string/todo"
                 android:src="@drawable/line" />
 
             <Space
@@ -69,7 +71,9 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginStart="15dp"
-                android:src="@drawable/line" />
+                android:contentDescription="@string/todo"
+                android:src="@drawable/line"
+                tools:ignore="ContentDescription" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -80,7 +84,6 @@
     </android.support.v7.widget.CardView>
 
     <LinearLayout
-        android:id="@+id/developer_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -93,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="cursive"
-            android:text="Developed by" />
+            android:text="@string/developed_by" />
 
         <Space
             android:layout_width="wrap_content"
@@ -102,7 +105,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TWRP Builder Team"/>
+            android:text="@string/twrp_builder_team" />
         <Space
             android:layout_width="wrap_content"
             android:layout_height="5dp" />

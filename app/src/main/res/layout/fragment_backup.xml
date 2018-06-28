@@ -5,7 +5,7 @@
 
 <LinearLayout
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_gravity="center"
@@ -48,7 +48,6 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_view"
         android:layout_gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -110,10 +109,11 @@
             android:orientation="vertical" android:layout_width="match_parent"
             android:id="@+id/fragment_backup_child_linear"
             android:layout_height="match_parent">
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:id="@+id/fl_list_test_builds"
-                android:layout_height="match_parent"></FrameLayout>
+                android:layout_height="match_parent" />
 
         </LinearLayout>
     </android.support.v7.widget.CardView>

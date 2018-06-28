@@ -1,9 +1,8 @@
 package com.github.TwrpBuilder.app;
 
 import android.content.DialogInterface;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -12,10 +11,8 @@ import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,15 +31,12 @@ import java.util.Locale;
  */
 
 public class SettingsActivity extends AppCompatActivity {
-    private CardView cardView_Lang;
-    private TextView textView_currentLang;
-    private String myLang=Locale.getDefault().getLanguage();
+    private final String myLang = Locale.getDefault().getLanguage();
     private ArrayAdapter<String> supportedLang;
     private LinearLayout linearLayout;
     private AlertDialog.Builder builderSingle;
-    private CardView CheckUpdate;
-    private AppCompatCheckBox NotificationCheckBox;
-    private String[] supportLangs=new String[]{
+    @NonNull
+    private final String[] supportLangs = new String[]{
             "en",
             "ar",
             "tr",
@@ -51,7 +45,8 @@ public class SettingsActivity extends AppCompatActivity {
 	    "fr",
             "it"
     };
-    private String[] langList=new String[]{
+    @NonNull
+    private final String[] langList = new String[]{
             "English",
             "Arabic",
             "Turkish",
@@ -66,18 +61,18 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         Toolbar toolbar=findViewById(R.id.action_bar_tool);
         toolbar.setTitle(R.string.settings);
-        cardView_Lang=findViewById(R.id.settings_lang);
-        textView_currentLang=findViewById(R.id.current_lang);
+        CardView cardView_Lang = findViewById(R.id.settings_lang);
+        TextView textView_currentLang = findViewById(R.id.current_lang);
         textView_currentLang.setText(myLang);
-        CheckUpdate=findViewById(R.id.settings_update);
+        CardView checkUpdate = findViewById(R.id.settings_update);
         builderSingle = new AlertDialog.Builder(SettingsActivity.this);
-        NotificationCheckBox=findViewById(R.id.settings_notification_checkBox);
+        AppCompatCheckBox notificationCheckBox = findViewById(R.id.settings_notification_checkBox);
         linearLayout=findViewById(R.id.settings_view);
         supportedLang=new ArrayAdapter<>(SettingsActivity.this,android.R.layout.select_dialog_singlechoice);
 
         boolean checked = PreferenceManager.getDefaultSharedPreferences(this)
                 .getBoolean("notification", false);
-        NotificationCheckBox.setChecked(checked);
+        notificationCheckBox.setChecked(checked);
 
         for (String s: langList)
         {
@@ -87,12 +82,12 @@ public class SettingsActivity extends AppCompatActivity {
                 .setTitle(R.string.select_lang)
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(@NonNull DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
 
-        CheckUpdate.setOnClickListener(new View.OnClickListener() {
+        checkUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(SettingsActivity.this, R.string.checking_for_updates,Toast.LENGTH_SHORT).show();
@@ -110,28 +105,28 @@ public class SettingsActivity extends AppCompatActivity {
                         final String strName = supportedLang.getItem(which);
                         if (strName.equals(langList[0])) {
                             new setLocale(getBaseContext(),supportLangs[0]);
-                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[0]).commit();
+                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[0]).apply();
                         }
                         else if (strName.equals(langList[1]))
                         {
                             new setLocale(getBaseContext(),supportLangs[1]);
-                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[1]).commit();
+                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[1]).apply();
                         }else if (strName.equals(langList[2]))
                         {
                             new setLocale(getBaseContext(),supportLangs[2]);
-                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[2]).commit();
+                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[2]).apply();
                         }else if (strName.equals(langList[3]))
                         {
                             new setLocale(getBaseContext(),supportLangs[3]);
-                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[3]).commit();
+                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[3]).apply();
                         }else if (strName.equals(langList[4]))
                         {
                             new setLocale(getBaseContext(),supportLangs[4]);
-                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[4]).commit();
+                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[4]).apply();
 			}else if (strName.equals(langList[5]))
                         {
                             new setLocale(getBaseContext(),supportLangs[5]);
-                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[5]).commit();
+                            PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString("lang", supportLangs[5]).apply();
 			 }
                         Snackbar.make(linearLayout, R.string.restart_change,Snackbar.LENGTH_SHORT).show();
 
@@ -143,15 +138,15 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        NotificationCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        notificationCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b)
                 {
-                    PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putBoolean("notification", true).commit();
+                    PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putBoolean("notification", true).apply();
                     FirebaseMessaging.getInstance().unsubscribeFromTopic("pushNotifications");
                 }else {
-                    PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putBoolean("notification", false).commit();
+                    PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putBoolean("notification", false).apply();
                     FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
                 }
             }

@@ -56,29 +56,26 @@ import static com.github.TwrpBuilder.util.Config.getBuildModel;
 
 public class BackupFragment extends Fragment implements View.OnClickListener {
 
-    /*Buttons*/
-    public Button mUploadBackup;
+    /*FireBase*/
+    @NonNull
+    private final FirebaseStorage storage = FirebaseStorage.getInstance();
     private Button mBackupButton;
 
     /*TextView*/
     private TextView mBuildDescription;
-    private TextView textViewBrand, textViewModel, textViewBoard, textViewSupported;
-
+    @NonNull
+    private final StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/");
+    private final boolean isSupported;
+    /*Buttons*/
+    private Button mUploadBackup;
     /*ProgressBar*/
-    ProgressBar mProgressBar;
-
-    /*FireBase*/
-    public FirebaseStorage storage = FirebaseStorage.getInstance();
-    public StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/");
-    public StorageReference riversRef;
+    private ProgressBar mProgressBar;
 
     private boolean hasUpB;
-
-    private SharedPreferences preferences;
-    private String recoveryPath;
+    private StorageReference riversRef;
     private LinearLayout fragment_backup_child_linear;
-    private String colon = " : ";
-    private boolean isSupported;
+    @Nullable
+    private String recoveryPath;
 
     BackupFragment(boolean isSupported) {
         this.isSupported = isSupported;
@@ -86,7 +83,7 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_backup, container, false);
         mBackupButton = view.findViewById(R.id.BackupRecovery);
         mUploadBackup = view.findViewById(R.id.UploadBackup);
@@ -95,18 +92,19 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
         fragment_backup_child_linear = view.findViewById(R.id.fragment_backup_child_linear);
         riversRef = storageRef.child("queue/" + getBuildBrand() + "/" + getBuildBoard() + "/" + getBuildModel() + "/" + TwrpBackFName);
         mProgressBar.setVisibility(View.VISIBLE);
-        preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         recoveryPath = preferences.getString("recoveryPath", "");
-        textViewBrand = view.findViewById(R.id.tv_brand);
-        textViewModel = view.findViewById(R.id.tv_model);
-        textViewBoard = view.findViewById(R.id.tv_board);
-        textViewSupported = view.findViewById(R.id.tv_supported);
+        TextView textViewBrand = view.findViewById(R.id.tv_brand);
+        TextView textViewModel = view.findViewById(R.id.tv_model);
+        TextView textViewBoard = view.findViewById(R.id.tv_board);
+        TextView textViewSupported = view.findViewById(R.id.tv_supported);
 
+        String colon = " : ";
         textViewBrand.setText(getString(R.string.brand) + colon + Config.getBuildBrand());
         textViewBoard.setText(getString(R.string.board) + colon + Config.getBuildBoard());
         textViewModel.setText(getString(R.string.model) + colon + Config.getBuildModel());
         if (!isSupported) {
-            textViewSupported.setText("Running in non-root mode");
+            textViewSupported.setText(R.string.running_in_not_root_mode);
         }
 
         checkRequest();
@@ -179,8 +177,8 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
             }
         }
         if (!isSupported) {
-            if (FromCB == true) {
-                if (resultOfB == true) {
+            if (FromCB) {
+                if (resultOfB) {
                     if (!hasUpB) {
                         mUploadBackup.setVisibility(View.VISIBLE);
                     } else {
@@ -195,7 +193,7 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(@NonNull View view) {
         int id = view.getId();
         if (id == mBackupButton.getId()) {
             if (isSupported) {
@@ -217,6 +215,7 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
     class BackupTask extends AsyncTask<Void, String, Void> {
         private boolean failed;
 
+        @Nullable
         @Override
         protected Void doInBackground(Void... params) {
             ShellExecuter.mkdir("TwrpBuilder");
@@ -226,7 +225,7 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if (isOldMtk == true) {
+            if (isOldMtk) {
                 Shell.SU.run("dd if=" + recoveryPath + " bs=20000000 count=1 of=" + Sdcard + "TwrpBuilder/recovery.img ; cat /proc/dumchar > " + Sdcard + "TwrpBuilder/mounts ; cd " + Sdcard + "TwrpBuilder && tar -c recovery.img build.prop mounts > " + Sdcard + "TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
             } else {
                 Shell.SU.run("dd if=" + recoveryPath + " of=" + Sdcard + "TwrpBuilder/recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` > " + Sdcard + "TwrpBuilder/mounts ; cd " + Sdcard + "TwrpBuilder && tar -c recovery.img build.prop mounts > " + Sdcard + "TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
@@ -239,19 +238,20 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
             super.onPostExecute(aVoid);
             mProgressBar.setVisibility(View.GONE);
             if (failed) {
-                mBuildDescription.setText("Failed to create backup .");
+                mBuildDescription.setText(R.string.failed_to_create_backup);
                 Snackbar.make(fragment_backup_child_linear, "Failed to backup", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             } else {
                 if (!hasUpB) {
                     mUploadBackup.setVisibility(View.VISIBLE);
                 }
-                mBuildDescription.setText("Backed up recovery " + recoveryPath);
+                mBuildDescription.setText(getString(R.string.backup_recovery_from_path) + recoveryPath);
                 Snackbar.make(fragment_backup_child_linear, "Backup Done", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         }
-        private void compressGzipFile(String file, String gzipFile) {
+
+        private void compressGzipFile(@NonNull String file, @NonNull String gzipFile) {
             try {
                 FileInputStream fis = new FileInputStream(file);
                 FileOutputStream fos = new FileOutputStream(gzipFile);

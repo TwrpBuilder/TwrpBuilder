@@ -27,29 +27,27 @@ import com.google.firebase.database.Query;
  */
 
 public class FragmentListDevs extends Fragment implements View.OnClickListener {
-    private RecyclerView recyclerView;
+    @Nullable
     private FirebaseRecyclerAdapter adapter;
-    private Query query;
-    private FirebaseRecyclerOptions options;
-    private LinearLayoutManager layoutManager;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v=inflater.inflate(R.layout.fragment_list_developers,container,false);
-        recyclerView=v.findViewById(R.id.rv_list_devs);
-        query = FirebaseDatabase.getInstance()
+        RecyclerView recyclerView = v.findViewById(R.id.rv_list_devs);
+        Query query = FirebaseDatabase.getInstance()
                 .getReference("Developers");
-        options = new FirebaseRecyclerOptions.Builder()
-                .setQuery(query,Developer.class)
+        FirebaseRecyclerOptions options = new FirebaseRecyclerOptions.Builder()
+                .setQuery(query, Developer.class)
                 .build();
         query.keepSynced(true);
 
         String s=null;
 
         adapter= new FirebaseRecyclerAdapter<Developer, ListContributorsHolder>(options) {
+            @NonNull
             @Override
-            public ListContributorsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            public ListContributorsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.list_developers,parent,false);
                 return new ListContributorsHolder(view);
             }
@@ -77,7 +75,7 @@ public class FragmentListDevs extends Fragment implements View.OnClickListener {
                 new FirebaseProgressBar(progressBar,textView,adapter,"Developers");
             }
         };
-        layoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -101,7 +99,7 @@ public class FragmentListDevs extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(@NonNull View view) {
         int id=view.getId();
 
     }

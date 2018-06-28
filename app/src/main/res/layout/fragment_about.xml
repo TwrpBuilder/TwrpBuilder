@@ -32,7 +32,6 @@
             android:paddingTop="24dp"
             android:padding="16dp">
             <TextView
-                android:id="@+id/official_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -64,7 +63,6 @@
             android:padding="16dp">
 
             <TextView
-                android:id="@+id/xda_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

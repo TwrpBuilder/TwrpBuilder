@@ -1,6 +1,7 @@
 package com.github.TwrpBuilder.adapter;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,21 +17,24 @@ import org.json.JSONException;
 
 abstract public class AbstractGithubAdapter extends BaseAdapter
 {
-    public Context mContext;
-    public LayoutInflater mInflater;
+    final LayoutInflater mInflater;
+    private final Context mContext;
 
     abstract protected JSONArray onIndex();
     abstract protected void onUpdate(JSONArray list);
-    abstract protected View onView(int position, View convertView, ViewGroup parent);
 
-    public AbstractGithubAdapter(Context context)
+    AbstractGithubAdapter(Context context)
     {
         this.mContext = context;
         this.mInflater = LayoutInflater.from(context);
     }
 
-    public Context getContext() { return this.mContext; }
-    public LayoutInflater getInflater() { return this.mInflater; }
+    @Nullable
+    abstract protected View onView(int position, View convertView, ViewGroup parent);
+
+    Context getContext() {
+        return this.mContext;
+    }
 
     @Override
     public int getCount()
@@ -38,14 +42,12 @@ abstract public class AbstractGithubAdapter extends BaseAdapter
         return this.onIndex().length();
     }
 
+    @Nullable
     @Override
-    public Object getItem(int position)
-    {
-        try
-        {
+    public Object getItem(int position) {
+        try {
             return this.onIndex().getJSONObject(position);
-        } catch (JSONException e)
-        {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -64,9 +66,9 @@ abstract public class AbstractGithubAdapter extends BaseAdapter
         this.notifyDataSetChanged();
     }
 
+    @Nullable
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
-    {
+    public View getView(int position, View convertView, ViewGroup parent) {
         return this.onView(position, convertView, parent);
     }
 }

@@ -4,20 +4,21 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.github.TwrpBuilder.R;
 import com.github.TwrpBuilder.model.Message;
 import com.github.TwrpBuilder.model.Pbuild;
+import com.github.TwrpBuilder.util.DateUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,10 +39,6 @@ import static com.github.TwrpBuilder.util.Config.getBuildBrand;
 import static com.github.TwrpBuilder.util.Config.getBuildModel;
 import static com.github.TwrpBuilder.util.Config.getBuildProduct;
 
-import com.github.TwrpBuilder.R;
-import com.github.TwrpBuilder.util.Config;
-import com.github.TwrpBuilder.util.DateUtils;
-
 /**
  * Created by androidlover5842 on 23/1/18.
  */
@@ -49,19 +46,20 @@ import com.github.TwrpBuilder.util.DateUtils;
 public class UploaderActivity extends AppCompatActivity {
     private Button mCancel;
     private TextView ShowOutput;
-    private FirebaseDatabase mFirebaseInstance;
-    private FirebaseStorage storage = FirebaseStorage.getInstance();
-    private StorageReference riversRef;
-    private StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/");
+    @NonNull
+    private final FirebaseStorage storage = FirebaseStorage.getInstance();
+    @NonNull
+    private final StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/");
     private DatabaseReference mUploader;
     private DatabaseReference mBuildAdded;
     private UploadTask uploadTask;
-    private FirebaseAuth mFirebaseAuth;
+    @Nullable
     private NotificationManager mNotifyManager;
     private NotificationCompat.Builder mBuilder;
-    private Uri file;
     private String Uid;
+    @Nullable
     private String userId;
+    @Nullable
     private String Email;
     public static boolean result;
     public static boolean fromI;
@@ -74,14 +72,14 @@ public class UploaderActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.uploading);
         mCancel= findViewById(R.id.cancel_upload);
         ShowOutput = findViewById(R.id.show_output);
-        mFirebaseInstance = FirebaseDatabase.getInstance();
+        FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
         mUploader = mFirebaseInstance.getReference("InQueue");
         mBuildAdded = mFirebaseInstance.getReference("mqueue");
-        mFirebaseAuth=FirebaseAuth.getInstance();
-        Email=mFirebaseAuth.getCurrentUser().getEmail();
-        Uid=mFirebaseAuth.getCurrentUser().getUid();
-        file = Uri.fromFile(new File(Sdcard+"TwrpBuilder/"+TwrpBackFName));
-        riversRef = storageRef.child("queue/" + getBuildBrand() + "/" + getBuildBoard() + "/" + getBuildModel() + "/" + file.getLastPathSegment());
+        FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+        Email = mFirebaseAuth.getCurrentUser().getEmail();
+        Uid = mFirebaseAuth.getCurrentUser().getUid();
+        Uri file = Uri.fromFile(new File(Sdcard + "TwrpBuilder/" + TwrpBackFName));
+        StorageReference riversRef = storageRef.child("queue/" + getBuildBrand() + "/" + getBuildBoard() + "/" + getBuildModel() + "/" + file.getLastPathSegment());
 
         mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         fromI=true;
@@ -113,7 +111,7 @@ public class UploaderActivity extends AppCompatActivity {
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
-            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+            public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
                 final double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
                 ShowOutput.setText(String.valueOf(progress + "%"));
                 mBuilder =
@@ -150,7 +148,7 @@ public class UploaderActivity extends AppCompatActivity {
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+                    public void onClick(@NonNull DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
                 });

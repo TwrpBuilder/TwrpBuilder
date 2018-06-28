@@ -7,5 +7,4 @@
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
     </style>
 
-    <style name="preferenceTheme" parent="android:Theme.Material.Dialog" />
 </resources>

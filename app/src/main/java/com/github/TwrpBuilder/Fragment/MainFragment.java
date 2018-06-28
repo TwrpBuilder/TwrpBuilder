@@ -46,7 +46,7 @@ public class MainFragment extends Fragment {
         return view;
     }
 
-    public static class ViewPagerAdapter extends FragmentPagerAdapter {
+    static class ViewPagerAdapter extends FragmentPagerAdapter {
 
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();

@@ -61,16 +61,6 @@ public class MainActivity extends AppCompatActivity
     private StatusFragment statusFragment;
     private MainFragment mainFragment;
 
-    /*Firebase*/
-    private FirebaseAuth mFirebaseAuth;
-
-    /*Navigation drawer*/
-    private NavigationView navigationView;
-
-    /*Text View*/
-    TextView mUserEmail;
-
-    private boolean enabled;
     public static String Cache;
 
     @Override
@@ -80,7 +70,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Cache = getCacheDir() + File.separator;
-        mFirebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
         FirebaseDBInstance.getDatabase();
         try {
             ProviderInstaller.installIfNeeded(getApplicationContext());
@@ -104,11 +94,11 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View navHeaderView = navigationView.inflateHeaderView(R.layout.nav_header_main);
-        mUserEmail = navHeaderView.findViewById(R.id.user_email);
-        enabled = PreferenceManager.getDefaultSharedPreferences(this)
+        TextView mUserEmail;
+        boolean enabled = PreferenceManager.getDefaultSharedPreferences(this)
                 .getBoolean("notification", false);
 
         /*Fragments*/
@@ -144,7 +134,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.quit:
                 finish();
@@ -168,39 +158,49 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            updateFragment(mainFragment);
-            setTitle(R.string.home);
-        } else if (id == R.id.nav_contributors) {
-            updateFragment(mFragmentContributors);
-            setTitle(R.string.contributors);
-        } else if (id == R.id.nav_our_team) {
-            updateFragment(new FragmentListDevs());
-            setTitle(getString(R.string.our_team));
-        } else if (id == R.id.nav_build_done) {
-            updateFragment(new FragmentStatusCommon("Builds"));
-            setTitle(R.string.completed);
-        } else if (id == R.id.nav_reject) {
-            updateFragment(new FragmentStatusCommon("Rejected"));
-            setTitle(R.string.rejected);
-        } else if (id == R.id.action_log_out) {
-            FirebaseAuth.getInstance().signOut();
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean("admin", false);
-            editor.apply();
-            startActivity(new Intent(MainActivity.this, LoginActivity.class)); //Go back to home page
-            finish();
-        } else if (id == R.id.nav_build_incomplete) {
-            updateFragment(statusFragment);
-            setTitle(R.string.incomplete);
-        } else if (id == R.id.nav_about) {
-            updateFragment(new FragmentAbout());
-            setTitle(R.string.app_name);
+        switch (id) {
+            case R.id.nav_home:
+                updateFragment(mainFragment);
+                setTitle(R.string.home);
+                break;
+            case R.id.nav_contributors:
+                updateFragment(mFragmentContributors);
+                setTitle(R.string.contributors);
+                break;
+            case R.id.nav_our_team:
+                updateFragment(new FragmentListDevs());
+                setTitle(getString(R.string.our_team));
+                break;
+            case R.id.nav_build_done:
+                updateFragment(new FragmentStatusCommon("Builds"));
+                setTitle(R.string.completed);
+                break;
+            case R.id.nav_reject:
+                updateFragment(new FragmentStatusCommon("Rejected"));
+                setTitle(R.string.rejected);
+                break;
+            case R.id.action_log_out:
+                FirebaseAuth.getInstance().signOut();
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putBoolean("admin", false);
+                editor.apply();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class)); //Go back to home page
+
+                finish();
+                break;
+            case R.id.nav_build_incomplete:
+                updateFragment(statusFragment);
+                setTitle(R.string.incomplete);
+                break;
+            case R.id.nav_about:
+                updateFragment(new FragmentAbout());
+                setTitle(R.string.app_name);
+                break;
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -214,12 +214,10 @@ public class MainActivity extends AppCompatActivity
         ft.commit();
     }
 
-    private boolean checkPermission() {
+    private void checkPermission() {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             int result = ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            return result == PackageManager.PERMISSION_GRANTED;
         }
-        return false;
     }
 
     private void requestPermission() {
@@ -252,7 +250,7 @@ public class MainActivity extends AppCompatActivity
      * isOnline - Check if there is a NetworkConnection
      * @return void
      */
-    protected void isOnline() {
+    private void isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = null;
         if (cm != null) {
@@ -263,10 +261,5 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-    }
 }
 

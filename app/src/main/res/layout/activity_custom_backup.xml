@@ -1,33 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_light">
+    android:background="@color/background_light"
+    android:orientation="vertical">
 
-<include layout="@layout/action_bar"/>
+    <include layout="@layout/action_bar" />
 
     <EditText
-        android:layout_width="match_parent"
-        android:hint="Select Stock Recovery"
         android:id="@+id/ed_select_recovery"
-        android:focusableInTouchMode="false"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"/>
+        android:layout_margin="16dp"
+        android:focusableInTouchMode="false"
+        android:hint="@string/select_stock_recovery" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:text="Generate Backup"
-        android:layout_gravity="center"
         android:id="@+id/bt_generate_backup"
-        android:layout_height="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/generate_backup" />
 
     <ProgressBar
-        android:layout_width="wrap_content"
         android:id="@+id/pb_gen_backup"
-        android:visibility="gone"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
 </LinearLayout>

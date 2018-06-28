@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
@@ -31,7 +32,9 @@ public class InitActivity extends AppCompatActivity {
     public static boolean isOldMtk;
     public static boolean ROOT_GRANTED;
 
-    String file[] = new String[]{
+    @NonNull
+    private final
+    String[] file = new String[]{
             "RECOVERY",
             "Recovery",
             "FOTAKernel",
@@ -66,8 +69,9 @@ public class InitActivity extends AppCompatActivity {
         }
     }
 
-    public class getRecoveryMountTask extends AsyncTask<String, String, String> {
+    class getRecoveryMountTask extends AsyncTask<String, String, String> {
 
+        @Nullable
         @Override
         public String doInBackground(String... voids) {
 
@@ -108,10 +112,6 @@ public class InitActivity extends AppCompatActivity {
             finish();
         }
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
     }
 
 }

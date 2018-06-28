@@ -11,9 +11,9 @@ import org.json.JSONArray;
 
 abstract public class GithubAdapterIDEA extends AbstractGithubAdapter
 {
-    JSONArray mList = new JSONArray();
+    private JSONArray mList = new JSONArray();
 
-    public GithubAdapterIDEA(Context context)
+    GithubAdapterIDEA(Context context)
     {
         super(context);
     }

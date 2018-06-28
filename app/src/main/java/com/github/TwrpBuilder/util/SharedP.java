@@ -2,6 +2,7 @@ package com.github.TwrpBuilder.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.support.v7.preference.PreferenceManager;
 
 /**
@@ -10,7 +11,7 @@ import android.support.v7.preference.PreferenceManager;
 
 public class SharedP {
 
-    public static void putRecoveryString(Context context, String value, boolean bool) {
+    public static void putRecoveryString(@NonNull Context context, String value, boolean bool) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("recoveryPath", value);

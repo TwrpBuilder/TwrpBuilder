@@ -13,10 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.TwrpBuilder.R;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.github.TwrpBuilder.R;
 
 /**
  * Created by androidlover5842 on 18/1/18.
@@ -39,12 +39,12 @@ public class StatusFragment extends Fragment {
         return view;
     }
 
-    public static class ViewPagerAdapter extends FragmentPagerAdapter {
+    static class ViewPagerAdapter extends FragmentPagerAdapter {
 
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        public ViewPagerAdapter(FragmentManager manager) {
+        ViewPagerAdapter(FragmentManager manager) {
             super(manager);
         }
 
@@ -58,7 +58,7 @@ public class StatusFragment extends Fragment {
             return mFragmentList.size();
         }
 
-        public void addFragment(Fragment fragment, String title) {
+        void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }

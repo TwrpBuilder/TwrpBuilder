@@ -3,6 +3,7 @@ package com.github.TwrpBuilder.filelister;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +24,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import yogesh.firzen.mukkiasevaigal.M;
-import yogesh.firzen.mukkiasevaigal.S;
 
 /**
  * Created by root on 9/7/17.
@@ -31,11 +31,12 @@ import yogesh.firzen.mukkiasevaigal.S;
 
 class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileListHolder> {
 
-    private List<File> data = new LinkedList<>();
+    private final Context context;
     private File defaultDir = Environment.getExternalStorageDirectory();
     private File selectedFile = defaultDir;
-    private Context context;
-    private FilesListerView listerView;
+    private final FilesListerView listerView;
+    @NonNull
+    private List<File> data = new LinkedList<>();
     private boolean unreadableDir;
 
     FileListAdapter(FilesListerView view) {
@@ -97,7 +98,7 @@ class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileListHolde
             unreadableDir = false;
             File[] files = dir.listFiles(new FileFilter() {
                 @Override
-                public boolean accept(File file) {
+                public boolean accept(@NonNull File file) {
 
                     return file.isDirectory() || file.getName().endsWith(".img") ;
                 }
@@ -110,7 +111,7 @@ class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileListHolde
         data = new LinkedList<>(fs);
         Collections.sort(data, new Comparator<File>() {
             @Override
-            public int compare(File f1, File f2) {
+            public int compare(@NonNull File f1, @NonNull File f2) {
                 if ((f1.isDirectory() && f2.isDirectory()))
                     return f1.getName().compareToIgnoreCase(f2.getName());
                 else if (f1.isDirectory() && !f2.isDirectory())
@@ -138,18 +139,19 @@ class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileListHolde
 
     }
 
+    @NonNull
     @Override
-    public FileListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FileListHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new FileListHolder(View.inflate(getContext(), R.layout.item_file_lister, null));
     }
 
     @Override
-    public void onBindViewHolder(FileListHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FileListHolder holder, int position) {
         File f = data.get(position);
         if (f != null) {
             holder.name.setText(f.getName());
         } else if (!unreadableDir) {
-            holder.name.setText("Create a new Folder here");
+            holder.name.setText(R.string.create_new_folder);
             holder.icon.setImageResource(R.drawable.ic_create_new_folder_black_48dp);
         }
         if (unreadableDir) {
@@ -186,10 +188,10 @@ class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileListHolde
 
     class FileListHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView name;
-        ImageView icon;
+        final TextView name;
+        final ImageView icon;
 
-        FileListHolder(View itemView) {
+        FileListHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name);
             icon = itemView.findViewById(R.id.icon);
@@ -224,7 +226,7 @@ class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileListHolde
                                 M.T(getContext(), "This folder already exists.\n Please provide another name for the folder");
                             } else {
                                 dialog.dismiss();
-                                file.mkdirs();
+                                boolean mkdirs = file.mkdirs();
                                 fileLister(file);
                             }
                         }
@@ -236,7 +238,6 @@ class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileListHolde
                 M.L("From FileLister", f.getAbsolutePath());
                 if (f.isDirectory()) {
                     fileLister(f);
-                } else {
                 }
             }
         }

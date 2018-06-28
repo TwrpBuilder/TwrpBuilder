@@ -1,13 +1,13 @@
 package com.github.TwrpBuilder.holder;
 
 import android.content.Context;
-import android.support.design.widget.FloatingActionButton;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.FitCenter;
 import com.bumptech.glide.request.RequestOptions;
 import com.github.TwrpBuilder.R;
@@ -19,13 +19,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class ListContributorsHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    private Context context;
-    private String colon = " : ";
-    private String gitId, xdaUrl, donationUrl, description, email, photoUrl, name, key;
-    private TextView tvGitId, tvXdaUrl, tvDonation, tvDescription, tvName, tvEmail;
-    private CircleImageView imageViewProfile;
+    private final Context context;
+    private final TextView tvGitId;
+    private final TextView tvXdaUrl;
+    private final TextView tvDonation;
+    private final TextView tvDescription;
+    private final TextView tvName;
+    private final TextView tvEmail;
+    private final CircleImageView imageViewProfile;
 
-    public ListContributorsHolder(View itemView) {
+    public ListContributorsHolder(@NonNull View itemView) {
         super(itemView);
         tvGitId = itemView.findViewById(R.id.tv_his_gitId);
         tvXdaUrl = itemView.findViewById(R.id.tv_his_xda);
@@ -44,18 +47,10 @@ public class ListContributorsHolder extends RecyclerView.ViewHolder implements V
             String photoUrl,
             String xdaUrl,
             String gitId,
-            String donationUrl,
-            String description,
+            @Nullable String donationUrl,
+            @Nullable String description,
             String key
     ) {
-        this.email = email;
-        this.name = name;
-        this.photoUrl = photoUrl;
-        this.xdaUrl = xdaUrl;
-        this.gitId = gitId;
-        this.donationUrl = donationUrl;
-        this.description = description;
-        this.key = key;
         tvGitId.setText(gitId);
         tvName.setText(name);
         tvEmail.setText(email);
