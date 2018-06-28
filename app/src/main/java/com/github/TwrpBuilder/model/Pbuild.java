@@ -66,6 +66,18 @@ public class Pbuild {
         return Model;
     }
 
+    public String getCodeName() {
+        return CodeName;
+    }
+
+    public void setCodeName(String codeName) {
+        CodeName = codeName;
+    }
+
+    public String getFmcToken() {
+        return FmcToken;
+    }
+
     public String getUrl() {
         return Url;
     }
@@ -82,5 +94,51 @@ public class Pbuild {
         return Rejector;
     }
 
+    public void setFmcToken(String fmcToken) {
+        FmcToken = fmcToken;
+    }
 
+    public String getUid() {
+        return Uid;
+    }
+
+    public void setUid(String uid) {
+        Uid = uid;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public void setBrand(String brand) {
+        Brand = brand;
+    }
+
+    public void setDate(String date) {
+        Date = date;
+    }
+
+    public void setModel(String model) {
+        Model = model;
+    }
+
+    public void setBoard(String board) {
+        Board = board;
+    }
+
+    public void setUrl(String url) {
+        Url = url;
+    }
+
+    public void setDeveloperEmail(String developerEmail) {
+        DeveloperEmail = developerEmail;
+    }
+
+    public void setNote(String note) {
+        Note = note;
+    }
+
+    public void setRejector(String rejector) {
+        Rejector = rejector;
+    }
 }
