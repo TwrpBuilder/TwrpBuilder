@@ -28,11 +28,11 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:title="@string/credits"
+                    android:title="@string/contributors"
                     android:id="@+id/nav_credits"
                     android:icon="@drawable/ic_code_white_24dp"/>
                 <item
-                    android:title="Contributors"
+                    android:title="@string/our_team"
                     android:id="@+id/nav_contributor"
                     android:icon="@drawable/ic_developers"/>
 

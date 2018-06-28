@@ -1,16 +1,18 @@
 package com.github.TwrpBuilder.holder;
 
 import android.content.Context;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.FitCenter;
+import com.bumptech.glide.request.RequestOptions;
 import com.github.TwrpBuilder.R;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by androidlover5842 on 12.3.2018.
@@ -21,7 +23,7 @@ public class ListContributorsHolder extends RecyclerView.ViewHolder implements V
     private String colon = " : ";
     private String gitId, xdaUrl, donationUrl, description, email, photoUrl, name, key;
     private TextView tvGitId, tvXdaUrl, tvDonation, tvDescription, tvName, tvEmail;
-    private ImageView imageViewProfile;
+    private CircleImageView imageViewProfile;
 
     public ListContributorsHolder(View itemView) {
         super(itemView);
@@ -32,7 +34,7 @@ public class ListContributorsHolder extends RecyclerView.ViewHolder implements V
         tvEmail = itemView.findViewById(R.id.tv_his_email);
         tvDonation = itemView.findViewById(R.id.tv_his_donation);
         imageViewProfile = itemView.findViewById(R.id.img_his_profile);
-        this.context=itemView.getContext();
+        this.context = itemView.getContext();
 
     }
 
@@ -54,20 +56,26 @@ public class ListContributorsHolder extends RecyclerView.ViewHolder implements V
         this.donationUrl = donationUrl;
         this.description = description;
         this.key = key;
-        tvGitId.setText("Git ID"+colon+gitId);
-        tvName.setText("name"+colon+name);
-        tvEmail.setText("email"+colon+email);
-        tvXdaUrl.setText("Xda id"+colon+xdaUrl);
-        tvDescription.setText("Bio"+colon+description);
-        if (donationUrl!=null)
-        tvDonation.setText("Donation"+colon+donationUrl);
-        else
-            tvDescription.setVisibility(View.GONE);
-        Glide.with(context.getApplicationContext()).load(photoUrl).into(imageViewProfile);
+        tvGitId.setText(gitId);
+        tvName.setText(name);
+        tvEmail.setText(email);
+        tvXdaUrl.setText(xdaUrl);
+        if (description != null) {
+            tvDescription.setText(description);
+            tvDescription.setVisibility(View.VISIBLE);
+        }
+        if (donationUrl != null) {
+            tvDonation.setText(donationUrl);
+            tvDonation.setVisibility(View.VISIBLE);
+        }
+        Glide.with(context.getApplicationContext())
+                .load(photoUrl)
+                .apply(new RequestOptions().circleCrop().transform(new FitCenter()))
+                .into(imageViewProfile);
     }
 
     @Override
     public void onClick(View view) {
-        
+
     }
 }

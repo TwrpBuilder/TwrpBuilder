@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:id="@+id/cv_developerProfile"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginEnd="16dp"
@@ -67,59 +67,91 @@
                 android:id="@+id/tv_build_by"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Built by :- "
+                android:text="Developer Profile"
                 android:layout_gravity="center"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:layout_marginBottom="@dimen/_8sdp"/>
 
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_gravity="center"
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_his_profile"
-                android:layout_height="100dp" />
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center" />
 
             <TextView
+                android:textColor="@color/white"
                 android:id="@+id/tv_his_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:textIsSelectable="true"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/tv_his_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autoLink="email"
-                android:textIsSelectable="true"
-                android:textSize="13sp" />
-            <TextView
-                android:id="@+id/tv_his_gitId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textIsSelectable="true"
-                android:autoLink="web"
-                android:textSize="13sp" />
-            <TextView
-                android:id="@+id/tv_his_xda"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autoLink="web"
-                android:textIsSelectable="true"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/tv_his_donation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autoLink="web|phone"
-                android:textIsSelectable="true"
-                android:textSize="13sp" />
+                android:textSize="@dimen/_16ssp" />
 
             <TextView
                 android:id="@+id/tv_his_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:textIsSelectable="true"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/_8sdp">
+
+                <TextView
+                    android:id="@+id/tv_his_email"
+                    android:layout_width="@dimen/_22sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:layout_marginEnd="@dimen/_16ssp"
+                    android:layout_marginRight="@dimen/_16sdp"
+                    android:autoLink="email"
+                    android:background="@drawable/ic_gmail"
+                    android:textColor="#0000"
+                    android:textColorLink="#0000"
+                    android:textIsSelectable="false"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tv_his_gitId"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_marginRight="@dimen/_16sdp"
+                    android:autoLink="web"
+                    android:background="@drawable/ic_github_circle_white_36dp"
+                    android:textColor="#0000"
+                    android:textColorLink="#0000"
+                    android:textIsSelectable="true"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tv_his_xda"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:autoLink="web"
+                    android:background="@drawable/ic_xda_white_36dp"
+                    android:textColor="#0000"
+                    android:textColorLink="#0000"
+                    android:textIsSelectable="true"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_his_donation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:autoLink="web|phone"
+                android:textIsSelectable="true"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
         </LinearLayout>
     </android.support.v7.widget.CardView>
 

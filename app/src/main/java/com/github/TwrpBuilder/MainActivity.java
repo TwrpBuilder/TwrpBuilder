@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity
         else if (id==R.id.nav_contributor)
         {
             updateFragment(new FragmentListContributors());
-            setTitle(getString(R.string.contributor));
+            setTitle(getString(R.string.contributors));
         }
         else if (id==R.id.nav_build_done)
         {

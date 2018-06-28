@@ -34,7 +34,7 @@
     <string name="uploaded">Uploaded</string>
     <string name="failed_to_upload">"Failed to upload data . "</string>
     <string name="upload_finished">Upload complete</string>
-    <string name="Uploading_please_wait">"Uploading Please Wait... "</string>
+    <string name="Uploading_please_wait">"Uploading Please Wait…"</string>
     <string name="warning_about_recovery_backup">If it takes more then 1 min to backup then send me recovery.img via email</string>
     <string name="made_recovery_backup">"Made Recovery Backup. "</string>
     <string name="nothing_to_show">Nothing to show</string>
@@ -89,16 +89,17 @@
     <string name="one_time_request">You can make request one time only from this device . If you\'re facing any issues then please contact via Xda.</string>
     <string name="namma_per_uh">FileLister</string>
     <string name="create_folder_hint">Enter Folder Name Here</string>
-    <string name="works_or_not">Please check the box if it worked or if it didn't work.</string>
+    <string name="works_or_not">Please check the box if it worked or if it didn\'t work.</string>
     <string name="tell_us_more_optional">Tell us more (optional)</string>
     <string name="not_works">not works</string>
     <string name="works">works</string>
     <string name="Feedback">Feedback :</string>
     <string name="feedback">feedback</string>
     <string name="send">Send</string>
-    <string name="sending">Sending ...</string>
+    <string name="sending">Sending…</string>
     <string name="Feedback_sent">Feedback sent</string>
     <string name="feedback_failed">Failed to send feedback</string>
-    <string name="contributor">Contributor</string>
     <string name="no_rejected">No rejected builds</string>
+    <string name="contributors">Contributors</string>
+    <string name="our_team">Our Team</string>
 </resources>

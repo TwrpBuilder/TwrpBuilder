@@ -57,7 +57,7 @@ dependencies {
     implementation 'com.android.support:cardview-v7:27.1.1'
     implementation 'eu.chainfire:libsuperuser:1.0.0.+'
     implementation 'com.google.firebase:firebase-storage:16.0.1'
-    implementation 'com.google.firebase:firebase-messaging:17.0.0'
+    implementation 'com.google.firebase:firebase-messaging:17.1.0'
     implementation 'com.google.firebase:firebase-auth:16.0.2'
     implementation 'com.google.firebase:firebase-database:16.0.1'
     implementation 'com.google.firebase:firebase-core:16.0.1'
@@ -77,5 +77,10 @@ dependencies {
     implementation "com.android.support:support-fragment:27.1.1"
     implementation files('libs/RootTools.jar')
     implementation project(path: ':updater')
+    // CircleImageView
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    // ssp & ssd
+    implementation 'com.intuit.ssp:ssp-android:1.0.5'
+    implementation 'com.intuit.sdp:sdp-android:1.0.5'
 }
 apply plugin: 'com.google.gms.google-services'
