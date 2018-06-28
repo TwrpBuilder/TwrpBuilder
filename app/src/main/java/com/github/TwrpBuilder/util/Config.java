@@ -17,7 +17,7 @@ public class Config
    public final static String Sdcard= Environment.getExternalStorageDirectory().getPath()+File.separator;
    @NonNull
    public static final String APP_UPDATE_URL = "https://raw.githubusercontent.com/TwrpBuilder/TwrpBuilder/master/app/version.json";
-   public static final int Version = 3;
+   public static final int Version = 4;
    @NonNull
    public static final String OfficialWebsite = "https://twrpbuilder.github.io/";
    @NonNull

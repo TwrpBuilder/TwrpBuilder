@@ -1,8 +1,8 @@
 {
 "TwrpBuilder": [
 	{
-	"version": "3",
-	"changelog": "- added feedback option \n- switched from listview to recyclerview \n- updater file manager for flasher and custom backup \n- bug fixes \n-translation update"
+      "version": "4",
+      "changelog": "- updated UI \n- fixed language settings \n- bug fixes"
 	}
 		]
 }
