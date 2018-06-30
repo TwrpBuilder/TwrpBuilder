@@ -6,8 +6,13 @@ package com.github.TwrpBuilder.model;
 
 public class Message {
 
-    private final String title;
-    private final String body;
+    private String title;
+    private String body;
+    private String email;
+    private boolean works;
+
+    public Message() {
+    }
 
     public Message(String title,String body) {
         this.title=title;
@@ -17,8 +22,39 @@ public class Message {
     public Message(String title,String body,String email,boolean works) {
         this.title=title;
         this.body = body;
-        String email1 = email;
-        boolean works1 = works;
+        this.email = email;
+        this.works = works;
     }
 
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean getWorks() {
+        return works;
+    }
+
+    public void setWorks(boolean works) {
+        this.works = works;
+    }
 }
