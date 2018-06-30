@@ -112,7 +112,8 @@ public class UploaderActivity extends AppCompatActivity {
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                final double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                final double progress = (100 * taskSnapshot.getBytesTransferred()) /
+                        (taskSnapshot.getTotalByteCount() > 0 ? taskSnapshot.getTotalByteCount() : 1);
                 ShowOutput.setText(String.valueOf(progress + "%"));
                 mBuilder =
                         new NotificationCompat.Builder(UploaderActivity.this,"2")

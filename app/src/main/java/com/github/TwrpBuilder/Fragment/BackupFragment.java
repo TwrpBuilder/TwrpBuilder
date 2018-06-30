@@ -40,9 +40,11 @@ import eu.chainfire.libsuperuser.Shell;
 
 import static com.github.TwrpBuilder.app.CustomBackupActivity.FromCB;
 import static com.github.TwrpBuilder.app.CustomBackupActivity.resultOfB;
+import static com.github.TwrpBuilder.app.InitActivity.IS_SUPPORTED;
 import static com.github.TwrpBuilder.app.InitActivity.isOldMtk;
 import static com.github.TwrpBuilder.app.UploaderActivity.fromI;
 import static com.github.TwrpBuilder.app.UploaderActivity.result;
+import static com.github.TwrpBuilder.util.Config.MIN_BACKUP_SIZE;
 import static com.github.TwrpBuilder.util.Config.Sdcard;
 import static com.github.TwrpBuilder.util.Config.TwrpBackFName;
 import static com.github.TwrpBuilder.util.Config.getBuildBoard;
@@ -65,7 +67,6 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
     private TextView mBuildDescription;
     @NonNull
     private final StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/");
-    private final boolean isSupported;
     /*Buttons*/
     private Button mUploadBackup;
     /*ProgressBar*/
@@ -76,9 +77,9 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
     private LinearLayout fragment_backup_child_linear;
     @Nullable
     private String recoveryPath;
+    private String backupFile = Sdcard + "TwrpBuilder/" + Config.TwrpBackFName;
 
-    BackupFragment(boolean isSupported) {
-        this.isSupported = isSupported;
+    public BackupFragment() {
     }
 
     @Nullable
@@ -103,7 +104,7 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
         textViewBrand.setText(getString(R.string.brand) + colon + Config.getBuildBrand());
         textViewBoard.setText(getString(R.string.board) + colon + Config.getBuildBoard());
         textViewModel.setText(getString(R.string.model) + colon + Config.getBuildModel());
-        if (!isSupported) {
+        if (!IS_SUPPORTED) {
             textViewSupported.setText(R.string.running_in_not_root_mode);
         }
 
@@ -176,7 +177,7 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
                 fromI = false;
             }
         }
-        if (!isSupported) {
+        if (!IS_SUPPORTED) {
             if (FromCB) {
                 if (resultOfB) {
                     if (!hasUpB) {
@@ -196,7 +197,7 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
     public void onClick(@NonNull View view) {
         int id = view.getId();
         if (id == mBackupButton.getId()) {
-            if (isSupported) {
+            if (IS_SUPPORTED) {
                 mBackupButton.setVisibility(View.GONE);
                 mBuildDescription.setText(getString(R.string.warning_about_recovery_backup));
                 mBuildDescription.setVisibility(View.VISIBLE);
@@ -213,7 +214,7 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
     }
 
     class BackupTask extends AsyncTask<Void, String, Void> {
-        private boolean failed;
+        private boolean failed, smallSize;
 
         @Nullable
         @Override
@@ -230,23 +231,24 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
             } else {
                 Shell.SU.run("dd if=" + recoveryPath + " of=" + Sdcard + "TwrpBuilder/recovery.img ; ls -la `find /dev/block/platform/ -type d -name \"by-name\"` > " + Sdcard + "TwrpBuilder/mounts ; cd " + Sdcard + "TwrpBuilder && tar -c recovery.img build.prop mounts > " + Sdcard + "TwrpBuilder/TwrpBuilderRecoveryBackup.tar ");
             }
-            compressGzipFile(Sdcard + "/TwrpBuilder/TwrpBuilderRecoveryBackup.tar", Sdcard + "TwrpBuilder/" + Config.TwrpBackFName);
+            compressGzipFile(Sdcard + "/TwrpBuilder/TwrpBuilderRecoveryBackup.tar", backupFile);
             return null;
         }
+
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             mProgressBar.setVisibility(View.GONE);
             if (failed) {
-                mBuildDescription.setText(R.string.failed_to_create_backup);
-                Snackbar.make(fragment_backup_child_linear, "Failed to backup", Snackbar.LENGTH_LONG)
+                mBuildDescription.setText(smallSize ? R.string.backup_size_too_small : R.string.failed_to_create_backup);
+                Snackbar.make(fragment_backup_child_linear, R.string.faild_to_backup, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             } else {
                 if (!hasUpB) {
                     mUploadBackup.setVisibility(View.VISIBLE);
                 }
                 mBuildDescription.setText(getString(R.string.backup_recovery_from_path) + recoveryPath);
-                Snackbar.make(fragment_backup_child_linear, "Backup Done", Snackbar.LENGTH_LONG)
+                Snackbar.make(fragment_backup_child_linear, R.string.backup_done, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         }
@@ -265,6 +267,11 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
                 gzipOS.close();
                 fos.close();
                 fis.close();
+                if (gzipFile.length() < MIN_BACKUP_SIZE) {
+                    failed = true;
+                    smallSize = true;
+                    new File(gzipFile).delete();
+                }
             } catch (IOException e) {
                 failed = true;
                 e.printStackTrace();

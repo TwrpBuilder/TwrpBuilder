@@ -17,9 +17,6 @@ import com.github.TwrpBuilder.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.github.TwrpBuilder.app.InitActivity.ROOT_GRANTED;
-import static com.github.TwrpBuilder.app.InitActivity.isSupport;
-
 /**
  * Created by androidlover5842 on 20/1/18.
  */
@@ -34,7 +31,7 @@ public class MainFragment extends Fragment {
         BackupFragment backupFragment;
         // check only once for root access
 
-        backupFragment = new BackupFragment(isSupport && ROOT_GRANTED);
+        backupFragment = new BackupFragment();
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(backupFragment, getString(R.string.make_request));

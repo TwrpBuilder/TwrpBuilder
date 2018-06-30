@@ -35,8 +35,8 @@ import com.scottyab.aescrypt.AESCrypt;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.github.TwrpBuilder.app.InitActivity.IS_SUPPORTED;
 import static com.github.TwrpBuilder.app.InitActivity.ROOT_GRANTED;
-import static com.github.TwrpBuilder.app.InitActivity.isSupport;
 import static com.github.TwrpBuilder.util.Config.getBuildModel;
 
 /**
@@ -101,7 +101,7 @@ public class BuildsHolder extends RecyclerView.ViewHolder {
             setTvDeveloper(developer);
             setTvNote(note);
             if (filterQuery) {
-                if (ROOT_GRANTED && isSupport) {
+                if (ROOT_GRANTED && IS_SUPPORTED) {
                     btFlash.setVisibility(View.VISIBLE);
                 }
                 btFeedBack.setVisibility(View.VISIBLE);

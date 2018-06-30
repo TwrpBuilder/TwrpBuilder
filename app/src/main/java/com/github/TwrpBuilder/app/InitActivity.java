@@ -29,7 +29,7 @@ import eu.chainfire.libsuperuser.Shell;
 public class InitActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
-    public static boolean isSupport;
+    public static boolean IS_SUPPORTED;
     public static boolean isOldMtk;
     public static boolean ROOT_GRANTED;
 
@@ -64,7 +64,7 @@ public class InitActivity extends AppCompatActivity {
                 new getRecoveryMountTask().execute();
             } else {
                 startActivity(new Intent(InitActivity.this, LoginActivity.class));
-                isSupport = false;
+                IS_SUPPORTED = false;
                 finish();
             }
         } else {
@@ -104,7 +104,7 @@ public class InitActivity extends AppCompatActivity {
                 }
             }
             isOldMtk = preferences.getBoolean("isOldMtk", false);
-            isSupport = preferences.getBoolean("isSupport", false);
+            IS_SUPPORTED = preferences.getBoolean("isSupport", false);
             return name;
         }
 

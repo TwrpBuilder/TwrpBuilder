@@ -85,8 +85,11 @@
     <string name="developer_profile">Developer Profile</string>
     <string name="create_new_folder">Create a new Folder here</string>
     <string name="running_in_not_root_mode">Running in non-root mode</string>
-    <string name="failed_to_create_backup">Failed to create backup .</string>
+    <string name="failed_to_create_backup">Failed to create backup</string>
     <string name="backup_recovery_from_path">Backed up recovery</string>
     <string name="folder">Folder</string>
     <string name="reach_us">Reach Us</string>
+    <string name="backup_size_too_small">Backup size is too small. Create backup again.</string>
+    <string name="faild_to_backup">Failed to backup</string>
+    <string name="backup_done">Backup Done</string>
 </resources>

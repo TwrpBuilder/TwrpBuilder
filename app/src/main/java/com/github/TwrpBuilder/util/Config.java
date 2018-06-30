@@ -26,6 +26,7 @@ public class Config
    public static final String GithubSource = "https://github.com/TwrpBuilder";
    @NonNull
    public static final String XdaThread = "https://forum.xda-developers.com/android/apps-games/twrpbuilder-t3744253";
+    public static final int MIN_BACKUP_SIZE = 5000000;
    private static final String BuildModel = Build.MODEL;
    private static final String BuildBoard = Build.BOARD;
    private static final String BuildBrand = Build.BRAND;
