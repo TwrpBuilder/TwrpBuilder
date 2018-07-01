@@ -1,8 +1,8 @@
 {
 "TwrpBuilder": [
 	{
-      "version": "4",
-      "changelog": "- updated UI \n- fixed language settings \n- bug fixes"
+		"version": "5",
+		"changelog": "- major bug fixes \n- added Report an issue button if you encounter anymore"
 	}
 		]
 }
