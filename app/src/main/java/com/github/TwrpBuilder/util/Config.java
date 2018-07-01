@@ -1,5 +1,8 @@
 package com.github.TwrpBuilder.util;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -16,7 +19,6 @@ public class Config {
     public final static String Sdcard = Environment.getExternalStorageDirectory().getPath() + File.separator;
     @NonNull
     public static final String APP_UPDATE_URL = "https://raw.githubusercontent.com/TwrpBuilder/TwrpBuilder/master/app/version.json";
-    public static final int Version = 4;
     @NonNull
     public static final String OfficialWebsite = "https://twrpbuilder.github.io/";
     @NonNull
@@ -84,4 +86,13 @@ public class Config {
         return data;
     }
 
+    public static int getAppVersion(Context context) {
+        try {
+            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return pInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }

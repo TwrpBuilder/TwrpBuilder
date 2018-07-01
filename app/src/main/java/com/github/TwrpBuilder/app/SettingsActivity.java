@@ -89,7 +89,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(SettingsActivity.this, R.string.checking_for_updates, Toast.LENGTH_SHORT).show();
-                new Updater(SettingsActivity.this, Config.Version, Config.APP_UPDATE_URL, true);
+                new Updater(SettingsActivity.this, Config.getAppVersion(getApplicationContext()), Config.APP_UPDATE_URL, true);
             }
         });
 
