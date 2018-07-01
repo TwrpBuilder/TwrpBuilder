@@ -1,8 +1,8 @@
 {
 "TwrpBuilder": [
 	{
-		"version": "5",
-		"changelog": "- major bug fixes \n- added Report an issue button if you encounter anymore"
+		"version": "6",
+		"changelog": "- updated the app update cycle itself\n- not really a harmful update"
 	}
 		]
 }
