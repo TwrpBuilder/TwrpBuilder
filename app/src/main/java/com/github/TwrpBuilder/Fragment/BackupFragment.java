@@ -155,6 +155,7 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
             mBackupButton.setVisibility(View.GONE);
         } else {
             mBackupButton.setVisibility(View.VISIBLE);
+            mUploadBackup.setVisibility(View.GONE);
         }
         return thisExist;
     }
@@ -188,6 +189,7 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
                     resultOfB = false;
                 } else {
                     mBackupButton.setVisibility(View.VISIBLE);
+                    mUploadBackup.setVisibility(View.GONE);
                 }
             }
         }
