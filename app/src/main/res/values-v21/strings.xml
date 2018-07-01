@@ -9,4 +9,5 @@
     <string name="backup_size_too_small">Backup size too small. Delete %1$s and create backup again.</string>
     <string name="faild_to_backup">Failed to backup</string>
     <string name="backup_done">Backup Done</string>
+    <string name="report_a_bug">Report a bug</string>
 </resources>

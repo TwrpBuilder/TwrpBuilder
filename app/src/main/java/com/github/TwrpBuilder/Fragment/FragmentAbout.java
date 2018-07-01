@@ -19,7 +19,7 @@ import com.github.TwrpBuilder.util.Config;
  */
 
 public class FragmentAbout extends Fragment implements View.OnClickListener {
-    private CardView cardViewWebsite,cardViewXdaThread,cardViewSource,cardViewTelegram;
+    private CardView cardViewWebsite, cardViewXdaThread, cardViewSource, cardViewTelegram, cardViewBugReport;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -28,11 +28,13 @@ public class FragmentAbout extends Fragment implements View.OnClickListener {
         cardViewXdaThread=v.findViewById(R.id.xdaThread);
         cardViewSource=v.findViewById(R.id.source);
         cardViewTelegram=v.findViewById(R.id.telegram);
+        cardViewBugReport = v.findViewById(R.id.bug_report);
 
         cardViewWebsite.setOnClickListener(this);
         cardViewXdaThread.setOnClickListener(this);
         cardViewSource.setOnClickListener(this);
         cardViewTelegram.setOnClickListener(this);
+        cardViewBugReport.setOnClickListener(this);
         return v;
     }
 
@@ -55,6 +57,8 @@ public class FragmentAbout extends Fragment implements View.OnClickListener {
        else if (id==cardViewTelegram.getId())
        {
            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Config.TGramSupport)));
+       } else if (id == cardViewBugReport.getId()) {
+           startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Config.ReportIssue)));
        }
     }
 }
