@@ -18,7 +18,7 @@ public class Config {
     public final static String TwrpBackFName = "TwrpBuilderRecoveryBackup.tar.gz";
     public final static String Sdcard = Environment.getExternalStorageDirectory().getPath() + File.separator;
     @NonNull
-    public static final String APP_UPDATE_URL = "https://raw.githubusercontent.com/TwrpBuilder/TwrpBuilder/master/app/version.json";
+    public static final String APP_UPDATE_URL = "https://api.github.com/repos/TwrpBuilder/TwrpBuilder/releases/latest";
     @NonNull
     public static final String OfficialWebsite = "https://twrpbuilder.github.io/";
     @NonNull
@@ -86,13 +86,13 @@ public class Config {
         return data;
     }
 
-    public static int getAppVersion(Context context) {
+    public static double getAppVersion(Context context) {
         try {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            return pInfo.versionCode;
+            return Double.parseDouble(pInfo.versionName);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
-            return 0;
+            return 1.0;
         }
     }
 }

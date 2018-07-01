@@ -9,6 +9,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
+import static com.github.updater.JsonParser.apkName;
+import static com.github.updater.JsonParser.apkURL;
 import static com.github.updater.JsonParser.changelog;
 import static com.github.updater.JsonParser.version;
 
@@ -20,12 +22,11 @@ public class Updater {
 
     private final AlertDialog.Builder dialog;
 
-    public Updater(@NonNull final Context context, final int Version, String url, final boolean Settings) {
-        JsonParser jsonParser = new JsonParser(url);
+    public Updater(@NonNull final Context context, final double Version, String url, final boolean Settings) {
+        new JsonParser(url);
         final Handler ha = new Handler();
-        new FetchUpdateUri();
 
-        dialog = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Dialog_Alert).setTitle("Update");
+        dialog = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Dialog_Alert).setTitle("New update available");
 
         ha.postDelayed(new Runnable() {
 
@@ -36,16 +37,16 @@ public class Updater {
                 }
                 if (Version < version) {
                     dialog
-                            .setMessage("Changelog :- \n" + changelog)
+                            .setMessage(changelog)
                             .setCancelable(false)
                             .setPositiveButton("Download", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    Toast.makeText(context, "Please wait starting download", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, "Downloading! Please wait...", Toast.LENGTH_SHORT).show();
                                     DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
 
-                                    DownloadManager.Request request = new DownloadManager.Request(FetchUpdateUri.url);
-                                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, FetchUpdateUri.name);
+                                    DownloadManager.Request request = new DownloadManager.Request(apkURL);
+                                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, apkName);
 
                                     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                                     if (downloadManager != null) {

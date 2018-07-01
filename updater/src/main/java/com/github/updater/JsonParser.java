@@ -1,5 +1,6 @@
 package com.github.updater;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 
@@ -16,12 +17,14 @@ import java.net.URL;
 
 class JsonParser extends AsyncTask<Void, Void, Void> {
 
+    public static double version;
     static String changelog;
-    public static int version;
+    static Uri apkURL;
+    static String apkName;
     private final String uri;
 
-    JsonParser(String uri){
-        this.uri=uri;
+    JsonParser(String uri) {
+        this.uri = uri;
         this.execute();
     }
 
@@ -35,7 +38,6 @@ class JsonParser extends AsyncTask<Void, Void, Void> {
             char[] chars = new char[1024];
             while ((read = reader.read(chars)) != -1)
                 buffer.append(chars, 0, read);
-
             return buffer.toString();
         } finally {
             if (reader != null)
@@ -49,12 +51,12 @@ class JsonParser extends AsyncTask<Void, Void, Void> {
         try {
             String data = readUrl(uri);
             JSONObject jsonObject = new JSONObject(data);
-            JSONArray jsonArray = jsonObject.getJSONArray("TwrpBuilder");
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObj = jsonArray.getJSONObject(i);
-                version = Integer.valueOf(jsonObj.get("version").toString());
-                changelog = jsonObj.get("changelog").toString();
-            }
+            version = Double.valueOf(jsonObject.get("tag_name").toString().substring(1));
+            changelog = String.copyValueOf(jsonObject.get("body").toString().toCharArray());
+            JSONArray jsonArray = jsonObject.getJSONArray("assets");
+            JSONObject jsonObj = jsonArray.getJSONObject(0);
+            apkURL = Uri.parse(jsonObj.get("browser_download_url").toString());
+            apkName = apkURL.getLastPathSegment();
         } catch (Exception e) {
             e.printStackTrace();
         }
