@@ -73,14 +73,14 @@
     <string name="sending">جارى اﻹرسال…</string>
   <string name="Feedback_sent">تم اﻹرسال</string>
   <string name="feedback_failed">فشل اﻹرسال</string>
-    <string name="select_stock_recovery">Select Stock Recovery</string>
-    <string name="generate_backup">Generate Backup</string>
-    <string name="running_in_not_root_mode">Running in non-root mode</string>
-    <string name="failed_to_create_backup">Failed to create backup .</string>
-    <string name="backup_recovery_from_path">Backed up recovery</string>
-    <string name="reach_us">Reach Us</string>
-  <string name="backup_size_too_small">Backup size too small. Delete %1$s and create backup again.</string>
-  <string name="faild_to_backup">Failed to backup</string>
-  <string name="backup_done">Backup Done</string>
-  <string name="report_a_bug">Report a bug</string>
+    <string name="select_stock_recovery">اختيار ملف الريكفري اﻷصلي</string>
+    <string name="generate_backup">إنشاء النسخة اﻹحتياطية</string>
+    <string name="running_in_not_root_mode">يجري العمل بدون صلاحيات الرووت</string>
+    <string name="failed_to_create_backup">فشل إنشاء النسخة اﻹحتياطية.</string>
+    <string name="backup_recovery_from_path">الريكفري المنسوخ احتياطيا</string>
+    <string name="reach_us">الوصول إلينا</string>
+  <string name="backup_size_too_small">حجم النسخة اﻹحتياطية صغير جدا. قم بمسح %1$s ثم أعد إنشاء النسخة مرة أخري.</string>
+  <string name="faild_to_backup">فشل النسخ الاحتياطي</string>
+  <string name="backup_done">انتهي النسخ اﻹحتياطي</string>
+  <string name="report_a_bug">اﻹبلاغ عن مشكلة</string>
 </resources>
