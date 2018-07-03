@@ -73,14 +73,14 @@
     <string name="sending">Gönderiliyor…</string>
   <string name="Feedback_sent">Geribildirim gönderildi</string>
   <string name="feedback_failed">Geribildirim gönderilemedi</string>
-    <string name="select_stock_recovery">Select Stock Recovery</string>
-    <string name="generate_backup">Generate Backup</string>
-    <string name="running_in_not_root_mode">Running in non-root mode</string>
-    <string name="failed_to_create_backup">Failed to create backup .</string>
-    <string name="backup_recovery_from_path">Backed up recovery</string>
-  <string name="reach_us">Reach Us</string>
-  <string name="backup_size_too_small">Backup size too small. Delete %1$s and create backup again.</string>
-  <string name="faild_to_backup">Failed to backup</string>
-  <string name="backup_done">Backup Done</string>
-  <string name="report_a_bug">Report a bug</string>
+    <string name="select_stock_recovery">Stock kurtarma modunu seçin</string>
+    <string name="generate_backup">Yedek oluştur</string>
+    <string name="running_in_not_root_mode">Kök erişimsiz modda çalışıyor</string>
+    <string name="failed_to_create_backup">Yedek oluşturulurken bir hata oluştu.</string>
+    <string name="backup_recovery_from_path">Yedek oluşturuldu</string>
+  <string name="reach_us">Bize ulaşın</string>
+  <string name="backup_size_too_small">Yedek boyutu çok küçük. %1$s\'i silin ve yeniden yedek oluşturun.</string>
+  <string name="faild_to_backup">Yedek oluşturulamadı.</string>
+  <string name="backup_done">Yedek oluşturuldu</string>
+  <string name="report_a_bug">Bir hata bildirin</string>
 </resources>
