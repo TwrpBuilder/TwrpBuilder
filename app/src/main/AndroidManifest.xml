@@ -40,19 +40,7 @@
         <activity
             android:name="com.github.TwrpBuilder.app.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.github.TwrpBuilder.app.ResetPasswordActivity"
-            android:label="@string/title_activity_reset_password"
-            android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity
-            android:name="com.github.TwrpBuilder.app.ActivitySubmitBuild"
-            android:label="Submit Build"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
         <activity android:name="com.github.TwrpBuilder.app.UploaderActivity" />
         <activity
             android:name="com.github.TwrpBuilder.app.CustomBackupActivity"
@@ -62,7 +50,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".app.ActivityMessage" />
         <activity android:name=".app.FlasherActivity" />
         <activity android:name=".app.SettingsActivity" />
 
