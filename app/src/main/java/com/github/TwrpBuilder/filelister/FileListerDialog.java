@@ -5,10 +5,16 @@ import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.widget.Toast;
+
+import com.github.TwrpBuilder.R;
+
+import java.io.File;
 
 import static android.content.DialogInterface.BUTTON_NEGATIVE;
 import static android.content.DialogInterface.BUTTON_NEUTRAL;
 import static android.content.DialogInterface.BUTTON_POSITIVE;
+import static com.github.TwrpBuilder.util.Config.MIN_BACKUP_SIZE;
 
 /**
  * A File Lister Dialog
@@ -21,6 +27,7 @@ public class FileListerDialog {
     private FilesListerView filesListerView;
 
     private OnFileSelectedListener onFileSelectedListener;
+    private Context ctx;
 
     private FileListerDialog(@NonNull Context context) {
         //super(context);
@@ -44,24 +51,28 @@ public class FileListerDialog {
         return new FileListerDialog(context);
     }
 
-    private void init(Context context) {
+    private void init(final Context context) {
+        this.ctx = context;
         filesListerView = new FilesListerView(context);
         alertDialog.setView(filesListerView);
-        alertDialog.setButton(BUTTON_POSITIVE, "Select", new DialogInterface.OnClickListener() {
+        alertDialog.setButton(BUTTON_POSITIVE, context.getString(R.string.select), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(@NonNull DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-                if (onFileSelectedListener != null)
-                    onFileSelectedListener.onFileSelected(filesListerView.getSelected(), filesListerView.getSelected().getAbsolutePath());
+                if (new File(filesListerView.getSelected().getAbsolutePath()).length() > MIN_BACKUP_SIZE) {
+                    dialogInterface.dismiss();
+                    if (onFileSelectedListener != null)
+                        onFileSelectedListener.onFileSelected(filesListerView.getSelected(), filesListerView.getSelected().getAbsolutePath());
+                } else
+                    Toast.makeText(context, R.string.recovery_too_small, Toast.LENGTH_LONG).show();
             }
         });
-        alertDialog.setButton(BUTTON_NEUTRAL, "Default Dir", new DialogInterface.OnClickListener() {
+        alertDialog.setButton(BUTTON_NEUTRAL, context.getString(R.string.root_dir), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //filesListerView.goToDefaultDir();
             }
         });
-        alertDialog.setButton(BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+        alertDialog.setButton(BUTTON_NEGATIVE, context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(@NonNull DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -73,7 +84,7 @@ public class FileListerDialog {
      * Display the FileListerDialog
      */
     public void show() {
-        alertDialog.setTitle("Select a file");
+        alertDialog.setTitle(ctx.getString(R.string.select_stock_recovery));
 
         filesListerView.start();
         alertDialog.show();

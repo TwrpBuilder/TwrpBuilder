@@ -127,7 +127,7 @@ public class CustomBackupActivity extends AppCompatActivity {
         if (!running) {
             super.onBackPressed();
         } else {
-            Toast.makeText(getBaseContext(), "You can't exit until backup is finished", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), R.string.you_cant_exit_until_backup, Toast.LENGTH_SHORT).show();
         }
     }
 

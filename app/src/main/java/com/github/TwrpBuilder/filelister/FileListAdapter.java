@@ -2,6 +2,7 @@ package com.github.TwrpBuilder.filelister;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.TwrpBuilder.R;
 
@@ -24,6 +26,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import yogesh.firzen.mukkiasevaigal.M;
+
+import static com.github.TwrpBuilder.util.Config.MIN_BACKUP_SIZE;
 
 /**
  * Created by root on 9/7/17.
@@ -238,6 +242,11 @@ class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileListHolde
                 M.L("From FileLister", f.getAbsolutePath());
                 if (f.isDirectory()) {
                     fileLister(f);
+                } else {
+                    v.setBackgroundColor(Color.parseColor("#5511fe11"));
+                    if (new File(f.getAbsolutePath()).length() < MIN_BACKUP_SIZE) {
+                        Toast.makeText(getContext(), R.string.recovery_too_small, Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         }
