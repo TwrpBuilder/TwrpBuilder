@@ -89,7 +89,7 @@
     <string name="backup_recovery_from_path">Backed up recovery</string>
     <string name="folder">Folder</string>
     <string name="reach_us">Reach Us</string>
-    <string name="backup_size_too_small">Backup size is too small. Create backup again.</string>
+    <string name="backup_size_too_small">Backup size too small. Delete %1$s and create backup again.</string>
     <string name="faild_to_backup">Failed to backup</string>
     <string name="backup_done">Backup Done</string>
     <string name="report_a_bug">Report a bug</string>

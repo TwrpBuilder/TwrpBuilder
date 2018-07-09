@@ -242,7 +242,8 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
             super.onPostExecute(aVoid);
             mProgressBar.setVisibility(View.GONE);
             if (failed) {
-                mBuildDescription.setText(smallSize ? R.string.backup_size_too_small : R.string.failed_to_create_backup);
+                mBuildDescription.setText(smallSize ? getString(R.string.backup_size_too_small, backupFile) :
+                        getString(R.string.failed_to_create_backup));
                 Snackbar.make(fragment_backup_child_linear, R.string.faild_to_backup, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             } else {
