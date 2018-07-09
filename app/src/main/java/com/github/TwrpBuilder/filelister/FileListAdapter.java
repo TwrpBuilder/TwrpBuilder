@@ -1,12 +1,9 @@
 package com.github.TwrpBuilder.filelister;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Environment;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -138,7 +135,6 @@ class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileListHolde
     private void dirUp() {
         if (!unreadableDir) {
             data.add(0, selectedFile.getParentFile());
-            data.add(1, null);
         }
 
     }
@@ -154,9 +150,6 @@ class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileListHolde
         File f = data.get(position);
         if (f != null) {
             holder.name.setText(f.getName());
-        } else if (!unreadableDir) {
-            holder.name.setText(R.string.create_new_folder);
-            holder.icon.setImageResource(R.drawable.ic_create_new_folder_black_48dp);
         }
         if (unreadableDir) {
             if (f != null) {
@@ -204,39 +197,6 @@ class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileListHolde
 
         @Override
         public void onClick(View v) {
-            if (data.get(getAdapterPosition()) == null) {
-                View view = View.inflate(getContext(), R.layout.dialog_create_folder, null);
-                final AppCompatEditText editText = view.findViewById(R.id.edittext);
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
-                        .setView(view)
-                        .setTitle("Enter the folder name")
-                        .setPositiveButton("Create", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        });
-                final AlertDialog dialog = builder.create();
-                dialog.show();
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String name = editText.getText().toString();
-                        if (TextUtils.isEmpty(name)) {
-                            M.T(getContext(), "Please enter a valid folder name");
-                        } else {
-                            File file = new File(selectedFile, name);
-                            if (file.exists()) {
-                                M.T(getContext(), "This folder already exists.\n Please provide another name for the folder");
-                            } else {
-                                dialog.dismiss();
-                                boolean mkdirs = file.mkdirs();
-                                fileLister(file);
-                            }
-                        }
-                    }
-                });
-            } else {
                 File f = data.get(getAdapterPosition());
                 selectedFile = f;
                 M.L("From FileLister", f.getAbsolutePath());
@@ -248,7 +208,6 @@ class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileListHolde
                         Toast.makeText(getContext(), R.string.recovery_too_small, Toast.LENGTH_SHORT).show();
                     }
                 }
-            }
         }
     }
 
