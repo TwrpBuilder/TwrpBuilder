@@ -29,7 +29,7 @@ public class Config {
     public static final String XdaThread = "https://forum.xda-developers.com/android/apps-games/twrpbuilder-t3744253";
     public static final String ReportIssue = "https://github.com/TWRPBuilder/TWRPBuilder/issues";
 
-    public static final int MIN_BACKUP_SIZE = 5000000;
+    public static final int MIN_BACKUP_SIZE = 3000000;
 
     private static final String BuildModel = Build.MODEL;
     private static final String BuildBoard = Build.BOARD;
