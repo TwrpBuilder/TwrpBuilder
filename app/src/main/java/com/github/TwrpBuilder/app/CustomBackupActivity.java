@@ -81,8 +81,8 @@ public class CustomBackupActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(editText.getText().toString())) {
-                    Snackbar.make(getCurrentFocus(), R.string.select_file, Snackbar.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(editText.getText().toString()) || editText.getText().toString().trim().length() == 0) {
+                    Snackbar.make(findViewById(R.id.ll_custom_backup), getResources().getString(R.string.select_file), Snackbar.LENGTH_SHORT).show();
                 } else {
                     progressBar.setVisibility(View.VISIBLE);
                     button.setEnabled(false);
