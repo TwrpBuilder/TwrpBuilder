@@ -235,9 +235,9 @@ public class MainActivity extends AppCompatActivity
             switch (requestCode) {
                 case 1:
                     if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                        Log.e("value", "Permission Granted .");
+                        Log.e("TwrpBuilder", "Necessary App Permissions Granted");
                     } else {
-                        Log.e("value", "Permission Denied .");
+                        Log.e("TwrpBuilder", "Necessary App Permissions Denied");
                         finish();
                     }
                     break;

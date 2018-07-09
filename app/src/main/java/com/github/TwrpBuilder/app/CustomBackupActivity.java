@@ -87,7 +87,7 @@ public class CustomBackupActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.VISIBLE);
                     button.setEnabled(false);
                     running = true;
-                    new GenrateBackup().execute();
+                    new GenerateBackup().execute();
                 }
             }
         });
@@ -131,7 +131,7 @@ public class CustomBackupActivity extends AppCompatActivity {
         }
     }
 
-    class GenrateBackup extends AsyncTask<Void, Void, Void> {
+    class GenerateBackup extends AsyncTask<Void, Void, Void> {
 
         @Nullable
         @Override
@@ -142,8 +142,11 @@ public class CustomBackupActivity extends AppCompatActivity {
 
                 ShellExecuter.cp(editText.getText().toString(), Cache + "recovery.img");
                 String[] file = new String[]{Cache + "build.prop", Cache + "recovery.img"};
-                zip(file, Cache + "TwrpBuilderRecoveryBackup.zip");
-                ShellExecuter.cp(Cache + "TwrpBuilderRecoveryBackup.zip", Sdcard + "TwrpBuilder/" + TwrpBackFName);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    zip(file, Cache + "TwrpBuilderRecoveryBackup.zip");
+                    ShellExecuter.cp(Cache + "TwrpBuilderRecoveryBackup.zip", Sdcard + "TwrpBuilder/" + TwrpBackFName);
+                } else
+                    Snackbar.make(findViewById(R.id.ll_custom_backup), R.string.android_below_KITKAT_not_supported, Snackbar.LENGTH_LONG).show();
             } catch (IOException e) {
                 e.printStackTrace();
             }

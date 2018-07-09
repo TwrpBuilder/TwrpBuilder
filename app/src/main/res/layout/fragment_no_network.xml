@@ -14,14 +14,14 @@
         android:layout_marginTop="120dp" />
 
     <TextView
-        android:text="@string/no_network"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="75dp"
+        android:layout_marginBottom="266dp"
         android:fontFamily="sans-serif"
-        android:textSize="30sp"
-        android:textColor="@android:color/holo_red_dark" />
+        android:text="@string/no_network"
+        android:textColor="@android:color/white"
+        android:textSize="30sp" />
 
 </RelativeLayout>

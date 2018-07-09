@@ -206,8 +206,8 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
                 mProgressBar.setVisibility(View.VISIBLE);
                 new BackupTask().execute();
             } else {
-                mBackupButton.setVisibility(View.GONE);
                 startActivity(new Intent(getContext(), CustomBackupActivity.class));
+                mBackupButton.setVisibility(View.GONE);
             }
         } else if (id == mUploadBackup.getId()) {
             startActivity(new Intent(getActivity(), UploaderActivity.class));

@@ -83,4 +83,6 @@
   <string name="faild_to_backup">فشل النسخ الاحتياطي</string>
   <string name="backup_done">انتهي النسخ اﻹحتياطي</string>
   <string name="report_a_bug">اﻹبلاغ عن مشكلة</string>
+    <string name="android_below_KITKAT_not_supported">Android below KITKAT not supported</string>
+    <string name="build_is_ready_for">Build is ready for %1$s</string>
 </resources>

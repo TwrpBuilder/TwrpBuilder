@@ -10,4 +10,6 @@
     <string name="faild_to_backup">Failed to backup</string>
     <string name="backup_done">Backup Done</string>
     <string name="report_a_bug">Report a bug</string>
+    <string name="android_below_KITKAT_not_supported">Android below KITKAT not supported</string>
+    <string name="build_is_ready_for">Build is ready for %1$s</string>
 </resources>
