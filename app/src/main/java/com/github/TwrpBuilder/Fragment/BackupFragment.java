@@ -270,7 +270,7 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
                 gzipOS.close();
                 fos.close();
                 fis.close();
-                if (gzipFile.length() < MIN_BACKUP_SIZE) {
+                if (new File(gzipFile).length() < MIN_BACKUP_SIZE) {
                     failed = true;
                     smallSize = true;
                     new File(gzipFile).delete();

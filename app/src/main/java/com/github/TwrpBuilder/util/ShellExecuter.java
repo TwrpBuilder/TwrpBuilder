@@ -21,28 +21,25 @@ public class ShellExecuter {
     private static final String TAG = "ShellExecuter";
 
 
-    public static String command(String command){
-        return Shell.SH.run(command).toString().replace("[","").replace("]","");
+    public static String command(String command) {
+        return Shell.SH.run(command).toString().replace("[", "").replace("]", "");
     }
 
-    public static void mkdir(String name){
-        File makedir = new File(Sdcard+name );
-        Log.d(TAG,"Request to make folder "+name+" received .");
+    public static void mkdir(String name) {
+        File makedir = new File(Sdcard + name);
+        Log.d(TAG, "Request to make dir " + name + " received!");
         boolean success;
         if (!makedir.exists()) {
             success = makedir.mkdirs();
             if (success) {
-                Log.i(TAG,"Dir "+name+" made .");
+                Log.i(TAG, "Dir " + name + " created successfully!");
             } else {
-                Log.e(TAG,"Failed to make dir "+name);
+                Log.e(TAG, "Failed to make dir " + name);
             }
-        }else
-        {
-            Log.i(TAG,name+" dir alredy exist");
-            Log.e(TAG,"Failed to make dir "+name);
-
+        } else {
+            Log.i(TAG, name + " dir already exists!");
         }
-       }
+    }
 
     public static void cp(@NonNull String src, @NonNull String dst) throws IOException {
         FileInputStream var2 = new FileInputStream(src);
@@ -50,7 +47,7 @@ public class ShellExecuter {
         byte[] var4 = new byte[1024];
 
         int var5;
-        while((var5 = var2.read(var4)) > 0) {
+        while ((var5 = var2.read(var4)) > 0) {
             var3.write(var4, 0, var5);
         }
 
