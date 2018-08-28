@@ -1,6 +1,6 @@
 <resources>
     <string name="settings">Ajustes</string>
-    <string name="title_activity_reset_password">ResetPasswordActivity</string>
+    <string name="title_activity_reset_password">Restaurar Contraseña</string>
     <string name="hint_email">Correo electrónico</string>
     <string name="forgot_password">¿Olvidaste tu contraseña?</string>
     <string name="reset_password">Restablecer contraseña</string>
@@ -74,24 +74,24 @@
     <string name="contributors">Colaboradores</string>
     <string name="our_team">Nuestro Equipo</string>
     <string name="incomplete">Incompleto</string>
-    <string name="select_stock_recovery">Seleccionar Recovery Stock</string>
-    <string name="generate_backup">Generar copia de seguiridad</string>
+    <string name="select_stock_recovery">Seleccionar Recovery de fabrica</string>
+    <string name="generate_backup">Generar copia de seguridad</string>
     <string name="developed_by">Desarrollado por</string>
     <string name="twrp_builder_team">Equipo de TWRP Builder</string>
-    <string name="todo">TODO</string>
+    <string name="todo">Tareas por hacer</string>
     <string name="developer_profile">Perfil del desarrollador</string>
     <string name="create_new_folder">Crear una nueva carpeta aquí</string>
     <string name="running_in_not_root_mode">Ejecutándose en modo no-root</string>
     <string name="failed_to_create_backup">Error al crear la copia de seguridad</string>
     <string name="backup_recovery_from_path">Recovery de respaldo</string>
     <string name="folder">Carpeta</string>
-    <string name="reach_us">Reach Us</string>
+    <string name="reach_us">Contáctanos</string>
     <string name="backup_size_too_small">Tamaño de respaldo demasiado pequeño. Eliminar %1$s y crear la copia de seguridad nuevamente</string>
     <string name="faild_to_backup">Falló al hacer la copia de seguridad</string>
     <string name="backup_done">Copia de seguridad lista</string>
     <string name="report_a_bug">Reportar un bug</string>
     <string name="android_below_KITKAT_not_supported">Versión de Android menor a KITKAT no soportado</string>
-    <string name="build_is_ready_for">Compilacion está listo para %1$s</string>
+    <string name="build_is_ready_for">La compilación estará lista en %1$s</string>
     <string name="you_cant_exit_until_backup">No puedes salir hasta que se complete la copia de seguridad</string>
     <string name="recovery_too_small">Tamaño de archivo demasiado pequeño, seleccione un archivo de recuperación adecuado</string>
     <string name="select">Seleccionar</string>
