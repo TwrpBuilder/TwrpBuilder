@@ -1,4 +1,7 @@
 ## TWRPBuilder App 
+
+<img src="Banner.png" width="70%" height="70%" />
+
 [![Build Status](https://travis-ci.org/TwrpBuilder/TwrpBuilder.svg?branch=master)](https://travis-ci.org/TwrpBuilder/TwrpBuilder) [![Crowdin](https://d322cqt584bo4o.cloudfront.net/twrpbuilder/localized.svg)](https://crowdin.com/project/twrpbuilder)
 >An Android app that allows you to request TWRP for your (officially unsupported) device. All it needs is some basic info about your device, and through the app, it sends the info to be used for the creation of TWRP Recovery for your device.
 ### Download
