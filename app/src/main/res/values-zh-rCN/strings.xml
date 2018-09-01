@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">TWRP 构建</string>
     <string name="navigation_drawer_open">开启导航抽屉</string>
     <string name="navigation_drawer_close">关闭导航抽屉</string>
     <string name="settings">设置</string>
