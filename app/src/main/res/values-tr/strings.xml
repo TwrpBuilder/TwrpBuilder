@@ -83,10 +83,10 @@
   <string name="faild_to_backup">Yedek oluşturulamadı.</string>
   <string name="backup_done">Yedek oluşturuldu</string>
   <string name="report_a_bug">Bir hata bildirin</string>
-    <string name="android_below_KITKAT_not_supported">Android below KITKAT not supported</string>
-    <string name="build_is_ready_for">Build is ready for %1$s</string>
-    <string name="you_cant_exit_until_backup">You can\'t exit until backup is finished</string>
-    <string name="recovery_too_small">File size too small, Select a proper recovery file</string>
-    <string name="select">Select</string>
-    <string name="root_dir">Default Dir</string>
+    <string name="android_below_KITKAT_not_supported">Android KITKAT sürümünden aşağısı desteklenmiyor</string>
+    <string name="build_is_ready_for">%1$s için güncelleme hazır.</string>
+    <string name="you_cant_exit_until_backup">Yedekleme bitene kadar çıkamazsınız.</string>
+    <string name="recovery_too_small">Boyut çok küçük. Lütfen geçerli bir dosya seçin.</string>
+    <string name="select">Seç</string>
+    <string name="root_dir">Varsayılan dizin</string>
 </resources>
