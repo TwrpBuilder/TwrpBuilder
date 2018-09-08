@@ -5,7 +5,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -142,11 +141,8 @@ public class CustomBackupActivity extends AppCompatActivity {
 
                 ShellExecuter.cp(editText.getText().toString(), Cache + "recovery.img");
                 String[] file = new String[]{Cache + "build.prop", Cache + "recovery.img"};
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    zip(file, Cache + "TwrpBuilderRecoveryBackup.zip");
-                    ShellExecuter.cp(Cache + "TwrpBuilderRecoveryBackup.zip", Sdcard + "TwrpBuilder/" + TwrpBackFName);
-                } else
-                    Snackbar.make(findViewById(R.id.ll_custom_backup), R.string.android_below_KITKAT_not_supported, Snackbar.LENGTH_LONG).show();
+                zip(file, Cache + "TwrpBuilderRecoveryBackup.zip");
+                ShellExecuter.cp(Cache + "TwrpBuilderRecoveryBackup.zip", Sdcard + "TwrpBuilder/" + TwrpBackFName);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -162,7 +158,6 @@ public class CustomBackupActivity extends AppCompatActivity {
             finish();
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         void zip(@NonNull String[] files, @NonNull String zipFile) throws IOException {
             BufferedInputStream origin;
             try (ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(zipFile)))) {
