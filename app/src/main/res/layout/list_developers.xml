@@ -23,12 +23,12 @@
                 android:layout_gravity="center" />
 
             <TextView
-                android:textColor="@color/white"
                 android:id="@+id/tv_his_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:textColor="@color/white"
                 android:textIsSelectable="true"
                 android:textSize="@dimen/_16ssp" />
 

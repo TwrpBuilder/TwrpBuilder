@@ -2,12 +2,6 @@
     <string name="navigation_drawer_open">Abrir el cajón de navegación</string>
     <string name="navigation_drawer_close">Cerrar el cajón de navegación</string>
     <string name="settings">Ajustes</string>
-    <string name="title_activity_reset_password">ResetPasswordActivity</string>
-    <string name="hint_email">Email</string>
-    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
-    <string name="reset_password">Reset Password</string>
-    <string name="forgot_password_msg">Solo necesitamos su ID de correo electrónico registrada para enviarle instrucciones de restablecimiento de contraseña.</string>
-    <string name="btn_back"><![CDATA[<< Atras]]></string>
     <string name="backup_recovery">Backup Recovery</string>
     <string name="upload_backup">Enviar Backup</string>
     <string name="no_network">No hay conexion</string>
@@ -23,12 +17,9 @@
     <string name="something_went_wrong">Oops! Algo salió mal</string>
     <string name="contribution_counter_info">Hizo %d contribuciones</string>
     <string name="connecting_to_github">Conectando a Github…</string>
-    <string name="enter_url_of_recovery">Ingrese la URL de recuperación</string>
-    <string name="submit">Enviar</string>
     <string name="cancel_upload">Cancelar carga</string>
     <string name="cancel_warning">Estas seguro que quieres cancelar?</string>
     <string name="select_file">Por favor seleccione un archivo</string>
-    <string name="enter_url">Por favor ingrese la URL</string>
     <string name="build_status">Estado de Compilaciones</string>
     <string name="queue">Cola</string>
     <string name="running">Corriendo</string>
@@ -61,7 +52,6 @@
     <string name="rejected_by">Rechazado por</string>
     <string name="note">Nota</string>
     <string name="one_time_request">Puede solicitar solo una vez desde este dispositivo. Si tiene algún problema, póngase en contacto por Xda.</string>
-    <string name="create_folder_hint">Ingrese el nombre de la carpeta aquí</string>
     <string name="works_or_not">Please check box works or not works.</string>
     <string name="tell_us_more_optional">Tell us more (optional)</string>
     <string name="not_works">not works</string>
@@ -82,8 +72,6 @@
     <string name="faild_to_backup">Failed to backup</string>
     <string name="backup_done">Backup Done</string>
     <string name="report_a_bug">Report a bug</string>
-    <string name="android_below_KITKAT_not_supported">Android below KITKAT not supported</string>
-    <string name="build_is_ready_for">Build is ready for %1$s</string>
     <string name="you_cant_exit_until_backup">You can\'t exit until backup is finished</string>
     <string name="recovery_too_small">File size too small, Select a proper recovery file</string>
     <string name="select">Select</string>

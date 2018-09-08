@@ -19,10 +19,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Date: 10/23/16 12:51 PM
  */
 
-public class CreditsAdapter extends GithubAdapterIDEA
-{
-    public CreditsAdapter(Context context)
-    {
+public class CreditsAdapter extends GithubAdapterIDEA {
+    public CreditsAdapter(Context context) {
         super(context);
     }
 

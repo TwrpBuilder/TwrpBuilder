@@ -8,8 +8,7 @@ import java.io.PrintWriter;
 
 public class FWriter {
 
-    public FWriter(@NonNull String name, String data)
-    {
+    public FWriter(@NonNull String name, String data) {
         run(name, data);
     }
 

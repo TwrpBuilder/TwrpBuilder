@@ -32,19 +32,20 @@ public class FragmentStatusCommon extends Fragment {
     private String reference;
     private View view;
     @Nullable
-    private String filterQuery=null;
+    private String filterQuery = null;
     private String equalTo;
 
-    public FragmentStatusCommon(){}
+    public FragmentStatusCommon() {
+    }
 
-    public FragmentStatusCommon(String reference){
-        this.reference=reference;
+    public FragmentStatusCommon(String reference) {
+        this.reference = reference;
     }
 
     public FragmentStatusCommon(String reference, @Nullable String filterQuery, String equalTo) {
-        this.reference=reference;
-        this.filterQuery=filterQuery;
-        this.equalTo=equalTo;
+        this.reference = reference;
+        this.filterQuery = filterQuery;
+        this.equalTo = equalTo;
     }
 
 
@@ -72,10 +73,10 @@ public class FragmentStatusCommon extends Fragment {
             public BuildsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.list_build_common, parent, false);
-                if (filterQuery!=null) {
-                    return new BuildsHolder(view,reference,true,getContext());
-                }else {
-                    return new BuildsHolder(view,reference,false,getContext());
+                if (filterQuery != null) {
+                    return new BuildsHolder(view, reference, true, getContext());
+                } else {
+                    return new BuildsHolder(view, reference, false, getContext());
                 }
             }
 
@@ -96,7 +97,7 @@ public class FragmentStatusCommon extends Fragment {
             @Override
             public void onDataChanged() {
                 super.onDataChanged();
-            ProgressBar();
+                ProgressBar();
             }
         };
         ProgressBar();
@@ -110,12 +111,12 @@ public class FragmentStatusCommon extends Fragment {
 
     }
 
-    private void ProgressBar(){
-        ProgressBar progressBar= view.findViewById(R.id.pb_builds);
-        TextView textView= view.findViewById(R.id.tv_no_build);
-        if (filterQuery!=null){
-            new FirebaseProgressBar(progressBar,textView,adapter,reference,true,filterQuery,equalTo);
-        }else {
+    private void ProgressBar() {
+        ProgressBar progressBar = view.findViewById(R.id.pb_builds);
+        TextView textView = view.findViewById(R.id.tv_no_build);
+        if (filterQuery != null) {
+            new FirebaseProgressBar(progressBar, textView, adapter, reference, true, filterQuery, equalTo);
+        } else {
             new FirebaseProgressBar(progressBar, textView, adapter, reference);
         }
 

@@ -61,12 +61,11 @@ public class BackupFragment extends Fragment implements View.OnClickListener {
     /*FireBase*/
     @NonNull
     private final FirebaseStorage storage = FirebaseStorage.getInstance();
-    private Button mBackupButton;
-
-    /*TextView*/
-    private TextView mBuildDescription;
     @NonNull
     private final StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/");
+    private Button mBackupButton;
+    /*TextView*/
+    private TextView mBuildDescription;
     /*Buttons*/
     private Button mUploadBackup;
     /*ProgressBar*/

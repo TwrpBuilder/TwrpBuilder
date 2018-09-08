@@ -44,12 +44,14 @@ import static com.github.TwrpBuilder.util.Config.getBuildProduct;
  */
 
 public class UploaderActivity extends AppCompatActivity {
-    private Button mCancel;
-    private TextView ShowOutput;
+    public static boolean result;
+    public static boolean fromI;
     @NonNull
     private final FirebaseStorage storage = FirebaseStorage.getInstance();
     @NonNull
     private final StorageReference storageRef = storage.getReferenceFromUrl("gs://twrpbuilder.appspot.com/");
+    private Button mCancel;
+    private TextView ShowOutput;
     private DatabaseReference mUploader;
     private DatabaseReference mBuildAdded;
     private UploadTask uploadTask;
@@ -61,16 +63,14 @@ public class UploaderActivity extends AppCompatActivity {
     private String userId;
     @Nullable
     private String Email;
-    public static boolean result;
-    public static boolean fromI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_uploader);
-        Toolbar toolbar=findViewById(R.id.action_bar_tool);
+        Toolbar toolbar = findViewById(R.id.action_bar_tool);
         toolbar.setTitle(R.string.uploading);
-        mCancel= findViewById(R.id.cancel_upload);
+        mCancel = findViewById(R.id.cancel_upload);
         ShowOutput = findViewById(R.id.show_output);
         FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
         mUploader = mFirebaseInstance.getReference("InQueue");
@@ -82,7 +82,7 @@ public class UploaderActivity extends AppCompatActivity {
         StorageReference riversRef = storageRef.child("queue/" + getBuildBrand() + "/" + getBuildBoard() + "/" + getBuildModel() + "/" + file.getLastPathSegment());
 
         mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        fromI=true;
+        fromI = true;
         uploadTask = riversRef.putFile(file);
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -91,11 +91,11 @@ public class UploaderActivity extends AppCompatActivity {
                 mBuilder.setOngoing(false);
                 mNotifyManager.notify(1, mBuilder.build());
                 userId = mUploader.push().getKey();
-                Pbuild user = new Pbuild(getBuildBrand(), getBuildBoard(), getBuildModel(),getBuildProduct(), Email, Uid, refreshedToken, DateUtils.getDate());
-                Message message=new Message("TwrpBuilder","New build in queue for "+getBuildModel()+" "+getBuildBrand());
+                Pbuild user = new Pbuild(getBuildBrand(), getBuildBoard(), getBuildModel(), getBuildProduct(), Email, Uid, refreshedToken, DateUtils.getDate());
+                Message message = new Message("TwrpBuilder", "New build in queue for " + getBuildModel() + " " + getBuildBrand());
                 mUploader.child(userId).setValue(user);
                 mBuildAdded.push().setValue(message);
-                result=true;
+                result = true;
                 finish();
 
             }
@@ -116,7 +116,7 @@ public class UploaderActivity extends AppCompatActivity {
                         (taskSnapshot.getTotalByteCount() > 0 ? taskSnapshot.getTotalByteCount() : 1);
                 ShowOutput.setText(String.valueOf(progress + "%"));
                 mBuilder =
-                        new NotificationCompat.Builder(UploaderActivity.this,"2")
+                        new NotificationCompat.Builder(UploaderActivity.this, "2")
                                 .setSmallIcon(R.mipmap.ic_launcher)
                                 .setContentTitle(getString(R.string.uploading))
                                 .setAutoCancel(false)
@@ -137,7 +137,7 @@ public class UploaderActivity extends AppCompatActivity {
 
     }
 
-     @Override
+    @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.cancel_warning)

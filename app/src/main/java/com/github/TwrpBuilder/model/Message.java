@@ -14,13 +14,13 @@ public class Message {
     public Message() {
     }
 
-    public Message(String title,String body) {
-        this.title=title;
+    public Message(String title, String body) {
+        this.title = title;
         this.body = body;
     }
 
-    public Message(String title,String body,String email,boolean works) {
-        this.title=title;
+    public Message(String title, String body, String email, boolean works) {
+        this.title = title;
         this.body = body;
         this.email = email;
         this.works = works;

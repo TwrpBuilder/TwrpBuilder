@@ -1,7 +1,6 @@
 package com.github.TwrpBuilder.app;
 
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -43,12 +42,12 @@ import static com.github.TwrpBuilder.util.Config.buildProp;
 
 public class CustomBackupActivity extends AppCompatActivity {
 
-    private EditText editText;
-    private Button button;
-    private ProgressBar progressBar;
     public static boolean FromCB;
     public static boolean resultOfB;
     private static boolean running;
+    private EditText editText;
+    private Button button;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

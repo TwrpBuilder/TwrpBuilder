@@ -3,12 +3,6 @@
     <string name="navigation_drawer_open">Ouvir le menu de navigation</string>
     <string name="navigation_drawer_close">Fermer le menu de navigation</string>
     <string name="settings">Paramètre</string>
-    <string name="title_activity_reset_password">Récupérer le mot de passe</string>
-    <string name="hint_email">Email</string>
-    <string name="forgot_password">Mot de passe oublié ?</string>
-    <string name="reset_password">Récupérer le mot de passe</string>
-    <string name="forgot_password_msg">Nous avons just besoin de l\'email de votre inscription pour pouvoir vous envoyer les instructions pour réinitialiser votre mot de passe.</string>
-    <string name="btn_back"><![CDATA[<< Back]]></string>
     <string name="backup_recovery">Backup Recovery</string>
     <string name="upload_backup">Upload Backup</string>
     <string name="no_network">Pas de réseau</string>
@@ -24,12 +18,9 @@
     <string name="something_went_wrong">Oops! Quelque chose c\'est mal passé</string>
     <string name="contribution_counter_info">A fait %d contributions</string>
     <string name="connecting_to_github">Connection à Github…</string>
-    <string name="enter_url_of_recovery">Entrer l\'Url du recovery</string>
-    <string name="submit">Demandé</string>
     <string name="cancel_upload">Annulé l\'Upload</string>
     <string name="cancel_warning">Voulez vous réelement anuler?</string>
     <string name="select_file">Veullez choisir un fichier</string>
-    <string name="enter_url">Veuillez entrer l\'Url</string>
     <string name="build_status">Build Status</string>
     <string name="queue">Queue</string>
     <string name="running">En cour</string>
@@ -62,7 +53,6 @@
     <string name="rejected_by">Rejected by</string>
     <string name="note">Note</string>
     <string name="one_time_request">You can make request one time only from this device . If you\'re facing any issues then please contact via Xda.</string>
-    <string name="create_folder_hint">Enter Folder Name Here</string>
     <string name="works_or_not">Please check the box if it worked or if it didn\'t work.</string>
     <string name="tell_us_more_optional">Tell us more (optional)</string>
     <string name="not_works">not works</string>

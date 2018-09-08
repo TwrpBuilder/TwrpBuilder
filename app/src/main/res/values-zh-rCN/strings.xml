@@ -2,12 +2,6 @@
     <string name="navigation_drawer_open">开启导航抽屉</string>
     <string name="navigation_drawer_close">关闭导航抽屉</string>
     <string name="settings">设置</string>
-    <string name="title_activity_reset_password">ResetPasswordActivity</string>
-    <string name="hint_email">电子邮件</string>
-    <string name="forgot_password">忘记密码？</string>
-    <string name="reset_password">重置密码</string>
-    <string name="forgot_password_msg">我们仅需要您的注册邮箱地址以发送密码重置指引。</string>
-    <string name="btn_back"><![CDATA[<< Back]]></string>
     <string name="backup_recovery">备份恢复程序</string>
     <string name="upload_backup">上传备份</string>
     <string name="no_network">无网络</string>
@@ -23,12 +17,9 @@
     <string name="something_went_wrong">啊哦！出现了一些问题</string>
     <string name="contribution_counter_info">做出了 %d 项贡献</string>
     <string name="connecting_to_github">正在连接至 Github···</string>
-    <string name="enter_url_of_recovery">请输入恢复程序地址</string>
-    <string name="submit">提交</string>
     <string name="cancel_upload">取消上传</string>
     <string name="cancel_warning">您是否想要取消？</string>
     <string name="select_file">请选择文件</string>
-    <string name="enter_url">请输入网址</string>
     <string name="build_status">构建状态</string>
     <string name="queue">队列中</string>
     <string name="running">正在运行</string>
@@ -61,7 +52,6 @@
     <string name="rejected_by">拒绝者</string>
     <string name="note">附注</string>
     <string name="one_time_request">您仅可从此设备中发出一次请求。若您遭遇任何问题请通过 XDA 联系我们。</string>
-    <string name="create_folder_hint">请在此处输入文件夹名</string>
     <string name="works_or_not">请无论可用与否都点选此方框。</string>
     <string name="tell_us_more_optional">告诉我们更多（可选）</string>
     <string name="not_works">不可用</string>
@@ -82,7 +72,6 @@
     <string name="twrp_builder_team">TWRP 构建团队</string>
     <string name="todo">TODO</string>
     <string name="developer_profile">开发者档案</string>
-    <string name="create_new_folder">在此新建文件夹</string>
     <string name="running_in_not_root_mode">运行于无 Root 模式</string>
     <string name="failed_to_create_backup">无法创建备份</string>
     <string name="backup_recovery_from_path">已备份恢复程序</string>
@@ -92,8 +81,6 @@
     <string name="faild_to_backup">无法备份</string>
     <string name="backup_done">备份完成</string>
     <string name="report_a_bug">反馈错误</string>
-    <string name="android_below_KITKAT_not_supported">低于 Android 4.4 以下的版本不受支持</string>
-    <string name="build_is_ready_for">已为 %1$s 构建</string>
     <string name="you_cant_exit_until_backup">您在备份完成前无法退出</string>
     <string name="recovery_too_small">文件过小，请选择正确的备份文件。</string>
     <string name="select">选择</string>

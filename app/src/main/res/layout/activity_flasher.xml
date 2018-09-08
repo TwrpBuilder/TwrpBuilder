@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_light">
+    android:background="@color/background_light"
+    android:orientation="vertical">
 
 
-    <include layout="@layout/action_bar"/>
+    <include layout="@layout/action_bar" />
 
     <EditText
-        android:layout_width="match_parent"
-        android:hint="@string/select_file"
         android:id="@+id/ed_select_recovery"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/select_file" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/flash"
         android:id="@+id/bt_flash"
-        android:layout_height="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/flash" />
 
     <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_gravity="center"
         android:id="@+id/pb_flasher"
-        android:visibility="gone"
-        android:layout_height="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
 </LinearLayout>

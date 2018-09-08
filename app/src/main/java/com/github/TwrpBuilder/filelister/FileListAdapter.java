@@ -33,9 +33,9 @@ import static com.github.TwrpBuilder.util.Config.MIN_BACKUP_SIZE;
 class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileListHolder> {
 
     private final Context context;
+    private final FilesListerView listerView;
     private File defaultDir = Environment.getExternalStorageDirectory();
     private File selectedFile = defaultDir;
-    private final FilesListerView listerView;
     @NonNull
     private List<File> data = new LinkedList<>();
     private boolean unreadableDir;
@@ -43,6 +43,31 @@ class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileListHolde
     FileListAdapter(FilesListerView view) {
         this.context = view.getContext();
         listerView = view;
+    }
+
+    private static String[] getPhysicalPaths() {
+        return new String[]{
+                "/storage/sdcard0",
+                "/storage/sdcard1",                 //Motorola Xoom
+                "/storage/extsdcard",               //Samsung SGS3
+                "/storage/sdcard0/external_sdcard", //User request
+                "/mnt/extsdcard",
+                "/mnt/sdcard/external_sd",          //Samsung galaxy family
+                "/mnt/external_sd",
+                "/mnt/media_rw/sdcard1",            //4.4.2 on CyanogenMod S3
+                "/removable/microsd",               //Asus transformer prime
+                "/mnt/emmc",
+                "/storage/external_SD",             //LG
+                "/storage/ext_sd",                  //HTC One Max
+                "/storage/removable/sdcard1",       //Sony Xperia Z1
+                "/data/sdext",
+                "/data/sdext2",
+                "/data/sdext3",
+                "/data/sdext4",
+                "/sdcard1",                         //Sony Xperia Z
+                "/sdcard2",                         //HTC One M8s
+                "/storage/microsd"                  //ASUS ZenFone 2
+        };
     }
 
     void start() {
@@ -101,7 +126,7 @@ class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileListHolde
                 @Override
                 public boolean accept(@NonNull File file) {
 
-                    return file.isDirectory() || file.getName().endsWith(".img") ;
+                    return file.isDirectory() || file.getName().endsWith(".img");
                 }
             });
             if (files != null) {
@@ -183,6 +208,10 @@ class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileListHolde
         fileLister(defaultDir);
     }
 
+    private Context getContext() {
+        return context;
+    }
+
     class FileListHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         final TextView name;
@@ -197,46 +226,17 @@ class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileListHolde
 
         @Override
         public void onClick(View v) {
-                File f = data.get(getAdapterPosition());
-                selectedFile = f;
-                M.L("From FileLister", f.getAbsolutePath());
-                if (f.isDirectory()) {
-                    fileLister(f);
-                } else {
-                    v.setBackgroundColor(Color.parseColor("#5511fe11"));
-                    if (new File(f.getAbsolutePath()).length() < MIN_BACKUP_SIZE) {
-                        Toast.makeText(getContext(), R.string.recovery_too_small, Toast.LENGTH_SHORT).show();
-                    }
+            File f = data.get(getAdapterPosition());
+            selectedFile = f;
+            M.L("From FileLister", f.getAbsolutePath());
+            if (f.isDirectory()) {
+                fileLister(f);
+            } else {
+                v.setBackgroundColor(Color.parseColor("#5511fe11"));
+                if (new File(f.getAbsolutePath()).length() < MIN_BACKUP_SIZE) {
+                    Toast.makeText(getContext(), R.string.recovery_too_small, Toast.LENGTH_SHORT).show();
                 }
+            }
         }
-    }
-
-    private static String[] getPhysicalPaths() {
-        return new String[]{
-                "/storage/sdcard0",
-                "/storage/sdcard1",                 //Motorola Xoom
-                "/storage/extsdcard",               //Samsung SGS3
-                "/storage/sdcard0/external_sdcard", //User request
-                "/mnt/extsdcard",
-                "/mnt/sdcard/external_sd",          //Samsung galaxy family
-                "/mnt/external_sd",
-                "/mnt/media_rw/sdcard1",            //4.4.2 on CyanogenMod S3
-                "/removable/microsd",               //Asus transformer prime
-                "/mnt/emmc",
-                "/storage/external_SD",             //LG
-                "/storage/ext_sd",                  //HTC One Max
-                "/storage/removable/sdcard1",       //Sony Xperia Z1
-                "/data/sdext",
-                "/data/sdext2",
-                "/data/sdext3",
-                "/data/sdext4",
-                "/sdcard1",                         //Sony Xperia Z
-                "/sdcard2",                         //HTC One M8s
-                "/storage/microsd"                  //ASUS ZenFone 2
-        };
-    }
-
-    private Context getContext() {
-        return context;
     }
 }

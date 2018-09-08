@@ -23,11 +23,11 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
 
 
         if (remoteMessage.getNotification() != null) {
-            String messageBody=remoteMessage.getNotification().getBody();
-            System.out.println("FirebaseNotificationService: i'm trigrred "+messageBody);
+            String messageBody = remoteMessage.getNotification().getBody();
+            System.out.println("FirebaseNotificationService: i'm trigrred " + messageBody);
             if (messageBody.endsWith(getBuildModel())) {
-                System.out.println("FirebaseNotificationService: fuck this "+getBuildModel());
-                System.out.println("FirebaseNotificationService: this can't be true "+messageBody);
+                System.out.println("FirebaseNotificationService: fuck this " + getBuildModel());
+                System.out.println("FirebaseNotificationService: this can't be true " + messageBody);
                 Intent intent = new Intent(this, BackupFragment.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,

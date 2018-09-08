@@ -18,9 +18,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="#162B36"
         android:fitsSystemWindows="true"
-        app:menu="@menu/activity_main_drawer"
         android:theme="@style/AppTheme"
-        android:background="#162B36"/>
+        app:menu="@menu/activity_main_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

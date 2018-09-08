@@ -25,13 +25,13 @@ import javax.mail.internet.MimeMessage;
  */
 
 public class GMail extends javax.mail.Authenticator {
-    private String user;
-    private String password;
-    private Session session;
-
     static {
         Security.addProvider(new JSSEProvider());
     }
+
+    private String user;
+    private String password;
+    private Session session;
 
     public GMail(String user, String password) {
         this.user = user;

@@ -10,12 +10,12 @@ import android.util.DisplayMetrics;
  */
 
 public class setLocale {
-    public setLocale(Context context , String lang){
-            java.util.Locale myLocale = new java.util.Locale(lang);
-            Resources res = context.getResources();
-            DisplayMetrics dm = res.getDisplayMetrics();
-            Configuration conf = res.getConfiguration();
-            conf.locale = myLocale;
-            res.updateConfiguration(conf, dm);
+    public setLocale(Context context, String lang) {
+        java.util.Locale myLocale = new java.util.Locale(lang);
+        Resources res = context.getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
     }
 }

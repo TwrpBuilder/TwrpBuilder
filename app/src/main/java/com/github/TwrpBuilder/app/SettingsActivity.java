@@ -29,9 +29,6 @@ import com.google.firebase.messaging.FirebaseMessaging;
  */
 
 public class SettingsActivity extends AppCompatActivity {
-    private ArrayAdapter<String> supportedLang;
-    private LinearLayout linearLayout;
-    private AlertDialog.Builder builderSingle;
     @NonNull
     private final String[] supportLangs = new String[]{
             "en",
@@ -52,6 +49,9 @@ public class SettingsActivity extends AppCompatActivity {
             "French",
             "Italian"
     };
+    private ArrayAdapter<String> supportedLang;
+    private LinearLayout linearLayout;
+    private AlertDialog.Builder builderSingle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

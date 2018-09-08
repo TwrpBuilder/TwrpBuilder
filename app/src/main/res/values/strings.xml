@@ -3,12 +3,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="settings">Settings</string>
-    <string name="title_activity_reset_password">ResetPasswordActivity</string>
-    <string name="hint_email">Email</string>
-    <string name="forgot_password">Forgot your password?</string>
-    <string name="reset_password">Reset Password</string>
-    <string name="forgot_password_msg">We just need your registered email to send you password reset instructions.</string>
-    <string name="btn_back"><![CDATA[<< Back]]></string>
     <string name="backup_recovery">Backup Recovery</string>
     <string name="upload_backup">Upload Backup</string>
     <string name="no_network">No Network</string>
@@ -24,12 +18,9 @@
     <string name="something_went_wrong">Oops! Something went wrong</string>
     <string name="contribution_counter_info">Made %d contributions</string>
     <string name="connecting_to_github">Connecting to Github…</string>
-    <string name="enter_url_of_recovery">Enter Url of recovery</string>
-    <string name="submit">Submit</string>
     <string name="cancel_upload">Cancel Upload</string>
     <string name="cancel_warning">Are you sure you want to cancel?</string>
     <string name="select_file">Please select a file</string>
-    <string name="enter_url">Please Enter Url</string>
     <string name="build_status">Build Status</string>
     <string name="queue">Queue</string>
     <string name="running">Running</string>
@@ -62,7 +53,6 @@
     <string name="rejected_by">Rejected by</string>
     <string name="note">Note</string>
     <string name="one_time_request">You can make request one time only from this device . If you\'re facing any issues then please contact via Xda.</string>
-    <string name="create_folder_hint">Enter Folder Name Here</string>
     <string name="works_or_not">Please check the box if it worked or if it didn\'t work.</string>
     <string name="tell_us_more_optional">Tell us more (optional)</string>
     <string name="not_works">not works</string>
@@ -83,7 +73,6 @@
     <string name="twrp_builder_team">TWRP Builder Team</string>
     <string name="todo">TODO</string>
     <string name="developer_profile">Developer Profile</string>
-    <string name="create_new_folder">Create a new Folder here</string>
     <string name="running_in_not_root_mode">Running in non-root mode</string>
     <string name="failed_to_create_backup">Failed to create backup</string>
     <string name="backup_recovery_from_path">Backed up recovery</string>
@@ -93,8 +82,6 @@
     <string name="faild_to_backup">Failed to backup</string>
     <string name="backup_done">Backup Done</string>
     <string name="report_a_bug">Report a bug</string>
-    <string name="android_below_KITKAT_not_supported">Android below KITKAT not supported</string>
-    <string name="build_is_ready_for">Build is ready for %1$s</string>
     <string name="you_cant_exit_until_backup">You can\'t exit until backup is finished</string>
     <string name="recovery_too_small">File size too small, Select a proper recovery file</string>
     <string name="select">Select</string>

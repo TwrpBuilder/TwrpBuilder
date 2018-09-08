@@ -15,19 +15,18 @@ import org.json.JSONException;
  * Date: 10/25/16 5:45 PM
  */
 
-abstract public class AbstractGithubAdapter extends BaseAdapter
-{
+abstract public class AbstractGithubAdapter extends BaseAdapter {
     final LayoutInflater mInflater;
     private final Context mContext;
 
-    abstract protected JSONArray onIndex();
-    abstract protected void onUpdate(JSONArray list);
-
-    AbstractGithubAdapter(Context context)
-    {
+    AbstractGithubAdapter(Context context) {
         this.mContext = context;
         this.mInflater = LayoutInflater.from(context);
     }
+
+    abstract protected JSONArray onIndex();
+
+    abstract protected void onUpdate(JSONArray list);
 
     @Nullable
     abstract protected View onView(int position, View convertView, ViewGroup parent);
@@ -37,8 +36,7 @@ abstract public class AbstractGithubAdapter extends BaseAdapter
     }
 
     @Override
-    public int getCount()
-    {
+    public int getCount() {
         return this.onIndex().length();
     }
 
@@ -55,13 +53,11 @@ abstract public class AbstractGithubAdapter extends BaseAdapter
     }
 
     @Override
-    public long getItemId(int position)
-    {
+    public long getItemId(int position) {
         return position;
     }
 
-    public void update(JSONArray newList)
-    {
+    public void update(JSONArray newList) {
         this.onUpdate(newList);
         this.notifyDataSetChanged();
     }

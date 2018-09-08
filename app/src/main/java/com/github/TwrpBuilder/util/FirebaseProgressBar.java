@@ -21,11 +21,11 @@ import com.google.firebase.database.ValueEventListener;
 public class FirebaseProgressBar {
 
     public FirebaseProgressBar(@NonNull final ProgressBar progressBar, @NonNull final TextView textView, @NonNull FirebaseRecyclerAdapter adapter, @NonNull final String refId) {
-        start(progressBar,textView,adapter,refId,false,null,null);
+        start(progressBar, textView, adapter, refId, false, null, null);
     }
 
     public FirebaseProgressBar(@NonNull final ProgressBar progressBar, @NonNull final TextView textView, @NonNull FirebaseRecyclerAdapter adapter, @NonNull final String refId, boolean filter, @NonNull String from, String where) {
-        start(progressBar,textView,adapter,refId,filter,from,where);
+        start(progressBar, textView, adapter, refId, filter, from, where);
     }
 
     private void start(final ProgressBar progressBar, @NonNull final TextView textView, @NonNull FirebaseRecyclerAdapter adapter, @NonNull final String refId, final boolean filter, @NonNull String from, String equalto) {
@@ -34,24 +34,20 @@ public class FirebaseProgressBar {
 
         progressBar.setVisibility(View.VISIBLE);
         Query query;
-        if (filter)
-        {
+        if (filter) {
             query = mFirebaseInstance.getReference(refId).orderByChild(from).equalTo(equalto);
-        }else {
+        } else {
             query = mFirebaseInstance.getReference(refId);
         }
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 progressBar.setVisibility(View.GONE);
-                if (!dataSnapshot.exists())
-                {
+                if (!dataSnapshot.exists()) {
 
-                    if (filter)
-                    {
+                    if (filter) {
                         textView.setText(R.string.no_builds_found);
-                    }
-                    else {
+                    } else {
                         switch (refId) {
                             case "RunningBuild":
                                 textView.setText(R.string.no_running_builds);
@@ -65,8 +61,7 @@ public class FirebaseProgressBar {
                         }
                     }
                     textView.setVisibility(View.VISIBLE);
-                }
-                else {
+                } else {
                     textView.setVisibility(View.GONE);
                 }
 

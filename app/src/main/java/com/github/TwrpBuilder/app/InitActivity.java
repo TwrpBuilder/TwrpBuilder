@@ -28,11 +28,9 @@ import eu.chainfire.libsuperuser.Shell;
 
 public class InitActivity extends AppCompatActivity {
 
-    private ProgressBar progressBar;
     public static boolean IS_SUPPORTED;
     public static boolean isOldMtk;
     public static boolean ROOT_GRANTED;
-
     @NonNull
     private final
     String[] file = new String[]{
@@ -42,6 +40,7 @@ public class InitActivity extends AppCompatActivity {
             "fotakernel",
             "recovery"
     };
+    private ProgressBar progressBar;
     private int GoogleVersion;
 
     @Override

@@ -55,13 +55,12 @@ import javax.net.ssl.SSLEngine;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    public static String Cache;
     /*Fragments*/
     private NoNetwork mNoNetwork;
     private ContributorsFragment mFragmentContributors;
     private StatusFragment statusFragment;
     private MainFragment mainFragment;
-
-    public static String Cache;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -33,7 +33,7 @@ public class FragmentListDevs extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View v=inflater.inflate(R.layout.fragment_list_developers,container,false);
+        final View v = inflater.inflate(R.layout.fragment_list_developers, container, false);
         RecyclerView recyclerView = v.findViewById(R.id.rv_list_devs);
         Query query = FirebaseDatabase.getInstance()
                 .getReference("Developers");
@@ -42,19 +42,19 @@ public class FragmentListDevs extends Fragment implements View.OnClickListener {
                 .build();
         query.keepSynced(true);
 
-        String s=null;
+        String s = null;
 
-        adapter= new FirebaseRecyclerAdapter<Developer, ListContributorsHolder>(options) {
+        adapter = new FirebaseRecyclerAdapter<Developer, ListContributorsHolder>(options) {
             @NonNull
             @Override
             public ListContributorsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.list_developers,parent,false);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_developers, parent, false);
                 return new ListContributorsHolder(view);
             }
 
             @Override
             protected void onBindViewHolder(@NonNull ListContributorsHolder holder, int position, @NonNull Developer model) {
-                String key=getRef(position).getKey();
+                String key = getRef(position).getKey();
                 holder.bind(
                         model.getEmail(),
                         model.getName(),
@@ -70,9 +70,9 @@ public class FragmentListDevs extends Fragment implements View.OnClickListener {
             @Override
             public void onDataChanged() {
                 super.onDataChanged();
-                ProgressBar progressBar= v.findViewById(R.id.pb_builds);
-                TextView textView= v.findViewById(R.id.tv_no_build);
-                new FirebaseProgressBar(progressBar,textView,adapter,"Developers");
+                ProgressBar progressBar = v.findViewById(R.id.pb_builds);
+                TextView textView = v.findViewById(R.id.tv_no_build);
+                new FirebaseProgressBar(progressBar, textView, adapter, "Developers");
             }
         };
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -80,9 +80,9 @@ public class FragmentListDevs extends Fragment implements View.OnClickListener {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        ProgressBar progressBar= v.findViewById(R.id.pb_builds);
-        TextView textView= v.findViewById(R.id.tv_no_build);
-        new FirebaseProgressBar(progressBar,textView,adapter,"Developers");
+        ProgressBar progressBar = v.findViewById(R.id.pb_builds);
+        TextView textView = v.findViewById(R.id.tv_no_build);
+        new FirebaseProgressBar(progressBar, textView, adapter, "Developers");
 
         return v;
     }
@@ -92,6 +92,7 @@ public class FragmentListDevs extends Fragment implements View.OnClickListener {
         super.onStart();
         adapter.startListening();
     }
+
     @Override
     public void onStop() {
         super.onStop();
@@ -100,7 +101,7 @@ public class FragmentListDevs extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(@NonNull View view) {
-        int id=view.getId();
+        int id = view.getId();
 
     }
 }

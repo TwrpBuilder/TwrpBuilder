@@ -20,14 +20,15 @@ import com.github.TwrpBuilder.util.Config;
 
 public class FragmentAbout extends Fragment implements View.OnClickListener {
     private CardView cardViewWebsite, cardViewXdaThread, cardViewSource, cardViewTelegram, cardViewBugReport;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v=inflater.inflate(R.layout.fragment_about,container,false);
-        cardViewWebsite=v.findViewById(R.id.website);
-        cardViewXdaThread=v.findViewById(R.id.xdaThread);
-        cardViewSource=v.findViewById(R.id.source);
-        cardViewTelegram=v.findViewById(R.id.telegram);
+        View v = inflater.inflate(R.layout.fragment_about, container, false);
+        cardViewWebsite = v.findViewById(R.id.website);
+        cardViewXdaThread = v.findViewById(R.id.xdaThread);
+        cardViewSource = v.findViewById(R.id.source);
+        cardViewTelegram = v.findViewById(R.id.telegram);
         cardViewBugReport = v.findViewById(R.id.bug_report);
 
         cardViewWebsite.setOnClickListener(this);
@@ -39,26 +40,18 @@ public class FragmentAbout extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(@NonNull View view)
-    {
-        int id=view.getId();
-       if (id==cardViewWebsite.getId())
-       {
-           startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Config.OfficialWebsite)));
-       }
-       else if (id==cardViewXdaThread.getId())
-       {
-           startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Config.XdaThread)));
-       }
-       else if (id==cardViewSource.getId())
-       {
-           startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Config.GithubSource)));
-       }
-       else if (id==cardViewTelegram.getId())
-       {
-           startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Config.TGramSupport)));
-       } else if (id == cardViewBugReport.getId()) {
-           startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Config.ReportIssue)));
-       }
+    public void onClick(@NonNull View view) {
+        int id = view.getId();
+        if (id == cardViewWebsite.getId()) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Config.OfficialWebsite)));
+        } else if (id == cardViewXdaThread.getId()) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Config.XdaThread)));
+        } else if (id == cardViewSource.getId()) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Config.GithubSource)));
+        } else if (id == cardViewTelegram.getId()) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Config.TGramSupport)));
+        } else if (id == cardViewBugReport.getId()) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Config.ReportIssue)));
+        }
     }
 }

@@ -12,15 +12,18 @@ public class Developer {
     private String gitId;
     private String donationUrl;
     private String description;
-    public Developer(){}
-    public Developer(String email,String name,String photoUrl,String xdaUrl,String gitId,String donationUrl,String description ){
-        this.email=email;
-        this.name=name;
-        this.photoUrl=photoUrl;
-        this.xdaUrl=xdaUrl;
-        this.gitId=gitId;
-        this.donationUrl=donationUrl;
-        this.description=description;
+
+    public Developer() {
+    }
+
+    public Developer(String email, String name, String photoUrl, String xdaUrl, String gitId, String donationUrl, String description) {
+        this.email = email;
+        this.name = name;
+        this.photoUrl = photoUrl;
+        this.xdaUrl = xdaUrl;
+        this.gitId = gitId;
+        this.donationUrl = donationUrl;
+        this.description = description;
     }
 
     public String getEmail() {

@@ -57,8 +57,7 @@
             android:name="io.fabric.ApiKey"
             android:value="170780f99a1c0f42ee4bce379c8a786f3e295ea7" />
 
-        <service
-            android:name="com.github.TwrpBuilder.firebase.FirebaseNotificationService">
+        <service android:name="com.github.TwrpBuilder.firebase.FirebaseNotificationService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

@@ -27,7 +27,7 @@ public class StatusFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_status,container,false);
+        View view = inflater.inflate(R.layout.fragment_status, container, false);
         ViewPager viewPager = view.findViewById(R.id.pager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new FragmentStatusCommon("InQueue"), getString(R.string.queue));
