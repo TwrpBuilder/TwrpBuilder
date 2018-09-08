@@ -1,16 +1,15 @@
 package com.github.updater;
 
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Environment;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.webkit.WebView;
 import android.widget.Toast;
 
-import static com.github.updater.JsonParser.apkName;
-import static com.github.updater.JsonParser.apkURL;
 import static com.github.updater.JsonParser.changelog;
 import static com.github.updater.JsonParser.version;
 
@@ -42,16 +41,8 @@ public class Updater {
                             .setPositiveButton("Download", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    Toast.makeText(context, "Downloading! Please wait...", Toast.LENGTH_SHORT).show();
-                                    DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-
-                                    DownloadManager.Request request = new DownloadManager.Request(apkURL);
-                                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, apkName);
-
-                                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                                    if (downloadManager != null) {
-                                        Long reference = downloadManager.enqueue(request);
-                                    }
+                                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                                    context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/TwrpBuilder/TwrpBuilder/releases/latest")));
                                 }
                             })
                             .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
