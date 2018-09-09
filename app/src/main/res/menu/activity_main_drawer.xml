@@ -12,14 +12,14 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/nav_build_incomplete"
-                    android:icon="@drawable/ic_incomplete_builds"
-                    android:title="@string/incomplete" />
-
-                <item
                     android:id="@+id/nav_build_done"
                     android:icon="@drawable/ic_builds_done"
                     android:title="@string/completed" />
+                
+                <item
+                    android:id="@+id/nav_build_incomplete"
+                    android:icon="@drawable/ic_incomplete_builds"
+                    android:title="@string/incomplete" />
 
                 <item
                     android:id="@+id/nav_reject"
