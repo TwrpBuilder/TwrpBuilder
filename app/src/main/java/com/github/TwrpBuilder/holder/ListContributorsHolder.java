@@ -62,6 +62,8 @@ public class ListContributorsHolder extends RecyclerView.ViewHolder implements V
         if (donationUrl != null) {
             tvDonation.setText(donationUrl);
             tvDonation.setVisibility(View.VISIBLE);
+        } else {
+            tvDonation.setText("");
         }
         Glide.with(context.getApplicationContext())
                 .load(photoUrl)
