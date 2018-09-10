@@ -53,16 +53,16 @@ public class FragmentListDevs extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull ListContributorsHolder holder, int position, @NonNull Developer model) {
+            protected void onBindViewHolder(@NonNull ListContributorsHolder holder, int position, @NonNull Developer dev) {
                 String key = getRef(position).getKey();
                 holder.bind(
-                        model.getEmail(),
-                        model.getName(),
-                        model.getPhotoUrl(),
-                        model.getXdaUrl(),
-                        model.getGitId(),
-                        model.getDonationUrl(),
-                        model.getDescription(),
+                        dev.getEmail(),
+                        dev.getName(),
+                        dev.getPhotoUrl(),
+                        dev.getXdaUrl(),
+                        dev.getGitId(),
+                        dev.getDonationUrl(),
+                        dev.getDescription(),
                         key
                 );
             }
