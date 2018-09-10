@@ -10,10 +10,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -26,7 +24,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.TwrpBuilder.Fragment.ContributorsFragment;
 import com.github.TwrpBuilder.Fragment.FragmentAbout;
@@ -110,18 +107,11 @@ public class MainActivity extends AppCompatActivity
         setTitle(R.string.home);
 
         /*Text View*/
-        mUserEmail = navHeaderView.findViewById(R.id.user_email);
         if (!enabled) {
 
             FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
         }
-        /*replace email with users email*/
-        mUserEmail.setText(mFirebaseAuth.getCurrentUser().getEmail());
-        /*My Functions :)*/
-        checkPermission();
-        requestPermission();
         isOnline();
-        new Updater(MainActivity.this, Config.getAppVersion(getApplicationContext()), Config.APP_UPDATE_URL, false);
 
     }
 
@@ -133,6 +123,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        overridePendingTransition(0, 0);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.quit:
@@ -140,10 +136,6 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.action_log_out:
                 FirebaseAuth.getInstance().signOut();
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putBoolean("admin", false);
-                editor.apply();
                 startActivity(new Intent(MainActivity.this, LoginActivity.class)); //Go back to home page
                 finish();
                 break;
@@ -154,17 +146,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
@@ -210,22 +191,6 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragment);
         ft.commit();
-    }
-
-    private void checkPermission() {
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            int result = ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
-    }
-
-    private void requestPermission() {
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                Toast.makeText(MainActivity.this, "Write External Storage permission allows us to do store images. Please allow this permission in App SettingsActivity.", Toast.LENGTH_LONG).show();
-            } else {
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-            }
-        }
     }
 
     @Override
