@@ -28,7 +28,7 @@ android {
             config {
                 keyAlias keystoreProperties['keyAlias']
                 keyPassword keystoreProperties['keyPassword']
-                storeFile file(keystoreProperties['storeFile'])
+                storeFile file('twrpbuilderkey.jks')
                 storePassword keystoreProperties['storePassword']
             }
         }
