@@ -34,9 +34,7 @@ import com.github.TwrpBuilder.Fragment.NoNetwork;
 import com.github.TwrpBuilder.Fragment.StatusFragment;
 import com.github.TwrpBuilder.app.LoginActivity;
 import com.github.TwrpBuilder.app.SettingsActivity;
-import com.github.TwrpBuilder.util.Config;
 import com.github.TwrpBuilder.util.FirebaseDBInstance;
-import com.github.updater.Updater;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.security.ProviderInstaller;
@@ -58,6 +56,18 @@ public class MainActivity extends AppCompatActivity
     private ContributorsFragment mFragmentContributors;
     private StatusFragment statusFragment;
     private MainFragment mainFragment;
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        overridePendingTransition(0, 0);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        overridePendingTransition(0, 0);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +98,6 @@ public class MainActivity extends AppCompatActivity
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View navHeaderView = navigationView.inflateHeaderView(R.layout.nav_header_main);
@@ -105,6 +113,7 @@ public class MainActivity extends AppCompatActivity
         /*Replace Fragment*/
         updateFragment(this.mainFragment);
         setTitle(R.string.home);
+        toggle.syncState();
 
         /*Text View*/
         if (!enabled) {
@@ -120,12 +129,6 @@ public class MainActivity extends AppCompatActivity
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.activity_option, menu);
         return true;
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        overridePendingTransition(0, 0);
     }
 
     @Override

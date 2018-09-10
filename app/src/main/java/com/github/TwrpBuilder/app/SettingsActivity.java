@@ -16,12 +16,9 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.TwrpBuilder.R;
-import com.github.TwrpBuilder.util.Config;
 import com.github.TwrpBuilder.util.setLocale;
-import com.github.updater.Updater;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 /**
@@ -84,14 +81,6 @@ public class SettingsActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
-
-        checkUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(SettingsActivity.this, R.string.checking_for_updates, Toast.LENGTH_SHORT).show();
-                new Updater(SettingsActivity.this, Config.getAppVersion(getApplicationContext()), Config.APP_UPDATE_URL, true);
-            }
-        });
 
         cardView_Lang.setOnClickListener(new View.OnClickListener() {
             @Override

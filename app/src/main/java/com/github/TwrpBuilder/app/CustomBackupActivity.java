@@ -117,6 +117,7 @@ public class CustomBackupActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        overridePendingTransition(0, 0);
         FromCB = true;
     }
 
