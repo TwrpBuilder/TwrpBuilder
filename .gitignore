@@ -1,5 +1,7 @@
 *.iml
 .gradle
+/app/twrpbuilderkey.jks
+keystore.properties
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries

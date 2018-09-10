@@ -13,6 +13,8 @@ licenses:
 jdk:
 - oraclejdk8
 script:
+  - wget https://raw.githubusercontent.com/TwrpBuilder/TwrpBuilder/master/build.sh
+  - chmod +x build.sh && ./build.sh
   - "./gradlew build"
   - "mv ./app/build/outputs/apk/release/app-release.apk ./TwrpBuilder-$(git describe --tags).apk"
 
