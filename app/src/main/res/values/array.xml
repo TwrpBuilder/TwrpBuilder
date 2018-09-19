@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="supportLangs">
+        <item>en</item>
+        <item>ar</item>
+        <item>tr</item>
+        <item>es</item>
+        <item>fr</item>
+        <item>ro</item>
+        <item>it</item>
+    </string-array>
+
+    <string-array name="langList">
+        <item>@string/language_english</item>
+        <item>@string/language_arabic</item>
+        <item>@string/language_turkish</item>
+        <item>@string/language_spanish</item>
+        <item>@string/language_french</item>
+        <item>@string/language_romanian</item>
+        <item>@string/language_italian</item>
+    </string-array>
+
+    <string name="language_english">English</string>
+    <string name="language_arabic">Arabic</string>
+    <string name="language_turkish">Turkish</string>
+    <string name="language_spanish">Spanish</string>
+    <string name="language_french">French</string>
+    <string name="language_romanian">Romanian</string>
+    <string name="language_italian">Italian</string>
+</resources>

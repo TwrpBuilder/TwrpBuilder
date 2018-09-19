@@ -64,4 +64,5 @@
     <string name="Feedback_sent">Feedback sent</string>
     <string name="feedback_failed">Failed to send feedback</string>
     <string name="no_rejected">No rejected builds</string>
+    <string name="settings_category_general">General</string>
 </resources>

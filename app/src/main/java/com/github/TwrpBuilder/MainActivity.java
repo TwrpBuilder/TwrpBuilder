@@ -2,7 +2,6 @@ package com.github.TwrpBuilder;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -33,7 +32,7 @@ import com.github.TwrpBuilder.Fragment.MainFragment;
 import com.github.TwrpBuilder.Fragment.NoNetwork;
 import com.github.TwrpBuilder.Fragment.StatusFragment;
 import com.github.TwrpBuilder.app.LoginActivity;
-import com.github.TwrpBuilder.app.SettingsActivity;
+import com.github.TwrpBuilder.app.Settings;
 import com.github.TwrpBuilder.util.FirebaseDBInstance;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -143,7 +142,7 @@ public class MainActivity extends AppCompatActivity
                 finish();
                 break;
             case R.id.settings:
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                startActivity(new Intent(MainActivity.this, Settings.class));
                 break;
         }
         return super.onOptionsItemSelected(item);

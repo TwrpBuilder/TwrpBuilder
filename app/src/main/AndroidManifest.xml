@@ -26,6 +26,11 @@
             android:name="com.github.TwrpBuilder.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".app.Settings"
+            android:label="@string/settings"
+            android:theme="@style/SettingsTheme"/>
+
         <activity
             android:name=".app.InitActivity"
             android:hardwareAccelerated="false"
@@ -51,7 +56,6 @@
                 android:value=".MainActivity" />
         </activity>
         <activity android:name=".app.FlasherActivity" />
-        <activity android:name=".app.SettingsActivity" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="language_english">İngilizce</string>
+    <string name="language_arabic">Arapça</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_spanish">İspanyolca</string>
+    <string name="language_french">Fransızca</string>
+    <string name="language_romanian">Romence</string>
+    <string name="language_italian">İtalyanca</string>
+</resources>

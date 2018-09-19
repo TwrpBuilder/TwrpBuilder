@@ -86,4 +86,5 @@
     <string name="recovery_too_small">File size too small, Select a proper recovery file</string>
     <string name="select">Select</string>
     <string name="root_dir">Default Dir</string>
+    <string name="settings_category_general">General</string>
 </resources>

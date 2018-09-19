@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/settings_category_general">
+
+        <Preference
+            android:key="preference_language"
+            android:title="@string/language" />
+
+        <SwitchPreference
+            android:key="preference_disable_notification"
+            android:title="@string/disable_notification"
+            android:summary="This option may not work for now. Consider it as alpha stage."/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
