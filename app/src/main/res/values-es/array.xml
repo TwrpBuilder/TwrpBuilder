@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="language_english">English</string>
-    <string name="language_arabic">Arabic</string>
-    <string name="language_turkish">Turkish</string>
-    <string name="language_spanish">Spanish</string>
-    <string name="language_french">French</string>
-    <string name="language_romanian">Romanian</string>
-    <string name="language_italian">Italian</string>
+    <string name="language_english">Inglés</string>
+    <string name="language_arabic">Árabe</string>
+    <string name="language_turkish">Turco</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_french">Francés</string>
+    <string name="language_romanian">Rumano</string>
+    <string name="language_italian">Italiano</string>
 </resources>
