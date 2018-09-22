@@ -81,7 +81,6 @@ public class Settings extends PreferenceActivity {
             }
         });
 
-        /*
         findPreference("preference_disable_notification").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
@@ -95,7 +94,6 @@ public class Settings extends PreferenceActivity {
                 return true;
             }
         });
-        */
 
         findPreference("preference_disable_notification").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
