@@ -7,6 +7,12 @@
             android:checked="true"
             android:icon="@drawable/ic_home_white_24dp"
             android:title="@string/home" />
+
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/outline_settings_white_18dp"
+            android:title="@string/settings"
+            android:checkable="false"/>
     </group>
     <item android:title="@string/build_status">
         <menu>

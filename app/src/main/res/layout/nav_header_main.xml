@@ -30,10 +30,36 @@
         android:textStyle="bold"
         android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/user_email"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/header_user_info"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing" />
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:baselineAligned="false">
+
+        <TextView
+            android:id="@+id/user_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:layout_width="@dimen/nav_header_vertical_spacing"
+            android:layout_height="0dp"/>
+
+        <ImageButton
+            android:id="@+id/header_action_log_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_power_settings_new_white_18dp"
+            android:background="@drawable/button_light_surface"
+            android:contentDescription="@string/logout"
+            android:layout_gravity="bottom|end"
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"/>
+
+    </LinearLayout>
 
 </LinearLayout>

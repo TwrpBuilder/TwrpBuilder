@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.TwrpBuilder.Fragment.ContributorsFragment;
@@ -33,6 +34,7 @@ import com.github.TwrpBuilder.Fragment.NoNetwork;
 import com.github.TwrpBuilder.Fragment.StatusFragment;
 import com.github.TwrpBuilder.app.LoginActivity;
 import com.github.TwrpBuilder.app.Settings;
+import com.github.TwrpBuilder.util.Config;
 import com.github.TwrpBuilder.util.FirebaseDBInstance;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity
     private ContributorsFragment mFragmentContributors;
     private StatusFragment statusFragment;
     private MainFragment mainFragment;
+    public static boolean isUserLoggedIn;
 
     @Override
     public void onPause() {
@@ -97,10 +100,27 @@ public class MainActivity extends AppCompatActivity
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
+
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
         View navHeaderView = navigationView.inflateHeaderView(R.layout.nav_header_main);
-        TextView mUserEmail;
+
+        TextView mUserEmail = navHeaderView.findViewById(R.id.user_email);
+        ImageButton mLogOut_header = navHeaderView.findViewById(R.id.header_action_log_out);
+
+        if (mFirebaseAuth.getCurrentUser() != null) {
+            mUserEmail.setText(Config.getBuildBrand() + "\n" + Config.getBuildModel() + "\n" + mFirebaseAuth.getCurrentUser().getEmail());
+            mLogOut_header.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FirebaseAuth.getInstance().signOut();
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class)); //Go back to home page
+                    finish();
+                }
+            });
+        }
+
         boolean enabled = PreferenceManager.getDefaultSharedPreferences(this)
                 .getBoolean("notification", false);
 
@@ -136,14 +156,6 @@ public class MainActivity extends AppCompatActivity
             case R.id.quit:
                 finish();
                 break;
-            case R.id.action_log_out:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class)); //Go back to home page
-                finish();
-                break;
-            case R.id.settings:
-                startActivity(new Intent(MainActivity.this, Settings.class));
-                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -157,6 +169,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_home:
                 updateFragment(mainFragment);
                 setTitle(R.string.home);
+                break;
+            case R.id.nav_settings:
+                startActivity(new Intent(MainActivity.this, Settings.class));
                 break;
             case R.id.nav_contributors:
                 updateFragment(mFragmentContributors);
