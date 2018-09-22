@@ -121,9 +121,6 @@ public class MainActivity extends AppCompatActivity
             });
         }
 
-        boolean enabled = PreferenceManager.getDefaultSharedPreferences(this)
-                .getBoolean("notification", false);
-
         /*Fragments*/
         mNoNetwork = new NoNetwork();
         mFragmentContributors = new ContributorsFragment();
@@ -134,13 +131,7 @@ public class MainActivity extends AppCompatActivity
         setTitle(R.string.home);
         toggle.syncState();
 
-        /*Text View*/
-        if (!enabled) {
-
-            FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
-        }
         isOnline();
-
     }
 
     @Override
