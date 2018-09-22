@@ -94,20 +94,5 @@ public class Settings extends PreferenceActivity {
                 return true;
             }
         });
-
-        findPreference("preference_disable_notification").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                if(PreferenceManager.getDefaultSharedPreferences(Settings.this).getBoolean("preference_disable_notification",true)) {
-                    FirebaseMessaging.getInstance().unsubscribeFromTopic("pushNotifications");
-                    Log.d(getResources().getString(R.string.app_name),"Notifications are disabled.");
-                } else {
-                    FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
-                    Log.d(getResources().getString(R.string.app_name),"Notifications are enabled.");
-                }
-
-                return true;
-            }
-        });
     }
 }
