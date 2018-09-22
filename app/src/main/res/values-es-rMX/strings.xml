@@ -83,4 +83,5 @@
     <string name="recovery_too_small">Tamaño de archivo demasiado pequeño, seleccione un archivo de recuperación adecuado</string>
     <string name="select">Seleccionar</string>
     <string name="root_dir">Directorio por defecto</string>
+    <string name="settings_category_general">General</string>
 </resources>

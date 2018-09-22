@@ -5,6 +5,7 @@
         <item>ar</item>
         <item>tr</item>
         <item>es</item>
+        <item>es-rMX</item>
         <item>fr</item>
         <item>ro</item>
         <item>it</item>
@@ -15,6 +16,7 @@
         <item>@string/language_arabic</item>
         <item>@string/language_turkish</item>
         <item>@string/language_spanish</item>
+        <item>@string/language_spanish_rMX</item>
         <item>@string/language_french</item>
         <item>@string/language_romanian</item>
         <item>@string/language_italian</item>
@@ -27,4 +29,5 @@
     <string name="language_french">French</string>
     <string name="language_romanian">Romanian</string>
     <string name="language_italian">Italian</string>
+    <string name="language_spanish_rMX">Spanish (Mexico)</string>
 </resources>
