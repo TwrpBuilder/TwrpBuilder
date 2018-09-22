@@ -28,6 +28,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@drawable/settings_background</item>
+        <item name="android:navigationIcon">@drawable/ic_arrow_back_white_24dp</item>
     </style>
 
     <style name="SettingsTheme.Dialog" parent="@android:style/Theme.Material.Dialog.Alert">
