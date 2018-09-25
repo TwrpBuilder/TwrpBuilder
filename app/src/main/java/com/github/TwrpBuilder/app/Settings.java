@@ -10,6 +10,7 @@ import android.preference.PreferenceActivity;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.preference.PreferenceManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -38,6 +39,13 @@ public class Settings extends PreferenceActivity {
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         addPreferencesFromResource(R.xml.settings);
+        
+        Toolbar mToolbar = (Toolbar)findViewById(R.id.action_bar_tool);
+		setSupportActionBar(mToolbar);
+		if (getSupportActionBar() != null){
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+			getSupportActionBar().setDisplayShowHomeEnabled(true);
+		}
 
         supportLangs = getResources().getStringArray(R.array.supportLangs);
         langList = getResources().getStringArray(R.array.langList);
@@ -104,7 +112,9 @@ public class Settings extends PreferenceActivity {
         int id = item.getItemId();
 
         if (id == android.R.id.home) {
-            onBackPressed();  return true;
+            this.finish();
+            return true;
+
         }
 
         return super.onOptionsItemSelected(item);
